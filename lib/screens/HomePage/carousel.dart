@@ -1,12 +1,12 @@
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:flutter/material.dart';
 
-class Carousel extends StatefulWidget {
+class CarouselWidget extends StatefulWidget {
   @override
-  _CarouselState createState() => _CarouselState();
+  _CarouselWidgetState createState() => _CarouselWidgetState();
 }
 
-class _CarouselState extends State<Carousel> {
+class _CarouselWidgetState extends State<CarouselWidget> {
   final List<List<String>> events = [
     [
       'assets/images/HomePage/event_1.jpg',
@@ -52,107 +52,84 @@ class _CarouselState extends State<Carousel> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: MediaQuery.of(context).size.height - 25,
-      width: MediaQuery.of(context).size.width,
-      child: Column(
-        children: <Widget>[
-          GestureDetector(
-            onHorizontalDragEnd: (DragEndDetails details) {
-              if (details.velocity.pixelsPerSecond.dx > 0) {
-                _preve();
-              } else if (details.velocity.pixelsPerSecond.dx < 0) {
-                _next();
-              }
-            },
-            child: Container(
-              width: double.infinity,
-              height: 350,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage(events[currentIndex][0]),
-                    fit: BoxFit.cover),
-              ),
-              child: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.bottomRight,
-                    colors: [
-                      Colors.grey[700].withOpacity(0.90),
-                      Colors.grey.withOpacity(0),
-                    ],
-                  ),
-                ),
-                //Here we create the column with the indicator, title & description
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    /*Here we have the title and the description. In order to have them align on the left of the screen 
+    return GestureDetector(
+      onHorizontalDragEnd: (DragEndDetails details) {
+        if (details.velocity.pixelsPerSecond.dx > 0) {
+          _preve();
+        } else if (details.velocity.pixelsPerSecond.dx < 0) {
+          _next();
+        }
+      },
+      child: Container(
+        width: double.infinity,
+        height: 350,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage(events[currentIndex][0]), fit: BoxFit.cover),
+        ),
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.bottomRight,
+              colors: [
+                Colors.grey[700].withOpacity(0.90),
+                Colors.grey.withOpacity(0),
+              ],
+            ),
+          ),
+          //Here we create the column with the indicator, title & description
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              /*Here we have the title and the description. In order to have them align on the left of the screen 
                     with need to wrap them in a row*/
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20),
-                      //The alignement on the left is possible here with the row
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          //Just the column of the title and the description
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                events[currentIndex][1],
-                                style: TextStyle(
-                                  fontSize: 30,
-                                  color: blue_1,
-                                ),
-                              ),
-                              Text(
-                                events[currentIndex][2],
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: white,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                //The alignement on the left is possible here with the row
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    //Just the column of the title and the description
                     Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: <Widget>[
-                        Container(
-                          width: 90,
-                          margin: EdgeInsets.only(bottom: 50),
-                          child: Row(
-                            children: _buildIndicator(),
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          events[currentIndex][1],
+                          style: TextStyle(
+                            fontSize: 30,
+                            color: blue_2,
                           ),
-                        )
+                        ),
+                        Text(
+                          events[currentIndex][2],
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: white,
+                          ),
+                        ),
                       ],
                     ),
                   ],
                 ),
               ),
-            ),
-          ),
-          Expanded(
-            child: Transform.translate(
-              offset: Offset(0, -40),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30),
-                    topRight: Radius.circular(30),
-                  ),
-                ),
+              SizedBox(
+                height: 20,
               ),
-            ),
-          )
-        ],
+              Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  Container(
+                    width: 90,
+                    margin: EdgeInsets.only(bottom: 50),
+                    child: Row(
+                      children: _buildIndicator(),
+                    ),
+                  )
+                ],
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
