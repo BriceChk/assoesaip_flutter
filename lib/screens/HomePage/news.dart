@@ -1,3 +1,4 @@
+import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:flutter/material.dart';
 
 class NewsWidget extends StatelessWidget {
@@ -87,7 +88,7 @@ class NewsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        //color: Colors.blue,
+        color: white,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(30),
           topRight: Radius.circular(30),

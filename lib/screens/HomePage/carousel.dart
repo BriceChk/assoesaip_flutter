@@ -62,7 +62,6 @@ class _CarouselWidgetState extends State<CarouselWidget> {
       },
       child: Container(
         width: double.infinity,
-        height: 350,
         decoration: BoxDecoration(
           image: DecorationImage(
               image: AssetImage(events[currentIndex][0]), fit: BoxFit.cover),
@@ -120,7 +119,7 @@ class _CarouselWidgetState extends State<CarouselWidget> {
                 children: <Widget>[
                   Container(
                     width: 90,
-                    margin: EdgeInsets.only(bottom: 50),
+                    margin: EdgeInsets.only(bottom: 25),
                     child: Row(
                       children: _buildIndicator(),
                     ),
