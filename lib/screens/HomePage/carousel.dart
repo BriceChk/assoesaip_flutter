@@ -63,11 +63,19 @@ class _CarouselWidgetState extends State<CarouselWidget> {
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
+          /*borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(30),
+            bottomRight: Radius.circular(30),
+          ),*/
           image: DecorationImage(
               image: AssetImage(events[currentIndex][0]), fit: BoxFit.cover),
         ),
         child: Container(
           decoration: BoxDecoration(
+            /*borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(30),
+              bottomRight: Radius.circular(30),
+            ),*/
             gradient: LinearGradient(
               begin: Alignment.bottomRight,
               colors: [

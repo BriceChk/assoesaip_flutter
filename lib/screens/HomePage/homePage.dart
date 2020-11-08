@@ -14,7 +14,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: blue_0,
+      backgroundColor: white,
       //* We implement that for the scroll and the sliverAppBar
       body: CustomScrollView(
         //! I don't know why but apparently that the things i was missing
@@ -22,7 +22,7 @@ class _HomePageState extends State<HomePage> {
         slivers: [
           //* SliverAppBar to have the animation
           SliverAppBar(
-            backgroundColor: Colors.blue,
+            backgroundColor: white,
             //* Height of the picture (carousel)
             expandedHeight: 275,
             stretch: true,

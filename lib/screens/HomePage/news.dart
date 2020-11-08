@@ -87,13 +87,7 @@ class NewsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        color: white,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(30),
-          topRight: Radius.circular(30),
-        ),
-      ),
+      color: white,
       //* Container of the white widget with the rounded corner
       child: Container(
         //* Size of the screen
