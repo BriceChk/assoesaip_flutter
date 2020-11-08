@@ -44,6 +44,41 @@ class NewsWidget extends StatelessWidget {
       'NRS - Nouvelle route du son (Angers)',
       'Date : 31 octobre 2020',
     ],
+    [
+      'assets/images/HomePage/event_3.jpg',
+      'Soirée Halloween',
+      'Soirée déguisé d\'halloween',
+      'NRS - Nouvelle route du son (Angers)',
+      'Date : 31 octobre 2020',
+    ],
+    [
+      'assets/images/HomePage/event_3.jpg',
+      'Soirée Halloween',
+      'Soirée déguisé d\'halloween',
+      'NRS - Nouvelle route du son (Angers)',
+      'Date : 31 octobre 2020',
+    ],
+    [
+      'assets/images/HomePage/event_3.jpg',
+      'Soirée Halloween',
+      'Soirée déguisé d\'halloween',
+      'NRS - Nouvelle route du son (Angers)',
+      'Date : 31 octobre 2020',
+    ],
+    [
+      'assets/images/HomePage/event_3.jpg',
+      'Soirée Halloween',
+      'Soirée déguisé d\'halloween',
+      'NRS - Nouvelle route du son (Angers)',
+      'Date : 31 octobre 2020',
+    ],
+    [
+      'assets/images/HomePage/event_3.jpg',
+      'Soirée Halloween',
+      'Soirée déguisé d\'halloween',
+      'NRS - Nouvelle route du son (Angers)',
+      'Date : 31 octobre 2020',
+    ],
   ];
 
   int currentIndex = 0;
@@ -52,7 +87,7 @@ class NewsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        //color: Colors.blue,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(30),
           topRight: Radius.circular(30),
