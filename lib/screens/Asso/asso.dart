@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class Association extends StatelessWidget {
   final List<List<String>> associations = [
     [
-      'assets/images/HomePage/event_1.jpg',
+      'assets/images/SuperBowlLogo.png',
       'BDE - Bureau des étudiants',
       'Le BDE est une équipe active et impliquée qui dynamise le quotidien de l\'ensemble des étudiants de l\'école en organisant et animant des activités culturelles et de loisirs.',
     ],

@@ -178,7 +178,7 @@ class _CarouselWidgetState extends State<CarouselWidget> {
   final List<List<String>> events = [
     [
       'assets/images/HomePage/event_1.jpg',
-      'Event_1',
+      'COVID-19 : dernières informations',
       'Lorem ipsum dolor sit amet, consectetur.',
     ],
     [
@@ -253,26 +253,30 @@ class _CarouselWidgetState extends State<CarouselWidget> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    //* Just the column of the title and the description
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          events[currentIndex][1],
-                          style: TextStyle(
-                            fontSize: 30,
-                            color: blue_2,
+                    //! Wrap the column inside a flexible widget in order to do not have the text overflow
+                    //! Like this we have a multiple line text
+                    Flexible(
+                      //* Just the column of the title and the description
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            events[currentIndex][1],
+                            style: TextStyle(
+                              fontSize: 25,
+                              color: blue_2,
+                            ),
                           ),
-                        ),
-                        //! See the overflow of the text right here
-                        /*Text(
-                          events[currentIndex][2],
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: white,
+                          //! See the overflow of the text right here
+                          Text(
+                            events[currentIndex][2],
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: white,
+                            ),
                           ),
-                        ),*/
-                      ],
+                        ],
+                      ),
                     ),
                   ],
                 ),
