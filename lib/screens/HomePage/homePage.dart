@@ -13,35 +13,31 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: blue_0,
-      //* We implement that for the scroll and the sliverAppBar
-      body: CustomScrollView(
-        //! I don't know why but apparently that the things i was missing
-        physics: BouncingScrollPhysics(),
-        slivers: [
-          //* SliverAppBar to have the animation
-          SliverAppBar(
-            backgroundColor: Colors.blue,
-            //* Height of the picture (carousel)
-            expandedHeight: 275,
-            stretch: true,
-            //* Stretch mode remove or add some features
-            flexibleSpace: FlexibleSpaceBar(stretchModes: [
-              StretchMode.zoomBackground,
-              StretchMode.blurBackground,
-            ], background: CarouselWidget()),
+    return CustomScrollView(
+      //! I don't know why but apparently that the things i was missing
+      physics: BouncingScrollPhysics(),
+      slivers: [
+        //* SliverAppBar to have the animation
+        SliverAppBar(
+          backgroundColor: white,
+          //* Height of the picture (carousel)
+          expandedHeight: 275,
+          stretch: true,
+          //* Stretch mode remove or add some features
+          flexibleSpace: FlexibleSpaceBar(stretchModes: [
+            StretchMode.zoomBackground,
+            StretchMode.blurBackground,
+          ], background: CarouselWidget()),
+        ),
+        //* Others widget from the page here only the news (for now)
+        SliverList(
+          delegate: SliverChildListDelegate(
+            [
+              NewsWidget(),
+            ],
           ),
-          //* Others widget from the page here only the news (for now)
-          SliverList(
-            delegate: SliverChildListDelegate(
-              [
-                NewsWidget(),
-              ],
-            ),
-          )
-        ],
-      ),
+        )
+      ],
     );
   }
 }
