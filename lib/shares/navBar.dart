@@ -100,6 +100,7 @@ class _NavigationBarState extends State<NavigationBar> {
         children: tabPages,
         onPageChanged: onPageChanged,
         controller: _pageController,
+        physics: NeverScrollableScrollPhysics(),
       ),
     );
   }
