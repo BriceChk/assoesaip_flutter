@@ -79,7 +79,7 @@ class _NavigationBarState extends State<NavigationBar> {
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: 'Home',
+            label: 'Accueil',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.calendar_today_rounded),
@@ -87,7 +87,7 @@ class _NavigationBarState extends State<NavigationBar> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.group),
-            label: 'Club & Asso',
+            label: 'Clubs & assos',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.fastfood),
