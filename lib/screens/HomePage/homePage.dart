@@ -21,7 +21,7 @@ class _HomePageState extends State<HomePage> {
         SliverAppBar(
           backgroundColor: white,
           //* Height of the picture (carousel)
-          expandedHeight: 275,
+          expandedHeight: 370,
           stretch: true,
           //* Stretch mode remove or add some features
           flexibleSpace: FlexibleSpaceBar(stretchModes: [

@@ -94,10 +94,11 @@ class NewsWidget extends StatelessWidget {
         width: MediaQuery.of(context).size.width,
         //* Column if widget in order to have the buildnews working I.E carousel.dart
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             //Want to have space between the carousel and the top of the rounded container
             Padding(
-              padding: EdgeInsets.only(top: 5),
+              padding: EdgeInsets.only(top: 10, left: 10),
               child: Text(
                 "Actualités",
                 style: TextStyle(fontSize: 25),
