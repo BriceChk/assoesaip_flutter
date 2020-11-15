@@ -1,6 +1,5 @@
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:flutter/material.dart';
-import 'package:assoesaip_flutter/shares/navBar.dart';
 
 class Association extends StatelessWidget {
   final List<List<String>> associations = [
@@ -11,23 +10,21 @@ class Association extends StatelessWidget {
     ],
   ];
 
-  final List<String> menu_asso = [
-    'Accueil',
-    'Actu',
-    'Membres',
-    'Partenariats',
-    'La Cafet\'',
+  static final List<String> menuAssoList = [
+    "Accueil",
+    "Actu",
+    "Membres",
+    "Partenariats",
   ];
+  final menuAssoMap = menuAssoList.asMap();
 
-  final double padding_horizontal = 15;
-  final double font_size_asso = 18;
   int assoIndex = 0;
 
+  final double paddinghorizontal = 15;
   @override
   Widget build(BuildContext context) {
-    return
-        //* ListView because we want to scroll through the information about each association
-        ListView(
+    //! Wrap in container with the color white because of the "extendbody: true" in navbar.
+    return ListView(
       children: <Widget>[
         //* We want the rounded border on the bottom so we wrap it in a container
         Container(
@@ -53,7 +50,7 @@ class Association extends StatelessWidget {
               SizedBox(height: 10),
               //* Name of the association
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: padding_horizontal),
+                padding: EdgeInsets.symmetric(horizontal: paddinghorizontal),
                 child: Container(
                   //TODO_color: Colors.amber,
                   child: Text(
@@ -68,7 +65,7 @@ class Association extends StatelessWidget {
               SizedBox(height: 15),
               //* Small introduction in text of the association
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: padding_horizontal),
+                padding: EdgeInsets.symmetric(horizontal: paddinghorizontal),
                 child: Container(
                   //TODO_color: Colors.yellow,
                   child: Text(
@@ -93,7 +90,7 @@ class Association extends StatelessWidget {
             //* Wrap the menu in a container for the color, roundedborder and the size of it
             child: Container(
               decoration: BoxDecoration(
-                  color: white,
+                  color: Colors.green[100],
                   borderRadius: BorderRadius.all(Radius.circular(10))),
               height: 50,
               //! Specific size: it's the padding*2 that we need to indicate otherwise overflow !!!
@@ -104,7 +101,7 @@ class Association extends StatelessWidget {
                 //* Pading of each side of the container
                 child: Padding(
                   padding:
-                      EdgeInsets.symmetric(horizontal: padding_horizontal - 5),
+                      EdgeInsets.symmetric(horizontal: paddinghorizontal - 5),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     //* Display the asso menu
@@ -115,6 +112,7 @@ class Association extends StatelessWidget {
             ),
           ),
         ),
+        Text("Here some text"),
       ],
     );
   }
@@ -123,24 +121,25 @@ class Association extends StatelessWidget {
   Widget _news(bool isActive) {
     //* Padding for each text in the menu
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: padding_horizontal - 10),
+      padding: EdgeInsets.symmetric(horizontal: paddinghorizontal - 10),
       //* Gesture Detector to know if the user tap of the menu
       child: GestureDetector(
-        onTap: () {},
-        //* Display the right text
-        child: Text(
-          menu_asso[assoIndex],
-          style: TextStyle(
-            fontSize: font_size_asso,
-          ),
-        ),
-      ),
+          onTap: () {
+            //! Problem here, retrieve the index maybe with :
+            //! https://stackoverflow.com/questions/54990716/flutter-get-iteration-index-from-list-map
+            //! J'avais réussie a avoir un truc mais ca me donnait pas l'index mais la valeur de celle-ci comme "accueil"
+          },
+          //* Display the right text
+          child: Text(
+            menuAssoMap[assoIndex],
+            style: TextStyle(fontSize: 18),
+          )),
     );
   }
 
   List<Widget> _buildMenu() {
     List<Widget> menuNumber = [];
-    for (int i = 0; i < menu_asso.length; i++) {
+    for (int i = 0; i < menuAssoList.length; i++) {
       if (assoIndex == i) {
         menuNumber.add(_news(true));
       } else {
