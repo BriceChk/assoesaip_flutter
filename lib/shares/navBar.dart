@@ -1,4 +1,3 @@
-import 'package:assoesaip_flutter/screens/Asso/asso.dart';
 import 'package:assoesaip_flutter/screens/Asso/AssoCategories/assoCategories.dart';
 import 'package:assoesaip_flutter/screens/HomePage/homePage.dart';
 import 'package:flutter/material.dart';
