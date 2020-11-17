@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "713556071588",
+    "firebase_url": "https://assoesaip.firebaseio.com",
+    "project_id": "assoesaip",
+    "storage_bucket": "assoesaip.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:713556071588:android:5655a393ae928eb8750231",
+        "android_client_info": {
+          "package_name": "org.esaip.asso.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "713556071588-3b624mf9p2o1i37nmee361ppmh1th8b3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlDZQkJSboCFlM_DzjMjzwH39BSTsZSxg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "713556071588-3b624mf9p2o1i37nmee361ppmh1th8b3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
