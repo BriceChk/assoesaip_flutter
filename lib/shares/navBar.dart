@@ -1,4 +1,5 @@
 import 'package:assoesaip_flutter/screens/Asso/asso.dart';
+import 'package:assoesaip_flutter/screens/Asso/AssoCategories/assoCategories.dart';
 import 'package:assoesaip_flutter/screens/HomePage/homePage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
@@ -18,7 +19,8 @@ class _NavigationBarState extends State<NavigationBar> {
   List<Widget> tabPages = [
     HomePage(),
     Text("Calendrier"),
-    Association(),
+    AssociationCategories(),
+    //Association(),
     Text("Cafet"),
   ];
 

@@ -70,7 +70,8 @@ class _CarouselWidgetState extends State<CarouselWidget> {
                 ),
                 //* Picture of the events
                 image: DecorationImage(
-                    image: AssetImage(events[currentIndex][0]), fit: BoxFit.cover),
+                    image: AssetImage(events[currentIndex][0]),
+                    fit: BoxFit.cover),
               ),
               child: Container(
                 //* Rounded corner for the grey shadow too and display of the shadow
@@ -79,15 +80,16 @@ class _CarouselWidgetState extends State<CarouselWidget> {
                     Radius.circular(15),
                   ),
                   gradient: LinearGradient(
-                    begin: Alignment.bottomRight,
                     colors: [
                       Colors.grey[700].withOpacity(0.90),
                       Colors.grey.withOpacity(0),
                     ],
+                    begin: Alignment.bottomRight,
                   ),
                 ),
                 //* Here we create the column with the indicator, title & description
-                child: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
+                child:
+                    Column(mainAxisAlignment: MainAxisAlignment.end, children: [
                   //* Here we have the title and the description. In order to have them align on the left of the screen
                   //* with need to wrap them in a row
                   Padding(
