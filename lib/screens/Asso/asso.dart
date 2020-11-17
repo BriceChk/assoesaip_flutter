@@ -1,7 +1,20 @@
+import 'package:assoesaip_flutter/screens/Asso/assoSubMenu.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:flutter/material.dart';
 
-class Association extends StatelessWidget {
+class Association extends StatefulWidget {
+  static final List<List<String>> menuAssoList = [
+    ["Accueil", "1"],
+    ["Actu", "0"],
+    ["Membres", "0"],
+    ["Partenariats", "0"],
+  ];
+
+  @override
+  _AssociationState createState() => _AssociationState();
+}
+
+class _AssociationState extends State<Association> {
   final List<List<String>> associations = [
     [
       'assets/images/SuperBowlLogo.png',
@@ -10,17 +23,10 @@ class Association extends StatelessWidget {
     ],
   ];
 
-  static final List<String> menuAssoList = [
-    "Accueil",
-    "Actu",
-    "Membres",
-    "Partenariats",
-  ];
-  final menuAssoMap = menuAssoList.asMap();
-
-  int assoIndex = 0;
+  final menuAssoMap = Association.menuAssoList.asMap();
 
   final double paddinghorizontal = 15;
+
   @override
   Widget build(BuildContext context) {
     //! Wrap in container with the color white because of the "extendbody: true" in navbar.
@@ -83,71 +89,64 @@ class Association extends StatelessWidget {
         ),
         //* Offset because we want the overlay of the menu on the container
         Transform.translate(
-          offset: Offset(0, -20),
-          //* Padding of each side of the menu
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 35),
-            //* Wrap the menu in a container for the color, roundedborder and the size of it
-            child: Container(
-              decoration: BoxDecoration(
-                  color: Colors.green[100],
-                  borderRadius: BorderRadius.all(Radius.circular(10))),
-              height: 50,
-              //! Specific size: it's the padding*2 that we need to indicate otherwise overflow !!!
-              width: MediaQuery.of(context).size.width - 70,
-              //* Slider on the axis horizontal
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                //* Pading of each side of the container
-                child: Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: paddinghorizontal - 5),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    //* Display the asso menu
-                    children: _buildMenu(),
+            offset: Offset(0, -20),
+            //* Padding of each side of the menu
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 35),
+              //* Wrap the menu in a container for the color, roundedborder and the size of it
+              child: Container(
+                decoration: BoxDecoration(
+                    color: Colors.green[100],
+                    borderRadius: BorderRadius.all(Radius.circular(10))),
+                height: 50,
+                //! Specific size: it's the padding*2 that we need to indicate otherwise overflow !!!
+                width: MediaQuery.of(context).size.width - 70,
+                //* Slider on the axis horizontal
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  //* Pading of each side of the container
+                  child: Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: paddinghorizontal - 5),
+                    child: Row(
+                      //mainAxisAlignment: MainAxisAlignment.center,
+                      //* Display the asso menu
+                      children: menuAssoMap
+                          .map((i, element) => MapEntry(
+                              i,
+                              Padding(
+                                padding: const EdgeInsets.only(left: 10),
+                                child: Container(
+                                  child: GestureDetector(
+                                    child: element[1] == "1"
+                                        ? Text(
+                                            element[0],
+                                            style: TextStyle(
+                                                fontSize: 18, color: blue_3),
+                                          )
+                                        : Text(
+                                            element[0],
+                                            style: TextStyle(fontSize: 18),
+                                          ),
+                                    onTap: () {
+                                      setState(() {
+                                        menuAssoMap[assoIndex][1] = "0";
+                                        assoIndex = i;
+                                        element[1] = "1";
+                                      });
+                                    },
+                                  ),
+                                ),
+                              )))
+                          .values
+                          .toList(),
+                    ),
                   ),
                 ),
               ),
-            ),
-          ),
-        ),
-        Text("Here some text"),
+            )),
+        AssoSubMenu(),
       ],
     );
-  }
-
-  //* function of the menu desgin
-  Widget _news(bool isActive) {
-    //* Padding for each text in the menu
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: paddinghorizontal - 10),
-      //* Gesture Detector to know if the user tap of the menu
-      child: GestureDetector(
-          onTap: () {
-            //! Problem here, retrieve the index maybe with :
-            //! https://stackoverflow.com/questions/54990716/flutter-get-iteration-index-from-list-map
-            //! J'avais réussie a avoir un truc mais ca me donnait pas l'index mais la valeur de celle-ci comme "accueil"
-          },
-          //* Display the right text
-          child: Text(
-            menuAssoMap[assoIndex],
-            style: TextStyle(fontSize: 18),
-          )),
-    );
-  }
-
-  List<Widget> _buildMenu() {
-    List<Widget> menuNumber = [];
-    for (int i = 0; i < menuAssoList.length; i++) {
-      if (assoIndex == i) {
-        menuNumber.add(_news(true));
-      } else {
-        menuNumber.add(_news(false));
-      }
-      assoIndex++;
-    }
-    assoIndex = 0;
-    return menuNumber;
   }
 }
