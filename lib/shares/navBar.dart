@@ -1,4 +1,5 @@
 import 'package:assoesaip_flutter/screens/Asso/asso.dart';
+import 'package:assoesaip_flutter/screens/Asso/AssoCategories/assoCategories.dart';
 import 'package:assoesaip_flutter/screens/HomePage/homePage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
@@ -18,7 +19,8 @@ class _NavigationBarState extends State<NavigationBar> {
   List<Widget> tabPages = [
     HomePage(),
     Text("Calendrier"),
-    Association(),
+    AssociationCategories(),
+    //Association(),
     Text("Cafet"),
   ];
 
@@ -36,6 +38,11 @@ class _NavigationBarState extends State<NavigationBar> {
     ),
   );
 
+  final bottomShape = BorderRadius.only(
+    topRight: Radius.circular(25),
+    topLeft: Radius.circular(25),
+  );
+
   @override
   void initState() {
     super.initState();
@@ -51,49 +58,54 @@ class _NavigationBarState extends State<NavigationBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //* Background color of the scaffold
-      backgroundColor: scaffoldBackgroundColor,
-      bottomNavigationBar: SnakeNavigationBar.color(
-        //* Here we have all the option of the navBar
-        behaviour: SnakeBarBehaviour.pinned,
-        snakeShape: SnakeShape.circle,
-        shape: bottomBarShape,
-        snakeViewColor: selectedColor,
-        selectedItemColor: SnakeShape.circle == SnakeShape.indicator
-            ? selectedColor
-            : circleSelectedColor,
-        unselectedItemColor: unselectedColor,
-        backgroundColor: navBarColor,
+      extendBody: true,
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: white,
+          borderRadius: bottomShape,
+        ),
+        child: SnakeNavigationBar.color(
+          //* Here we have all the option of the navBar
+          behaviour: SnakeBarBehaviour.pinned,
+          snakeShape: SnakeShape.circle,
+          shape: bottomBarShape,
+          snakeViewColor: selectedColor,
+          selectedItemColor: SnakeShape.circle == SnakeShape.indicator
+              ? selectedColor
+              : circleSelectedColor,
+          unselectedItemColor: unselectedColor,
+          backgroundColor: navBarColor,
 
-        ///configuration for SnakeNavigationBar.gradient
-        //snakeViewGradient: selectedGradient,
-        //selectedItemGradient: snakeShape == SnakeShape.indicator ? selectedGradient : null,
-        //unselectedItemGradient: unselectedGradient,
+          ///configuration for SnakeNavigationBar.gradient
+          //snakeViewGradient: selectedGradient,
+          //selectedItemGradient: snakeShape == SnakeShape.indicator ? selectedGradient : null,
+          //unselectedItemGradient: unselectedGradient,
 
-        showUnselectedLabels: true,
+          showUnselectedLabels: true,
 
-        currentIndex: _pageIndex,
-        onTap: onTabTapped,
+          currentIndex: _pageIndex,
+          onTap: onTabTapped,
 
-        //* Here we have the different icons for each pages
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Accueil',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_today_rounded),
-            label: 'Calendrier',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.group),
-            label: 'Clubs & assos',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.fastfood),
-            label: 'Cafet\'',
-          ),
-        ],
+          //* Here we have the different icons for each pages
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.calendar_today_rounded),
+              label: 'Calendrier',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.group),
+              label: 'Club & Asso',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.fastfood),
+              label: 'Cafet\'',
+            ),
+          ],
+        ),
       ),
       //* Here we have the changes of the page with the called function
       body: PageView(

@@ -1,8 +1,20 @@
+import 'package:assoesaip_flutter/screens/Asso/assoSubMenu.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:flutter/material.dart';
-import 'package:assoesaip_flutter/shares/navBar.dart';
 
-class Association extends StatelessWidget {
+class Association extends StatefulWidget {
+  static final List<List<String>> menuAssoList = [
+    ["Accueil", "1"],
+    ["Actu", "0"],
+    ["Membres", "0"],
+    ["Partenariats", "0"],
+  ];
+
+  @override
+  _AssociationState createState() => _AssociationState();
+}
+
+class _AssociationState extends State<Association> {
   final List<List<String>> associations = [
     [
       'assets/images/SuperBowlLogo.png',
@@ -11,23 +23,14 @@ class Association extends StatelessWidget {
     ],
   ];
 
-  final List<String> menu_asso = [
-    'Accueil',
-    'Actu',
-    'Membres',
-    'Partenariats',
-    'La Cafet\'',
-  ];
+  final menuAssoMap = Association.menuAssoList.asMap();
 
-  final double padding_horizontal = 15;
-  final double font_size_asso = 18;
-  int assoIndex = 0;
+  final double paddinghorizontal = 15;
 
   @override
   Widget build(BuildContext context) {
-    return
-        //* ListView because we want to scroll through the information about each association
-        ListView(
+    //! Wrap in container with the color white because of the "extendbody: true" in navbar.
+    return ListView(
       children: <Widget>[
         //* We want the rounded border on the bottom so we wrap it in a container
         Container(
@@ -53,7 +56,7 @@ class Association extends StatelessWidget {
               SizedBox(height: 10),
               //* Name of the association
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: padding_horizontal),
+                padding: EdgeInsets.symmetric(horizontal: paddinghorizontal),
                 child: Container(
                   //TODO_color: Colors.amber,
                   child: Text(
@@ -68,7 +71,7 @@ class Association extends StatelessWidget {
               SizedBox(height: 15),
               //* Small introduction in text of the association
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: padding_horizontal),
+                padding: EdgeInsets.symmetric(horizontal: paddinghorizontal),
                 child: Container(
                   //TODO_color: Colors.yellow,
                   child: Text(
@@ -93,7 +96,7 @@ class Association extends StatelessWidget {
             //* Wrap the menu in a container for the color, roundedborder and the size of it
             child: Container(
               decoration: BoxDecoration(
-                  color: white,
+                  color: Colors.green[100],
                   borderRadius: BorderRadius.all(Radius.circular(10))),
               height: 50,
               //! Specific size: it's the padding*2 that we need to indicate otherwise overflow !!!
@@ -104,51 +107,47 @@ class Association extends StatelessWidget {
                 //* Pading of each side of the container
                 child: Padding(
                   padding:
-                      EdgeInsets.symmetric(horizontal: padding_horizontal - 5),
+                      EdgeInsets.symmetric(horizontal: paddinghorizontal - 5),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    //mainAxisAlignment: MainAxisAlignment.center,
                     //* Display the asso menu
-                    children: _buildMenu(),
+                    children: menuAssoMap
+                        .map((i, element) => MapEntry(
+                            i,
+                            Padding(
+                              padding: const EdgeInsets.only(left: 10),
+                              child: Container(
+                                child: GestureDetector(
+                                  child: element[1] == "1"
+                                      ? Text(
+                                          element[0],
+                                          style: TextStyle(
+                                              fontSize: 18, color: blue_3),
+                                        )
+                                      : Text(
+                                          element[0],
+                                          style: TextStyle(fontSize: 18),
+                                        ),
+                                  onTap: () {
+                                    setState(() {
+                                      menuAssoMap[assoIndex][1] = "0";
+                                      assoIndex = i;
+                                      element[1] = "1";
+                                    });
+                                  },
+                                ),
+                              ),
+                            )))
+                        .values
+                        .toList(),
                   ),
                 ),
               ),
             ),
           ),
         ),
+        AssoSubMenu(),
       ],
     );
-  }
-
-  //* function of the menu desgin
-  Widget _news(bool isActive) {
-    //* Padding for each text in the menu
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: padding_horizontal - 10),
-      //* Gesture Detector to know if the user tap of the menu
-      child: GestureDetector(
-        onTap: () {},
-        //* Display the right text
-        child: Text(
-          menu_asso[assoIndex],
-          style: TextStyle(
-            fontSize: font_size_asso,
-          ),
-        ),
-      ),
-    );
-  }
-
-  List<Widget> _buildMenu() {
-    List<Widget> menuNumber = [];
-    for (int i = 0; i < menu_asso.length; i++) {
-      if (assoIndex == i) {
-        menuNumber.add(_news(true));
-      } else {
-        menuNumber.add(_news(false));
-      }
-      assoIndex++;
-    }
-    assoIndex = 0;
-    return menuNumber;
   }
 }
