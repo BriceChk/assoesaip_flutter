@@ -1,5 +1,6 @@
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:floating_search_bar/floating_search_bar.dart';
 import 'package:flutter/material.dart';
 
 class CarouselWidget extends StatefulWidget {
@@ -34,7 +35,7 @@ class _CarouselWidgetState extends State<CarouselWidget> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: EdgeInsets.only(top: 80, left: 10, bottom: 10),
+          padding: EdgeInsets.only(top: 50, left: 10, bottom: 10),
           child: Text(
             "A la une",
             style: TextStyle(fontSize: 25),

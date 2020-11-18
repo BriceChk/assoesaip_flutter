@@ -15,7 +15,9 @@ class MyApp extends StatelessWidget {
     ]);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: NavigationBar(),
+      home: SafeArea(
+          child: NavigationBar()
+      ),
     );
   }
 }
