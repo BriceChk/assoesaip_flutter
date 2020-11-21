@@ -121,8 +121,7 @@ class _AssociationCategoriesState extends State<AssociationCategories> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          AssociationsSubCategories()));
+                                      builder: (context) => Test()));
                             }),
                       ),
                     ),
