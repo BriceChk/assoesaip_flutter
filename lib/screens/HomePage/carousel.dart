@@ -34,8 +34,11 @@ class _CarouselWidgetState extends State<CarouselWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        SizedBox(
+          height: 10,
+        ),
         Padding(
-          padding: EdgeInsets.only(top: 50, left: 10, bottom: 10),
+          padding: EdgeInsets.only(left: 10, bottom: 10),
           child: Text(
             "A la une",
             style: TextStyle(fontSize: 25),

@@ -3,6 +3,7 @@
 import 'package:assoesaip_flutter/screens/HomePage/carousel.dart';
 import 'package:assoesaip_flutter/screens/HomePage/news.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
+import 'package:floating_search_bar/floating_search_bar.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -17,11 +18,29 @@ class _HomePageState extends State<HomePage> {
       //! I don't know why but apparently that the things i was missing
       physics: BouncingScrollPhysics(),
       slivers: [
+        SliverPadding(
+          padding: EdgeInsets.only(top: 10),
+          sliver: SliverFloatingBar(
+            leading: Container(
+              height: double.infinity,
+              width: MediaQuery.of(context).size.width - 110,
+              child: Center(
+                child: TextField(
+                    decoration: InputDecoration.collapsed(
+                  hintText: "Rechercher...",
+                )),
+              ),
+            ),
+            trailing: CircleAvatar(
+              child: Text("CB"),
+            ),
+          ),
+        ),
         //* SliverAppBar to have the animation
         SliverAppBar(
           backgroundColor: white,
           //* Height of the picture (carousel)
-          expandedHeight: 370,
+          expandedHeight: 325,
           stretch: true,
           //* Stretch mode remove or add some features
           flexibleSpace: FlexibleSpaceBar(stretchModes: [
