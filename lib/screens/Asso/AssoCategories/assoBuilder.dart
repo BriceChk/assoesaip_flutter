@@ -15,7 +15,6 @@ class AssoBuilder extends StatelessWidget {
                 builder: (context) => AssociationCategories(),
                 settings: settings);
             break;
-
           case 'Test':
             return MaterialPageRoute(
                 builder: (context) => Test(), settings: settings);

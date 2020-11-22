@@ -11,36 +11,34 @@ class Test extends StatelessWidget {
   );
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Container(
-        color: white,
-        child: CustomScrollView(
-          physics: BouncingScrollPhysics(),
-          slivers: [
-            SliverAppBar(
-              shape: roundedBorder,
-              centerTitle: true,
-              actions: [
-                Header(),
+    return Container(
+      color: white,
+      child: CustomScrollView(
+        physics: BouncingScrollPhysics(),
+        slivers: [
+          SliverAppBar(
+            shape: roundedBorder,
+            centerTitle: true,
+            actions: [
+              Header(),
+            ],
+            toolbarHeight: 130,
+            pinned: true,
+            backgroundColor: blue_2,
+          ),
+          SliverList(
+            delegate: SliverChildListDelegate(
+              [
+                SizedBox(
+                  height: 5,
+                ),
+                //* Widget with all the name of the categories of the association
+                NewsWidget(),
+                SizedBox(height: 55)
               ],
-              toolbarHeight: 130,
-              pinned: true,
-              backgroundColor: blue_2,
             ),
-            SliverList(
-              delegate: SliverChildListDelegate(
-                [
-                  SizedBox(
-                    height: 5,
-                  ),
-                  //* Widget with all the name of the categories of the association
-                  NewsWidget(),
-                  //* Sizedbox of height 60 because otherwise the last one is under the navbar
-                ],
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -70,7 +68,10 @@ class Header extends StatelessWidget {
             Row(
               children: [
                 GestureDetector(
-                  child: Icon(Icons.arrow_back),
+                  child: Icon(
+                    Icons.arrow_back,
+                    color: blue_0,
+                  ),
                   onTap: () {
                     Navigator.of(context).pop();
                   },
