@@ -7,6 +7,13 @@ class AssociationCategories extends StatefulWidget {
 }
 
 class _AssociationCategoriesState extends State<AssociationCategories> {
+  final ContinuousRectangleBorder roundedBorder = ContinuousRectangleBorder(
+    borderRadius: BorderRadius.only(
+      bottomLeft: Radius.circular(50),
+      bottomRight: Radius.circular(50),
+    ),
+  );
+
   @override
   Widget build(BuildContext context) {
     //* Using the CustomScroolView in order to have the bouncingScrollPhysic
@@ -15,6 +22,7 @@ class _AssociationCategoriesState extends State<AssociationCategories> {
       slivers: [
         //* We wrap our header inside the sliverAppBar with somme properties
         SliverAppBar(
+          shape: roundedBorder,
           centerTitle: true,
           actions: [
             Header(),
@@ -47,9 +55,17 @@ class _AssociationCategoriesState extends State<AssociationCategories> {
 class Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final Color fontColor = Colors.black;
     return Container(
       width: MediaQuery.of(context).size.width,
-      color: blue_2,
+      decoration: BoxDecoration(
+        color: blue_2,
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(10),
+          bottomRight: Radius.circular(10),
+        ),
+      ),
+
       //* In order to have a padding horizontaly
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 15),
@@ -59,7 +75,10 @@ class Header extends StatelessWidget {
           children: [
             Text(
               "Bienvenue !",
-              style: TextStyle(fontSize: 30),
+              style: TextStyle(
+                fontSize: 30,
+                color: fontColor,
+              ),
             ),
             SizedBox(
               height: 10,
@@ -67,7 +86,7 @@ class Header extends StatelessWidget {
             Text(
               "Découvre les clubs et associations qui font vivre l'esaip, leurs actualités et les prochains événement sur ton campus.",
               textAlign: TextAlign.justify,
-              style: TextStyle(fontSize: 16),
+              style: TextStyle(fontSize: 16, color: fontColor),
             ),
           ],
         ),
@@ -125,7 +144,7 @@ class AssociationBuilder extends StatelessWidget {
                 padding: EdgeInsets.only(top: 5),
                 child: Container(
                   //! color: Colors.green,
-                  height: 75,
+                  height: 90,
                   width: MediaQuery.of(context).size.width,
                   child: Card(
                     elevation: 0.5,
@@ -138,7 +157,8 @@ class AssociationBuilder extends StatelessWidget {
                     child: InkWell(
                         splashColor: blue_2,
                         child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -147,6 +167,7 @@ class AssociationBuilder extends StatelessWidget {
                                 element[0],
                                 style: TextStyle(fontSize: 20),
                               ),
+                              //SizedBox(height: 10),
                               Text(
                                 element[1],
                                 style: TextStyle(fontSize: 15),
