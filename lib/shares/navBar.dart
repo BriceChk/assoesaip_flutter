@@ -3,7 +3,6 @@ import 'package:assoesaip_flutter/screens/Asso/AssoCategories/assoCategories.dar
 import 'package:assoesaip_flutter/screens/HomePage/homePage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'constant.dart';
 
 class NavigationBar extends StatefulWidget {
@@ -13,7 +12,6 @@ class NavigationBar extends StatefulWidget {
 
 class _NavigationBarState extends State<NavigationBar> {
   //TODO_ variable
-  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
   int _pageIndex = 0;
   PageController _pageController;
 
@@ -49,37 +47,6 @@ class _NavigationBarState extends State<NavigationBar> {
   void initState() {
     super.initState();
     _pageController = PageController(initialPage: _pageIndex);
-    _firebaseMessaging.configure(
-      onMessage: (Map<String, dynamic> message) async {
-        print("onMessage: $message");
-        // ? Notif reçue pendant que l'app est au 1er plan
-        //_showItemDialog(message);
-      },
-      onLaunch: (Map<String, dynamic> message) async {
-        // ? Notif cliquée pendant que l'app est completement fermée
-        print("onLaunch: $message");
-        //_navigateToItemDetail(message);
-      },
-      onResume: (Map<String, dynamic> message) async {
-        // ? Notif cliquée pendant que l'app est en arriere plan
-        print("onResume: $message");
-        //_navigateToItemDetail(message);
-      },
-    );
-    _firebaseMessaging.requestNotificationPermissions(
-        const IosNotificationSettings(
-            sound: true, badge: true, alert: true, provisional: true));
-    _firebaseMessaging.onIosSettingsRegistered
-        .listen((IosNotificationSettings settings) {
-      print("Settings registered: $settings");
-    });
-    _firebaseMessaging.getToken().then((String token) {
-      assert(token != null);
-      setState(() {
-        //_homeScreenText = "Push Messaging token: $token";
-      });
-      print("Token : $token");
-    });
   }
 
   @override

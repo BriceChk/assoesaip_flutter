@@ -1,4 +1,4 @@
-package org.esaip.asso.assoesaip_flutter
+package org.esaip.asso.android
 
 import io.flutter.embedding.android.FlutterActivity
 
