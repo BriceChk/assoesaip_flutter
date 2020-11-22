@@ -14,49 +14,54 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      //! I don't know why but apparently that the things i was missing
-      physics: BouncingScrollPhysics(),
-      slivers: [
-        SliverPadding(
-          padding: EdgeInsets.only(top: 10),
-          sliver: SliverFloatingBar(
-            leading: Container(
-              height: double.infinity,
-              width: MediaQuery.of(context).size.width - 110,
-              child: Center(
-                child: TextField(
-                    decoration: InputDecoration.collapsed(
-                  hintText: "Rechercher...",
-                )),
+    return Container(
+      color: white,
+      child: CustomScrollView(
+        //! I don't know why but apparently that the things i was missing
+        physics: BouncingScrollPhysics(),
+        slivers: [
+          SliverPadding(
+            padding: EdgeInsets.only(top: 10),
+            sliver: SliverFloatingBar(
+              backgroundColor: white,
+              leading: Container(
+                height: double.infinity,
+                width: MediaQuery.of(context).size.width - 110,
+                child: Center(
+                  child: TextField(
+                      decoration: InputDecoration.collapsed(
+                    hintText: "Rechercher...",
+                  )),
+                ),
+              ),
+              trailing: CircleAvatar(
+                child: Text("CB"),
               ),
             ),
-            trailing: CircleAvatar(
-              child: Text("CB"),
+          ),
+          //* SliverAppBar to have the animation
+          SliverAppBar(
+            backgroundColor: white,
+            //* Height of the picture (carousel)
+            expandedHeight: 325,
+            stretch: true,
+            //* Stretch mode remove or add some features
+            flexibleSpace: FlexibleSpaceBar(stretchModes: [
+              StretchMode.zoomBackground,
+              StretchMode.blurBackground,
+            ], background: CarouselWidget()),
+          ),
+          //* Others widget from the page here only the news (for now)
+          SliverList(
+            delegate: SliverChildListDelegate(
+              [
+                NewsWidget(),
+                SizedBox(height: 55),
+              ],
             ),
-          ),
-        ),
-        //* SliverAppBar to have the animation
-        SliverAppBar(
-          backgroundColor: white,
-          //* Height of the picture (carousel)
-          expandedHeight: 325,
-          stretch: true,
-          //* Stretch mode remove or add some features
-          flexibleSpace: FlexibleSpaceBar(stretchModes: [
-            StretchMode.zoomBackground,
-            StretchMode.blurBackground,
-          ], background: CarouselWidget()),
-        ),
-        //* Others widget from the page here only the news (for now)
-        SliverList(
-          delegate: SliverChildListDelegate(
-            [
-              NewsWidget(),
-            ],
-          ),
-        )
-      ],
+          )
+        ],
+      ),
     );
   }
 }
