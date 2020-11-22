@@ -118,10 +118,7 @@ class _AssociationCategoriesState extends State<AssociationCategories> {
                             ),
                             onTap: () {
                               print(element[0] + " tapped");
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Test()));
+                              Navigator.of(context).pushNamed("Test");
                             }),
                       ),
                     ),
