@@ -23,6 +23,7 @@ class _HomePageState extends State<HomePage> {
           SliverPadding(
             padding: EdgeInsets.only(top: 10),
             sliver: SliverFloatingBar(
+              elevation: 2,
               backgroundColor: white,
               leading: Container(
                 height: double.infinity,
@@ -30,7 +31,7 @@ class _HomePageState extends State<HomePage> {
                 child: Center(
                   child: TextField(
                       decoration: InputDecoration.collapsed(
-                    hintText: "Rechercher...",
+                    hintText: "Rechercher dans les actualités...",
                   )),
                 ),
               ),
