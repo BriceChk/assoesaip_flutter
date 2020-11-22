@@ -46,10 +46,13 @@ class _HomePageState extends State<HomePage> {
             expandedHeight: 325,
             stretch: true,
             //* Stretch mode remove or add some features
-            flexibleSpace: FlexibleSpaceBar(stretchModes: [
-              StretchMode.zoomBackground,
-              StretchMode.blurBackground,
-            ], background: CarouselWidget()),
+            flexibleSpace: FlexibleSpaceBar(
+              stretchModes: [
+                StretchMode.zoomBackground,
+                StretchMode.blurBackground,
+              ],
+              background: CarouselWidget(),
+            ),
           ),
           //* Others widget from the page here only the news (for now)
           SliverList(
