@@ -1,4 +1,4 @@
-import 'package:assoesaip_flutter/shares/navBar.dart';
+import 'package:assoesaip_flutter/screens/LoginPage/loginPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SafeArea(child: NavigationBar()),
+      home: SafeArea(child: LoginPage()),
     );
   }
 }

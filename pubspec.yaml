@@ -61,6 +61,8 @@ flutter:
   assets:
     - assets/images/HomePage/
     - assets/images/SuperBowlLogo.png
+    - assets/images/logo.png
+    - assets/images/key.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
