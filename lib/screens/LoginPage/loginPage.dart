@@ -22,22 +22,20 @@ class LoginPage extends StatelessWidget {
             Container(
               height: MediaQuery.of(context).size.height / 2.25,
               width: MediaQuery.of(context).size.width,
-              decoration:
-                  BoxDecoration(color: blue_2, borderRadius: roundedBorder1),
+              decoration: BoxDecoration(
+                  color: blue_2.withOpacity(0.75),
+                  borderRadius: roundedBorder1),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  SizedBox(
-                    height: 25,
-                  ),
+                  //SizedBox(height: 25),
                   Container(
                     child: Image.asset(
                       "assets/images/logo.png",
                       height: 150,
                     ),
                   ),
-                  SizedBox(
-                    height: 25,
-                  ),
+                  //SizedBox(height: 25),
                   Container(
                     child: Text(
                       "Bienvenue sur\nAsso'esaip",
@@ -51,13 +49,14 @@ class LoginPage extends StatelessWidget {
             Expanded(
               child: Container(
                 width: MediaQuery.of(context).size.width,
-                color: blue_2,
+                color: blue_2.withOpacity(0.75),
                 child: Container(
                   decoration:
                       BoxDecoration(color: white, borderRadius: roundedBorder2),
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      SizedBox(height: 25),
+                      //SizedBox(height: 25),
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 15),
                         child: Container(
@@ -68,14 +67,14 @@ class LoginPage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      SizedBox(height: 20),
+                      //SizedBox(height: 20),
                       Container(
                         child: Image.asset(
                           "assets/images/key.png",
                           height: 150,
                         ),
                       ),
-                      SizedBox(height: 20),
+                      //SizedBox(height: 20),
                       Padding(
                         padding:
                             EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -90,7 +89,10 @@ class LoginPage extends StatelessWidget {
                               width: MediaQuery.of(context).size.width,
                               child: Text(
                                 'Connectez vous',
-                                style: TextStyle(fontSize: 20, color: white),
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    color: white,
+                                    fontFamily: "Comic"),
                                 textAlign: TextAlign.center,
                               ),
                             ),
