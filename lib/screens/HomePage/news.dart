@@ -98,7 +98,7 @@ class NewsWidget extends StatelessWidget {
           children: <Widget>[
             //Want to have space between the carousel and the top of the rounded container
             Padding(
-              padding: EdgeInsets.only(top: 10, left: 10),
+              padding: EdgeInsets.only(top: 5, left: 10),
               child: Text(
                 "Actualités",
                 style: TextStyle(fontSize: 25),

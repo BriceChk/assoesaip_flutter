@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> {
             automaticallyImplyLeading: false,
             backgroundColor: white,
             //* Height of the picture (carousel)
-            expandedHeight: 325,
+            expandedHeight: 320,
             stretch: true,
             //* Stretch mode remove or add some features
             flexibleSpace: FlexibleSpaceBar(

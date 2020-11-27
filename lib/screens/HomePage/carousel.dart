@@ -130,7 +130,6 @@ class _CarouselWidgetState extends State<CarouselWidget> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 10),
                 ]),
               ),
             ),
