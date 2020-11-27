@@ -42,6 +42,7 @@ class _HomePageState extends State<HomePage> {
           ),
           //* SliverAppBar to have the animation
           SliverAppBar(
+            automaticallyImplyLeading: false,
             backgroundColor: white,
             //* Height of the picture (carousel)
             expandedHeight: 325,
