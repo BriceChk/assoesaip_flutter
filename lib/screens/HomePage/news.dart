@@ -1,7 +1,12 @@
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:flutter/material.dart';
 
-class NewsWidget extends StatelessWidget {
+class NewsWidget extends StatefulWidget {
+  @override
+  _NewsWidgetState createState() => _NewsWidgetState();
+}
+
+class _NewsWidgetState extends State<NewsWidget> {
   final List<List<String>> news = [
     [
       'assets/images/HomePage/event_1.jpg',
