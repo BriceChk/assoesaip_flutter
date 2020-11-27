@@ -12,30 +12,35 @@ class LoginPage extends StatelessWidget {
       topLeft: Radius.circular(75),
     );
 
+    //* Return a Scaffold widget because of the text we are including inside
     return Scaffold(
       body: Container(
+        //* First container which taking all the screen space (responsive to all size)
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         color: white,
+        //* Column because we want to display 2 distinct container (blue and white one)
         child: Column(
           children: [
+            //* First container with the color blue
             Container(
               height: MediaQuery.of(context).size.height / 2.25,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                   color: blue_2.withOpacity(0.75),
                   borderRadius: roundedBorder1),
+              //* Column in order to have the object inside the container align
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  //SizedBox(height: 25),
+                  //* Logo esaip inside a container
                   Container(
                     child: Image.asset(
                       "assets/images/logo.png",
                       height: 150,
                     ),
                   ),
-                  //SizedBox(height: 25),
+                  //* Classic text inside a container
                   Container(
                     child: Text(
                       "Bienvenue sur\nAsso'esaip",
@@ -46,17 +51,21 @@ class LoginPage extends StatelessWidget {
                 ],
               ),
             ),
+            //* Expanded because we want that this widget take all the available space
             Expanded(
+              //* 2 container stack on each other in order to have the rounded color the same as the upper container (blue)
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 color: blue_2.withOpacity(0.75),
+                //* Container with all the others object inside with the color white
                 child: Container(
                   decoration:
                       BoxDecoration(color: white, borderRadius: roundedBorder2),
+                  //* Column with the all the object align to each other
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      //SizedBox(height: 25),
+                      //* Container with the trash text
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 15),
                         child: Container(
@@ -67,14 +76,14 @@ class LoginPage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      //SizedBox(height: 20),
+                      //* Container with the image of the key
                       Container(
                         child: Image.asset(
                           "assets/images/key.png",
                           height: 150,
                         ),
                       ),
-                      //SizedBox(height: 20),
+                      //* Container with the button log in
                       Padding(
                         padding:
                             EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -85,6 +94,7 @@ class LoginPage extends StatelessWidget {
                           color: blue_0,
                           child: Padding(
                             padding: EdgeInsets.symmetric(vertical: 10),
+                            //* Container in order to have the button which takes all the available width
                             child: Container(
                               width: MediaQuery.of(context).size.width,
                               child: Text(
