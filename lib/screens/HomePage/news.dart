@@ -1,3 +1,4 @@
+import 'package:assoesaip_flutter/screens/Asso/AssoCategories/assoCategories.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:flutter/material.dart';
 
@@ -89,9 +90,14 @@ class _NewsWidgetState extends State<NewsWidget> {
 
   int currentIndex = 0;
   final String classicFont = "Nunito";
-  final Color backgroundColor = white;
-  final Color cardColor = Color(0xfff6dbd0).withOpacity(0.5);
-  final Color titleColor = powderBlue;
+  final Color backgroundColor = whiteWhite;
+  final Color cardColor = white;
+  final Color titleColor = navyBlue;
+
+  final RoundedRectangleBorder roundedBorder = RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(15),
+  );
+  final BorderRadius roundedImage = BorderRadius.circular(15);
 
   @override
   Widget build(BuildContext context) {
@@ -136,78 +142,75 @@ class _NewsWidgetState extends State<NewsWidget> {
   Widget _news(bool isActive) {
     return Padding(
       padding: EdgeInsets.only(right: 10, left: 10, bottom: 7.5),
-      child: Container(
-        height: 95,
-        decoration: BoxDecoration(
-          color: cardColor,
-          borderRadius: BorderRadius.all(
-            Radius.circular(15),
-          ),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            //* Container with the image inside
-            Container(
-              height: double.infinity,
-              width: 90,
-              decoration: BoxDecoration(
-                //* have the same rounded corner as the big container
-                borderRadius: BorderRadius.all(
-                  Radius.circular(15),
-                ),
-                //* URL of the picture of the news
-                image: DecorationImage(
-                  image: AssetImage(news[currentIndex][0]),
-                  fit: BoxFit.cover,
+      child: Card(
+        color: cardColor,
+        shape: roundedBorder,
+        child: Container(
+          height: 95,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              //* Container with the image inside
+              Container(
+                height: double.infinity,
+                width: 90,
+                decoration: BoxDecoration(
+                  //* have the same rounded corner as the big container
+                  borderRadius: roundedImage,
+                  //* URL of the picture of the news
+                  image: DecorationImage(
+                    image: AssetImage(news[currentIndex][0]),
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
-            ),
-            SizedBox(
-              width: 15,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 5),
-                //* Title of the news
-                Text(
-                  news[currentIndex][1],
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontFamily: classicFont,
+              SizedBox(
+                width: 15,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 5),
+                  //* Title of the news
+                  Text(
+                    news[currentIndex][1],
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontFamily: classicFont,
+                      color: titleColor,
+                    ),
                   ),
-                ),
-                SizedBox(height: 4),
-                //* Description of the news
-                Text(
-                  news[currentIndex][2],
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontFamily: classicFont,
+                  SizedBox(height: 4),
+                  //* Description of the news
+                  Text(
+                    news[currentIndex][2],
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontFamily: classicFont,
+                    ),
                   ),
-                ),
-                SizedBox(height: 2),
-                //* Name of the association
-                Text(
-                  news[currentIndex][3],
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontFamily: classicFont,
+                  SizedBox(height: 2),
+                  //* Name of the association
+                  Text(
+                    news[currentIndex][3],
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontFamily: classicFont,
+                    ),
                   ),
-                ),
-                SizedBox(height: 2.5),
-                //* Date of the news
-                Text(
-                  news[currentIndex][4],
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontFamily: classicFont,
+                  SizedBox(height: 2.5),
+                  //* Date of the news
+                  Text(
+                    news[currentIndex][4],
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontFamily: classicFont,
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

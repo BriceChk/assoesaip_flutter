@@ -15,7 +15,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final String classicFont = "Nunito";
-    final Color backgroundColor = white;
+    final Color backgroundColor = whiteWhite;
 
     return Container(
       color: backgroundColor,
@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
             padding: EdgeInsets.only(top: 10),
             sliver: SliverFloatingBar(
               elevation: 2,
-              backgroundColor: white,
+              backgroundColor: backgroundColor,
               leading: Container(
                 height: double.infinity,
                 width: MediaQuery.of(context).size.width - 110,
@@ -55,7 +55,7 @@ class _HomePageState extends State<HomePage> {
           //* SliverAppBar to have the animation
           SliverAppBar(
             automaticallyImplyLeading: false,
-            backgroundColor: white,
+            backgroundColor: backgroundColor,
             //* Height of the picture (carousel)
             expandedHeight: 320,
             stretch: true,

@@ -29,8 +29,9 @@ class _CarouselWidgetState extends State<CarouselWidget> {
   int currentIndex = 0;
 
   final String classicFont = "Nunito";
-  final Color backgroundColor = white;
+  final Color backgroundColor = whiteWhite;
   final Color titleColor = powderBlue;
+  final Color fontColor = white;
 
   @override
   Widget build(BuildContext context) {
@@ -133,7 +134,7 @@ class _CarouselWidgetState extends State<CarouselWidget> {
                                   events[currentIndex][2],
                                   style: TextStyle(
                                     fontSize: 16,
-                                    color: white,
+                                    color: fontColor,
                                     fontFamily: classicFont,
                                   ),
                                 ),
