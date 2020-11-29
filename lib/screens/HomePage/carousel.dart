@@ -28,6 +28,10 @@ class _CarouselWidgetState extends State<CarouselWidget> {
 
   int currentIndex = 0;
 
+  final String classicFont = "Nunito";
+  final Color backgroundColor = white;
+  final Color titleColor = powderBlue;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -40,28 +44,34 @@ class _CarouselWidgetState extends State<CarouselWidget> {
           padding: EdgeInsets.only(left: 10, bottom: 10),
           child: Text(
             "A la une",
-            style: TextStyle(fontSize: 25),
+            style: TextStyle(
+              fontSize: 25,
+              fontFamily: classicFont,
+            ),
           ),
         ),
         CarouselSlider.builder(
           //* All the option of the carousel see the pubdev page
           options: CarouselOptions(
-              height: 275,
-              aspectRatio: 16 / 9,
-              viewportFraction: 0.8,
-              initialPage: 0,
-              enableInfiniteScroll: true,
-              autoPlay: true,
-              autoPlayInterval: Duration(seconds: 5),
-              autoPlayAnimationDuration: Duration(milliseconds: 800),
-              autoPlayCurve: Curves.fastOutSlowIn,
-              enlargeCenterPage: true,
-              scrollDirection: Axis.horizontal,
-              onPageChanged: (index, reason) {
-                setState(() {
+            height: 275,
+            aspectRatio: 16 / 9,
+            viewportFraction: 0.8,
+            initialPage: 0,
+            enableInfiniteScroll: true,
+            autoPlay: true,
+            autoPlayInterval: Duration(seconds: 5),
+            autoPlayAnimationDuration: Duration(milliseconds: 800),
+            autoPlayCurve: Curves.fastOutSlowIn,
+            enlargeCenterPage: true,
+            scrollDirection: Axis.horizontal,
+            onPageChanged: (index, reason) {
+              setState(
+                () {
                   currentIndex = index;
-                });
-              }),
+                },
+              );
+            },
+          ),
           itemCount: events.length,
           itemBuilder: (BuildContext context, int currentIndex) => Container(
             //* Container of each event
@@ -73,8 +83,9 @@ class _CarouselWidgetState extends State<CarouselWidget> {
                 ),
                 //* Picture of the events
                 image: DecorationImage(
-                    image: AssetImage(events[currentIndex][0]),
-                    fit: BoxFit.cover),
+                  image: AssetImage(events[currentIndex][0]),
+                  fit: BoxFit.cover,
+                ),
               ),
               child: Container(
                 //* Rounded corner for the grey shadow too and display of the shadow
@@ -91,45 +102,49 @@ class _CarouselWidgetState extends State<CarouselWidget> {
                   ),
                 ),
                 //* Here we create the column with the indicator, title & description
-                child:
-                    Column(mainAxisAlignment: MainAxisAlignment.end, children: [
-                  //* Here we have the title and the description. In order to have them align on the left of the screen
-                  //* with need to wrap them in a row
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    //* The alignement on the left is possible here with the row
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        //! Wrap the column inside a flexible widget in order to do not have the text overflow
-                        //! Like this we have a multiple line text
-                        Flexible(
-                          //* Just the column of the title and the description
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                events[currentIndex][1],
-                                style: TextStyle(
-                                  fontSize: 25,
-                                  color: blizzardBlue,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    //* Here we have the title and the description. In order to have them align on the left of the screen
+                    //* with need to wrap them in a row
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      //* The alignement on the left is possible here with the row
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          //! Wrap the column inside a flexible widget in order to do not have the text overflow
+                          //! Like this we have a multiple line text
+                          Flexible(
+                            //* Just the column of the title and the description
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  events[currentIndex][1],
+                                  style: TextStyle(
+                                    fontSize: 25,
+                                    color: titleColor,
+                                    fontFamily: classicFont,
+                                  ),
                                 ),
-                              ),
-                              //! See the overflow of the text right here
-                              Text(
-                                events[currentIndex][2],
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: white,
+                                //! See the overflow of the text right here
+                                Text(
+                                  events[currentIndex][2],
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: white,
+                                    fontFamily: classicFont,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                ]),
+                  ],
+                ),
               ),
             ),
           ),

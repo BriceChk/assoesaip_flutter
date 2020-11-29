@@ -14,8 +14,12 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    final String classicFont = "Nunito";
+    final String titleFont = "Comic";
+    final Color backgroundColor = white;
+
     return Container(
-      color: white,
+      color: backgroundColor,
       child: CustomScrollView(
         //! I don't know why but apparently that the things i was missing
         physics: BouncingScrollPhysics(),
@@ -30,13 +34,22 @@ class _HomePageState extends State<HomePage> {
                 width: MediaQuery.of(context).size.width - 110,
                 child: Center(
                   child: TextField(
-                      decoration: InputDecoration.collapsed(
-                    hintText: "Rechercher dans les actualités...",
-                  )),
+                    decoration: InputDecoration.collapsed(
+                      hintText: "Rechercher dans les actualités...",
+                    ),
+                    style: TextStyle(
+                      fontFamily: classicFont,
+                    ),
+                  ),
                 ),
               ),
               trailing: CircleAvatar(
-                child: Text("CB"),
+                child: Text(
+                  "CB",
+                  style: TextStyle(
+                    fontFamily: classicFont,
+                  ),
+                ),
               ),
             ),
           ),
