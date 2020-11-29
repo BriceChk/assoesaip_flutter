@@ -1,6 +1,12 @@
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:flutter/material.dart';
 
+final String classicFont = "Nunito";
+final Color cardColor = white;
+final Color titleColor = powderBlue;
+final Color shadowColor = navyBlue;
+final Color fontColor = Colors.black;
+
 class AssociationCategories extends StatefulWidget {
   @override
   _AssociationCategoriesState createState() => _AssociationCategoriesState();
@@ -55,7 +61,6 @@ class _AssociationCategoriesState extends State<AssociationCategories> {
 class Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final Color fontColor = Colors.black;
     return Container(
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
@@ -78,6 +83,7 @@ class Header extends StatelessWidget {
               style: TextStyle(
                 fontSize: 30,
                 color: fontColor,
+                fontFamily: classicFont,
               ),
             ),
             SizedBox(
@@ -86,7 +92,11 @@ class Header extends StatelessWidget {
             Text(
               "Découvre les clubs et associations qui font vivre l'esaip, leurs actualités et les prochains événement sur ton campus.",
               textAlign: TextAlign.justify,
-              style: TextStyle(fontSize: 16, color: fontColor),
+              style: TextStyle(
+                fontSize: 16,
+                color: fontColor,
+                fontFamily: classicFont,
+              ),
             ),
           ],
         ),
@@ -100,34 +110,42 @@ class AssociationBuilder extends StatelessWidget {
     [
       "Vie étudiante",
       "La vie des étudiants sur les campus de l'esaip",
+      "assets/images/AssoCategories/Student.png"
     ],
     [
       "Arts & culture",
       "Théâtre, musique, découvertes culturelles et événementiel",
+      "assets/images/AssoCategories/Art.png"
     ],
     [
       "Sport",
       "Entraînement, championnats, tournois, événements",
+      "assets/images/AssoCategories/Sport.png"
     ],
     [
       "Jeux",
       "Jeux vidéos, de plateau et activités ludiques",
+      "assets/images/AssoCategories/Game.png"
     ],
     [
       "Environnement",
       "Futurs ingénieurs et déjà responsables: des projets pour un développement durable",
+      "assets/images/AssoCategories/Environment.png"
     ],
     [
       "Humanitaire",
       "Missions humanitaires",
+      "assets/images/AssoCategories/Humanitarian.png"
     ],
     [
       "Réseaux & partenariats",
       "Projets en lien avec les entreprises ou le réseau La Salle",
+      "assets/images/AssoCategories/Network.png"
     ],
     [
       "Vie étudiante",
       "La vie des étudiants sur les campus de l'esaip",
+      "assets/images/AssoCategories/Student.png"
     ],
   ];
   @override
@@ -148,29 +166,51 @@ class AssociationBuilder extends StatelessWidget {
                   width: MediaQuery.of(context).size.width,
                   child: Card(
                     elevation: 0.5,
-                    shadowColor: darkCornflowerBlue,
+                    shadowColor: shadowColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    color: white,
+                    color: cardColor,
                     //* InkWell like this we can integrate the ontap function
                     child: InkWell(
                         splashColor: ceruleanCrayola,
                         child: Padding(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 7.5,
+                            vertical: 5,
+                          ),
+                          child: Row(
                             children: [
-                              Text(
-                                element[0],
-                                style: TextStyle(fontSize: 20),
+                              Container(
+                                width: 75,
+                                child: Image.asset(element[2]),
                               ),
-                              //SizedBox(height: 10),
-                              Text(
-                                element[1],
-                                style: TextStyle(fontSize: 15),
+                              SizedBox(width: 5),
+                              //! Wrap in flexible like this we can have text in multiline
+                              Flexible(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    //* Title of card
+                                    Text(
+                                      element[0],
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontFamily: classicFont,
+                                      ),
+                                    ),
+                                    //* Description of the card
+                                    Text(
+                                      element[1],
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontFamily: classicFont,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
                           ),
