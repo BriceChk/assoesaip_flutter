@@ -79,6 +79,10 @@ flutter:
     - family: Comic
       fonts:
         - asset: assets/fonts/Comic_Neue/ComicNeue-Regular.ttf
+
+    - family: Nunito
+      fonts:
+        - asset: assets/fonts/Nunito/Nunito-Regular.ttf
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf

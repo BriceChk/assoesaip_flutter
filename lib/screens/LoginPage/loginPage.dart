@@ -12,13 +12,16 @@ class LoginPage extends StatelessWidget {
       topLeft: Radius.circular(75),
     );
 
+    final Color backgroundColorBlue = skyBlueCrayola1.withOpacity(0.9);
+    final Color backgroundColorWhite = white;
+
     //* Return a Scaffold widget because of the text we are including inside
     return Scaffold(
       body: Container(
         //* First container which taking all the screen space (responsive to all size)
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
-        color: white,
+        color: backgroundColorWhite,
         //* Column because we want to display 2 distinct container (blue and white one)
         child: Column(
           children: [
@@ -27,8 +30,9 @@ class LoginPage extends StatelessWidget {
               height: MediaQuery.of(context).size.height / 2.25,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
-                  color: blue_2.withOpacity(0.75),
-                  borderRadius: roundedBorder1),
+                color: backgroundColorBlue,
+                borderRadius: roundedBorder1,
+              ),
               //* Column in order to have the object inside the container align
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -56,11 +60,13 @@ class LoginPage extends StatelessWidget {
               //* 2 container stack on each other in order to have the rounded color the same as the upper container (blue)
               child: Container(
                 width: MediaQuery.of(context).size.width,
-                color: blue_2.withOpacity(0.75),
+                color: backgroundColorBlue,
                 //* Container with all the others object inside with the color white
                 child: Container(
-                  decoration:
-                      BoxDecoration(color: white, borderRadius: roundedBorder2),
+                  decoration: BoxDecoration(
+                    color: white,
+                    borderRadius: roundedBorder2,
+                  ),
                   //* Column with the all the object align to each other
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -71,7 +77,10 @@ class LoginPage extends StatelessWidget {
                         child: Container(
                           child: Text(
                             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed leo.",
-                            style: TextStyle(fontSize: 20),
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontFamily: "nunito",
+                            ),
                             textAlign: TextAlign.center,
                           ),
                         ),
@@ -91,18 +100,19 @@ class LoginPage extends StatelessWidget {
                           elevation: 5,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10)),
-                          color: blue_0,
+                          color: navyBlue,
                           child: Padding(
                             padding: EdgeInsets.symmetric(vertical: 10),
                             //* Container in order to have the button which takes all the available width
                             child: Container(
                               width: MediaQuery.of(context).size.width,
                               child: Text(
-                                'Connectez vous',
+                                'Connectez-vous',
                                 style: TextStyle(
-                                    fontSize: 20,
-                                    color: white,
-                                    fontFamily: "Comic"),
+                                  fontSize: 20,
+                                  color: white,
+                                  fontFamily: "Comic",
+                                ),
                                 textAlign: TextAlign.center,
                               ),
                             ),

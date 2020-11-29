@@ -24,7 +24,7 @@ class Test extends StatelessWidget {
             ],
             toolbarHeight: 130,
             pinned: true,
-            backgroundColor: blue_2,
+            backgroundColor: ceruleanCrayola,
           ),
           SliverList(
             delegate: SliverChildListDelegate(
@@ -51,7 +51,7 @@ class Header extends StatelessWidget {
     return Container(
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
-        color: blue_2,
+        color: ceruleanCrayola,
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(10),
           bottomRight: Radius.circular(10),
@@ -70,7 +70,7 @@ class Header extends StatelessWidget {
                 GestureDetector(
                   child: Icon(
                     Icons.arrow_back,
-                    color: blue_0,
+                    color: navyBlue,
                   ),
                   onTap: () {
                     Navigator.of(context).pop();

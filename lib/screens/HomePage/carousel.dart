@@ -112,7 +112,7 @@ class _CarouselWidgetState extends State<CarouselWidget> {
                                 events[currentIndex][1],
                                 style: TextStyle(
                                   fontSize: 25,
-                                  color: blue_2,
+                                  color: blizzardBlue,
                                 ),
                               ),
                               //! See the overflow of the text right here

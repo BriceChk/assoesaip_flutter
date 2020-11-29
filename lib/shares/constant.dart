@@ -3,10 +3,15 @@
 
 import 'package:flutter/material.dart';
 
-const blue_0 = Color(0xff101740); //* Font in white
-const blue_1 = Color(0xff363C59); //* Font in white
-const blue_2 = Color(0xff2BA8D9); //* Font in black
-const blue_3 = Color(0xff29B9D9); //* Font in black
-const white = Color(0xffF2F2F2); //* Font in black
+const navyBlue = Color(0xff03045E); //* Font in white
+const darkCornflowerBlue = Color(0xff023E8A); //* Font in white
+const starCommandBlue = Color(0xff0077B6); //* Font in white
+const blueGreen = Color(0xff0096C7); //* Font in white
+const ceruleanCrayola = Color(0xff00B4D8); //* Font in white
+const skyBlueCrayola1 = Color(0xff48CAE4); //* Font in black
+const skyBlueCrayola2 = Color(0xff90E0EF); //* Font in black
+const blizzardBlue = Color(0xffADE8F4); //* Font in black
+const powderBlue = Color(0xffCAF0F8); //* Font in black
+const white = Color(0xfff5f3f4); //* Font in black
 
 int assoIndex = 0;

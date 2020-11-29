@@ -29,7 +29,7 @@ class _AssociationCategoriesState extends State<AssociationCategories> {
           ],
           toolbarHeight: 130,
           pinned: true,
-          backgroundColor: blue_2,
+          backgroundColor: ceruleanCrayola,
         ),
         //* We wrap the rest of the page inside the SliverList: like this everything scrool vertically except the header
         SliverList(
@@ -59,7 +59,7 @@ class Header extends StatelessWidget {
     return Container(
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
-        color: blue_2,
+        color: ceruleanCrayola,
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(10),
           bottomRight: Radius.circular(10),
@@ -148,14 +148,14 @@ class AssociationBuilder extends StatelessWidget {
                   width: MediaQuery.of(context).size.width,
                   child: Card(
                     elevation: 0.5,
-                    shadowColor: blue_0,
+                    shadowColor: darkCornflowerBlue,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
                     color: white,
                     //* InkWell like this we can integrate the ontap function
                     child: InkWell(
-                        splashColor: blue_2,
+                        splashColor: ceruleanCrayola,
                         child: Padding(
                           padding:
                               EdgeInsets.symmetric(horizontal: 15, vertical: 5),

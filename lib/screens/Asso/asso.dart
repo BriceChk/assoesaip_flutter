@@ -35,7 +35,7 @@ class _AssociationState extends State<Association> {
         //* We want the rounded border on the bottom so we wrap it in a container
         Container(
           decoration: BoxDecoration(
-            color: blue_2,
+            color: ceruleanCrayola,
             borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(40),
               bottomRight: Radius.circular(40),
@@ -122,7 +122,7 @@ class _AssociationState extends State<Association> {
                                       ? Text(
                                           element[0],
                                           style: TextStyle(
-                                              fontSize: 18, color: blue_3),
+                                              fontSize: 18, color: powderBlue),
                                         )
                                       : Text(
                                           element[0],
