@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 final String classicFont = "Nunito";
 final Color cardColor = white;
-final Color titleColor = powderBlue;
+final Color hearderColor = skyBlueCrayola1;
 final Color shadowColor = navyBlue;
 final Color fontColor = Colors.black;
 
@@ -35,7 +35,7 @@ class _AssociationCategoriesState extends State<AssociationCategories> {
           ],
           toolbarHeight: 130,
           pinned: true,
-          backgroundColor: ceruleanCrayola,
+          backgroundColor: hearderColor,
         ),
         //* We wrap the rest of the page inside the SliverList: like this everything scrool vertically except the header
         SliverList(
@@ -64,7 +64,7 @@ class Header extends StatelessWidget {
     return Container(
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
-        color: ceruleanCrayola,
+        color: hearderColor,
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(10),
           bottomRight: Radius.circular(10),
@@ -86,9 +86,7 @@ class Header extends StatelessWidget {
                 fontFamily: classicFont,
               ),
             ),
-            SizedBox(
-              height: 10,
-            ),
+            SizedBox(height: 10),
             Text(
               "Découvre les clubs et associations qui font vivre l'esaip, leurs actualités et les prochains événement sur ton campus.",
               textAlign: TextAlign.justify,
