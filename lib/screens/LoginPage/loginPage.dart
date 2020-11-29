@@ -13,7 +13,8 @@ class LoginPage extends StatelessWidget {
     );
 
     final Color backgroundColorBlue = skyBlueCrayola1.withOpacity(0.9);
-    final Color backgroundColorWhite = white;
+    final Color backgroundColorWhite = whiteWhite;
+    final String classicFont = "Nunito";
 
     //* Return a Scaffold widget because of the text we are including inside
     return Scaffold(
@@ -48,7 +49,10 @@ class LoginPage extends StatelessWidget {
                   Container(
                     child: Text(
                       "Bienvenue sur\nAsso'esaip",
-                      style: TextStyle(fontSize: 30),
+                      style: TextStyle(
+                        fontSize: 30,
+                        fontFamily: classicFont,
+                      ),
                       textAlign: TextAlign.center,
                     ),
                   )
@@ -64,7 +68,7 @@ class LoginPage extends StatelessWidget {
                 //* Container with all the others object inside with the color white
                 child: Container(
                   decoration: BoxDecoration(
-                    color: white,
+                    color: backgroundColorWhite,
                     borderRadius: roundedBorder2,
                   ),
                   //* Column with the all the object align to each other
@@ -79,7 +83,7 @@ class LoginPage extends StatelessWidget {
                             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed leo.",
                             style: TextStyle(
                               fontSize: 20,
-                              fontFamily: "nunito",
+                              fontFamily: classicFont,
                             ),
                             textAlign: TextAlign.center,
                           ),
@@ -111,7 +115,8 @@ class LoginPage extends StatelessWidget {
                                 style: TextStyle(
                                   fontSize: 20,
                                   color: white,
-                                  fontFamily: "Comic",
+                                  fontFamily: "Nunito",
+                                  letterSpacing: 1.25,
                                 ),
                                 textAlign: TextAlign.center,
                               ),
