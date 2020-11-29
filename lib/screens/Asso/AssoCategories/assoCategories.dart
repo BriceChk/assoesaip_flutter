@@ -6,6 +6,7 @@ final Color cardColor = white;
 final Color hearderColor = skyBlueCrayola1;
 final Color shadowColor = navyBlue;
 final Color fontColor = Colors.black;
+final Color titleColor = navyBlue;
 
 class AssociationCategories extends StatefulWidget {
   @override
@@ -13,10 +14,10 @@ class AssociationCategories extends StatefulWidget {
 }
 
 class _AssociationCategoriesState extends State<AssociationCategories> {
-  final ContinuousRectangleBorder roundedBorder = ContinuousRectangleBorder(
+  final RoundedRectangleBorder roundedBorder = RoundedRectangleBorder(
     borderRadius: BorderRadius.only(
-      bottomLeft: Radius.circular(50),
-      bottomRight: Radius.circular(50),
+      bottomLeft: Radius.circular(25),
+      bottomRight: Radius.circular(25),
     ),
   );
 
@@ -195,9 +196,9 @@ class AssociationBuilder extends StatelessWidget {
                                     Text(
                                       element[0],
                                       style: TextStyle(
-                                        fontSize: 20,
-                                        fontFamily: classicFont,
-                                      ),
+                                          fontSize: 20,
+                                          fontFamily: classicFont,
+                                          color: titleColor),
                                     ),
                                     //* Description of the card
                                     Text(
