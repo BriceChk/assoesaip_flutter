@@ -122,7 +122,6 @@ class _NewsWidgetState extends State<NewsWidget> {
             ),
             //! Container of each news
             Container(
-              //color: Colors.amber,
               width: MediaQuery.of(context).size.width,
               child: Column(
                 children: _buildNews(),
@@ -153,7 +152,6 @@ class _NewsWidgetState extends State<NewsWidget> {
               height: double.infinity,
               width: 90,
               decoration: BoxDecoration(
-                color: Colors.green,
                 //* have the same rounded corner as the big container
                 borderRadius: BorderRadius.all(
                   Radius.circular(15),
