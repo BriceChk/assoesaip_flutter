@@ -15,7 +15,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final String classicFont = "Nunito";
-    final String titleFont = "Comic";
     final Color backgroundColor = white;
 
     return Container(

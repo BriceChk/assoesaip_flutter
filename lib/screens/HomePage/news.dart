@@ -88,11 +88,15 @@ class _NewsWidgetState extends State<NewsWidget> {
   ];
 
   int currentIndex = 0;
+  final String classicFont = "Nunito";
+  final Color backgroundColor = white;
+  final Color cardColor = Color(0xfff6dbd0).withOpacity(0.5);
+  final Color titleColor = powderBlue;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: white,
+      color: backgroundColor,
       //* Container of the white widget with the rounded corner
       child: Container(
         //* Size of the screen
@@ -106,7 +110,10 @@ class _NewsWidgetState extends State<NewsWidget> {
               padding: EdgeInsets.only(top: 5, left: 10),
               child: Text(
                 "Actualités",
-                style: TextStyle(fontSize: 25),
+                style: TextStyle(
+                  fontSize: 25,
+                  fontFamily: classicFont,
+                ),
               ),
             ),
             //* Sizedbox in order to have a apsace between the rounded and the first news
@@ -131,9 +138,9 @@ class _NewsWidgetState extends State<NewsWidget> {
     return Padding(
       padding: EdgeInsets.only(right: 10, left: 10, bottom: 7.5),
       child: Container(
-        height: 90,
+        height: 95,
         decoration: BoxDecoration(
-          color: Colors.grey[300],
+          color: cardColor,
           borderRadius: BorderRadius.all(
             Radius.circular(15),
           ),
@@ -144,7 +151,7 @@ class _NewsWidgetState extends State<NewsWidget> {
             //* Container with the image inside
             Container(
               height: double.infinity,
-              width: 85,
+              width: 90,
               decoration: BoxDecoration(
                 color: Colors.green,
                 //* have the same rounded corner as the big container
@@ -170,6 +177,7 @@ class _NewsWidgetState extends State<NewsWidget> {
                   news[currentIndex][1],
                   style: TextStyle(
                     fontSize: 20,
+                    fontFamily: classicFont,
                   ),
                 ),
                 SizedBox(height: 4),
@@ -178,6 +186,7 @@ class _NewsWidgetState extends State<NewsWidget> {
                   news[currentIndex][2],
                   style: TextStyle(
                     fontSize: 14,
+                    fontFamily: classicFont,
                   ),
                 ),
                 SizedBox(height: 2),
@@ -186,6 +195,7 @@ class _NewsWidgetState extends State<NewsWidget> {
                   news[currentIndex][3],
                   style: TextStyle(
                     fontSize: 12,
+                    fontFamily: classicFont,
                   ),
                 ),
                 SizedBox(height: 2.5),
@@ -194,6 +204,7 @@ class _NewsWidgetState extends State<NewsWidget> {
                   news[currentIndex][4],
                   style: TextStyle(
                     fontSize: 14,
+                    fontFamily: classicFont,
                   ),
                 ),
               ],

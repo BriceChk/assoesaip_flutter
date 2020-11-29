@@ -26,9 +26,9 @@ class _NavigationBarState extends State<NavigationBar> {
   //TODO_ Colors
   Color selectedColor = navyBlue;
   Color unselectedColor = navyBlue;
-  Color circleSelectedColor = skyBlueCrayola1;
+  Color circleSelectedColor = skyBlueCrayola2;
   Color scaffoldBackgroundColor = white;
-  Color navBarColor = powderBlue;
+  Color navBarColor = powderBlue.withOpacity(0.75);
 
   ShapeBorder bottomBarShape = RoundedRectangleBorder(
     borderRadius: BorderRadius.only(
