@@ -142,6 +142,7 @@ class _NewsWidgetState extends State<NewsWidget> {
     return Padding(
       padding: EdgeInsets.only(right: 10, left: 10, bottom: 7.5),
       child: Card(
+        elevation: 0.5,
         color: cardColor,
         shape: roundedBorder,
         child: Container(
