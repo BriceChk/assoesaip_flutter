@@ -7,6 +7,7 @@ final Color hearderColor = skyBlueCrayola1;
 final Color shadowColor = navyBlue;
 final Color fontColor = Colors.black;
 final Color titleColor = navyBlue;
+final Color splashColor = skyBlueCrayola1;
 
 final BorderRadius borderHeader = BorderRadius.only(
   bottomLeft: Radius.circular(25),
@@ -174,7 +175,8 @@ class AssociationBuilder extends StatelessWidget {
                     color: cardColor,
                     //* InkWell like this we can integrate the ontap function
                     child: InkWell(
-                        splashColor: ceruleanCrayola,
+                        borderRadius: BorderRadius.circular(10),
+                        splashColor: splashColor,
                         child: Padding(
                           padding: EdgeInsets.symmetric(
                             horizontal: 7.5,
