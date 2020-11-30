@@ -161,10 +161,12 @@ class AssociationBuilder extends StatelessWidget {
               i,
               //* Here we're building each card with each name of the specific association
               Padding(
-                padding: EdgeInsets.only(top: 5),
+                padding: EdgeInsets.only(top: 5, right: 10, left: 10),
                 child: Container(
-                  //! color: Colors.green,
-                  height: 90,
+                  //! boxConstraints like this we can set a min height to the card and combine with flexible the height can be override
+                  constraints: BoxConstraints(
+                    minHeight: 90,
+                  ),
                   width: MediaQuery.of(context).size.width,
                   child: Card(
                     elevation: 0.5,
