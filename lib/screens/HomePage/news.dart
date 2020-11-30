@@ -1,4 +1,3 @@
-import 'package:assoesaip_flutter/screens/Asso/AssoCategories/assoCategories.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:flutter/material.dart';
 

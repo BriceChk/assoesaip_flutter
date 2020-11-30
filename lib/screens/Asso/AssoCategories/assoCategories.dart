@@ -8,6 +8,11 @@ final Color shadowColor = navyBlue;
 final Color fontColor = Colors.black;
 final Color titleColor = navyBlue;
 
+final BorderRadius borderHeader = BorderRadius.only(
+  bottomLeft: Radius.circular(25),
+  bottomRight: Radius.circular(25),
+);
+
 class AssociationCategories extends StatefulWidget {
   @override
   _AssociationCategoriesState createState() => _AssociationCategoriesState();
@@ -66,10 +71,7 @@ class Header extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
         color: hearderColor,
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(10),
-          bottomRight: Radius.circular(10),
-        ),
+        borderRadius: borderHeader,
       ),
 
       //* In order to have a padding horizontaly

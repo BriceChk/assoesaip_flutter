@@ -2,17 +2,22 @@ import 'package:assoesaip_flutter/screens/HomePage/news.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:flutter/material.dart';
 
+final String classicFont = "Nunito";
+final Color backgroundColor = whiteWhite;
+final Color hearderColor = skyBlueCrayola1;
+
 class Test extends StatelessWidget {
-  final ContinuousRectangleBorder roundedBorder = ContinuousRectangleBorder(
+  final RoundedRectangleBorder roundedBorder = RoundedRectangleBorder(
     borderRadius: BorderRadius.only(
-      bottomLeft: Radius.circular(50),
-      bottomRight: Radius.circular(50),
+      bottomLeft: Radius.circular(25),
+      bottomRight: Radius.circular(25),
     ),
   );
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: white,
+      color: backgroundColor,
       child: CustomScrollView(
         physics: BouncingScrollPhysics(),
         slivers: [
@@ -45,17 +50,19 @@ class Test extends StatelessWidget {
 }
 
 class Header extends StatelessWidget {
+  final BorderRadius borderHeader = BorderRadius.only(
+    bottomLeft: Radius.circular(25),
+    bottomRight: Radius.circular(25),
+  );
+
   @override
   Widget build(BuildContext context) {
     final Color fontColor = Colors.black;
     return Container(
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
-        color: ceruleanCrayola,
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(10),
-          bottomRight: Radius.circular(10),
-        ),
+        color: hearderColor,
+        borderRadius: borderHeader,
       ),
 
       //* In order to have a padding horizontaly
@@ -84,9 +91,9 @@ class Header extends StatelessWidget {
                   child: Text(
                     "Bienvenue !",
                     style: TextStyle(
-                      fontSize: 30,
-                      color: fontColor,
-                    ),
+                        fontSize: 30,
+                        color: fontColor,
+                        fontFamily: classicFont),
                   ),
                 ),
               ],
@@ -97,7 +104,11 @@ class Header extends StatelessWidget {
             Text(
               "Découvre les clubs et associations qui font vivre l'esaip, leurs actualités et les prochains événement sur ton campus.",
               textAlign: TextAlign.justify,
-              style: TextStyle(fontSize: 16, color: fontColor),
+              style: TextStyle(
+                fontSize: 16,
+                color: fontColor,
+                fontFamily: classicFont,
+              ),
             ),
           ],
         ),
