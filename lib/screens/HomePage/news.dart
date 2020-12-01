@@ -100,6 +100,7 @@ class _NewsWidgetState extends State<NewsWidget> {
 
   @override
   Widget build(BuildContext context) {
+    currentIndex = 0;
     return Container(
       color: backgroundColor,
       //* Container of the white widget with the rounded corner
