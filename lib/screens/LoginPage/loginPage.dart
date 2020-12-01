@@ -6,10 +6,10 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final BorderRadius roundedBorder1 = BorderRadius.only(
-      bottomRight: Radius.circular(75),
+      bottomRight: Radius.circular(50),
     );
     final BorderRadius roundedBorder2 = BorderRadius.only(
-      topLeft: Radius.circular(75),
+      topLeft: Radius.circular(50),
     );
 
     final Color backgroundColorBlue = skyBlueCrayola1.withOpacity(0.9);
