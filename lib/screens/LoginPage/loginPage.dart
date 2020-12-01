@@ -1,3 +1,4 @@
+import 'package:assoesaip_flutter/screens/LoginPage/webviewLoginPage.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:assoesaip_flutter/shares/navBar.dart';
 import 'package:flutter/material.dart';
@@ -123,11 +124,14 @@ class LoginPage extends StatelessWidget {
                             ),
                           ),
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => NavigationBar()),
-                            );
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        MyWebView(
+                                          title: "Connexion microsoft",
+                                          selectedUrl:
+                                              "https://asso-esaip.bricechk.fr/login",
+                                        )));
                           },
                         ),
                       ),
