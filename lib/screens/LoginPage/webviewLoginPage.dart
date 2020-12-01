@@ -22,10 +22,13 @@ class MyWebView extends StatelessWidget {
           title: Text(title),
         ),
         body: WebView(
-          onPageStarted: (String url) {
-            if (url == 'https://asso-esaip.bricechk.fr/') {
+          navigationDelegate: (NavigationRequest request) {
+            if (request.url == 'https://asso-esaip.bricechk.fr/') {
               Navigator.of(context).pushReplacement(MaterialPageRoute(
                   builder: (BuildContext context) => NavigationBar()));
+              return NavigationDecision.prevent;
+            } else {
+              return NavigationDecision.navigate;
             }
           },
           initialUrl: selectedUrl,
