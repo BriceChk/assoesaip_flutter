@@ -140,7 +140,7 @@ class AssociationBuilder extends StatelessWidget {
       "assets/images/AssoCategories/Humanitarian.png"
     ],
     [
-      "Réseaux & partenariats",
+      "Réseaux & partenariats & un gros test",
       "Projets en lien avec les entreprises ou le réseau La Salle",
       "assets/images/AssoCategories/Network.png"
     ],
@@ -221,6 +221,8 @@ class AssociationBuilder extends StatelessWidget {
                           ),
                         ),
                         onTap: () {
+                          assoNameString = element[0];
+                          assoDescriptionString = element[1];
                           //* Pushing through the new page with a specific name
                           //TODO_ print(element[0] + " tapped");
                           Navigator.of(context).pushNamed("Test");

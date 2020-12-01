@@ -15,3 +15,6 @@ const powderBlue = Color(0xffCAF0F8); //* Font in black
 const white = Color(0xfff5f3f4); //* Font in black
 const whiteWhite = Colors.white;
 int assoIndex = 0;
+
+String assoNameString = '';
+String assoDescriptionString = '';
