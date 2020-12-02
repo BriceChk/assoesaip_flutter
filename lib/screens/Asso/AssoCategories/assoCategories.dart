@@ -54,9 +54,7 @@ class _AssociationCategoriesState extends State<AssociationCategories> {
               //* Widget with all the name of the categories of the association
               AssociationBuilder(),
               //* Sizedbox of height 60 because otherwise the last one is under the navbar
-              SizedBox(
-                height: 60,
-              ),
+              SizedBox(height: 60),
             ],
           ),
         ),
