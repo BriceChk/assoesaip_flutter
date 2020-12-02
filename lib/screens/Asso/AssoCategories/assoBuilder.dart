@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'assoCategories.dart';
-import 'assoSubCategories.dart';
+import 'SubCategories/assoSubCategories.dart';
 
 class AssoBuilder extends StatelessWidget {
   @override
@@ -17,7 +17,7 @@ class AssoBuilder extends StatelessWidget {
             break;
           case 'Test':
             return MaterialPageRoute(
-                builder: (context) => Test(), settings: settings);
+                builder: (context) => AssoSubCategories(), settings: settings);
             break;
 
           default:
