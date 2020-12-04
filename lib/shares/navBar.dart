@@ -1,4 +1,6 @@
 import 'package:assoesaip_flutter/screens/Asso/AssoCategories/assoBuilder.dart';
+import 'package:assoesaip_flutter/screens/Cafet/cafet.dart';
+
 import 'package:assoesaip_flutter/screens/HomePage/homePage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
@@ -20,7 +22,7 @@ class _NavigationBarState extends State<NavigationBar> {
     Text("Calendrier"),
     AssoBuilder(),
     //Association(),
-    Text("Cafet"),
+    CafetCategories(),
   ];
 
   //TODO_ Colors
