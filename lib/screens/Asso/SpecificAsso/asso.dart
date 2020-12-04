@@ -44,15 +44,33 @@ class _AssociationState extends State<Association> {
           //* Here we want all the basics information about the association
           child: Column(
             children: [
-              //* Container witht the picture or logo of the association
-              Container(
-                height: 100,
-                width: 100,
-                //TODO_color: Colors.black,
-                child: Image.asset(
-                  associations[0][0],
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  //* GestureDetector in order to detect if the user tap on it
+                  GestureDetector(
+                    child: Icon(
+                      Icons.arrow_back,
+                      color: navyBlue,
+                    ),
+                    //* Pushing back to the AssociationCategories
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  SizedBox(width: 15),
+                  Container(
+                    height: 100,
+                    width: 100,
+                    //TODO_color: Colors.black,
+                    child: Image.asset(
+                      associations[0][0],
+                    ),
+                  ),
+                ],
               ),
+              //* Container witht the picture or logo of the association
+
               SizedBox(height: 10),
               //* Name of the association
               Padding(
