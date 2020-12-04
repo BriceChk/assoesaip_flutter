@@ -42,7 +42,6 @@ class AssoSubCategories extends StatelessWidget {
               [
                 //* Widget with all the name of the categories of the association
                 BodyAssoSubCategories(),
-                SizedBox(height: 55)
               ],
             ),
           ),

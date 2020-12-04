@@ -1,4 +1,5 @@
 import 'package:assoesaip_flutter/screens/Asso/AssoCategories/assoCategories.dart';
+import 'package:assoesaip_flutter/screens/Asso/SpecificAsso/asso.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:flutter/material.dart';
 
@@ -54,129 +55,131 @@ class Projets extends StatelessWidget {
           children: assoMap
               .map(
                 (j, element) => MapEntry(
-                    j,
-                    //* Here we're building each card with each name of the specific association
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 20),
-                      child: Container(
-                        constraints: BoxConstraints(minHeight: 80),
-                        width: double.infinity,
-                        child: Card(
-                          shape: roundedCorner,
-                          color: cardColor,
-                          margin: EdgeInsets.all(0),
-                          child: InkWell(
-                            onTap: () {
-                              print(element[0]);
-                            },
-                            borderRadius: BorderRadius.circular(10),
-                            splashColor: splashColor,
-                            child: Column(
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 10, vertical: 10),
-                                  child: Text(
-                                    element[0],
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontFamily: classicFont,
-                                      color: titleColor,
+                  j,
+                  //* Here we're building each card with each name of the specific association
+                  Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(top: 10, bottom: 10),
+                        child: Container(
+                          constraints: BoxConstraints(minHeight: 80),
+                          width: double.infinity,
+                          child: Card(
+                            shape: roundedCorner,
+                            color: cardColor,
+                            margin: EdgeInsets.all(0),
+                            child: InkWell(
+                              onTap: () {
+                                print(element[0]);
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        Association()));
+                              },
+                              borderRadius: BorderRadius.circular(10),
+                              splashColor: splashColor,
+                              child: Column(
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 10),
+                                    child: Text(
+                                      element[0],
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontFamily: classicFont,
+                                        color: titleColor,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                SizedBox(height: 10),
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 10, vertical: 10),
-                                  child: Text(
-                                    element[1],
-                                    textAlign: TextAlign.justify,
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      fontFamily: classicFont,
+                                  SizedBox(height: 10),
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 10),
+                                    child: Text(
+                                      element[1],
+                                      textAlign: TextAlign.justify,
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        fontFamily: classicFont,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                Column(
-                                  children: clubMap
-                                      .map(
-                                        (i, element) => MapEntry(
-                                          i,
-                                          //* Here we're building each card with each name of the specific association
-                                          element[0] == assoList[j][0]
-                                              ? Padding(
-                                                  padding:
-                                                      EdgeInsets.only(top: 15),
-                                                  child: Container(
-                                                    constraints: BoxConstraints(
-                                                        minHeight: 80),
-                                                    width: double.infinity,
-                                                    child: Card(
-                                                      shape: roundedCorner,
-                                                      margin: EdgeInsets.all(0),
-                                                      color: Colors.grey[200],
-                                                      child: InkWell(
-                                                        onTap: () {
-                                                          print(element[1]);
-                                                        },
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
-                                                        splashColor:
-                                                            splashColor,
-                                                        child: Padding(
-                                                          padding: EdgeInsets
-                                                              .symmetric(
-                                                                  horizontal:
-                                                                      10,
-                                                                  vertical: 10),
-                                                          child: Column(
-                                                            children: [
-                                                              Text(
-                                                                element[1],
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontSize: 18,
-                                                                  fontFamily:
-                                                                      classicFont,
-                                                                  color:
-                                                                      titleColor,
-                                                                ),
-                                                              ),
-                                                              SizedBox(
-                                                                  height: 10),
-                                                              Text(
-                                                                element[2],
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .justify,
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontSize: 15,
-                                                                  fontFamily:
-                                                                      classicFont,
-                                                                ),
-                                                              )
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                )
-                                              : Container(),
-                                        ),
-                                      )
-                                      .values
-                                      .toList(),
-                                )
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    )),
+                      Column(
+                        children: clubMap
+                            .map(
+                              (i, element) => MapEntry(
+                                i,
+                                //* Here we're building each card with each name of the specific association
+                                element[0] == assoList[j][0]
+                                    ? Padding(
+                                        padding: EdgeInsets.only(
+                                            right: 15, left: 15, bottom: 10),
+                                        child: Container(
+                                          constraints:
+                                              BoxConstraints(minHeight: 80),
+                                          width: double.infinity,
+                                          child: Card(
+                                            shape: roundedCorner,
+                                            margin: EdgeInsets.all(0),
+                                            color: Colors.grey[200],
+                                            child: InkWell(
+                                              onTap: () {
+                                                print(element[1]);
+                                                Navigator.of(context).push(
+                                                    MaterialPageRoute(
+                                                        builder: (BuildContext
+                                                                context) =>
+                                                            Association()));
+                                              },
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              splashColor: splashColor,
+                                              child: Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 10,
+                                                    vertical: 10),
+                                                child: Column(
+                                                  children: [
+                                                    Text(
+                                                      element[1],
+                                                      style: TextStyle(
+                                                        fontSize: 18,
+                                                        fontFamily: classicFont,
+                                                        color: titleColor,
+                                                      ),
+                                                    ),
+                                                    SizedBox(height: 10),
+                                                    Text(
+                                                      element[2],
+                                                      textAlign:
+                                                          TextAlign.justify,
+                                                      style: TextStyle(
+                                                        fontSize: 15,
+                                                        fontFamily: classicFont,
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    : Container(),
+                              ),
+                            )
+                            .values
+                            .toList(),
+                      )
+                    ],
+                  ),
+                ),
               )
               .values
               .toList(),
