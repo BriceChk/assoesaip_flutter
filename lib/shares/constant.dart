@@ -19,3 +19,4 @@ int assoIndex = 0;
 String assoNameString = '';
 String assoDescriptionString = '';
 int menuIndexSelected = 0;
+int menuAssoIndexSelected = 0;
