@@ -1,14 +1,14 @@
-import 'package:assoesaip_flutter/screens/LoginPage/webviewLoginPage.dart';
+import 'package:assoesaip_flutter/screens/LoginPage/loginWebViewPage.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatelessWidget {
+class WelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final BorderRadius roundedBorder1 = BorderRadius.only(
+    final BorderRadius roundedBottomRightBorder = BorderRadius.only(
       bottomRight: Radius.circular(50),
     );
-    final BorderRadius roundedBorder2 = BorderRadius.only(
+    final BorderRadius roundedTopLeftBorder = BorderRadius.only(
       topLeft: Radius.circular(50),
     );
 
@@ -32,7 +32,7 @@ class LoginPage extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                 color: backgroundColorBlue,
-                borderRadius: roundedBorder1,
+                borderRadius: roundedBottomRightBorder,
               ),
               //* Column in order to have the object inside the container align
               child: Column(
@@ -69,7 +69,7 @@ class LoginPage extends StatelessWidget {
                 child: Container(
                   decoration: BoxDecoration(
                     color: backgroundColorWhite,
-                    borderRadius: roundedBorder2,
+                    borderRadius: roundedTopLeftBorder,
                   ),
                   //* Column with the all the object align to each other
                   child: Column(
@@ -80,7 +80,7 @@ class LoginPage extends StatelessWidget {
                         padding: EdgeInsets.symmetric(horizontal: 15),
                         child: Container(
                           child: Text(
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed leo.",
+                            "Découvre les clubs et assos de ton campus, leurs actus et les prochains événements.",
                             style: TextStyle(
                               fontSize: 20,
                               fontFamily: classicFont,
@@ -111,7 +111,7 @@ class LoginPage extends StatelessWidget {
                             child: Container(
                               width: MediaQuery.of(context).size.width,
                               child: Text(
-                                'Connectez-vous',
+                                'Connexion',
                                 style: TextStyle(
                                   fontSize: 20,
                                   color: white,
@@ -125,12 +125,9 @@ class LoginPage extends StatelessWidget {
                           onPressed: () {
                             Navigator.of(context).pushReplacement(
                                 MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        MyWebView(
-                                          title: "Connexion microsoft",
-                                          selectedUrl:
-                                              "https://asso-esaip.bricechk.fr/login",
-                                        )));
+                                    builder: (BuildContext context) => LoginWebViewPage()
+                                )
+                            );
                           },
                         ),
                       ),

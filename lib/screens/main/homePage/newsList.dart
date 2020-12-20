@@ -1,12 +1,12 @@
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:flutter/material.dart';
 
-class NewsWidget extends StatefulWidget {
+class NewsListWidget extends StatefulWidget {
   @override
-  _NewsWidgetState createState() => _NewsWidgetState();
+  _NewsListWidgetState createState() => _NewsListWidgetState();
 }
 
-class _NewsWidgetState extends State<NewsWidget> {
+class _NewsListWidgetState extends State<NewsListWidget> {
   final List<List<String>> news = [
     [
       'assets/images/HomePage/event_1.jpg',
@@ -107,7 +107,7 @@ class _NewsWidgetState extends State<NewsWidget> {
       child: Container(
         //* Size of the screen
         width: MediaQuery.of(context).size.width,
-        //* Column if widget in order to have the buildnews working I.E carousel.dart
+        //* Column if widget in order to have the buildnews working I.E starredNewsCarousel.dart
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[

@@ -1,6 +1,7 @@
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 final String classicFont = "Nunito";
 final Color cardColor = white;
@@ -15,14 +16,12 @@ final BorderRadius borderHeader = BorderRadius.only(
   bottomRight: Radius.circular(25),
 );
 
-var formatDate = DateFormat('EEEE').format(DateTime.now());
-
-class CafetCategories extends StatefulWidget {
+class CafetWidget extends StatefulWidget {
   @override
-  _CafetCategoriesState createState() => _CafetCategoriesState();
+  _CafetWidgetState createState() => _CafetWidgetState();
 }
 
-class _CafetCategoriesState extends State<CafetCategories> {
+class _CafetWidgetState extends State<CafetWidget> {
   final RoundedRectangleBorder roundedBorder = RoundedRectangleBorder(
     borderRadius: BorderRadius.only(
       bottomLeft: Radius.circular(25),
@@ -83,6 +82,10 @@ class _CafetCategoriesState extends State<CafetCategories> {
 class Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    initializeDateFormatting();
+    var formatDate = DateFormat('EEEE', 'fr_FR').format(DateTime.now());
+    //TODO Si passé 13h, afficher le menu du lendemain
+
     return Container(
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
@@ -98,7 +101,7 @@ class Header extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "Menu du " + '$formatDate',
+              "Menu de " + '$formatDate',
               style: TextStyle(
                 fontSize: 30,
                 color: fontColor,

@@ -2,12 +2,12 @@ import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
-class CarouselWidget extends StatefulWidget {
+class StarredNewsCarouselWidget extends StatefulWidget {
   @override
-  _CarouselWidgetState createState() => _CarouselWidgetState();
+  _StarredNewsCarouselWidgetState createState() => _StarredNewsCarouselWidgetState();
 }
 
-class _CarouselWidgetState extends State<CarouselWidget> {
+class _StarredNewsCarouselWidgetState extends State<StarredNewsCarouselWidget> {
   final List<List<String>> events = [
     [
       'assets/images/HomePage/event_1.jpg',

@@ -1,7 +1,7 @@
 // HomePage when the user connect: AppBar + Carousel event + CustomScrollVertical vertical
 
-import 'package:assoesaip_flutter/screens/HomePage/carousel.dart';
-import 'package:assoesaip_flutter/screens/HomePage/news.dart';
+import 'package:assoesaip_flutter/screens/main/HomePage/starredNewsCarousel.dart';
+import 'package:assoesaip_flutter/screens/main/HomePage/newsList.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:floating_search_bar/floating_search_bar.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> {
                 child: Center(
                   child: TextField(
                     decoration: InputDecoration.collapsed(
-                      hintText: "Rechercher dans les actualités...",
+                      hintText: "Rechercher un club, une actu ...",
                     ),
                     style: TextStyle(
                       fontFamily: classicFont,
@@ -65,14 +65,14 @@ class _HomePageState extends State<HomePage> {
                 StretchMode.zoomBackground,
                 StretchMode.blurBackground,
               ],
-              background: CarouselWidget(),
+              background: StarredNewsCarouselWidget(),
             ),
           ),
           //* Others widget from the page here only the news (for now)
           SliverList(
             delegate: SliverChildListDelegate(
               [
-                NewsWidget(),
+                NewsListWidget(),
                 SizedBox(height: 55),
               ],
             ),

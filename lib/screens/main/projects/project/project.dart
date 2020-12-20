@@ -1,9 +1,9 @@
-import 'package:assoesaip_flutter/screens/Asso/SpecificAsso/bodyAsso.dart';
-import 'package:assoesaip_flutter/screens/Asso/SpecificAsso/header.dart';
+import 'package:assoesaip_flutter/screens/main/projects/project/projectBody.dart';
+import 'package:assoesaip_flutter/screens/main/projects/project/projectHeader.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:flutter/material.dart';
 
-class Association extends StatefulWidget {
+class Project extends StatefulWidget {
   static final List<List<String>> menuAssoList = [
     ["Accueil", "Selected"],
     ["Actu", "Unselected"],
@@ -12,11 +12,11 @@ class Association extends StatefulWidget {
   ];
 
   @override
-  _AssociationState createState() => _AssociationState();
+  _ProjectState createState() => _ProjectState();
 }
 
-class _AssociationState extends State<Association> {
-  final menuAssoMap = Association.menuAssoList.asMap();
+class _ProjectState extends State<Project> {
+  final menuAssoMap = Project.menuAssoList.asMap();
 
   final double paddinghorizontal = 15;
   final RoundedRectangleBorder roundedBorder = RoundedRectangleBorder(
@@ -37,7 +37,7 @@ class _AssociationState extends State<Association> {
             shape: roundedBorder,
             toolbarHeight: 200,
             actions: [
-              Header(),
+              ProjectHeader(),
             ],
           ),
           //* All the other Widget
@@ -45,7 +45,7 @@ class _AssociationState extends State<Association> {
             delegate: SliverChildListDelegate(
               [
                 //* Widget with all the name of the categories of the association
-                BodyAsso(),
+                ProjectBody(),
               ],
             ),
           ),

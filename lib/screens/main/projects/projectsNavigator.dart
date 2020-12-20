@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 
-import 'assoCategories.dart';
-import 'SubCategories/assoSubCategories.dart';
+import 'categoriesList.dart';
+import 'category/category.dart';
 
-class AssoBuilder extends StatelessWidget {
+class ProjectsNavigator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Navigator(
-      initialRoute: 'AssociationCategories',
+      initialRoute: 'CategoriesList',
       onGenerateRoute: (RouteSettings settings) {
         switch (settings.name) {
-          case 'AssociationCategories':
+          case 'CategoriesList':
             return MaterialPageRoute(
-                builder: (context) => AssociationCategories(),
+                builder: (context) => CategoriesList(),
                 settings: settings);
             break;
-          case 'Test':
+          case 'Category':
             return MaterialPageRoute(
-                builder: (context) => AssoSubCategories(), settings: settings);
+                builder: (context) => Category(), settings: settings);
             break;
 
           default:

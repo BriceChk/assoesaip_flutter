@@ -1,5 +1,5 @@
-import 'package:assoesaip_flutter/screens/Asso/AssoCategories/SubCategories/body.dart';
-import 'package:assoesaip_flutter/screens/Asso/AssoCategories/SubCategories/header.dart';
+import 'package:assoesaip_flutter/screens/main/projects/category/categoryBody.dart';
+import 'package:assoesaip_flutter/screens/main/projects/category/categoryHeader.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:flutter/material.dart';
 
@@ -8,7 +8,7 @@ final Color backgroundColor = whiteWhite;
 final Color hearderColor = skyBlueCrayola1;
 final Color menuColorSelected = powderBlue;
 
-class AssoSubCategories extends StatelessWidget {
+class Category extends StatelessWidget {
   final RoundedRectangleBorder roundedBorder = RoundedRectangleBorder(
     borderRadius: BorderRadius.only(
       bottomLeft: Radius.circular(25),
@@ -30,7 +30,7 @@ class AssoSubCategories extends StatelessWidget {
             shape: roundedBorder,
             //* Here we have the HeaderWidget
             actions: [
-              Header(),
+              CategoryHeader(),
             ],
             toolbarHeight: 130,
             pinned: true,
@@ -41,7 +41,7 @@ class AssoSubCategories extends StatelessWidget {
             delegate: SliverChildListDelegate(
               [
                 //* Widget with all the name of the categories of the association
-                BodyAssoSubCategories(),
+                CategoryBody(),
               ],
             ),
           ),

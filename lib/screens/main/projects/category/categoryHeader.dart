@@ -1,7 +1,7 @@
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:flutter/material.dart';
 
-class Header extends StatelessWidget {
+class CategoryHeader extends StatelessWidget {
   final BorderRadius borderHeader = BorderRadius.only(
     bottomLeft: Radius.circular(25),
     bottomRight: Radius.circular(25),
@@ -41,7 +41,7 @@ class Header extends StatelessWidget {
                   //* Pushing back to the AssociationCategories
                   onTap: () {
                     Navigator.of(context)
-                        .popUntil(ModalRoute.withName("AssociationCategories"));
+                        .popUntil(ModalRoute.withName("CategoriesList"));
                   },
                 ),
                 SizedBox(width: 15),

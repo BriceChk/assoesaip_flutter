@@ -14,12 +14,12 @@ final BorderRadius borderHeader = BorderRadius.only(
   bottomRight: Radius.circular(25),
 );
 
-class AssociationCategories extends StatefulWidget {
+class CategoriesList extends StatefulWidget {
   @override
-  _AssociationCategoriesState createState() => _AssociationCategoriesState();
+  _CategoriesListState createState() => _CategoriesListState();
 }
 
-class _AssociationCategoriesState extends State<AssociationCategories> {
+class _CategoriesListState extends State<CategoriesList> {
   final RoundedRectangleBorder roundedBorder = RoundedRectangleBorder(
     borderRadius: BorderRadius.only(
       bottomLeft: Radius.circular(25),
@@ -81,7 +81,7 @@ class Header extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "Bienvenue !",
+              "Parcourir les projets",
               style: TextStyle(
                 fontSize: 30,
                 color: fontColor,
@@ -90,7 +90,7 @@ class Header extends StatelessWidget {
             ),
             SizedBox(height: 10),
             Text(
-              "Découvre les clubs et associations qui font vivre l'esaip, leurs actualités et les prochains événement sur ton campus.",
+              "Découvre les clubs et associations de ton campus !",
               textAlign: TextAlign.justify,
               style: TextStyle(
                 fontSize: 16,
@@ -223,7 +223,7 @@ class AssociationBuilder extends StatelessWidget {
                           assoDescriptionString = element[1];
                           //* Pushing through the new page with a specific name
                           //TODO_ print(element[0] + " tapped");
-                          Navigator.of(context).pushNamed("Test");
+                          Navigator.of(context).pushNamed("Category");
                         }),
                   ),
                 ),

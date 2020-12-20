@@ -1,37 +1,30 @@
-import 'package:assoesaip_flutter/shares/navBar.dart';
+import 'file:///C:/Users/brice/Desktop/assoesaip_flutter/lib/screens/main/mainNavigation.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:webview_flutter/webview_flutter.dart';
 
-class MyWebView extends StatelessWidget {
-  final String title;
-  final String selectedUrl;
+class LoginWebViewPage extends StatelessWidget {
 
   final Completer<WebViewController> _controller =
       Completer<WebViewController>();
-
-  MyWebView({
-    @required this.title,
-    @required this.selectedUrl,
-  });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(title),
+          title: Text("Connexion à Asso'esaip"),
         ),
         body: WebView(
           navigationDelegate: (NavigationRequest request) {
             if (request.url == 'https://asso-esaip.bricechk.fr/') {
               Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  builder: (BuildContext context) => NavigationBar()));
+                  builder: (BuildContext context) => MainNavigation()));
               return NavigationDecision.prevent;
             } else {
               return NavigationDecision.navigate;
             }
           },
-          initialUrl: selectedUrl,
+          initialUrl: "https://asso-esaip.bricechk.fr/login",
           javascriptMode: JavascriptMode.unrestricted,
           onWebViewCreated: (WebViewController webViewController) {
             _controller.complete(webViewController);

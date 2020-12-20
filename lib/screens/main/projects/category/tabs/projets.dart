@@ -1,5 +1,5 @@
-import 'package:assoesaip_flutter/screens/Asso/AssoCategories/assoCategories.dart';
-import 'package:assoesaip_flutter/screens/Asso/SpecificAsso/asso.dart';
+import 'file:///C:/Users/brice/Desktop/assoesaip_flutter/lib/screens/main/projects/categoriesList.dart';
+import 'package:assoesaip_flutter/screens/main/projects/project/project.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:flutter/material.dart';
 
@@ -73,7 +73,7 @@ class Projets extends StatelessWidget {
                                 print(element[0]);
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (BuildContext context) =>
-                                        Association()));
+                                        Project()));
                               },
                               borderRadius: BorderRadius.circular(10),
                               splashColor: splashColor,
@@ -135,7 +135,7 @@ class Projets extends StatelessWidget {
                                                     MaterialPageRoute(
                                                         builder: (BuildContext
                                                                 context) =>
-                                                            Association()));
+                                                            Project()));
                                               },
                                               borderRadius:
                                                   BorderRadius.circular(10),

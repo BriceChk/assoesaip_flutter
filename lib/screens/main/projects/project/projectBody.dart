@@ -1,21 +1,21 @@
-import 'package:assoesaip_flutter/screens/Asso/AssoCategories/SubCategories/Menu/actu.dart';
-import 'package:assoesaip_flutter/screens/Asso/SpecificAsso/Menu/member.dart';
+import 'package:assoesaip_flutter/screens/main/projects/category/tabs/actu.dart';
+import 'package:assoesaip_flutter/screens/main/projects/project/tabs/member.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:flutter/material.dart';
 
-import 'Menu/accueil.dart';
-import 'Menu/partenariat.dart';
+import 'tabs/accueil.dart';
+import 'tabs/partenariat.dart';
 
 final String classicFont = "Nunito";
 final Color backgroundColor = whiteWhite;
 final Color menuColorSelected = powderBlue;
 
-class BodyAsso extends StatefulWidget {
+class ProjectBody extends StatefulWidget {
   @override
-  _BodyAssoState createState() => _BodyAssoState();
+  _ProjectBodyState createState() => _ProjectBodyState();
 }
 
-class _BodyAssoState extends State<BodyAsso> {
+class _ProjectBodyState extends State<ProjectBody> {
   final GlobalKey<_MenuSubCategoriesAssociationsState> _key = GlobalKey();
   @override
   Widget build(BuildContext context) {

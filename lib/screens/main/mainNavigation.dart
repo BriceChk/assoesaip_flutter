@@ -1,17 +1,17 @@
-import 'package:assoesaip_flutter/screens/Asso/AssoCategories/assoBuilder.dart';
-import 'package:assoesaip_flutter/screens/Cafet/cafet.dart';
-
-import 'package:assoesaip_flutter/screens/HomePage/homePage.dart';
+import 'package:assoesaip_flutter/screens/main/cafet/cafet.dart';
+import 'package:assoesaip_flutter/screens/main/calendar/calendar.dart';
+import 'package:assoesaip_flutter/screens/main/homePage/homePage.dart';
+import 'package:assoesaip_flutter/screens/main/projects/projectsNavigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
-import 'constant.dart';
+import '../../shares/constant.dart';
 
-class NavigationBar extends StatefulWidget {
+class MainNavigation extends StatefulWidget {
   @override
-  _NavigationBarState createState() => new _NavigationBarState();
+  _MainNavigationState createState() => new _MainNavigationState();
 }
 
-class _NavigationBarState extends State<NavigationBar> {
+class _MainNavigationState extends State<MainNavigation> {
   //TODO_ variable
   int _pageIndex = 0;
   PageController _pageController;
@@ -19,10 +19,9 @@ class _NavigationBarState extends State<NavigationBar> {
   //TODO_ Page of the App
   List<Widget> tabPages = [
     HomePage(),
-    Text("Calendrier"),
-    AssoBuilder(),
-    //Association(),
-    CafetCategories(),
+    CalendarWidget(),
+    ProjectsNavigator(),
+    CafetWidget(),
   ];
 
   //TODO_ Colors
@@ -39,7 +38,7 @@ class _NavigationBarState extends State<NavigationBar> {
     ),
   );
 
-  final bottomShape = BorderRadius.only(
+  final bottomBarBorder = BorderRadius.only(
     topRight: Radius.circular(25),
     topLeft: Radius.circular(25),
   );
@@ -63,7 +62,7 @@ class _NavigationBarState extends State<NavigationBar> {
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           color: white,
-          borderRadius: bottomShape,
+          borderRadius: bottomBarBorder,
         ),
         child: SnakeNavigationBar.color(
           //* Here we have all the option of the navBar
@@ -105,6 +104,8 @@ class _NavigationBarState extends State<NavigationBar> {
               icon: Icon(Icons.fastfood),
               label: 'Cafet\'',
             ),
+
+            //TODO Hide Cafet' item if not from Angers
           ],
         ),
       ),

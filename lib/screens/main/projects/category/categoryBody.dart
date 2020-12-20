@@ -1,20 +1,20 @@
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:flutter/material.dart';
 
-import 'Menu/actu.dart';
-import 'Menu/projets.dart';
-import 'Menu/calendrier.dart';
+import 'tabs/actu.dart';
+import 'tabs/projets.dart';
+import 'tabs/calendrier.dart';
 
 final String classicFont = "Nunito";
 final Color backgroundColor = whiteWhite;
 final Color menuColorSelected = powderBlue;
 
-class BodyAssoSubCategories extends StatefulWidget {
+class CategoryBody extends StatefulWidget {
   @override
-  _BodyAssoSubCategoriesState createState() => _BodyAssoSubCategoriesState();
+  _CategoryBodyState createState() => _CategoryBodyState();
 }
 
-class _BodyAssoSubCategoriesState extends State<BodyAssoSubCategories> {
+class _CategoryBodyState extends State<CategoryBody> {
   final GlobalKey<_MenuSubCategoriesAssociationsState> _key = GlobalKey();
   @override
   Widget build(BuildContext context) {
