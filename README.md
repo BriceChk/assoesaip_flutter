@@ -1,17 +1,4 @@
-# assoesaip_flutter
+# Asso'esaip Flutter application
 
-Asso'esaip Flutter app
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-# assoesaip_flutter
+This app is made for the [ESAIP](https://esaip.org/) Graduate School of Engineering Student Union, to be used with the [Asso'esaip website API](https://github.com/BriceChk/assoesaip-symfony).
+Its goal is to give a nearly read-only experience (for now) of all the website contents to the students and the possibility to receive push notifications.
