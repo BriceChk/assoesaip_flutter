@@ -59,7 +59,7 @@ class _CafetCategoriesState extends State<CafetCategories> {
                 decoration: InputDecoration(
                     border: InputBorder.none, hintText: 'Liste des repas'),
               ),
-              BodyLayout(),
+              Repas(),
               TextField(
                 decoration: InputDecoration(
                     border: InputBorder.none, hintText: 'Liste des boissons'),
@@ -113,7 +113,7 @@ class Header extends StatelessWidget {
   }
 }
 
-class BodyLayout extends StatelessWidget {
+class Repas extends StatelessWidget {
   final List<List<String>> repasList = [
     [
       "Repas 1",
