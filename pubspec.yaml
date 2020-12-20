@@ -64,6 +64,10 @@ flutter:
   assets:
     - assets/images/HomePage/
     - assets/images/AssoCategories/
+    - assets/images/Cafet/
+    - assets/images/Cafet/Repas/
+    - assets/images/Cafet/Boissons/
+    - assets/images/Cafet/Desserts/
     - assets/images/SuperBowlLogo.png
     - assets/images/logo.png
     - assets/images/key.png
