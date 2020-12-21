@@ -1,5 +1,6 @@
 // HomePage when the user connect: AppBar + Carousel event + CustomScrollVertical vertical
 
+import 'package:assoesaip_flutter/models/user.dart';
 import 'package:assoesaip_flutter/screens/main/HomePage/starredNewsCarousel.dart';
 import 'package:assoesaip_flutter/screens/main/HomePage/newsList.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
@@ -7,11 +8,19 @@ import 'package:floating_search_bar/floating_search_bar.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
+  final User user;
+
+  HomePage(this.user);
+
   @override
-  _HomePageState createState() => _HomePageState();
+  _HomePageState createState() => _HomePageState(user);
 }
 
 class _HomePageState extends State<HomePage> {
+  final User user;
+
+  _HomePageState(this.user);
+
   @override
   Widget build(BuildContext context) {
     final String classicFont = "Nunito";
@@ -43,12 +52,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               trailing: CircleAvatar(
-                child: Text(
-                  "CB",
-                  style: TextStyle(
-                    fontFamily: classicFont,
-                  ),
-                ),
+                backgroundImage: NetworkImage('https://asso-esaip.bricechk.fr/media/cache/memberPicture/images/profile-pics/' + this.user.avatarFileName),
               ),
             ),
           ),
