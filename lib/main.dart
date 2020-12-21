@@ -10,7 +10,10 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'models/user.dart';
 
 void main() {
-  runApp(MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]).then((value) => runApp(MyApp()));
 }
 
 class MyApp extends StatefulWidget {
@@ -26,10 +29,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-    ]);
-
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
         print("onMessage: $message");
@@ -49,23 +48,19 @@ class _MyAppState extends State<MyApp> {
     return FutureBuilder<User>(
       future: getUser(),
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            home: LoadingScreen()
-          );
-        }
+        Widget widget;
 
-        if (snapshot.data == null) {
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            home: WelcomePage(),
-          );
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          widget = LoadingScreen();
+        } else if (snapshot.data == null) {
+          widget = WelcomePage();
+        } else if (snapshot.data is User) {
+          widget = MainNavigation(snapshot.data);
         }
 
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          home: MainNavigation(),
+          home: widget,
         );
       },
     );
