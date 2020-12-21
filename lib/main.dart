@@ -49,7 +49,7 @@ class _MyAppState extends State<MyApp> {
     return FutureBuilder<User>(
       future: getUser(),
       builder: (context, snapshot) {
-        if (!snapshot.hasData) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             home: LoadingScreen()
