@@ -1,8 +1,13 @@
 import 'package:assoesaip_flutter/screens/LoginPage/welcomePage.dart';
+import 'package:assoesaip_flutter/screens/loginPage/loadingScreen.dart';
+import 'package:assoesaip_flutter/screens/main/mainNavigation.dart';
+import 'package:assoesaip_flutter/services/api.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
+import 'models/user.dart';
 
 void main() {
   runApp(MyApp());
@@ -41,10 +46,28 @@ class _MyAppState extends State<MyApp> {
       },
     );
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: SafeArea(child: WelcomePage()),
-      //TODO Checker si connecté, si oui aller direct à l'accueil
+    return FutureBuilder<User>(
+      future: getUser(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            home: LoadingScreen()
+          );
+        }
+
+        if (snapshot.data == null) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            home: WelcomePage(),
+          );
+        }
+
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: MainNavigation(),
+        );
+      },
     );
   }
 }

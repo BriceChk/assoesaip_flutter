@@ -1,12 +1,17 @@
-import 'file:///C:/Users/brice/Desktop/assoesaip_flutter/lib/screens/main/mainNavigation.dart';
-import 'package:flutter/material.dart';
 import 'dart:async';
+
+import 'package:assoesaip_flutter/screens/main/mainNavigation.dart';
+import 'package:flutter/material.dart';
+import 'package:requests/requests.dart';
+import 'package:webview_cookie_manager/webview_cookie_manager.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+
 
 class LoginWebViewPage extends StatelessWidget {
 
   final Completer<WebViewController> _controller =
       Completer<WebViewController>();
+  final cookieManager = WebviewCookieManager();
 
   @override
   Widget build(BuildContext context) {
@@ -15,10 +20,21 @@ class LoginWebViewPage extends StatelessWidget {
           title: Text("Connexion à Asso'esaip"),
         ),
         body: WebView(
-          navigationDelegate: (NavigationRequest request) {
+          navigationDelegate: (NavigationRequest request) async {
             if (request.url == 'https://asso-esaip.bricechk.fr/') {
+              // When we get to the home screen of the website, store the session cookie and go to the main screen app
+              final cookies = await cookieManager.getCookies('https://asso-esaip.bricechk.fr/');
+              Map<String, String> map = Map();
+              for (var c in cookies) {
+                if (c.name == "PHPSESSID") {
+                  map[c.name] = c.value;
+                  break;
+                }
+              }
+              Requests.setStoredCookies('asso-esaip.bricechk.fr:443', map);
               Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  builder: (BuildContext context) => MainNavigation()));
+                  builder: (BuildContext context) => MainNavigation())
+              );
               return NavigationDecision.prevent;
             } else {
               return NavigationDecision.navigate;

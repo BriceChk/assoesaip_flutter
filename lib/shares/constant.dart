@@ -7,6 +7,7 @@ const navyBlue = Color(0xff03045E); //* Font in white
 const darkCornflowerBlue = Color(0xff023E8A); //* Font in white
 const starCommandBlue = Color(0xff0077B6); //* Font in white
 const blueGreen = Color(0xff0096C7); //* Font in white
+const esaipBlue = Color(0xff009bc2);
 const ceruleanCrayola = Color(0xff00B4D8); //* Font in white
 const skyBlueCrayola1 = Color(0xff48CAE4); //* Font in black
 const skyBlueCrayola2 = Color(0xff90E0EF); //* Font in black
