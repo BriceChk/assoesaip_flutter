@@ -1,3 +1,4 @@
+import 'package:assoesaip_flutter/models/user.dart';
 import 'package:assoesaip_flutter/screens/main/cafet/cafet.dart';
 import 'package:assoesaip_flutter/screens/main/calendar/calendar.dart';
 import 'package:assoesaip_flutter/screens/main/homePage/homePage.dart';
@@ -7,22 +8,24 @@ import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import '../../shares/constant.dart';
 
 class MainNavigation extends StatefulWidget {
+  final User user;
+
+  MainNavigation(this.user);
+
   @override
-  _MainNavigationState createState() => new _MainNavigationState();
+  _MainNavigationState createState() => new _MainNavigationState(user);
 }
 
 class _MainNavigationState extends State<MainNavigation> {
   //TODO_ variable
   int _pageIndex = 0;
   PageController _pageController;
+  final User user;
 
   //TODO_ Page of the App
-  List<Widget> tabPages = [
-    HomePage(),
-    CalendarWidget(),
-    ProjectsNavigator(),
-    CafetWidget(),
-  ];
+  List<Widget> tabPages = [];
+
+  _MainNavigationState(this.user);
 
   //TODO_ Colors
   Color selectedColor = navyBlue;
@@ -47,6 +50,13 @@ class _MainNavigationState extends State<MainNavigation> {
   void initState() {
     super.initState();
     _pageController = PageController(initialPage: _pageIndex);
+
+    tabPages.add(HomePage(user));
+    tabPages.add(CalendarWidget());
+    tabPages.add(ProjectsNavigator());
+    if (user.campus == "Angers") {
+      tabPages.add(CafetWidget());
+    }
   }
 
   @override
@@ -87,26 +97,7 @@ class _MainNavigationState extends State<MainNavigation> {
           onTap: onTabTapped,
 
           //* Here we have the different icons for each pages
-          items: <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Accueil',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_today_rounded),
-              label: 'Calendrier',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.group),
-              label: 'Clubs & assos',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.fastfood),
-              label: 'Cafet\'',
-            ),
-
-            //TODO Hide Cafet' item if not from Angers
-          ],
+          items: buildNavigationBarItems(this.user.campus),
         ),
       ),
       //* Here we have the changes of the page with the called function
@@ -117,6 +108,32 @@ class _MainNavigationState extends State<MainNavigation> {
         physics: NeverScrollableScrollPhysics(),
       ),
     );
+  }
+
+  List<BottomNavigationBarItem> buildNavigationBarItems(String campus) {
+    List<BottomNavigationBarItem> items = [
+      BottomNavigationBarItem(
+        icon: Icon(Icons.home),
+        label: 'Accueil',
+      ),
+      BottomNavigationBarItem(
+        icon: Icon(Icons.calendar_today_rounded),
+        label: 'Calendrier',
+      ),
+      BottomNavigationBarItem(
+        icon: Icon(Icons.group),
+        label: 'Clubs & assos',
+      ),
+    ];
+
+    if (campus == 'Angers') {
+      items.add(BottomNavigationBarItem(
+        icon: Icon(Icons.fastfood),
+        label: 'Cafet\'',
+      ));
+    }
+
+    return items;
   }
 
   void onPageChanged(int page) {

@@ -1,6 +1,8 @@
 import 'dart:async';
 
+import 'package:assoesaip_flutter/models/user.dart';
 import 'package:assoesaip_flutter/screens/main/mainNavigation.dart';
+import 'package:assoesaip_flutter/services/api.dart';
 import 'package:flutter/material.dart';
 import 'package:requests/requests.dart';
 import 'package:webview_cookie_manager/webview_cookie_manager.dart';
@@ -32,8 +34,9 @@ class LoginWebViewPage extends StatelessWidget {
                 }
               }
               Requests.setStoredCookies('asso-esaip.bricechk.fr:443', map);
+              User user = await getUser();
               Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  builder: (BuildContext context) => MainNavigation())
+                  builder: (BuildContext context) => MainNavigation(user))
               );
               return NavigationDecision.prevent;
             } else {
