@@ -18,6 +18,18 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final User user;
+  String avatarUrl = 'https://asso-esaip.bricechk.fr/media/cache/memberPicture/';
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (user.avatarFileName == null) {
+      avatarUrl += 'build/images/placeholder.png';
+    } else {
+      avatarUrl += 'images/profile-pics/' + user.avatarFileName;
+    }
+  }
 
   _HomePageState(this.user);
 
@@ -52,7 +64,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               trailing: CircleAvatar(
-                backgroundImage: NetworkImage('https://asso-esaip.bricechk.fr/media/cache/memberPicture/images/profile-pics/' + this.user.avatarFileName),
+                backgroundImage: NetworkImage(avatarUrl),
               ),
             ),
           ),
