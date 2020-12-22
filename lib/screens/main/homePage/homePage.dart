@@ -73,7 +73,7 @@ class _HomePageState extends State<HomePage> {
             automaticallyImplyLeading: false,
             backgroundColor: backgroundColor,
             //* Height of the picture (carousel)
-            expandedHeight: 320,
+            expandedHeight: 310,
             stretch: true,
             //* Stretch mode remove or add some features
             flexibleSpace: FlexibleSpaceBar(
@@ -88,8 +88,34 @@ class _HomePageState extends State<HomePage> {
           SliverList(
             delegate: SliverChildListDelegate(
               [
-                NewsListWidget(),
-                SizedBox(height: 55),
+                Container(
+                  color: backgroundColor,
+                  width: MediaQuery.of(context).size.width,
+                  //* Container of the white widget with the rounded corner
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      //Want to have space between the carousel and the top of the rounded container
+                      Padding(
+                        padding: EdgeInsets.only(top: 5, left: 10),
+                        child: Text(
+                          "Actualités",
+                          style: TextStyle(
+                            fontSize: 25,
+                            fontFamily: classicFont,
+                          ),
+                        ),
+                      ),
+                      //* Sizedbox in order to have a apsace between the rounded and the first news
+                      SizedBox(
+                        height: 10,
+                      ),
+                      //! Container of each news
+                      NewsListWidget()
+                    ],
+                  ),
+                ),
+                SizedBox(height: 60),
               ],
             ),
           )

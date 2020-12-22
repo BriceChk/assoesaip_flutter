@@ -1,5 +1,9 @@
+import 'package:assoesaip_flutter/models/news.dart';
+import 'package:assoesaip_flutter/services/api.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class NewsListWidget extends StatefulWidget {
   @override
@@ -7,87 +11,6 @@ class NewsListWidget extends StatefulWidget {
 }
 
 class _NewsListWidgetState extends State<NewsListWidget> {
-  final List<List<String>> news = [
-    [
-      'assets/images/HomePage/event_1.jpg',
-      'Théâtre',
-      'Atelier théâtre présenté par le BDA',
-      'BDA - Bureau des Arts (Angers)',
-      'Date : 21 octobre 2020',
-    ],
-    [
-      'assets/images/HomePage/event_2.jpg',
-      'WEI',
-      'Week-end d\'intégration',
-      'BDE - Bureau des étudiant (Angers)',
-      'Date : 23 octobre 2020',
-    ],
-    [
-      'assets/images/HomePage/event_3.jpg',
-      'Soirée Halloween',
-      'Soirée déguisé d\'halloween',
-      'NRS - Nouvelle route du son (Angers)',
-      'Date : 31 octobre 2020',
-    ],
-    [
-      'assets/images/HomePage/event_3.jpg',
-      'Soirée Halloween',
-      'Soirée déguisé d\'halloween',
-      'NRS - Nouvelle route du son (Angers)',
-      'Date : 31 octobre 2020',
-    ],
-    [
-      'assets/images/HomePage/event_3.jpg',
-      'Soirée Halloween',
-      'Soirée déguisé d\'halloween',
-      'NRS - Nouvelle route du son (Angers)',
-      'Date : 31 octobre 2020',
-    ],
-    [
-      'assets/images/HomePage/event_3.jpg',
-      'Soirée Halloween',
-      'Soirée déguisé d\'halloween',
-      'NRS - Nouvelle route du son (Angers)',
-      'Date : 31 octobre 2020',
-    ],
-    [
-      'assets/images/HomePage/event_3.jpg',
-      'Soirée Halloween',
-      'Soirée déguisé d\'halloween',
-      'NRS - Nouvelle route du son (Angers)',
-      'Date : 31 octobre 2020',
-    ],
-    [
-      'assets/images/HomePage/event_3.jpg',
-      'Soirée Halloween',
-      'Soirée déguisé d\'halloween',
-      'NRS - Nouvelle route du son (Angers)',
-      'Date : 31 octobre 2020',
-    ],
-    [
-      'assets/images/HomePage/event_3.jpg',
-      'Soirée Halloween',
-      'Soirée déguisé d\'halloween',
-      'NRS - Nouvelle route du son (Angers)',
-      'Date : 31 octobre 2020',
-    ],
-    [
-      'assets/images/HomePage/event_3.jpg',
-      'Soirée Halloween',
-      'Soirée déguisé d\'halloween',
-      'NRS - Nouvelle route du son (Angers)',
-      'Date : 31 octobre 2020',
-    ],
-    [
-      'assets/images/HomePage/event_3.jpg',
-      'Soirée Halloween',
-      'Soirée déguisé d\'halloween',
-      'NRS - Nouvelle route du son (Angers)',
-      'Date : 31 octobre 2020',
-    ],
-  ];
-
-  int currentIndex = 0;
   final String classicFont = "Nunito";
   final Color backgroundColor = whiteWhite;
   final Color cardColor = white;
@@ -98,56 +21,76 @@ class _NewsListWidgetState extends State<NewsListWidget> {
   );
   final BorderRadius roundedImage = BorderRadius.circular(15);
 
+  List<News> news;
+
+  @override
+  void initState() {
+    super.initState();
+    getNews().then((value){
+      setState(() {
+        news = value;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    currentIndex = 0;
-    return Container(
-      color: backgroundColor,
-      //* Container of the white widget with the rounded corner
-      child: Container(
-        //* Size of the screen
-        width: MediaQuery.of(context).size.width,
-        //* Column if widget in order to have the buildnews working I.E starredNewsCarousel.dart
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            //Want to have space between the carousel and the top of the rounded container
-            Padding(
-              padding: EdgeInsets.only(top: 5, left: 10),
-              child: Text(
-                "Actualités",
-                style: TextStyle(
-                  fontSize: 25,
-                  fontFamily: classicFont,
-                ),
-              ),
-            ),
-            //* Sizedbox in order to have a apsace between the rounded and the first news
-            SizedBox(
-              height: 15,
-            ),
-            //! Container of each news
-            Container(
-              width: MediaQuery.of(context).size.width,
-              child: Column(
-                children: _buildNews(),
-              ),
-            ),
-          ],
-        ),
+    if (news is List<News>) {
+      return _newsListWidget();
+    }  else if (news == null) {
+      return Text('Erreur');
+    } else {
+      return Text('Chargement ...');
+    }
+  }
+
+  Widget _newsListWidget() {
+    return Column(
+      children: news.map((e) => _buildNewsWidget(e)).toList(),
+    );
+  }
+
+  Widget _buildNewsTitle(News n) {
+    if (n.article == null && n.event == null) return null;
+
+    var title = n.article != null ? n.article.title : n.event.title;
+
+    return Text(
+      title,
+      style: TextStyle(
+        fontSize: 20,
+        fontFamily: classicFont,
+        color: titleColor,
       ),
     );
   }
 
-  Widget _news(bool isActive) {
-    return Padding(
-      padding: EdgeInsets.only(right: 10, left: 10, bottom: 7.5),
-      child: Card(
-        elevation: 0.5,
-        color: cardColor,
-        shape: roundedBorder,
-        child: Container(
-          height: 95,
+  Widget _buildNewsWidget(News n) {
+    String imageUrl = 'https://asso-esaip.bricechk.fr/media/cache/medium/images/';
+    if (n.project.logoFileName == null) {
+
+    } else {
+      imageUrl += 'project-logos/' + n.project.logoFileName;
+    }
+
+    String content = n.content;
+    if (n.article != null) {
+      content = n.article.abstract;
+    } else if (n.event != null) {
+      content = n.event.abstract;
+    }
+
+    DateFormat formatter = DateFormat('dd MMMM yyyy', 'fr_FR');
+    String date = formatter.format(n.datePublished);
+
+    Widget card = Card(
+      elevation: 0.5,
+      color: cardColor,
+      shape: roundedBorder,
+      margin: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+      child: Padding(
+        padding: EdgeInsets.all(4),
+        child: IntrinsicHeight(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -160,73 +103,68 @@ class _NewsListWidgetState extends State<NewsListWidget> {
                   borderRadius: roundedImage,
                   //* URL of the picture of the news
                   image: DecorationImage(
-                    image: AssetImage(news[currentIndex][0]),
-                    fit: BoxFit.cover,
+                    image: NetworkImage(imageUrl),
+                    fit: BoxFit.contain,
                   ),
                 ),
               ),
               SizedBox(
-                width: 15,
+                width: 5,
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 5),
-                  //* Title of the news
-                  Text(
-                    news[currentIndex][1],
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontFamily: classicFont,
-                      color: titleColor,
+              Flexible(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    //* Title of the news
+                    _buildNewsTitle(n),
+                    //* Description of the news
+                    Text(
+                      content,
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontFamily: classicFont,
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 4),
-                  //* Description of the news
-                  Text(
-                    news[currentIndex][2],
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontFamily: classicFont,
+                    SizedBox(height: 3),
+                    //* Name of the association
+                    Text(
+                      n.project.name,
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontFamily: classicFont,
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 2),
-                  //* Name of the association
-                  Text(
-                    news[currentIndex][3],
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontFamily: classicFont,
+                    SizedBox(height: 2),
+                    //* Date of the news
+                    Text(
+                      date,
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontFamily: classicFont,
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 2.5),
-                  //* Date of the news
-                  Text(
-                    news[currentIndex][4],
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontFamily: classicFont,
-                    ),
-                  ),
-                ],
+                  ].where((o) => o != null).toList(), // Remove the eventually null Text for the title
+                ),
               ),
             ],
           ),
         ),
       ),
     );
-  }
 
-  List<Widget> _buildNews() {
-    List<Widget> newsNumber = [];
-    for (int i = 0; i < news.length; i++) {
-      if (currentIndex == i) {
-        newsNumber.add(_news(true));
-      } else {
-        newsNumber.add(_news(false));
-      }
-      currentIndex++;
+    if (n.link != null) {
+      return InkWell(
+        child: card,
+        onTap: () async {
+          if (await canLaunch(n.link)) {
+            await launch(n.link);
+          } else {
+            throw 'Could not launch ' + n.link;
+          }
+        },
+      );
     }
-    return newsNumber;
+
+    return card;
   }
 }
