@@ -14,10 +14,10 @@ class LoadingScreen extends StatelessWidget {
             children: [
               Image.asset(
                 'assets/images/logo.png',
-                height: 200,
+                height: 100,
                 fit: BoxFit.fitHeight,
               ),
-              SizedBox(height: 60,),
+              SizedBox(height: 30,),
               Text(
                 'Chargement en cours',
                 style: TextStyle(
