@@ -82,7 +82,6 @@ class _CafetWidgetState extends State<CafetWidget> {
 class Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    initializeDateFormatting();
     var formatDate = DateFormat('EEEE', 'fr_FR').format(DateTime.now());
     //TODO Si passé 13h, afficher le menu du lendemain
 

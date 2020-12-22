@@ -6,6 +6,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 import 'models/user.dart';
 
@@ -27,8 +28,23 @@ class _MyAppState extends State<MyApp> {
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
+  String status = 'loading';
+  User user;
+
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
+    initializeDateFormatting('fr_FR');
+
+    getUser().then((value) {
+      setState(() {
+        user = value;
+        status = 'ready';
+      });
+    });
+
+    //TODO move all data fetching here so that it doesn't reload when switching tabs
+
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
         print("onMessage: $message");
@@ -44,25 +60,23 @@ class _MyAppState extends State<MyApp> {
         //_navigateToItemDetail(message);
       },
     );
+  }
 
-    return FutureBuilder<User>(
-      future: getUser(),
-      builder: (context, snapshot) {
-        Widget widget;
+  @override
+  Widget build(BuildContext context) {
+    Widget widget;
 
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          widget = LoadingScreen();
-        } else if (snapshot.data == null) {
-          widget = WelcomePage();
-        } else if (snapshot.data is User) {
-          widget = MainNavigation(snapshot.data);
-        }
+    if (status == 'loading') {
+      widget = LoadingScreen();
+    } else if (user == null) {
+      widget = WelcomePage();
+    } else {
+      widget = MainNavigation(user);
+    }
 
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          home: widget,
-        );
-      },
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: widget,
     );
   }
 }
