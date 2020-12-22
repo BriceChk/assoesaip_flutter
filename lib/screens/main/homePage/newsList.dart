@@ -66,7 +66,7 @@ class _NewsListWidgetState extends State<NewsListWidget> {
   }
 
   Widget _buildNewsWidget(News n) {
-    String imageUrl = 'https://asso-esaip.bricechk.fr/media/cache/medium/images/';
+    String imageUrl = 'https://asso-esaip.bricechk.fr/images/';
     if (n.project.logoFileName == null) {
 
     } else {

@@ -18,7 +18,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final User user;
-  String avatarUrl = 'https://asso-esaip.bricechk.fr/media/cache/memberPicture/';
+  String avatarUrl = 'https://asso-esaip.bricechk.fr/';
 
   @override
   void initState() {
