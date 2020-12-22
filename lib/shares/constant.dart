@@ -29,6 +29,7 @@ final Color hearderColor = skyBlueCrayola1;
 final Color menuColorSelected = powderBlue;
 final Color shadowColor = navyBlue;
 final Color splashColor = skyBlueCrayola1;
+final Color greyIconColor = Colors.grey[500];
 
 int assoIndex = 0;
 

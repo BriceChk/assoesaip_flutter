@@ -67,6 +67,7 @@ class _NewsListWidgetState extends State<NewsListWidget> {
             child: Icon(
               FontAwesomeIcons.calendarAlt,
               size: 17.5,
+              color: greyIconColor,
             ),
           )
         : n.event == null
@@ -74,6 +75,7 @@ class _NewsListWidgetState extends State<NewsListWidget> {
                 child: Icon(
                   FontAwesomeIcons.externalLinkAlt,
                   size: 17.5,
+                  color: greyIconColor,
                 ),
               )
             : n.article == null
@@ -81,10 +83,14 @@ class _NewsListWidgetState extends State<NewsListWidget> {
                     child: Icon(
                       FontAwesomeIcons.newspaper,
                       size: 17.5,
+                      color: greyIconColor,
                     ),
                   )
                 : Container(
-                    child: Icon(Icons.campaign_rounded),
+                    child: Icon(
+                      Icons.campaign_rounded,
+                      color: greyIconColor,
+                    ),
                   );
   }
 
@@ -148,27 +154,35 @@ class _NewsListWidgetState extends State<NewsListWidget> {
                         fontFamily: classicFont,
                       ),
                     ),
-                    SizedBox(height: 3),
-                    //* Name of the association
-                    Text(
-                      n.project.name,
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontFamily: classicFont,
-                      ),
-                    ),
                     SizedBox(height: 2),
-                    //* Date of the news
+                    //* Row in order to have the icon and 2 text align each other
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          date,
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontFamily: classicFont,
-                          ),
+                        //* Alignment of the 2 Text: Name and Date
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            //* Name of the association
+                            Text(
+                              n.project.name,
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontFamily: classicFont,
+                              ),
+                            ),
+                            SizedBox(height: 3),
+                            //* Date of the news
+                            Text(
+                              date,
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontFamily: classicFont,
+                              ),
+                            ),
+                          ],
                         ),
+                        //* Icon for each type of news
                         Row(
                           children: [_buildNewsIcons(n), SizedBox(width: 10)],
                         ),
