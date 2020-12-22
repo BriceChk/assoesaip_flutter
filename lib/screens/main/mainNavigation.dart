@@ -98,7 +98,7 @@ class _MainNavigationState extends State<MainNavigation> {
           onTap: onTabTapped,
 
           //* Here we have the different icons for each pages
-          items: buildNavigationBarItems(this.user.campus),
+          items: buildNavigationBarItems(),
         ),
       ),
       //* Here we have the changes of the page with the called function
@@ -111,7 +111,7 @@ class _MainNavigationState extends State<MainNavigation> {
     );
   }
 
-  List<BottomNavigationBarItem> buildNavigationBarItems(String campus) {
+  List<BottomNavigationBarItem> buildNavigationBarItems() {
     List<BottomNavigationBarItem> items = [
       BottomNavigationBarItem(
         icon: Icon(Icons.home),
@@ -123,11 +123,11 @@ class _MainNavigationState extends State<MainNavigation> {
       ),
       BottomNavigationBarItem(
         icon: Icon(Icons.group),
-        label: 'Clubs & assos',
+        label: 'Assos',
       ),
     ];
 
-    if (campus == 'Angers') {
+    if (this.user.campus == 'Angers') {
       items.add(BottomNavigationBarItem(
         icon: Icon(Icons.fastfood),
         label: 'Cafet\'',
