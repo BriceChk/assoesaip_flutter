@@ -98,8 +98,8 @@ class _NewsListWidgetState extends State<NewsListWidget> {
       content = n.event.abstract;
     }
 
-    DateFormat formatter = DateFormat('dd MMMM yyyy', 'fr_FR');
-    String date = formatter.format(n.datePublished);
+    DateFormat formatter = DateFormat("dd MMMM yyyy · HH'h'mm", 'fr_FR');
+    String date = formatter.format(n.datePublished.toLocal());
 
     Widget card = Card(
       elevation: 0.5,
@@ -143,7 +143,7 @@ class _NewsListWidgetState extends State<NewsListWidget> {
                         fontFamily: classicFont,
                       ),
                     ),
-                    SizedBox(height: 2),
+                    SizedBox(height: 10),
                     //* Row in order to have the icon and 2 text align each other
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -160,7 +160,6 @@ class _NewsListWidgetState extends State<NewsListWidget> {
                                 fontFamily: classicFont,
                               ),
                             ),
-                            SizedBox(height: 3),
                             //* Date of the news
                             Text(
                               date,

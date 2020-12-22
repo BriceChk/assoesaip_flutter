@@ -112,8 +112,8 @@ class _StarredNewsCarouselWidgetState extends State<StarredNewsCarouselWidget> {
     String title = n.article != null ? n.article.title : n.event.title;
     String content = n.article != null ? n.article.abstract : n.event.abstract;
 
-    DateFormat formatter = DateFormat('dd MMMM yyyy', 'fr_FR');
-    String date = formatter.format(n.datePublished);
+    DateFormat formatter = DateFormat("dd MMMM yyyy · HH'h'mm", 'fr_FR');
+    String date = formatter.format(n.datePublished.toLocal());
 
     return Card(
       elevation: 2,
