@@ -62,36 +62,26 @@ class _NewsListWidgetState extends State<NewsListWidget> {
   }
 
   Widget _buildNewsIcons(News n) {
-    return n.event == null && n.link == null
-        ? Container(
-            child: Icon(
-              FontAwesomeIcons.calendarAlt,
-              size: 17.5,
-              color: greyIconColor,
-            ),
-          )
-        : n.event == null
-            ? Container(
-                child: Icon(
-                  FontAwesomeIcons.externalLinkAlt,
-                  size: 17.5,
-                  color: greyIconColor,
-                ),
-              )
-            : n.article == null
-                ? Container(
-                    child: Icon(
-                      FontAwesomeIcons.newspaper,
-                      size: 17.5,
-                      color: greyIconColor,
-                    ),
-                  )
-                : Container(
-                    child: Icon(
-                      Icons.campaign_rounded,
-                      color: greyIconColor,
-                    ),
-                  );
+    IconData icon;
+
+    if (n.event != null) {
+      icon = FontAwesomeIcons.calendarAlt;
+    } else if (n.article != null) {
+      icon = FontAwesomeIcons.newspaper;
+    } else if (n.link != null) {
+      icon = FontAwesomeIcons.externalLinkAlt;
+    } else {
+      return null;
+    }
+
+    return Container(
+      padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+      child: Icon(
+        icon,
+        size: 17.5,
+        color: greyIconColor
+      ),
+    );
   }
 
   Widget _buildNewsWidget(News n) {
@@ -182,14 +172,10 @@ class _NewsListWidgetState extends State<NewsListWidget> {
                           ],
                         ),
                         //* Icon for each type of news
-                        Row(
-                          children: [_buildNewsIcons(n), SizedBox(width: 10)],
-                        ),
-                      ],
+                        _buildNewsIcons(n)
+                      ].where((o) => o != null).toList(),
                     ),
-                  ]
-                      .where((o) => o != null)
-                      .toList(), // Remove the eventually null Text for the title
+                  ].where((o) => o != null).toList(), // Remove the eventually null Text for the title
                 ),
               ),
             ],
