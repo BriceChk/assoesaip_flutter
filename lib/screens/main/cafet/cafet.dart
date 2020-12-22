@@ -1,13 +1,11 @@
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:intl/date_symbol_data_local.dart';
 
 final String classicFont = "Nunito";
 final Color cardColor = white;
-final Color hearderColor = skyBlueCrayola1;
 final Color shadowColor = navyBlue;
-final Color fontColor = Colors.black;
+final Color fontColor = Colors.white;
 final Color titleColor = navyBlue;
 final Color splashColor = skyBlueCrayola1;
 
@@ -44,7 +42,7 @@ class _CafetWidgetState extends State<CafetWidget> {
           ],
           toolbarHeight: 130,
           pinned: true,
-          backgroundColor: hearderColor,
+          backgroundColor: esaipBlue,
         ),
         //* We wrap the rest of the page inside the SliverList: like this everything scrool vertically except the header
         SliverList(
@@ -88,7 +86,7 @@ class Header extends StatelessWidget {
     return Container(
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
-        color: hearderColor,
+        color: esaipBlue,
         borderRadius: borderHeader,
       ),
 

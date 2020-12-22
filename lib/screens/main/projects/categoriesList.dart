@@ -5,7 +5,7 @@ final String classicFont = "Nunito";
 final Color cardColor = white;
 final Color hearderColor = skyBlueCrayola1;
 final Color shadowColor = navyBlue;
-final Color fontColor = Colors.black;
+final Color fontColor = Colors.white;
 final Color titleColor = navyBlue;
 final Color splashColor = skyBlueCrayola1;
 
@@ -69,7 +69,7 @@ class Header extends StatelessWidget {
     return Container(
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
-        color: hearderColor,
+        color: esaipBlue,
         borderRadius: borderHeader,
       ),
 

@@ -28,11 +28,12 @@ class _MainNavigationState extends State<MainNavigation> {
   _MainNavigationState(this.user);
 
   //TODO_ Colors
-  Color selectedColor = navyBlue;
-  Color unselectedColor = navyBlue;
-  Color circleSelectedColor = skyBlueCrayola2;
+  Color navBarColor = esaipBlue;
+  Color selectedCircleColor = Colors.white;
+  Color unselectedIconColor = Colors.white;
+  Color selectedIconColor = esaipBlue;
+
   Color scaffoldBackgroundColor = white;
-  Color navBarColor = powderBlue.withOpacity(0.75);
 
   ShapeBorder bottomBarShape = RoundedRectangleBorder(
     borderRadius: BorderRadius.only(
@@ -79,11 +80,11 @@ class _MainNavigationState extends State<MainNavigation> {
           behaviour: SnakeBarBehaviour.pinned,
           snakeShape: SnakeShape.circle,
           shape: bottomBarShape,
-          snakeViewColor: selectedColor,
+          snakeViewColor: selectedCircleColor,
           selectedItemColor: SnakeShape.circle == SnakeShape.indicator
-              ? selectedColor
-              : circleSelectedColor,
-          unselectedItemColor: unselectedColor,
+              ? selectedCircleColor
+              : selectedIconColor,
+          unselectedItemColor: unselectedIconColor,
           backgroundColor: navBarColor,
 
           ///configuration for SnakeNavigationBar.gradient

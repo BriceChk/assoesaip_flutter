@@ -12,13 +12,13 @@ class CategoryHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color fontColor = Colors.black;
+    final Color fontColor = Colors.white;
     //* Container which wrapping the hearder of the app
     return Container(
       //* Taking all the width available
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
-        color: hearderColor,
+        color: esaipBlue,
         borderRadius: borderHeader,
       ),
       //* In order to have a padding horizontaly
