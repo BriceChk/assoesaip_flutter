@@ -36,7 +36,7 @@ class _CategoriesListState extends State<CategoriesList> {
           ],
           toolbarHeight: 130,
           pinned: true,
-          backgroundColor: hearderColor,
+          backgroundColor: headerColor,
         ),
         //* We wrap the rest of the page inside the SliverList: like this everything scrool vertically except the header
         SliverList(
@@ -63,7 +63,7 @@ class Header extends StatelessWidget {
     return Container(
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
-        color: esaipBlue,
+        color: headerColor,
         borderRadius: borderHeader,
       ),
 
@@ -78,7 +78,7 @@ class Header extends StatelessWidget {
               "Parcourir les projets",
               style: TextStyle(
                 fontSize: 30,
-                color: fontColor,
+                color: headerTextColor,
                 fontFamily: classicFont,
               ),
             ),
@@ -88,7 +88,7 @@ class Header extends StatelessWidget {
               textAlign: TextAlign.justify,
               style: TextStyle(
                 fontSize: 16,
-                color: fontColor,
+                color: headerTextColor,
                 fontFamily: classicFont,
               ),
             ),

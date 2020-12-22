@@ -15,13 +15,12 @@ class ProjectHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color fontColor = Colors.white;
     //* Container which wrapping the hearder of the app
     return Container(
       //* Taking all the width available
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
-        color: esaipBlue,
+        color: headerColor,
         borderRadius: borderHeader,
       ),
       //* In order to have a padding horizontaly
@@ -39,7 +38,7 @@ class ProjectHeader extends StatelessWidget {
                 GestureDetector(
                   child: Icon(
                     Icons.arrow_back,
-                    color: navyBlue,
+                    color: headerTextColor,
                   ),
                   //* Pushing back to the AssociationCategories
                   onTap: () {
@@ -57,7 +56,7 @@ class ProjectHeader extends StatelessWidget {
                         associations[1],
                         style: TextStyle(
                             fontSize: 25,
-                            color: fontColor,
+                            color: headerTextColor,
                             fontFamily: classicFont),
                       ),
                     ],
@@ -75,7 +74,7 @@ class ProjectHeader extends StatelessWidget {
                 textAlign: TextAlign.start,
                 style: TextStyle(
                   fontSize: 16,
-                  color: fontColor,
+                  color: headerTextColor,
                   fontFamily: classicFont,
                 ),
               ),

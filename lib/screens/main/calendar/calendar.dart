@@ -2,7 +2,6 @@ import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:flutter/material.dart';
 
 final String classicFont = "Nunito";
-final Color fontColor = Colors.white;
 
 final BorderRadius headerBorder = BorderRadius.only(
   bottomLeft: Radius.circular(25),
@@ -32,7 +31,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
           ],
           toolbarHeight: 130,
           pinned: true,
-          backgroundColor: skyBlueCrayola1,
+          backgroundColor: headerColor,
         )
       ],
     );
@@ -45,7 +44,7 @@ class CalendarHeader extends StatelessWidget {
     return Container(
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
-        color: esaipBlue,
+        color: headerColor,
         borderRadius: headerBorder,
       ),
 
@@ -60,7 +59,7 @@ class CalendarHeader extends StatelessWidget {
               "Calendrier",
               style: TextStyle(
                 fontSize: 30,
-                color: fontColor,
+                color: headerTextColor,
                 fontFamily: classicFont,
               ),
             ),

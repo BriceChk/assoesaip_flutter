@@ -24,12 +24,13 @@ final Color backgroundColor = whiteWhite;
 final Color cardColor = white;
 final Color titleColor = navyBlue;
 final Color titleCarouselColor = powderBlue;
-final Color fontColor = white;
-final Color hearderColor = skyBlueCrayola1;
 final Color menuColorSelected = powderBlue;
 final Color shadowColor = navyBlue;
 final Color splashColor = skyBlueCrayola1;
 final Color greyIconColor = Colors.grey[500];
+
+final Color headerColor = esaipBlue;
+final Color headerTextColor = Colors.white;
 
 int assoIndex = 0;
 

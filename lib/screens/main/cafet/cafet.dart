@@ -42,7 +42,7 @@ class _CafetWidgetState extends State<CafetWidget> {
           ],
           toolbarHeight: 130,
           pinned: true,
-          backgroundColor: esaipBlue,
+          backgroundColor: headerColor,
         ),
         //* We wrap the rest of the page inside the SliverList: like this everything scrool vertically except the header
         SliverList(
@@ -86,7 +86,7 @@ class Header extends StatelessWidget {
     return Container(
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
-        color: esaipBlue,
+        color: headerColor,
         borderRadius: borderHeader,
       ),
 
@@ -101,7 +101,7 @@ class Header extends StatelessWidget {
               "Menu de " + '$formatDate',
               style: TextStyle(
                 fontSize: 30,
-                color: fontColor,
+                color: headerTextColor,
                 fontFamily: classicFont,
               ),
             ),
