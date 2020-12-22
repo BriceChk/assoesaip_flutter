@@ -35,9 +35,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final String classicFont = "Nunito";
-    final Color backgroundColor = whiteWhite;
-
     return Container(
       color: backgroundColor,
       child: CustomScrollView(
@@ -69,6 +66,21 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           //* SliverAppBar to have the animation
+          SliverAppBar(
+            automaticallyImplyLeading: false,
+            backgroundColor: backgroundColor,
+            //* Height of the picture (carousel)
+            expandedHeight: 310,
+            stretch: true,
+            //* Stretch mode remove or add some features
+            flexibleSpace: FlexibleSpaceBar(
+              stretchModes: [
+                StretchMode.zoomBackground,
+                StretchMode.blurBackground,
+              ],
+              background: StarredNewsCarouselWidget(),
+            ),
+          ),
           //* Others widget from the page here only the news (for now)
           StarredNewsCarouselWidget(),
           SliverList(

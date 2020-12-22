@@ -15,6 +15,22 @@ const blizzardBlue = Color(0xffADE8F4); //* Font in black
 const powderBlue = Color(0xffCAF0F8); //* Font in black
 const white = Color(0xfff5f3f4); //* Font in black
 const whiteWhite = Colors.white;
+
+//* Font
+final String classicFont = "Nunito";
+
+//* Color
+final Color backgroundColor = whiteWhite;
+final Color cardColor = white;
+final Color titleColor = navyBlue;
+final Color titleCarouselColor = powderBlue;
+final Color fontColor = white;
+final Color hearderColor = skyBlueCrayola1;
+final Color menuColorSelected = powderBlue;
+final Color shadowColor = navyBlue;
+final Color splashColor = skyBlueCrayola1;
+final Color greyIconColor = Colors.grey[500];
+
 int assoIndex = 0;
 
 String assoNameString = '';

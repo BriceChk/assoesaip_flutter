@@ -6,10 +6,6 @@ import 'package:flutter/material.dart';
 import 'tabs/accueil.dart';
 import 'tabs/partenariat.dart';
 
-final String classicFont = "Nunito";
-final Color backgroundColor = whiteWhite;
-final Color menuColorSelected = powderBlue;
-
 class ProjectBody extends StatefulWidget {
   @override
   _ProjectBodyState createState() => _ProjectBodyState();

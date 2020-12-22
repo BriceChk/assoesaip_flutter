@@ -2,6 +2,7 @@ import 'package:assoesaip_flutter/models/news.dart';
 import 'package:assoesaip_flutter/services/api.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -11,11 +12,6 @@ class NewsListWidget extends StatefulWidget {
 }
 
 class _NewsListWidgetState extends State<NewsListWidget> {
-  final String classicFont = "Nunito";
-  final Color backgroundColor = whiteWhite;
-  final Color cardColor = white;
-  final Color titleColor = navyBlue;
-
   final RoundedRectangleBorder roundedBorder = RoundedRectangleBorder(
     borderRadius: BorderRadius.circular(15),
   );
@@ -26,7 +22,7 @@ class _NewsListWidgetState extends State<NewsListWidget> {
   @override
   void initState() {
     super.initState();
-    getNews().then((value){
+    getNews().then((value) {
       setState(() {
         news = value;
       });
@@ -37,7 +33,7 @@ class _NewsListWidgetState extends State<NewsListWidget> {
   Widget build(BuildContext context) {
     if (news is List<News>) {
       return _newsListWidget();
-    }  else if (news == null) {
+    } else if (news == null) {
       return Text('Erreur');
     } else {
       return Text('Chargement ...');
@@ -65,10 +61,42 @@ class _NewsListWidgetState extends State<NewsListWidget> {
     );
   }
 
+  Widget _buildNewsIcons(News n) {
+    return n.event == null && n.link == null
+        ? Container(
+            child: Icon(
+              FontAwesomeIcons.calendarAlt,
+              size: 17.5,
+              color: greyIconColor,
+            ),
+          )
+        : n.event == null
+            ? Container(
+                child: Icon(
+                  FontAwesomeIcons.externalLinkAlt,
+                  size: 17.5,
+                  color: greyIconColor,
+                ),
+              )
+            : n.article == null
+                ? Container(
+                    child: Icon(
+                      FontAwesomeIcons.newspaper,
+                      size: 17.5,
+                      color: greyIconColor,
+                    ),
+                  )
+                : Container(
+                    child: Icon(
+                      Icons.campaign_rounded,
+                      color: greyIconColor,
+                    ),
+                  );
+  }
+
   Widget _buildNewsWidget(News n) {
     String imageUrl = 'https://asso-esaip.bricechk.fr/images/';
     if (n.project.logoFileName == null) {
-
     } else {
       imageUrl += 'project-logos/' + n.project.logoFileName;
     }
@@ -125,25 +153,43 @@ class _NewsListWidgetState extends State<NewsListWidget> {
                         fontFamily: classicFont,
                       ),
                     ),
-                    SizedBox(height: 3),
-                    //* Name of the association
-                    Text(
-                      n.project.name,
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontFamily: classicFont,
-                      ),
-                    ),
                     SizedBox(height: 2),
-                    //* Date of the news
-                    Text(
-                      date,
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontFamily: classicFont,
-                      ),
+                    //* Row in order to have the icon and 2 text align each other
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        //* Alignment of the 2 Text: Name and Date
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            //* Name of the association
+                            Text(
+                              n.project.name,
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontFamily: classicFont,
+                              ),
+                            ),
+                            SizedBox(height: 3),
+                            //* Date of the news
+                            Text(
+                              date,
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontFamily: classicFont,
+                              ),
+                            ),
+                          ],
+                        ),
+                        //* Icon for each type of news
+                        Row(
+                          children: [_buildNewsIcons(n), SizedBox(width: 10)],
+                        ),
+                      ],
                     ),
-                  ].where((o) => o != null).toList(), // Remove the eventually null Text for the title
+                  ]
+                      .where((o) => o != null)
+                      .toList(), // Remove the eventually null Text for the title
                 ),
               ),
             ],

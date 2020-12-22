@@ -2,7 +2,6 @@ import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:flutter/material.dart';
 
 class Members extends StatelessWidget {
-  final String classicFont = "Nunito";
   final double nameSize = 18;
   final double roleSize = 16;
 

@@ -5,10 +5,6 @@ import 'tabs/actu.dart';
 import 'tabs/projets.dart';
 import 'tabs/calendrier.dart';
 
-final String classicFont = "Nunito";
-final Color backgroundColor = whiteWhite;
-final Color menuColorSelected = powderBlue;
-
 class CategoryBody extends StatefulWidget {
   @override
   _CategoryBodyState createState() => _CategoryBodyState();

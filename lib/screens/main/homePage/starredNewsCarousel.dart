@@ -7,7 +7,8 @@ import 'package:intl/intl.dart';
 
 class StarredNewsCarouselWidget extends StatefulWidget {
   @override
-  _StarredNewsCarouselWidgetState createState() => _StarredNewsCarouselWidgetState();
+  _StarredNewsCarouselWidgetState createState() =>
+      _StarredNewsCarouselWidgetState();
 }
 
 class _StarredNewsCarouselWidgetState extends State<StarredNewsCarouselWidget> {
