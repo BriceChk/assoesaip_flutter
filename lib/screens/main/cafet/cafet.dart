@@ -9,11 +9,6 @@ final Color fontColor = Colors.white;
 final Color titleColor = navyBlue;
 final Color splashColor = skyBlueCrayola1;
 
-final BorderRadius borderHeader = BorderRadius.only(
-  bottomLeft: Radius.circular(25),
-  bottomRight: Radius.circular(25),
-);
-
 class CafetWidget extends StatefulWidget {
   @override
   _CafetWidgetState createState() => _CafetWidgetState();
@@ -87,7 +82,7 @@ class Header extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
         color: headerColor,
-        borderRadius: borderHeader,
+        borderRadius: headerBorder,
       ),
 
       //* In order to have a padding horizontaly

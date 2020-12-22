@@ -1,7 +1,7 @@
+import 'package:assoesaip_flutter/screens/main/projects/categoriesList.dart';
+import 'package:assoesaip_flutter/screens/main/projects/category/category.dart';
 import 'package:flutter/material.dart';
 
-import 'categoriesList.dart';
-import 'category/category.dart';
 
 class ProjectsNavigator extends StatelessWidget {
   @override

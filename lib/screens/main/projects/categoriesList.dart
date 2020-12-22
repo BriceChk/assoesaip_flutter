@@ -3,11 +3,6 @@ import 'package:flutter/material.dart';
 
 final Color fontColor = Colors.black;
 
-final BorderRadius borderHeader = BorderRadius.only(
-  bottomLeft: Radius.circular(25),
-  bottomRight: Radius.circular(25),
-);
-
 class CategoriesList extends StatefulWidget {
   @override
   _CategoriesListState createState() => _CategoriesListState();
@@ -64,7 +59,7 @@ class Header extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
         color: headerColor,
-        borderRadius: borderHeader,
+        borderRadius: headerBorder,
       ),
 
       //* In order to have a padding horizontaly

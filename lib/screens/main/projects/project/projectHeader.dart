@@ -2,11 +2,6 @@ import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:flutter/material.dart';
 
 class ProjectHeader extends StatelessWidget {
-  final BorderRadius borderHeader = BorderRadius.only(
-    bottomLeft: Radius.circular(25),
-    bottomRight: Radius.circular(25),
-  );
-
   final List<String> associations = [
     'assets/images/SuperBowlLogo.png',
     'BDE - Bureau des étudiants',
@@ -21,7 +16,7 @@ class ProjectHeader extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
         color: headerColor,
-        borderRadius: borderHeader,
+        borderRadius: headerBorder,
       ),
       //* In order to have a padding horizontaly
       child: Padding(

@@ -2,11 +2,6 @@ import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:flutter/material.dart';
 
 class CategoryHeader extends StatelessWidget {
-  final BorderRadius borderHeader = BorderRadius.only(
-    bottomLeft: Radius.circular(25),
-    bottomRight: Radius.circular(25),
-  );
-
   @override
   Widget build(BuildContext context) {
     //* Container which wrapping the hearder of the app
@@ -15,7 +10,7 @@ class CategoryHeader extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
         color: headerColor,
-        borderRadius: borderHeader,
+        borderRadius: headerBorder,
       ),
       //* In order to have a padding horizontaly
       child: Padding(

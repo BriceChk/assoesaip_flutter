@@ -31,6 +31,10 @@ final Color greyIconColor = Colors.grey[500];
 
 final Color headerColor = esaipBlue;
 final Color headerTextColor = Colors.white;
+final BorderRadius headerBorder = BorderRadius.only(
+  bottomLeft: Radius.circular(25),
+  bottomRight: Radius.circular(25),
+);
 
 int assoIndex = 0;
 

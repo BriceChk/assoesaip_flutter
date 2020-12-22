@@ -3,11 +3,6 @@ import 'package:flutter/material.dart';
 
 final String classicFont = "Nunito";
 
-final BorderRadius headerBorder = BorderRadius.only(
-  bottomLeft: Radius.circular(25),
-  bottomRight: Radius.circular(25),
-);
-
 final RoundedRectangleBorder roundedBorder = RoundedRectangleBorder(
   borderRadius: headerBorder,
 );
