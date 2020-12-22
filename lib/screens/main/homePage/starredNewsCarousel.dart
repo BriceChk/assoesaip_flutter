@@ -44,7 +44,7 @@ class _StarredNewsCarouselWidgetState extends State<StarredNewsCarouselWidget> {
         Padding(
           padding: EdgeInsets.only(left: 10, bottom: 10),
           child: Text(
-            "A la une",
+            "À la une",
             style: TextStyle(
               fontSize: 25,
               fontFamily: classicFont,
