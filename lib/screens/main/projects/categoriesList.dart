@@ -1,13 +1,7 @@
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:flutter/material.dart';
 
-final String classicFont = "Nunito";
-final Color cardColor = white;
-final Color hearderColor = skyBlueCrayola1;
-final Color shadowColor = navyBlue;
 final Color fontColor = Colors.black;
-final Color titleColor = navyBlue;
-final Color splashColor = skyBlueCrayola1;
 
 final BorderRadius borderHeader = BorderRadius.only(
   bottomLeft: Radius.circular(25),

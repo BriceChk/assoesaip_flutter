@@ -7,9 +7,6 @@ class ProjectHeader extends StatelessWidget {
     bottomRight: Radius.circular(25),
   );
 
-  final String classicFont = "Nunito";
-  final Color hearderColor = skyBlueCrayola1;
-
   final List<String> associations = [
     'assets/images/SuperBowlLogo.png',
     'BDE - Bureau des étudiants',

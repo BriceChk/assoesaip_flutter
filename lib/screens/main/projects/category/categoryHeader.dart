@@ -7,9 +7,6 @@ class CategoryHeader extends StatelessWidget {
     bottomRight: Radius.circular(25),
   );
 
-  final String classicFont = "Nunito";
-  final Color hearderColor = skyBlueCrayola1;
-
   @override
   Widget build(BuildContext context) {
     final Color fontColor = Colors.black;

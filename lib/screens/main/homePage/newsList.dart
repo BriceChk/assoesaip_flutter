@@ -12,11 +12,6 @@ class NewsListWidget extends StatefulWidget {
 }
 
 class _NewsListWidgetState extends State<NewsListWidget> {
-  final String classicFont = "Nunito";
-  final Color backgroundColor = whiteWhite;
-  final Color cardColor = white;
-  final Color titleColor = navyBlue;
-
   final RoundedRectangleBorder roundedBorder = RoundedRectangleBorder(
     borderRadius: BorderRadius.circular(15),
   );

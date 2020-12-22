@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 
 class StarredNewsCarouselWidget extends StatefulWidget {
   @override
-  _StarredNewsCarouselWidgetState createState() => _StarredNewsCarouselWidgetState();
+  _StarredNewsCarouselWidgetState createState() =>
+      _StarredNewsCarouselWidgetState();
 }
 
 class _StarredNewsCarouselWidgetState extends State<StarredNewsCarouselWidget> {
@@ -27,11 +28,6 @@ class _StarredNewsCarouselWidgetState extends State<StarredNewsCarouselWidget> {
   ];
 
   int currentIndex = 0;
-
-  final String classicFont = "Nunito";
-  final Color backgroundColor = whiteWhite;
-  final Color titleColor = powderBlue;
-  final Color fontColor = white;
 
   @override
   Widget build(BuildContext context) {
@@ -125,7 +121,7 @@ class _StarredNewsCarouselWidgetState extends State<StarredNewsCarouselWidget> {
                                   events[currentIndex][1],
                                   style: TextStyle(
                                     fontSize: 25,
-                                    color: titleColor,
+                                    color: titleCarouselColor,
                                     fontFamily: classicFont,
                                   ),
                                 ),

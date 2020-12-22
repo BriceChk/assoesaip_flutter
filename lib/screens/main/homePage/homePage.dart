@@ -18,7 +18,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final User user;
-  String avatarUrl = 'https://asso-esaip.bricechk.fr/media/cache/memberPicture/';
+  String avatarUrl =
+      'https://asso-esaip.bricechk.fr/media/cache/memberPicture/';
 
   @override
   void initState() {
@@ -35,9 +36,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final String classicFont = "Nunito";
-    final Color backgroundColor = whiteWhite;
-
     return Container(
       color: backgroundColor,
       child: CustomScrollView(

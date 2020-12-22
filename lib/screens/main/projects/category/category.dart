@@ -1,12 +1,8 @@
-import 'package:assoesaip_flutter/screens/main/projects/category/categoryBody.dart';
-import 'package:assoesaip_flutter/screens/main/projects/category/categoryHeader.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:flutter/material.dart';
 
-final String classicFont = "Nunito";
-final Color backgroundColor = whiteWhite;
-final Color hearderColor = skyBlueCrayola1;
-final Color menuColorSelected = powderBlue;
+import 'categoryBody.dart';
+import 'categoryHeader.dart';
 
 class Category extends StatelessWidget {
   final RoundedRectangleBorder roundedBorder = RoundedRectangleBorder(
