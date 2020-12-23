@@ -2,132 +2,82 @@ import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:flutter/material.dart';
 
 import 'tabs/actu.dart';
-import 'tabs/projets.dart';
 import 'tabs/calendrier.dart';
+import 'tabs/projets.dart';
 
 class CategoryBody extends StatefulWidget {
-  CategoryBody(ProjectCategory categ);
-
   @override
   _CategoryBodyState createState() => _CategoryBodyState();
 }
 
 class _CategoryBodyState extends State<CategoryBody> {
-  final GlobalKey<_MenuSubCategoriesAssociationsState> _key = GlobalKey();
+  final Map<String, Widget> tabs = {
+    "Clubs & assos": ProjectsList(),
+    "Actus": CategoryNews(),
+    "Calendar": CategoryCalendar(),
+  };
+
+  String selected;
+
+  @override
+  void initState() {
+    super.initState();
+    selected = tabs.keys.first;
+  }
+
   @override
   Widget build(BuildContext context) {
-    final List<Widget> test = [
-      Projets(),
-      Actu(),
-      Calendrier(),
-    ];
-
     return Column(children: [
       //* Widget with all the name of the categories of the association
-      MenuSubCategoriesAssociations(
-        key: _key,
-        function: refreshmethod,
-      ),
-      menuIndexSelected == 0
-          ? test[0]
-          : menuIndexSelected == 1
-              ? test[1]
-              : test[2],
+      _buildCategoryTabs(),
+      tabs[selected],
       //* Sizedbox of height 60 because otherwise the last one is under the navbar
       SizedBox(height: 60),
     ]);
   }
 
-  refreshmethod() {
-    setState(() {});
-  }
-}
+  Widget _buildCategoryTabs() {
+    List<Widget> list = List();
 
-class MenuSubCategoriesAssociations extends StatefulWidget {
-  final Function function;
+    tabs.keys.forEach((tab) {
+      Widget w = Container(
+        decoration: BoxDecoration(
+            color: selected == tab ? menuColorSelected : Colors.white,
+            borderRadius: BorderRadius.all(Radius.circular(10))
+        ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+              vertical: 5, horizontal: 10),
+          child: Text(
+            tab,
+            style: TextStyle(
+              fontSize: 18,
+              fontFamily: classicFont,
+            ),
+          ),
+        ),
+      );
 
-  MenuSubCategoriesAssociations({Key key, this.function}) : super(key: key);
-
-  @override
-  _MenuSubCategoriesAssociationsState createState() =>
-      _MenuSubCategoriesAssociationsState();
-}
-
-class _MenuSubCategoriesAssociationsState
-    extends State<MenuSubCategoriesAssociations> {
-  final List<List<String>> menuList = [
-    ["Projets", "Selected"],
-    ["Actu", "Unselected"],
-    ["Calendrier", "Unselected"]
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    final menuMap = menuList.asMap();
-
-    final BorderRadius menuBorder = BorderRadius.all(Radius.circular(10));
+      if (selected == tab) {
+        list.add(w);
+      } else {
+        list.add(GestureDetector(
+          child: w,
+          onTap: () {
+            setState(() {
+              selected = tab;
+            });
+          },
+        ));
+      }
+    });
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       child: Container(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: menuMap
-              .map(
-                (i, element) => MapEntry(
-                  i,
-                  element[1] == "Unselected"
-                      ? Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 5, horizontal: 7.5),
-                          child: GestureDetector(
-                            onTap: () {
-                              widget.function();
-                              setState(() {
-                                menuList[menuIndexSelected][1] = "Unselected";
-                                element[1] = "Selected";
-                                menuIndexSelected = i;
-                              });
-                            },
-                            child: Container(
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 5, horizontal: 10),
-                                child: Text(
-                                  element[0],
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontFamily: classicFont,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        )
-                      : Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 5, horizontal: 7.5),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: menuColorSelected,
-                                borderRadius: menuBorder),
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 5, horizontal: 10),
-                              child: Text(
-                                element[0],
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontFamily: classicFont,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                ),
-              )
-              .values
-              .toList(),
+          children: list
         ),
       ),
     );

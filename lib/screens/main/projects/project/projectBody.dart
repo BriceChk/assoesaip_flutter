@@ -17,7 +17,7 @@ class _ProjectBodyState extends State<ProjectBody> {
   Widget build(BuildContext context) {
     final List<Widget> test = [
       Accueil(),
-      Actu(),
+      CategoryNews(),
       Members(),
       Partenariats(),
     ];

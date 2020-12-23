@@ -55,7 +55,7 @@ class Category extends StatelessWidget {
             delegate: SliverChildListDelegate(
               [
                 //* Widget with all the name of the categories of the association
-                CategoryBody(categ),
+                CategoryBody(),
               ],
             ),
           ),
