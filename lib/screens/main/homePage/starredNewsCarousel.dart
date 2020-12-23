@@ -160,11 +160,11 @@ class _StarredNewsCarouselWidgetState extends State<StarredNewsCarouselWidget> {
   }
 
   Widget _buildCarouselItem(News n) {
-    String imageUrl = 'https://asso-esaip.bricechk.fr/images/';
+    String imageUrl = 'https://asso-esaip.bricechk.fr/';
     if (n.project.logoFileName == null) {
-
+      imageUrl += 'build/images/project-placeholder.png';
     } else {
-      imageUrl += 'project-logos/' + n.project.logoFileName;
+      imageUrl += 'images/project-logos/' + n.project.logoFileName;
     }
 
     // The title is the Article title or the Event title ...
@@ -179,7 +179,7 @@ class _StarredNewsCarouselWidgetState extends State<StarredNewsCarouselWidget> {
       color: white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
-        side: BorderSide(color: esaipBlue, width: 1)
+        side: BorderSide(color: starCommandBlue, width: 1)
       ),
       child: Padding(
         padding: EdgeInsets.all(15),
