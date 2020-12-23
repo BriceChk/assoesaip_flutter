@@ -1,8 +1,8 @@
+import 'package:assoesaip_flutter/models/projectCategory.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:flutter/material.dart';
 
 import 'categoryBody.dart';
-import 'categoryHeader.dart';
 
 class Category extends StatelessWidget {
   final RoundedRectangleBorder roundedBorder = RoundedRectangleBorder(
@@ -13,7 +13,7 @@ class Category extends StatelessWidget {
   );
   @override
   Widget build(BuildContext context) {
-    //* Container of the page
+    ProjectCategory categ = ModalRoute.of(context).settings.arguments;
     return Container(
       color: backgroundColor,
       //* CustomScrollView in order to have the bouncingScrollPhysic
@@ -22,12 +22,14 @@ class Category extends StatelessWidget {
         slivers: [
           //* SliverAppBar in order to have the same as the page before
           SliverAppBar(
-            title: Text(
-              "Nom de la catégorie",
-              style: TextStyle(
-                fontSize: 30,
-                color: headerTextColor,
-                fontFamily: classicFont,
+            title: FittedBox(
+              child: Text(
+                categ.name,
+                style: TextStyle(
+                  fontSize: 30,
+                  color: headerTextColor,
+                  fontFamily: classicFont,
+                ),
               ),
             ),
             leading: GestureDetector(
@@ -46,14 +48,14 @@ class Category extends StatelessWidget {
             toolbarHeight: 60,
             expandedHeight: 130,
             backgroundColor: headerColor,
-            flexibleSpace: _headerFlexibleSpace(),
+            flexibleSpace: _headerFlexibleSpace(categ),
           ),
           //* All the other Widget
           SliverList(
             delegate: SliverChildListDelegate(
               [
                 //* Widget with all the name of the categories of the association
-                CategoryBody(),
+                CategoryBody(categ),
               ],
             ),
           ),
@@ -62,7 +64,7 @@ class Category extends StatelessWidget {
     );
   }
 
-  Widget _headerFlexibleSpace() {
+  Widget _headerFlexibleSpace(ProjectCategory c) {
     return FlexibleSpaceBar(
         collapseMode: CollapseMode.pin,
         centerTitle: true,
@@ -70,8 +72,8 @@ class Category extends StatelessWidget {
           padding: EdgeInsets.fromLTRB(15, 60, 15, 0),
           child: Center(
             child: Text(
-              "Futurs ingénieurs et déjà responsables : des projets pour un développement durable",
-              textAlign: TextAlign.justify,
+              c.description,
+              textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 16,
                 color: headerTextColor,
