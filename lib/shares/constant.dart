@@ -29,11 +29,11 @@ final Color shadowColor = navyBlue;
 final Color splashColor = skyBlueCrayola1;
 final Color greyIconColor = Colors.grey[500];
 
-final Color headerColor = esaipBlue;
+final Color headerColor = starCommandBlue;
 final Color headerTextColor = Colors.white;
 final BorderRadius headerBorder = BorderRadius.only(
-  bottomLeft: Radius.circular(25),
-  bottomRight: Radius.circular(25),
+  bottomLeft: Radius.circular(0),
+  bottomRight: Radius.circular(0),
 );
 
 int assoIndex = 0;

@@ -16,7 +16,7 @@ class _StarredNewsCarouselWidgetState extends State<StarredNewsCarouselWidget> {
 
   final String classicFont = "Nunito";
   final Color backgroundColor = whiteWhite;
-  final Color titleColor = esaipBlue;
+  final Color titleColor = starCommandBlue;
   final Color fontColor = Colors.black;
 
   @override
