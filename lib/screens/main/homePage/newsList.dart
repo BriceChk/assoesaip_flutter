@@ -4,6 +4,8 @@ import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:transparent_image/transparent_image.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class NewsListWidget extends StatefulWidget {
@@ -33,11 +35,39 @@ class _NewsListWidgetState extends State<NewsListWidget> {
   Widget build(BuildContext context) {
     if (news is List<News>) {
       return _newsListWidget();
-    } else if (news == null) {
-      return Text('Erreur');
     } else {
-      return Text('Chargement ...');
+      return _newsListPlaceholder();
     }
+  }
+
+  Widget _newsListPlaceholder() {
+    List<Widget> list = List();
+
+    for (var i = 0; i < 3; i++) {
+      list.add(Card(
+        elevation: 0.5,
+        color: cardColor,
+        shape: roundedBorder,
+        margin: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            //* Container with the image inside
+            Container(
+              height: 90,
+            ),
+          ],
+        ),
+      ));
+    }
+
+    return Shimmer.fromColors(
+        baseColor: cardColor,
+        highlightColor: Colors.grey[200],
+        child: Column(
+          children: list,
+        )
+    );
   }
 
   Widget _newsListWidget() {
