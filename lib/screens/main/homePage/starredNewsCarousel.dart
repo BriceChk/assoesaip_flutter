@@ -22,7 +22,7 @@ class _StarredNewsCarouselWidgetState extends State<StarredNewsCarouselWidget> {
   @override
   void initState() {
     super.initState();
-    getStarredNews().then((value){
+    getStarredNews().then((value) {
       setState(() {
         news = value;
       });
@@ -33,7 +33,7 @@ class _StarredNewsCarouselWidgetState extends State<StarredNewsCarouselWidget> {
   Widget build(BuildContext context) {
     if (news is List<News>) {
       return _buildCarouselWidget();
-    }  else if (news == null) {
+    } else if (news == null) {
       return SliverPadding(padding: EdgeInsets.zero);
     } else {
       return SliverPadding(padding: EdgeInsets.zero);
@@ -74,7 +74,7 @@ class _StarredNewsCarouselWidgetState extends State<StarredNewsCarouselWidget> {
               ),
             ),
             CarouselSlider.builder(
-              //* All the option of the carousel see the pubdev page
+                //* All the option of the carousel see the pubdev page
                 options: CarouselOptions(
                   height: 275,
                   aspectRatio: 16 / 9,
@@ -87,13 +87,11 @@ class _StarredNewsCarouselWidgetState extends State<StarredNewsCarouselWidget> {
                   autoPlayCurve: Curves.fastOutSlowIn,
                   enlargeCenterPage: true,
                   scrollDirection: Axis.horizontal,
-                  onPageChanged: (index, reason) {
-
-                  },
+                  onPageChanged: (index, reason) {},
                 ),
                 itemCount: news.length,
-                itemBuilder: (BuildContext context, int currentIndex) => _buildCarouselItem(news[currentIndex])
-            ),
+                itemBuilder: (BuildContext context, int currentIndex) =>
+                    _buildCarouselItem(news[currentIndex])),
           ],
         ),
       ),
@@ -103,7 +101,6 @@ class _StarredNewsCarouselWidgetState extends State<StarredNewsCarouselWidget> {
   Widget _buildCarouselItem(News n) {
     String imageUrl = 'https://asso-esaip.bricechk.fr/images/';
     if (n.project.logoFileName == null) {
-
     } else {
       imageUrl += 'project-logos/' + n.project.logoFileName;
     }
@@ -119,20 +116,19 @@ class _StarredNewsCarouselWidgetState extends State<StarredNewsCarouselWidget> {
       elevation: 2,
       color: white,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15),
-        side: BorderSide(color: esaipBlue, width: 1)
-      ),
+          borderRadius: BorderRadius.circular(15),
+          side: BorderSide(color: esaipBlue.withOpacity(0.5), width: 1)),
       child: Padding(
-        padding: EdgeInsets.all(15),
+        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
         child: Container(
           decoration: BoxDecoration(
               image: DecorationImage(
-                colorFilter: ColorFilter.mode(white.withOpacity(0.1), BlendMode.dstATop),
-                image: NetworkImage(imageUrl, scale: 10),
-                fit: BoxFit.scaleDown,
-                alignment: Alignment.center,
-              )
-          ),
+            colorFilter:
+                ColorFilter.mode(white.withOpacity(0.1), BlendMode.dstATop),
+            image: NetworkImage(imageUrl, scale: 10),
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.center,
+          )),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -146,8 +142,7 @@ class _StarredNewsCarouselWidgetState extends State<StarredNewsCarouselWidget> {
                         fontSize: 20,
                         color: titleColor,
                         fontFamily: classicFont,
-                        fontWeight: FontWeight.bold
-                    ),
+                        fontWeight: FontWeight.bold),
                   ),
                   //! See the overflow of the text right here
                   Text(
@@ -185,7 +180,7 @@ class _StarredNewsCarouselWidgetState extends State<StarredNewsCarouselWidget> {
             ],
           ),
         ),
-      )
+      ),
     );
   }
 }
