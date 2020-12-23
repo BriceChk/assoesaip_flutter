@@ -22,15 +22,31 @@ class Category extends StatelessWidget {
         slivers: [
           //* SliverAppBar in order to have the same as the page before
           SliverAppBar(
-            //* Shape of the AppBar with the roundedBorder
-            shape: roundedBorder,
-            //* Here we have the HeaderWidget
-            actions: [
-              CategoryHeader(),
-            ],
-            toolbarHeight: 130,
+            title: Text(
+              "Nom de la catégorie",
+              style: TextStyle(
+                fontSize: 30,
+                color: headerTextColor,
+                fontFamily: classicFont,
+              ),
+            ),
+            leading: GestureDetector(
+              child: Icon(
+                Icons.arrow_back,
+                color: headerTextColor,
+              ),
+              //* Pushing back to the AssociationCategories
+              onTap: () {
+                Navigator.of(context)
+                    .popUntil(ModalRoute.withName("CategoriesList"));
+              },
+            ),
             pinned: true,
-            backgroundColor: ceruleanCrayola,
+            floating: true,
+            toolbarHeight: 60,
+            expandedHeight: 130,
+            backgroundColor: headerColor,
+            flexibleSpace: _headerFlexibleSpace(),
           ),
           //* All the other Widget
           SliverList(
@@ -43,6 +59,27 @@ class Category extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _headerFlexibleSpace() {
+    return FlexibleSpaceBar(
+        collapseMode: CollapseMode.pin,
+        centerTitle: true,
+        background: Container(
+          padding: EdgeInsets.fromLTRB(15, 60, 15, 0),
+          child: Center(
+            child: Text(
+              "Futurs ingénieurs et déjà responsables : des projets pour un développement durable",
+              textAlign: TextAlign.justify,
+              style: TextStyle(
+                fontSize: 16,
+                color: headerTextColor,
+                fontFamily: classicFont,
+              ),
+            ),
+          ),
+        )
     );
   }
 }

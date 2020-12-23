@@ -24,12 +24,20 @@ class _CategoriesListState extends State<CategoriesList> {
       slivers: [
         //* We wrap our header inside the sliverAppBar with somme properties
         SliverAppBar(
-          shape: roundedBorder,
+          automaticallyImplyLeading: true,
           centerTitle: true,
-          actions: [
-            Header(),
-          ],
-          toolbarHeight: 130,
+          title: Text(
+            "Parcourir les projets",
+            style: TextStyle(
+              fontSize: 30,
+              color: headerTextColor,
+              fontFamily: classicFont,
+            ),
+          ),
+          flexibleSpace: _headerFlexibleSpace(),
+          toolbarHeight: 60,
+          expandedHeight: 100,
+          floating: true,
           pinned: true,
           backgroundColor: headerColor,
         ),
@@ -37,9 +45,7 @@ class _CategoriesListState extends State<CategoriesList> {
         SliverList(
           delegate: SliverChildListDelegate(
             [
-              SizedBox(
-                height: 5,
-              ),
+              SizedBox(height: 5),
               //* Widget with all the name of the categories of the association
               AssociationBuilder(),
               //* Sizedbox of height 60 because otherwise the last one is under the navbar
@@ -50,46 +56,25 @@ class _CategoriesListState extends State<CategoriesList> {
       ],
     );
   }
-}
 
-class Header extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
-        color: headerColor,
-        borderRadius: headerBorder,
-      ),
-
-      //* In order to have a padding horizontaly
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 15),
-        //* Column in order to have 2 differents text widget one under the others
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "Parcourir les projets",
-              style: TextStyle(
-                fontSize: 30,
-                color: headerTextColor,
-                fontFamily: classicFont,
-              ),
+  Widget _headerFlexibleSpace() {
+    return FlexibleSpaceBar(
+      collapseMode: CollapseMode.pin,
+      centerTitle: true,
+      background: Container(
+        padding: EdgeInsets.fromLTRB(15, 60, 15, 0),
+        child: Center(
+          child: Text(
+            "Découvre les clubs et associations ton campus !",
+            textAlign: TextAlign.justify,
+            style: TextStyle(
+              fontSize: 16,
+              color: headerTextColor,
+              fontFamily: classicFont,
             ),
-            SizedBox(height: 10),
-            Text(
-              "Découvre les clubs et associations de ton campus !",
-              textAlign: TextAlign.justify,
-              style: TextStyle(
-                fontSize: 16,
-                color: headerTextColor,
-                fontFamily: classicFont,
-              ),
-            ),
-          ],
+          ),
         ),
-      ),
+      )
     );
   }
 }
