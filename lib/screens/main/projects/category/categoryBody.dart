@@ -6,6 +6,8 @@ import 'tabs/projets.dart';
 import 'tabs/calendrier.dart';
 
 class CategoryBody extends StatefulWidget {
+  CategoryBody(ProjectCategory categ);
+
   @override
   _CategoryBodyState createState() => _CategoryBodyState();
 }
