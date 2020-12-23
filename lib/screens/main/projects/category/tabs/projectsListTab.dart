@@ -2,7 +2,7 @@ import 'package:assoesaip_flutter/screens/main/projects/project/project.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:flutter/material.dart';
 
-class ProjectsList extends StatelessWidget {
+class ProjectsListTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<List<String>> assoList = [

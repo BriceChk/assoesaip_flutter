@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class CategoryCalendar extends StatelessWidget {
+class CategoryCalendarTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(

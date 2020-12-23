@@ -1,16 +1,30 @@
 import 'package:assoesaip_flutter/models/projectCategory.dart';
+import 'package:assoesaip_flutter/screens/main/projects/category/tabs/categoryNewsTab.dart';
+import 'package:assoesaip_flutter/screens/main/projects/category/tabs/categoryCalendarTab.dart';
+import 'package:assoesaip_flutter/screens/main/projects/category/tabs/projectsListTab.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:flutter/material.dart';
 
-import 'categoryBody.dart';
+class Category extends StatefulWidget {
+  @override
+  _CategoryState createState() => _CategoryState();
+}
 
-class Category extends StatelessWidget {
-  final RoundedRectangleBorder roundedBorder = RoundedRectangleBorder(
-    borderRadius: BorderRadius.only(
-      bottomLeft: Radius.circular(25),
-      bottomRight: Radius.circular(25),
-    ),
-  );
+class _CategoryState extends State<Category> {
+  final Map<String, Widget> tabs = {
+    "Clubs & assos": ProjectsListTab(),
+    "Actus": CategoryNewsTab(),
+    "Calendar": CategoryCalendarTab(),
+  };
+
+  String selected;
+
+  @override
+  void initState() {
+    super.initState();
+    selected = tabs.keys.first;
+  }
+
   @override
   Widget build(BuildContext context) {
     ProjectCategory categ = ModalRoute.of(context).settings.arguments;
@@ -54,8 +68,13 @@ class Category extends StatelessWidget {
           SliverList(
             delegate: SliverChildListDelegate(
               [
-                //* Widget with all the name of the categories of the association
-                CategoryBody(),
+                Column(children: [
+                  //* Widget with all the name of the categories of the association
+                  _buildCategoryTabs(),
+                  tabs[selected],
+                  //* Sizedbox of height 60 because otherwise the last one is under the navbar
+                  SizedBox(height: 60),
+                ])
               ],
             ),
           ),
@@ -82,6 +101,53 @@ class Category extends StatelessWidget {
             ),
           ),
         )
+    );
+  }
+
+  Widget _buildCategoryTabs() {
+    List<Widget> list = List();
+
+    tabs.keys.forEach((tab) {
+      Widget w = Container(
+        decoration: BoxDecoration(
+            color: selected == tab ? menuColorSelected : Colors.white,
+            borderRadius: BorderRadius.all(Radius.circular(10))
+        ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+              vertical: 5, horizontal: 10),
+          child: Text(
+            tab,
+            style: TextStyle(
+              fontSize: 18,
+              fontFamily: classicFont,
+            ),
+          ),
+        ),
+      );
+
+      if (selected == tab) {
+        list.add(w);
+      } else {
+        list.add(GestureDetector(
+          child: w,
+          onTap: () {
+            setState(() {
+              selected = tab;
+            });
+          },
+        ));
+      }
+    });
+
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      child: Container(
+        child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: list
+        ),
+      ),
     );
   }
 }
