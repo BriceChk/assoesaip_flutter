@@ -150,10 +150,12 @@ class _NewsListWidgetState extends State<NewsListWidget> {
                   //* have the same rounded corner as the big container
                   borderRadius: roundedImage,
                   //* URL of the picture of the news
-                  image: DecorationImage(
-                    image: NetworkImage(imageUrl),
-                    fit: BoxFit.contain,
-                  ),
+                ),
+                child: FadeInImage.memoryNetwork(
+                  placeholder: kTransparentImage,
+                  image: imageUrl,
+                  fit: BoxFit.contain,
+                  fadeInDuration: Duration(milliseconds: 150),
                 ),
               ),
               SizedBox(

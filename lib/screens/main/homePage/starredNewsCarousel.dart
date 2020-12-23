@@ -183,66 +183,72 @@ class _StarredNewsCarouselWidgetState extends State<StarredNewsCarouselWidget> {
       ),
       child: Padding(
         padding: EdgeInsets.all(15),
-        child: Container(
-          decoration: BoxDecoration(
-              image: DecorationImage(
+        child: Stack(
+          children: [
+            Center(
+              child: ColorFiltered(
                 colorFilter: ColorFilter.mode(white.withOpacity(0.1), BlendMode.dstATop),
-                image: NetworkImage(imageUrl, scale: 10),
-                fit: BoxFit.scaleDown,
-                alignment: Alignment.center,
-              )
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: TextStyle(
-                        fontSize: 20,
-                        color: titleColor,
+                child: FadeInImage.memoryNetwork(
+                    placeholder: kTransparentImage,
+                    image: imageUrl,
+                  imageScale: 10,
+                  fadeInDuration: Duration(milliseconds: 150),
+
+                ),
+              ),
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: titleColor,
+                          fontFamily: classicFont,
+                          fontWeight: FontWeight.bold
+                      ),
+                    ),
+                    //! See the overflow of the text right here
+                    Text(
+                      content,
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: fontColor,
                         fontFamily: classicFont,
-                        fontWeight: FontWeight.bold
+                      ),
+                      overflow: TextOverflow.clip,
                     ),
-                  ),
-                  //! See the overflow of the text right here
-                  Text(
-                    content,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: fontColor,
-                      fontFamily: classicFont,
+                  ],
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      n.project.name,
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontFamily: classicFont,
+                      ),
                     ),
-                    overflow: TextOverflow.clip,
-                  ),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    n.project.name,
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontFamily: classicFont,
+                    SizedBox(height: 2),
+                    //* Date of the news
+                    Text(
+                      date,
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontFamily: classicFont,
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 2),
-                  //* Date of the news
-                  Text(
-                    date,
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontFamily: classicFont,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
+                  ],
+                ),
+              ],
+            ),
+          ]
         ),
       )
     );
