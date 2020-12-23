@@ -11,6 +11,7 @@ class ProjectCategory {
     this.name,
     this.description,
     this.visible,
+    this.logoFileName,
     this.order,
   });
 
@@ -18,6 +19,7 @@ class ProjectCategory {
   String url;
   String name;
   String description;
+  String logoFileName;
   bool visible;
   int order;
 
@@ -29,6 +31,7 @@ class ProjectCategory {
       url: json['url'],
       name: json['name'],
       description: json['description'],
+      logoFileName: json['logo_file_name'],
       visible: json['visible'],
       order: json['order'],
     );
@@ -39,6 +42,7 @@ class ProjectCategory {
     'url': url,
     'name': name,
     'description': description,
+    'logo_file_name': logoFileName,
     'visible': visible,
     'order': order,
   };

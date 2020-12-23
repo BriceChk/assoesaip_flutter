@@ -1,19 +1,33 @@
+import 'package:assoesaip_flutter/models/projectCategory.dart';
+import 'package:assoesaip_flutter/screens/main/projects/category/tabs/categoryNewsTab.dart';
+import 'package:assoesaip_flutter/screens/main/projects/category/tabs/categoryCalendarTab.dart';
+import 'package:assoesaip_flutter/screens/main/projects/category/tabs/projectsListTab.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:flutter/material.dart';
 
-import 'categoryBody.dart';
-import 'categoryHeader.dart';
+class Category extends StatefulWidget {
+  @override
+  _CategoryState createState() => _CategoryState();
+}
 
-class Category extends StatelessWidget {
-  final RoundedRectangleBorder roundedBorder = RoundedRectangleBorder(
-    borderRadius: BorderRadius.only(
-      bottomLeft: Radius.circular(25),
-      bottomRight: Radius.circular(25),
-    ),
-  );
+class _CategoryState extends State<Category> {
+  final Map<String, Widget> tabs = {
+    "Clubs & assos": ProjectsListTab(),
+    "Actus": CategoryNewsTab(),
+    "Calendar": CategoryCalendarTab(),
+  };
+
+  String selected;
+
+  @override
+  void initState() {
+    super.initState();
+    selected = tabs.keys.first;
+  }
+
   @override
   Widget build(BuildContext context) {
-    //* Container of the page
+    ProjectCategory categ = ModalRoute.of(context).settings.arguments;
     return Container(
       color: backgroundColor,
       //* CustomScrollView in order to have the bouncingScrollPhysic
@@ -22,12 +36,14 @@ class Category extends StatelessWidget {
         slivers: [
           //* SliverAppBar in order to have the same as the page before
           SliverAppBar(
-            title: Text(
-              "Nom de la catégorie",
-              style: TextStyle(
-                fontSize: 30,
-                color: headerTextColor,
-                fontFamily: classicFont,
+            title: FittedBox(
+              child: Text(
+                categ.name,
+                style: TextStyle(
+                  fontSize: 30,
+                  color: headerTextColor,
+                  fontFamily: classicFont,
+                ),
               ),
             ),
             leading: GestureDetector(
@@ -46,14 +62,19 @@ class Category extends StatelessWidget {
             toolbarHeight: 60,
             expandedHeight: 130,
             backgroundColor: headerColor,
-            flexibleSpace: _headerFlexibleSpace(),
+            flexibleSpace: _headerFlexibleSpace(categ),
           ),
           //* All the other Widget
           SliverList(
             delegate: SliverChildListDelegate(
               [
-                //* Widget with all the name of the categories of the association
-                CategoryBody(),
+                Column(children: [
+                  //* Widget with all the name of the categories of the association
+                  _buildCategoryTabs(),
+                  tabs[selected],
+                  //* Sizedbox of height 60 because otherwise the last one is under the navbar
+                  SizedBox(height: 60),
+                ])
               ],
             ),
           ),
@@ -62,7 +83,7 @@ class Category extends StatelessWidget {
     );
   }
 
-  Widget _headerFlexibleSpace() {
+  Widget _headerFlexibleSpace(ProjectCategory c) {
     return FlexibleSpaceBar(
         collapseMode: CollapseMode.pin,
         centerTitle: true,
@@ -70,8 +91,8 @@ class Category extends StatelessWidget {
           padding: EdgeInsets.fromLTRB(15, 60, 15, 0),
           child: Center(
             child: Text(
-              "Futurs ingénieurs et déjà responsables : des projets pour un développement durable",
-              textAlign: TextAlign.justify,
+              c.description,
+              textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 16,
                 color: headerTextColor,
@@ -80,6 +101,53 @@ class Category extends StatelessWidget {
             ),
           ),
         )
+    );
+  }
+
+  Widget _buildCategoryTabs() {
+    List<Widget> list = List();
+
+    tabs.keys.forEach((tab) {
+      Widget w = Container(
+        decoration: BoxDecoration(
+            color: selected == tab ? menuColorSelected : Colors.white,
+            borderRadius: BorderRadius.all(Radius.circular(10))
+        ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+              vertical: 5, horizontal: 10),
+          child: Text(
+            tab,
+            style: TextStyle(
+              fontSize: 18,
+              fontFamily: classicFont,
+            ),
+          ),
+        ),
+      );
+
+      if (selected == tab) {
+        list.add(w);
+      } else {
+        list.add(GestureDetector(
+          child: w,
+          onTap: () {
+            setState(() {
+              selected = tab;
+            });
+          },
+        ));
+      }
+    });
+
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      child: Container(
+        child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: list
+        ),
+      ),
     );
   }
 }

@@ -1,5 +1,9 @@
+import 'package:assoesaip_flutter/models/projectCategory.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:assoesaip_flutter/services/api.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 final Color fontColor = Colors.black;
 
@@ -9,12 +13,18 @@ class CategoriesList extends StatefulWidget {
 }
 
 class _CategoriesListState extends State<CategoriesList> {
-  final RoundedRectangleBorder roundedBorder = RoundedRectangleBorder(
-    borderRadius: BorderRadius.only(
-      bottomLeft: Radius.circular(25),
-      bottomRight: Radius.circular(25),
-    ),
-  );
+  List<ProjectCategory> categs;
+
+  @override
+  void initState() {
+    super.initState();
+
+    getProjectCategories().then((value) {
+      setState(() {
+        categs = value;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +57,7 @@ class _CategoriesListState extends State<CategoriesList> {
             [
               SizedBox(height: 5),
               //* Widget with all the name of the categories of the association
-              AssociationBuilder(),
+              _buildCategoryList(),
               //* Sizedbox of height 60 because otherwise the last one is under the navbar
               SizedBox(height: 60),
             ],
@@ -77,135 +87,134 @@ class _CategoriesListState extends State<CategoriesList> {
       )
     );
   }
-}
 
-class AssociationBuilder extends StatelessWidget {
-  final List<List<String>> assoCategoriesList = [
-    [
-      "Vie étudiante",
-      "La vie des étudiants sur les campus de l'esaip",
-      "assets/images/AssoCategories/Student.png"
-    ],
-    [
-      "Arts & culture",
-      "Théâtre, musique, découvertes culturelles et événementiel",
-      "assets/images/AssoCategories/Art.png"
-    ],
-    [
-      "Sport",
-      "Entraînement, championnats, tournois, événements",
-      "assets/images/AssoCategories/Sport.png"
-    ],
-    [
-      "Jeux",
-      "Jeux vidéos, de plateau et activités ludiques",
-      "assets/images/AssoCategories/Game.png"
-    ],
-    [
-      "Environnement",
-      "Futurs ingénieurs et déjà responsables: des projets pour un développement durable",
-      "assets/images/AssoCategories/Environment.png"
-    ],
-    [
-      "Humanitaire",
-      "Missions humanitaires",
-      "assets/images/AssoCategories/Humanitarian.png"
-    ],
-    [
-      "Réseaux & partenariats & un gros test",
-      "Projets en lien avec les entreprises ou le réseau La Salle",
-      "assets/images/AssoCategories/Network.png"
-    ],
-    [
-      "Vie étudiante",
-      "La vie des étudiants sur les campus de l'esaip",
-      "assets/images/AssoCategories/Student.png"
-    ],
-  ];
-  @override
-  Widget build(BuildContext context) {
-    final assoCategoriesMap = assoCategoriesList.asMap();
-    return Column(
-      //* Display the asso menu
-      children: assoCategoriesMap
-          .map(
-            (i, element) => MapEntry(
-              i,
-              //* Here we're building each card with each name of the specific association
-              Padding(
-                padding: EdgeInsets.only(top: 5, right: 10, left: 10),
-                child: Container(
-                  //! boxConstraints like this we can set a min height to the card and combine with flexible the height can be override
-                  constraints: BoxConstraints(
-                    minHeight: 90,
-                  ),
-                  width: MediaQuery.of(context).size.width,
-                  child: Card(
-                    elevation: 0.5,
-                    shadowColor: shadowColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+  Widget _buildCategoryList() {
+    if (categs is List<ProjectCategory>) {
+      return Column(
+        children: categs.map((c) => _buildCategoryCard(c)).toList(),
+      );
+    } else {
+      return _categoryListPlaceholder();
+    }
+  }
+
+  Widget _categoryListPlaceholder() {
+    List<Widget> list = List();
+
+    for (var i = 0; i < 10; i++) {
+      list.add(Shimmer.fromColors(
+        baseColor: cardColor,
+        highlightColor: Colors.grey[200],
+        child: Container(
+            padding: EdgeInsets.only(top: 5, right: 10, left: 10),
+            //! boxConstraints like this we can set a min height to the card and combine with flexible the height can be override
+            constraints: BoxConstraints(
+              minHeight: 90,
+            ),
+            //width: MediaQuery.of(context).size.width,
+            child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 7.5,
+                  vertical: 5,
+                ),
+                child: Row(
+                  children: [
+                    Flexible(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment:
+                        MainAxisAlignment.spaceAround,
+                        children: [],
+                      ),
                     ),
-                    color: cardColor,
-                    //* InkWell like this we can integrate the ontap function
-                    child: InkWell(
-                        borderRadius: BorderRadius.circular(10),
-                        splashColor: splashColor,
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 7.5,
-                            vertical: 5,
-                          ),
-                          child: Row(
-                            children: [
-                              Container(
-                                width: 75,
-                                child: Image.asset(element[2]),
-                              ),
-                              SizedBox(width: 5),
-                              //! Wrap in flexible like this we can have text in multiline
-                              Flexible(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    //* Title of card
-                                    Text(
-                                      element[0],
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          fontFamily: classicFont,
-                                          color: titleColor),
-                                    ),
-                                    //* Description of the card
-                                    Text(
-                                      element[1],
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontFamily: classicFont,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        onTap: () {
-                          assoNameString = element[0];
-                          assoDescriptionString = element[1];
-                          //* Pushing through the new page with a specific name
-                          //TODO_ print(element[0] + " tapped");
-                          Navigator.of(context).pushNamed("Category");
-                        }),
-                  ),
+                  ],
                 ),
               ),
+            )
+        ),
+      ));
+    }
+
+    return Column(
+      children: list,
+    );
+  }
+
+  Widget _buildCategoryCard(ProjectCategory c) {
+    String imgUrl = 'https://asso-esaip.bricechk.fr/images/category-logos/' + c.logoFileName;
+
+    return Container(
+      padding: EdgeInsets.only(top: 5, right: 10, left: 10),
+      //! boxConstraints like this we can set a min height to the card and combine with flexible the height can be override
+      constraints: BoxConstraints(
+        minHeight: 90,
+      ),
+      //width: MediaQuery.of(context).size.width,
+      child: Card(
+        elevation: 0.5,
+        shadowColor: shadowColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        color: cardColor,
+        //* InkWell like this we can integrate the ontap function
+        child: InkWell(
+            borderRadius: BorderRadius.circular(10),
+            splashColor: splashColor,
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: 7.5,
+                vertical: 5,
+              ),
+              child: Row(
+                children: [
+                  Container(
+                    width: 75,
+                    child: FadeInImage.memoryNetwork(
+                      placeholder: kTransparentImage,
+                      image: imgUrl,
+                      fit: BoxFit.contain,
+                      fadeInDuration: Duration(milliseconds: 150),
+                    ),
+                  ),
+                  SizedBox(width: 5),
+                  //! Wrap in flexible like this we can have text in multiline
+                  Flexible(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment:
+                      MainAxisAlignment.spaceAround,
+                      children: [
+                        //* Title of card
+                        Text(
+                          c.name,
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontFamily: classicFont,
+                              color: titleColor),
+                        ),
+                        //* Description of the card
+                        Text(
+                          c.description,
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontFamily: classicFont,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
-          )
-          .values
-          .toList(),
+            onTap: () {
+              Navigator.of(context).pushNamed("Category", arguments: c);
+            }),
+      ),
     );
   }
 }

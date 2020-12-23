@@ -1,10 +1,8 @@
-import 'package:assoesaip_flutter/screens/main/projects/category/tabs/actu.dart';
-import 'package:assoesaip_flutter/screens/main/projects/project/tabs/member.dart';
+import 'package:assoesaip_flutter/screens/main/projects/project/tabs/projectMembersTab.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:flutter/material.dart';
 
-import 'tabs/accueil.dart';
-import 'tabs/partenariat.dart';
+import 'tabs/projectHomeTab.dart';
 
 class ProjectBody extends StatefulWidget {
   @override
@@ -16,10 +14,8 @@ class _ProjectBodyState extends State<ProjectBody> {
   @override
   Widget build(BuildContext context) {
     final List<Widget> test = [
-      Accueil(),
-      Actu(),
-      Members(),
-      Partenariats(),
+      ProjectHomeTab(),
+      ProjectMembersTab(),
     ];
     return Column(children: [
       //* Widget with all the name of the categories of the association
@@ -58,9 +54,7 @@ class _MenuSubCategoriesAssociationsState
     extends State<MenuSubCategoriesAssociations> {
   final List<List<String>> menuList = [
     ["Accueil", "Selected"],
-    ["Actu", "Unselected"],
     ["Membres", "Unselected"],
-    ["Partenariats", "Unselected"]
   ];
   @override
   Widget build(BuildContext context) {
