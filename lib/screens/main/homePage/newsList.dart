@@ -17,6 +17,7 @@ class _NewsListWidgetState extends State<NewsListWidget> {
   final RoundedRectangleBorder roundedBorder = RoundedRectangleBorder(
     borderRadius: BorderRadius.circular(15),
   );
+  final BorderRadius splashBorderRadius = BorderRadius.circular(15);
   final BorderRadius roundedImage = BorderRadius.circular(15);
 
   List<News> news;
@@ -106,11 +107,7 @@ class _NewsListWidgetState extends State<NewsListWidget> {
 
     return Container(
       padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
-      child: Icon(
-        icon,
-        size: 17.5,
-        color: greyIconColor
-      ),
+      child: Icon(icon, size: 17.5, color: greyIconColor),
     );
   }
 
@@ -207,7 +204,9 @@ class _NewsListWidgetState extends State<NewsListWidget> {
                         _buildNewsIcons(n)
                       ].where((o) => o != null).toList(),
                     ),
-                  ].where((o) => o != null).toList(), // Remove the eventually null Text for the title
+                  ]
+                      .where((o) => o != null)
+                      .toList(), // Remove the eventually null Text for the title
                 ),
               ),
             ],
@@ -218,6 +217,8 @@ class _NewsListWidgetState extends State<NewsListWidget> {
 
     if (n.link != null) {
       return InkWell(
+        borderRadius: splashBorderRadius,
+        splashColor: splashColor,
         child: card,
         onTap: () async {
           if (await canLaunch(n.link)) {
