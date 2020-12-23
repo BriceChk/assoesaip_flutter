@@ -67,8 +67,7 @@ class _NewsListWidgetState extends State<NewsListWidget> {
         highlightColor: Colors.grey[200],
         child: Column(
           children: list,
-        )
-    );
+        ));
   }
 
   Widget _newsListWidget() {
@@ -134,82 +133,91 @@ class _NewsListWidgetState extends State<NewsListWidget> {
       color: cardColor,
       shape: roundedBorder,
       margin: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-      child: Padding(
-        padding: EdgeInsets.all(4),
-        child: IntrinsicHeight(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              //* Container with the image inside
-              Container(
-                height: double.infinity,
-                width: 90,
-                decoration: BoxDecoration(
-                  //* have the same rounded corner as the big container
-                  borderRadius: roundedImage,
-                  //* URL of the picture of the news
-                ),
-                child: FadeInImage.memoryNetwork(
-                  placeholder: kTransparentImage,
-                  image: imageUrl,
-                  fit: BoxFit.contain,
-                  fadeInDuration: Duration(milliseconds: 150),
-                ),
-              ),
-              SizedBox(
-                width: 5,
-              ),
-              Flexible(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    //* Title of the news
-                    _buildNewsTitle(n),
-                    //* Description of the news
-                    Text(
-                      content,
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontFamily: classicFont,
-                      ),
+      //* Add material and inwell because we want the riddle effect on the card
+      child: Material(
+        borderRadius: splashBorderRadius,
+        child: InkWell(
+          borderRadius: splashBorderRadius,
+          splashColor: splashColor,
+          onTap: () {},
+          child: Padding(
+            padding: EdgeInsets.all(4),
+            child: IntrinsicHeight(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  //* Container with the image inside
+                  Container(
+                    height: double.infinity,
+                    width: 90,
+                    decoration: BoxDecoration(
+                      //* have the same rounded corner as the big container
+                      borderRadius: roundedImage,
+                      //* URL of the picture of the news
                     ),
-                    SizedBox(height: 10),
-                    //* Row in order to have the icon and 2 text align each other
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    child: FadeInImage.memoryNetwork(
+                      placeholder: kTransparentImage,
+                      image: imageUrl,
+                      fit: BoxFit.contain,
+                      fadeInDuration: Duration(milliseconds: 150),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Flexible(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        //* Alignment of the 2 Text: Name and Date
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            //* Name of the association
-                            Text(
-                              n.project.name,
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontFamily: classicFont,
-                              ),
-                            ),
-                            //* Date of the news
-                            Text(
-                              date,
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontFamily: classicFont,
-                              ),
-                            ),
-                          ],
+                        //* Title of the news
+                        _buildNewsTitle(n),
+                        //* Description of the news
+                        Text(
+                          content,
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontFamily: classicFont,
+                          ),
                         ),
-                        //* Icon for each type of news
-                        _buildNewsIcons(n)
-                      ].where((o) => o != null).toList(),
+                        SizedBox(height: 10),
+                        //* Row in order to have the icon and 2 text align each other
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            //* Alignment of the 2 Text: Name and Date
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                //* Name of the association
+                                Text(
+                                  n.project.name,
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontFamily: classicFont,
+                                  ),
+                                ),
+                                //* Date of the news
+                                Text(
+                                  date,
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontFamily: classicFont,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            //* Icon for each type of news
+                            _buildNewsIcons(n)
+                          ].where((o) => o != null).toList(),
+                        ),
+                      ]
+                          .where((o) => o != null)
+                          .toList(), // Remove the eventually null Text for the title
                     ),
-                  ]
-                      .where((o) => o != null)
-                      .toList(), // Remove the eventually null Text for the title
-                ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),
