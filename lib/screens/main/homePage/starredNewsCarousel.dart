@@ -4,6 +4,8 @@ import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class StarredNewsCarouselWidget extends StatefulWidget {
   @override
@@ -33,8 +35,6 @@ class _StarredNewsCarouselWidgetState extends State<StarredNewsCarouselWidget> {
   Widget build(BuildContext context) {
     if (news is List<News>) {
       return _buildCarouselWidget();
-    } else if (news == null) {
-      return SliverPadding(padding: EdgeInsets.zero);
     } else {
       return _buildCarouselPlaceholder();
     }
@@ -179,8 +179,6 @@ class _StarredNewsCarouselWidgetState extends State<StarredNewsCarouselWidget> {
         borderRadius: BorderRadius.circular(15),
         side: BorderSide(color: starCommandBlue, width: 1)
       ),
-          borderRadius: BorderRadius.circular(15),
-          side: BorderSide(color: esaipBlue.withOpacity(0.5), width: 1)),
       child: Padding(
         padding: EdgeInsets.all(15),
         child: Stack(
@@ -249,66 +247,6 @@ class _StarredNewsCarouselWidgetState extends State<StarredNewsCarouselWidget> {
               ],
             ),
           ]
-        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-        child: Container(
-          decoration: BoxDecoration(
-              image: DecorationImage(
-            colorFilter:
-                ColorFilter.mode(white.withOpacity(0.1), BlendMode.dstATop),
-            image: NetworkImage(imageUrl, scale: 10),
-            fit: BoxFit.scaleDown,
-            alignment: Alignment.center,
-          )),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: TextStyle(
-                        fontSize: 20,
-                        color: titleColor,
-                        fontFamily: classicFont,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  //! See the overflow of the text right here
-                  Text(
-                    content,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: fontColor,
-                      fontFamily: classicFont,
-                    ),
-                    overflow: TextOverflow.clip,
-                  ),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    n.project.name,
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontFamily: classicFont,
-                    ),
-                  ),
-                  SizedBox(height: 2),
-                  //* Date of the news
-                  Text(
-                    date,
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontFamily: classicFont,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
         ),
       ),
     );
