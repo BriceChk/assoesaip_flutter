@@ -70,7 +70,7 @@ class _StarredNewsCarouselWidgetState extends State<StarredNewsCarouselWidget> {
               ),
             ),
             CarouselSlider.builder(
-              //* All the option of the carousel see the pubdev page
+                //* All the option of the carousel see the pubdev page
                 options: CarouselOptions(
                   height: 275,
                   aspectRatio: 16 / 9,
@@ -83,16 +83,14 @@ class _StarredNewsCarouselWidgetState extends State<StarredNewsCarouselWidget> {
                     baseColor: cardColor,
                     highlightColor: Colors.grey[200],
                     child: Card(
-                        color: cardColor,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            side: BorderSide(color: esaipBlue, width: 1)
-                        ),
-                        child: Container(width: 500),
+                      color: cardColor,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          side: BorderSide(color: esaipBlue, width: 1)),
+                      child: Container(width: 500),
                     ),
                   );
-                }
-            ),
+                }),
           ],
         ),
       ),
@@ -176,78 +174,73 @@ class _StarredNewsCarouselWidgetState extends State<StarredNewsCarouselWidget> {
       elevation: 2,
       color: white,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15),
-        side: BorderSide(color: starCommandBlue, width: 1)
-      ),
+          borderRadius: BorderRadius.circular(15),
+          side: BorderSide(color: starCommandBlue, width: 1)),
       child: Padding(
-        padding: EdgeInsets.all(15),
-        child: Stack(
-          children: [
-            Center(
-              child: ColorFiltered(
-                colorFilter: ColorFilter.mode(white.withOpacity(0.1), BlendMode.dstATop),
-                child: FadeInImage.memoryNetwork(
-                    placeholder: kTransparentImage,
-                    image: imageUrl,
-                  imageScale: 10,
-                  fadeInDuration: Duration(milliseconds: 150),
-
-                ),
+        padding: EdgeInsets.only(top: 15, bottom: 5, right: 15, left: 15),
+        child: Stack(children: [
+          Center(
+            child: ColorFiltered(
+              colorFilter:
+                  ColorFilter.mode(white.withOpacity(0.1), BlendMode.dstATop),
+              child: FadeInImage.memoryNetwork(
+                placeholder: kTransparentImage,
+                image: imageUrl,
+                imageScale: 10,
+                fadeInDuration: Duration(milliseconds: 150),
               ),
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: TextStyle(
-                          fontSize: 20,
-                          color: titleColor,
-                          fontFamily: classicFont,
-                          fontWeight: FontWeight.bold
-                      ),
-                    ),
-                    //! See the overflow of the text right here
-                    Text(
-                      content,
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: fontColor,
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: titleColor,
                         fontFamily: classicFont,
-                      ),
-                      overflow: TextOverflow.clip,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    content,
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: fontColor,
+                      fontFamily: classicFont,
                     ),
-                  ],
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      n.project.name,
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontFamily: classicFont,
-                      ),
+                    overflow: TextOverflow.clip,
+                  ),
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    n.project.name,
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontFamily: classicFont,
                     ),
-                    SizedBox(height: 2),
-                    //* Date of the news
-                    Text(
-                      date,
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontFamily: classicFont,
-                      ),
+                  ),
+                  SizedBox(height: 2),
+                  //* Date of the news
+                  Text(
+                    date,
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontFamily: classicFont,
                     ),
-                  ],
-                ),
-              ],
-            ),
-          ]
-        ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ]),
       ),
     );
   }
