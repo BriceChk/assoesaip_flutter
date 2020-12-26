@@ -18,8 +18,8 @@ class _StarredNewsCarouselWidgetState extends State<StarredNewsCarouselWidget> {
 
   final String classicFont = "Nunito";
   final Color backgroundColor = whiteWhite;
-  final Color titleColor = starCommandBlue;
-  final Color fontColor = Colors.black;
+  final Color titleColor = Colors.white;
+  final Color fontColor = Colors.white;
 
   @override
   void initState() {
@@ -141,6 +141,7 @@ class _StarredNewsCarouselWidgetState extends State<StarredNewsCarouselWidget> {
                   autoPlay: true,
                   autoPlayInterval: Duration(seconds: 5),
                   autoPlayAnimationDuration: Duration(milliseconds: 800),
+                  enlargeStrategy: CenterPageEnlargeStrategy.height,
                   autoPlayCurve: Curves.fastOutSlowIn,
                   enlargeCenterPage: true,
                   scrollDirection: Axis.horizontal,
@@ -172,17 +173,17 @@ class _StarredNewsCarouselWidgetState extends State<StarredNewsCarouselWidget> {
 
     return Card(
       elevation: 2,
-      color: white,
+      color: starCommandBlue,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
           side: BorderSide(color: starCommandBlue, width: 1)),
       child: Padding(
-        padding: EdgeInsets.only(top: 15, bottom: 5, right: 15, left: 15),
+        padding: EdgeInsets.only(top: 15, bottom: 10, right: 15, left: 15),
         child: Stack(children: [
           Center(
             child: ColorFiltered(
               colorFilter:
-                  ColorFilter.mode(white.withOpacity(0.1), BlendMode.dstATop),
+                  ColorFilter.mode(starCommandBlue.withOpacity(0.1), BlendMode.dstATop),
               child: FadeInImage.memoryNetwork(
                 placeholder: kTransparentImage,
                 image: imageUrl,
@@ -224,6 +225,7 @@ class _StarredNewsCarouselWidgetState extends State<StarredNewsCarouselWidget> {
                     n.project.name,
                     style: TextStyle(
                       fontSize: 12,
+                      color: fontColor,
                       fontFamily: classicFont,
                     ),
                   ),
@@ -233,6 +235,7 @@ class _StarredNewsCarouselWidgetState extends State<StarredNewsCarouselWidget> {
                     date,
                     style: TextStyle(
                       fontSize: 12,
+                      color: fontColor,
                       fontFamily: classicFont,
                     ),
                   ),

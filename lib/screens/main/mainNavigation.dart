@@ -29,9 +29,9 @@ class _MainNavigationState extends State<MainNavigation> {
 
   //TODO_ Colors
   Color navBarColor = starCommandBlue;
-  Color selectedCircleColor = navyBlue;
+  Color selectedCircleColor = Colors.white;
   Color unselectedIconColor = Colors.white;
-  Color selectedIconColor = Colors.white;
+  Color selectedIconColor = starCommandBlue;
 
   Color scaffoldBackgroundColor = white;
 
