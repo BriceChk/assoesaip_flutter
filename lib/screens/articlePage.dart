@@ -2,8 +2,8 @@ import 'package:assoesaip_flutter/models/article.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:flutter/material.dart';
 
-class NewsPage extends StatelessWidget {
-  NewsPage(this.n);
+class ArticlePage extends StatelessWidget {
+  ArticlePage(this.n);
 
   final Article n;
   final double titleSize = 27.5;

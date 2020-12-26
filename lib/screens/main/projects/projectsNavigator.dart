@@ -1,5 +1,5 @@
 import 'package:assoesaip_flutter/screens/main/projects/categoriesList.dart';
-import 'package:assoesaip_flutter/screens/main/projects/category/category.dart';
+import 'package:assoesaip_flutter/screens/main/projects/category/categoryPage.dart';
 import 'package:flutter/material.dart';
 
 

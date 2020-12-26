@@ -1,5 +1,5 @@
 import 'package:assoesaip_flutter/models/news.dart';
-import 'package:assoesaip_flutter/screens/main/homePage/newsPage.dart';
+import 'package:assoesaip_flutter/screens/articlePage.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -232,7 +232,7 @@ class NewsListWidget extends StatelessWidget {
         child: Container(child: card),
         onTap: () {
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => NewsPage(n.article)));
+              MaterialPageRoute(builder: (context) => ArticlePage(n.article)));
         },
       );
     }

@@ -81,23 +81,12 @@ class _MainNavigationState extends State<MainNavigation> {
           snakeShape: SnakeShape.circle,
           shape: bottomBarShape,
           snakeViewColor: selectedCircleColor,
-          selectedItemColor: SnakeShape.circle == SnakeShape.indicator
-              ? selectedCircleColor
-              : selectedIconColor,
+          selectedItemColor: selectedIconColor,
           unselectedItemColor: unselectedIconColor,
           backgroundColor: navBarColor,
-
-          ///configuration for SnakeNavigationBar.gradient
-          //snakeViewGradient: selectedGradient,
-          //selectedItemGradient: snakeShape == SnakeShape.indicator ? selectedGradient : null,
-          //unselectedItemGradient: unselectedGradient,
-
           showUnselectedLabels: true,
-
           currentIndex: _pageIndex,
           onTap: onTabTapped,
-
-          //* Here we have the different icons for each pages
           items: buildNavigationBarItems(),
         ),
       ),

@@ -1,5 +1,5 @@
 import 'package:assoesaip_flutter/models/project.dart';
-import 'package:assoesaip_flutter/screens/main/projects/project/project.dart';
+import 'package:assoesaip_flutter/screens/main/projects/project/projectPage.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:flutter/material.dart';
 
