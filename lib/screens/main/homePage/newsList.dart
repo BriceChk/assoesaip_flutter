@@ -145,27 +145,14 @@ class NewsListWidget extends StatelessWidget {
                         width: 10,
                       ),
                       //* Container with the name of the project
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            n.project.name,
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontFamily: classicFont,
-                              color: greyfontColor,
-                            ),
-                          ),
-                          Text(
-                            date,
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontFamily: classicFont,
-                              color: greyfontColor,
-                            ),
-                          ),
-                        ],
-                      )
+                      Text(
+                        n.project.name + ' | ' + date,
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontFamily: classicFont,
+                          color: greyfontColor,
+                        ),
+                      ),
                       //* Container with the date of the news
                     ],
                   ),
