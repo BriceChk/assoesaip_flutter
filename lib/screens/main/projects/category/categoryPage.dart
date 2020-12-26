@@ -68,6 +68,7 @@ class _CategoryState extends State<Category> {
                 ),
               ),
             ),
+            centerTitle: true,
             leading: GestureDetector(
               child: Icon(
                 Icons.arrow_back,
