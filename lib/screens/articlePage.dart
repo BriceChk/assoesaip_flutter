@@ -2,14 +2,26 @@ import 'package:assoesaip_flutter/models/article.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:flutter/material.dart';
 
-class ArticlePage extends StatelessWidget {
+class ArticlePage extends StatefulWidget {
   ArticlePage(this.n);
 
   final Article n;
+
+  @override
+  _ArticlePageState createState() => _ArticlePageState();
+}
+
+class _ArticlePageState extends State<ArticlePage> {
   final double titleSize = 27.5;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Voir l'article"),
+        centerTitle: true,
+        backgroundColor: starCommandBlue,
+      ),
       body: ListView(
         children: [
           Container(
@@ -20,7 +32,7 @@ class ArticlePage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  n.title,
+                  widget.n.title,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontSize: titleSize,
@@ -29,7 +41,7 @@ class ArticlePage extends StatelessWidget {
                 ),
                 SizedBox(height: 10),
                 Text(
-                  n.abstract,
+                  widget.n.abstract,
                   textAlign: TextAlign.justify,
                   style: TextStyle(fontFamily: classicFont, fontSize: 14),
                 ),
