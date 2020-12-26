@@ -15,11 +15,10 @@ class HomePage extends StatefulWidget {
   HomePage(this.user);
 
   @override
-  _HomePageState createState() => _HomePageState(user);
+  _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  final User user;
   String avatarUrl = 'https://asso-esaip.bricechk.fr/';
 
   List<News> news;
@@ -28,10 +27,10 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
 
-    if (user.avatarFileName == null) {
+    if (widget.user.avatarFileName == null) {
       avatarUrl += 'build/images/placeholder.png';
     } else {
-      avatarUrl += 'images/profile-pics/' + user.avatarFileName;
+      avatarUrl += 'images/profile-pics/' + widget.user.avatarFileName;
     }
 
     getNews().then((value) {
@@ -40,8 +39,6 @@ class _HomePageState extends State<HomePage> {
       });
     });
   }
-
-  _HomePageState(this.user);
 
   @override
   Widget build(BuildContext context) {

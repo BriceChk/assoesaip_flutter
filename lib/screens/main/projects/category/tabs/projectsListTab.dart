@@ -9,17 +9,13 @@ class ProjectsListTab extends StatefulWidget {
   ProjectsListTab(this.projects);
 
   @override
-  _ProjectsListTabState createState() => _ProjectsListTabState(projects);
+  _ProjectsListTabState createState() => _ProjectsListTabState();
 }
 
 class _ProjectsListTabState extends State<ProjectsListTab> {
   final RoundedRectangleBorder roundedCorner = RoundedRectangleBorder(
     borderRadius: BorderRadius.circular(10),
   );
-
-  List<Project> projects;
-
-  _ProjectsListTabState(this.projects);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +24,7 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
       child: Container(
         width: double.infinity,
         child: Column(
-          children: projects.map((e) => _buildAssoWidget(e)).toList()
+          children: widget.projects.map((e) => _buildAssoWidget(e)).toList()
         ),
       ),
     );

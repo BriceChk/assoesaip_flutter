@@ -14,15 +14,13 @@ class Category extends StatefulWidget {
   Category(this.categ);
 
   @override
-  _CategoryState createState() => _CategoryState(this.categ);
+  _CategoryState createState() => _CategoryState();
 }
 
 class _CategoryState extends State<Category> {
   Map<String, Widget> tabs;
 
   String selected;
-  ProjectCategory categ;
-  _CategoryState(this.categ);
 
   List<Project> projects;
   List<News> news;
@@ -31,12 +29,12 @@ class _CategoryState extends State<Category> {
   void initState() {
     super.initState();
     selected = 'Clubs & assos';
-    getCategoryProjects(categ.id).then((value) {
+    getCategoryProjects(widget.categ.id).then((value) {
       setState(() {
         projects = value;
       });
     });
-    getCategoryNews(categ.id).then((value) {
+    getCategoryNews(widget.categ.id).then((value) {
       setState(() {
         news = value;
       });
@@ -60,7 +58,7 @@ class _CategoryState extends State<Category> {
           SliverAppBar(
             title: FittedBox(
               child: Text(
-                categ.name,
+                widget.categ.name,
                 style: TextStyle(
                   fontSize: 30,
                   color: headerTextColor,
@@ -84,7 +82,7 @@ class _CategoryState extends State<Category> {
             toolbarHeight: 60,
             expandedHeight: 130,
             backgroundColor: headerColor,
-            flexibleSpace: _headerFlexibleSpace(categ),
+            flexibleSpace: _headerFlexibleSpace(widget.categ),
           ),
           //* All the other Widget
           SliverList(

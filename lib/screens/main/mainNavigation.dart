@@ -13,19 +13,16 @@ class MainNavigation extends StatefulWidget {
   MainNavigation(this.user);
 
   @override
-  _MainNavigationState createState() => new _MainNavigationState(user);
+  _MainNavigationState createState() => new _MainNavigationState();
 }
 
 class _MainNavigationState extends State<MainNavigation> {
   //TODO_ variable
   int _pageIndex = 0;
   PageController _pageController;
-  final User user;
 
   //TODO_ Page of the App
   List<Widget> tabPages = [];
-
-  _MainNavigationState(this.user);
 
   //TODO_ Colors
   Color navBarColor = starCommandBlue;
@@ -52,10 +49,10 @@ class _MainNavigationState extends State<MainNavigation> {
     super.initState();
     _pageController = PageController(initialPage: _pageIndex);
 
-    tabPages.add(HomePage(user));
+    tabPages.add(HomePage(widget.user));
     tabPages.add(CalendarWidget());
     tabPages.add(ProjectsNavigator());
-    if (user.campus == "Angers") {
+    if (widget.user.campus == "Angers") {
       tabPages.add(CafetWidget());
     }
   }
@@ -116,7 +113,7 @@ class _MainNavigationState extends State<MainNavigation> {
       ),
     ];
 
-    if (this.user.campus == 'Angers') {
+    if (widget.user.campus == 'Angers') {
       items.add(BottomNavigationBarItem(
         icon: Icon(Icons.fastfood),
         label: 'Cafet\'',
