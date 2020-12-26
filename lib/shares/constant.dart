@@ -27,7 +27,7 @@ final Color titleCarouselColor = powderBlue;
 final Color menuColorSelected = powderBlue;
 final Color shadowColor = navyBlue;
 final Color splashColor = skyBlueCrayola1;
-final Color greyIconColor = Colors.grey[500];
+final Color greyfontColor = Colors.grey[500];
 
 final Color headerColor = starCommandBlue;
 final Color headerTextColor = Colors.white;

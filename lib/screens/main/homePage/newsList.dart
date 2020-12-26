@@ -5,6 +5,7 @@ import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:intl/number_symbols_data.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class NewsListWidget extends StatefulWidget {
@@ -17,7 +18,7 @@ class _NewsListWidgetState extends State<NewsListWidget> {
     borderRadius: BorderRadius.circular(15),
   );
   final BorderRadius splashBorderRadius = BorderRadius.circular(15);
-  final BorderRadius roundedImage = BorderRadius.circular(15);
+  final BorderRadius roundedImage = BorderRadius.circular(5);
 
   List<News> news;
 
@@ -73,12 +74,17 @@ class _NewsListWidgetState extends State<NewsListWidget> {
     } else if (n.link != null) {
       icon = FontAwesomeIcons.externalLinkAlt;
     } else {
-      return null;
+      return Container();
     }
 
     return Container(
-      padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
-      child: Icon(icon, size: 17.5, color: greyIconColor),
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: starCommandBlue,
+      ),
+      height: 35,
+      width: 35,
+      child: Icon(icon, size: 17.5, color: white),
     );
   }
 
@@ -96,88 +102,126 @@ class _NewsListWidgetState extends State<NewsListWidget> {
       content = n.event.abstract;
     }
 
-    DateFormat formatter = DateFormat("dd MMMM yyyy · HH'h'mm", 'fr_FR');
+    DateFormat formatter = DateFormat("dd MMMM yyyy", 'fr_FR');
     String date = formatter.format(n.datePublished.toLocal());
 
-    Widget card = Card(
-      elevation: 0.5,
-      color: cardColor,
-      shape: roundedBorder,
-      margin: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-      child: Padding(
-        padding: EdgeInsets.all(4),
-        child: IntrinsicHeight(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              //* Container with the image inside
-              Container(
-                height: double.infinity,
-                width: 90,
-                decoration: BoxDecoration(
-                  //* have the same rounded corner as the big container
-                  borderRadius: roundedImage,
-                  //* URL of the picture of the news
-                  image: DecorationImage(
-                    image: NetworkImage(imageUrl),
-                    fit: BoxFit.contain,
-                  ),
-                ),
-              ),
-              SizedBox(
-                width: 5,
-              ),
-              Flexible(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    //* Title of the news
-                    _buildNewsTitle(n),
-                    //* Description of the news
-                    Text(
-                      content,
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontFamily: classicFont,
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    //* Row in order to have the icon and 2 text align each other
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    Widget card = Padding(
+      padding: EdgeInsets.symmetric(vertical: 10),
+      child: Card(
+        elevation: 3,
+        color: whiteWhite,
+        shape: roundedBorder,
+        margin: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+        child: Padding(
+          padding: EdgeInsets.all(4),
+          child: IntrinsicHeight(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  //* Row with the first line of the card: image + date + name project
+                  FittedBox(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        //* Alignment of the 2 Text: Name and Date
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            //* Name of the association
-                            Text(
-                              n.project.name,
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontFamily: classicFont,
-                              ),
+                        //* Container with the picture of the Project
+                        Container(
+                          height: 30,
+                          width: 30,
+                          decoration: BoxDecoration(
+                            borderRadius: roundedImage,
+                            image: DecorationImage(
+                              //! A CHANGER
+                              image:
+                                  AssetImage('assets/images/SuperBowlLogo.png'),
+                              fit: BoxFit.contain,
                             ),
-                            //* Date of the news
-                            Text(
-                              date,
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontFamily: classicFont,
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
-                        //* Icon for each type of news
-                        _buildNewsIcons(n)
-                      ].where((o) => o != null).toList(),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        //* Container with the name of the project
+                        Container(
+                          child: Text(
+                            n.project.name,
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontFamily: classicFont,
+                              color: greyfontColor,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.symmetric(horizontal: 5),
+                          height: 15,
+                          width: 1,
+                          color: greyfontColor,
+                        ),
+                        //* Container with the date of the news
+                        Container(
+                          child: Text(
+                            date,
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontFamily: classicFont,
+                              color: greyfontColor,
+                            ),
+                          ),
+                        )
+                      ],
                     ),
-                  ]
-                      .where((o) => o != null)
-                      .toList(), // Remove the eventually null Text for the title
-                ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 5),
+                    height: 1,
+                    color: greyfontColor,
+                  ),
+                  Stack(
+                    children: [
+                      Container(
+                        //color: Colors.amber,
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            //* Title of the news
+                            _buildNewsTitle(n),
+                            SizedBox(height: 10),
+                            //* Description of the news
+                            Text(
+                              content,
+                              textAlign: TextAlign.justify,
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontFamily: classicFont,
+                              ),
+                            ),
+                          ]
+                              .where((o) => o != null)
+                              .toList(), // Remove the eventually null Text for the title
+                        ),
+                      ),
+                      //* Icon for each type of news
+                      Positioned(
+                        right: 0,
+                        bottom: 0,
+                        child: Transform.translate(
+                          offset: Offset(0, 20),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              _buildNewsIcons(n),
+                            ].where((o) => o != null).toList(),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),
