@@ -3,7 +3,7 @@ import 'package:assoesaip_flutter/screens/main/projects/project/projectHeader.da
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:flutter/material.dart';
 
-class Project extends StatefulWidget {
+class ProjectPage extends StatefulWidget {
   static final List<List<String>> menuAssoList = [
     ["Accueil", "Selected"],
     ["Actu", "Unselected"],
@@ -12,11 +12,11 @@ class Project extends StatefulWidget {
   ];
 
   @override
-  _ProjectState createState() => _ProjectState();
+  _ProjectPageState createState() => _ProjectPageState();
 }
 
-class _ProjectState extends State<Project> {
-  final menuAssoMap = Project.menuAssoList.asMap();
+class _ProjectPageState extends State<ProjectPage> {
+  final menuAssoMap = ProjectPage.menuAssoList.asMap();
 
   final double paddinghorizontal = 15;
   final RoundedRectangleBorder roundedBorder = RoundedRectangleBorder(

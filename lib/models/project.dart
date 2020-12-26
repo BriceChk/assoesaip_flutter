@@ -23,6 +23,7 @@ class Project {
     this.html,
     this.dateAdded,
     this.dateModified,
+    this.childrenProjects,
   });
 
   int id;
@@ -40,6 +41,7 @@ class Project {
   String html;
   DateTime dateAdded;
   DateTime dateModified;
+  List<Project> childrenProjects;
 
   factory Project.fromJson(Map<String, dynamic> json) {
     if (json == null) return null;
@@ -60,6 +62,7 @@ class Project {
       html: json['html'],
       dateAdded: json['date_added'] == null ? null : DateTime.parse(json['date_added']),
       dateModified: json['date_modified'] == null ? null : DateTime.parse(json['date_modified']),
+      childrenProjects: json['children_projects'] == null ? null : List<Project>.from(json['children_projects'].map((x) => Project.fromJson(x))),
     );
   }
 
@@ -79,5 +82,6 @@ class Project {
     'html': html,
     'date_added': dateAdded == null ? null : dateAdded.toIso8601String(),
     'date_modified': dateModified == null ? null : dateModified.toIso8601String(),
+    'children_projects': List<dynamic>.from(childrenProjects.map((e) => e.toJson())),
   };
 }

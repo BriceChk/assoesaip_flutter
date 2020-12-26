@@ -1,8 +1,10 @@
 // HomePage when the user connect: AppBar + Carousel event + CustomScrollVertical vertical
 
+import 'package:assoesaip_flutter/models/news.dart';
 import 'package:assoesaip_flutter/models/user.dart';
 import 'package:assoesaip_flutter/screens/main/HomePage/starredNewsCarousel.dart';
 import 'package:assoesaip_flutter/screens/main/HomePage/newsList.dart';
+import 'package:assoesaip_flutter/services/api.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:floating_search_bar/floating_search_bar.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +22,8 @@ class _HomePageState extends State<HomePage> {
   final User user;
   String avatarUrl = 'https://asso-esaip.bricechk.fr/';
 
+  List<News> news;
+
   @override
   void initState() {
     super.initState();
@@ -29,6 +33,12 @@ class _HomePageState extends State<HomePage> {
     } else {
       avatarUrl += 'images/profile-pics/' + user.avatarFileName;
     }
+
+    getNews().then((value) {
+      setState(() {
+        news = value;
+      });
+    });
   }
 
   _HomePageState(this.user);
@@ -92,7 +102,7 @@ class _HomePageState extends State<HomePage> {
                         height: 10,
                       ),
                       //! Container of each news
-                      NewsListWidget()
+                      news is List<News> ? NewsListWidget(news) : NewsListWidget.newsListPlaceholder()
                     ],
                   ),
                 ),

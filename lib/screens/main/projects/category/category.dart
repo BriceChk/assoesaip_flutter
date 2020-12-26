@@ -1,33 +1,55 @@
+import 'package:assoesaip_flutter/models/news.dart';
+import 'package:assoesaip_flutter/models/project.dart';
 import 'package:assoesaip_flutter/models/projectCategory.dart';
-import 'package:assoesaip_flutter/screens/main/projects/category/tabs/categoryNewsTab.dart';
+import 'package:assoesaip_flutter/screens/main/homePage/newsList.dart';
 import 'package:assoesaip_flutter/screens/main/projects/category/tabs/categoryCalendarTab.dart';
 import 'package:assoesaip_flutter/screens/main/projects/category/tabs/projectsListTab.dart';
+import 'package:assoesaip_flutter/services/api.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:flutter/material.dart';
 
 class Category extends StatefulWidget {
+  final ProjectCategory categ;
+
+  Category(this.categ);
+
   @override
-  _CategoryState createState() => _CategoryState();
+  _CategoryState createState() => _CategoryState(this.categ);
 }
 
 class _CategoryState extends State<Category> {
-  final Map<String, Widget> tabs = {
-    "Clubs & assos": ProjectsListTab(),
-    "Actus": CategoryNewsTab(),
-    "Calendar": CategoryCalendarTab(),
-  };
+  Map<String, Widget> tabs;
 
   String selected;
+  ProjectCategory categ;
+  _CategoryState(this.categ);
+
+  List<Project> projects;
+  List<News> news;
 
   @override
   void initState() {
     super.initState();
-    selected = tabs.keys.first;
+    selected = 'Clubs & assos';
+    getCategoryProjects(categ.id).then((value) {
+      setState(() {
+        projects = value;
+      });
+    });
+    getCategoryNews(categ.id).then((value) {
+      setState(() {
+        news = value;
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    ProjectCategory categ = ModalRoute.of(context).settings.arguments;
+    tabs = {
+      "Clubs & assos": projects is List<Project> ? ProjectsListTab(projects) : NewsListWidget.newsListPlaceholder(),
+      "Actus": news is List<News> ? NewsListWidget(news) : NewsListWidget.newsListPlaceholder(),
+      "Calendrier": CategoryCalendarTab(),
+    };
     return Container(
       color: backgroundColor,
       //* CustomScrollView in order to have the bouncingScrollPhysic
@@ -53,8 +75,7 @@ class _CategoryState extends State<Category> {
               ),
               //* Pushing back to the AssociationCategories
               onTap: () {
-                Navigator.of(context)
-                    .popUntil(ModalRoute.withName("CategoriesList"));
+                Navigator.of(context).pop();
               },
             ),
             pinned: true,
@@ -73,7 +94,7 @@ class _CategoryState extends State<Category> {
                   _buildCategoryTabs(),
                   tabs[selected],
                   //* Sizedbox of height 60 because otherwise the last one is under the navbar
-                  SizedBox(height: 60),
+                  SizedBox(height: 70),
                 ])
               ],
             ),

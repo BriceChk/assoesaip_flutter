@@ -9,20 +9,13 @@ class ProjectsNavigator extends StatelessWidget {
     return Navigator(
       initialRoute: 'CategoriesList',
       onGenerateRoute: (RouteSettings settings) {
-        switch (settings.name) {
-          case 'CategoriesList':
-            return MaterialPageRoute(
-                builder: (context) => CategoriesList(),
-                settings: settings);
-            break;
-          case 'Category':
-            return MaterialPageRoute(
-                builder: (context) => Category(), settings: settings);
-            break;
+        var routes = <String, WidgetBuilder> {
+          'CategoriesList': (context) => CategoriesList(),
+          'Category': (context) => Category(settings.arguments),
+        };
 
-          default:
-            throw Exception("Invalid route");
-        }
+        WidgetBuilder builder = routes[settings.name];
+        return MaterialPageRoute(builder: (ctx) => builder(ctx));
       },
     );
   }

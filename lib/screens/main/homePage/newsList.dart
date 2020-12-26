@@ -1,51 +1,58 @@
 import 'package:assoesaip_flutter/models/news.dart';
 import 'package:assoesaip_flutter/screens/main/homePage/newsPage.dart';
-import 'package:assoesaip_flutter/services/api.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:intl/number_symbols_data.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:transparent_image/transparent_image.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class NewsListWidget extends StatefulWidget {
-  @override
-  _NewsListWidgetState createState() => _NewsListWidgetState();
-}
+class NewsListWidget extends StatelessWidget {
+  final List<News> news;
 
-class _NewsListWidgetState extends State<NewsListWidget> {
+  NewsListWidget(this.news);
+
   final RoundedRectangleBorder roundedBorder = RoundedRectangleBorder(
     borderRadius: BorderRadius.circular(15),
   );
   final BorderRadius splashBorderRadius = BorderRadius.circular(15);
-  final BorderRadius roundedImage = BorderRadius.circular(5);
 
-  List<News> news;
+  static Widget newsListPlaceholder() {
+    List<Widget> list = List();
 
-  @override
-  void initState() {
-    super.initState();
-    getNews().then((value) {
-      setState(() {
-        news = value;
-      });
-    });
+    for (var i = 0; i < 10; i++) {
+      list.add(Card(
+        elevation: 0.5,
+        color: cardColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        margin: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            //* Container with the image inside
+            Container(
+              height: 90,
+            ),
+          ],
+        ),
+      ));
+    }
+
+    return Shimmer.fromColors(
+        baseColor: cardColor,
+        highlightColor: Colors.grey[200],
+        child: Column(
+          children: list,
+        ));
   }
 
   @override
   Widget build(BuildContext context) {
-    if (news is List<News>) {
-      return _newsListWidget();
-    } else if (news == null) {
-      return Text('Erreur');
-    } else {
-      return Text('Chargement ...');
-    }
-  }
-
-  Widget _newsListWidget() {
     return Column(
-      children: news.map((e) => _buildNewsWidget(e)).toList(),
+      children: news.map((e) => _buildNewsWidget(e, context)).toList(),
     );
   }
 
@@ -74,7 +81,7 @@ class _NewsListWidgetState extends State<NewsListWidget> {
     } else if (n.link != null) {
       icon = FontAwesomeIcons.externalLinkAlt;
     } else {
-      return Container();
+      return null;
     }
 
     return Container(
@@ -84,15 +91,16 @@ class _NewsListWidgetState extends State<NewsListWidget> {
       ),
       height: 35,
       width: 35,
-      child: Icon(icon, size: 17.5, color: white),
+      child: Icon(icon, size: 15, color: white),
     );
   }
 
-  Widget _buildNewsWidget(News n) {
-    String imageUrl = 'https://asso-esaip.bricechk.fr/images/';
+  Widget _buildNewsWidget(News n, BuildContext context) {
+    String imageUrl = 'https://asso-esaip.bricechk.fr/';
     if (n.project.logoFileName == null) {
+      imageUrl += 'build/images/project-placeholder.png';
     } else {
-      imageUrl += 'project-logos/' + n.project.logoFileName;
+      imageUrl += 'images/project-logos/' + n.project.logoFileName;
     }
 
     String content = n.content;
@@ -102,49 +110,45 @@ class _NewsListWidgetState extends State<NewsListWidget> {
       content = n.event.abstract;
     }
 
-    DateFormat formatter = DateFormat("dd MMMM yyyy", 'fr_FR');
+    DateFormat formatter = DateFormat("dd/MM/yyyy · HH'h'mm", 'fr_FR');
     String date = formatter.format(n.datePublished.toLocal());
 
     Widget card = Padding(
-      padding: EdgeInsets.symmetric(vertical: 10),
+      padding: EdgeInsets.symmetric(vertical: 7),
       child: Card(
         elevation: 3,
         color: whiteWhite,
         shape: roundedBorder,
         margin: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
         child: Padding(
-          padding: EdgeInsets.all(4),
+          padding: EdgeInsets.symmetric(vertical: 8, horizontal: 15),
           child: IntrinsicHeight(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  //* Row with the first line of the card: image + date + name project
-                  FittedBox(
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        //* Container with the picture of the Project
-                        Container(
-                          height: 30,
-                          width: 30,
-                          decoration: BoxDecoration(
-                            borderRadius: roundedImage,
-                            image: DecorationImage(
-                              //! A CHANGER
-                              image:
-                                  AssetImage('assets/images/SuperBowlLogo.png'),
-                              fit: BoxFit.contain,
-                            ),
-                          ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                //* Row with the first line of the card: image + date + name project
+                FittedBox(
+                  child: Row(
+                    children: [
+                      //* Container with the picture of the Project
+                      Container(
+                        height: 30,
+                        width: 30,
+                        child: FadeInImage.memoryNetwork(
+                          placeholder: kTransparentImage,
+                          image: imageUrl,
+                          imageScale: 10,
+                          fadeInDuration: Duration(milliseconds: 150),
                         ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        //* Container with the name of the project
-                        Container(
-                          child: Text(
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      //* Container with the name of the project
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
                             n.project.name,
                             style: TextStyle(
                               fontSize: 12,
@@ -152,16 +156,7 @@ class _NewsListWidgetState extends State<NewsListWidget> {
                               color: greyfontColor,
                             ),
                           ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.symmetric(horizontal: 5),
-                          height: 15,
-                          width: 1,
-                          color: greyfontColor,
-                        ),
-                        //* Container with the date of the news
-                        Container(
-                          child: Text(
+                          Text(
                             date,
                             style: TextStyle(
                               fontSize: 12,
@@ -169,58 +164,59 @@ class _NewsListWidgetState extends State<NewsListWidget> {
                               color: greyfontColor,
                             ),
                           ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.symmetric(vertical: 5),
-                    height: 1,
-                    color: greyfontColor,
-                  ),
-                  Stack(
-                    children: [
-                      Container(
-                        //color: Colors.amber,
-                        padding: EdgeInsets.symmetric(vertical: 10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            //* Title of the news
-                            _buildNewsTitle(n),
-                            SizedBox(height: 10),
-                            //* Description of the news
-                            Text(
-                              content,
-                              textAlign: TextAlign.justify,
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontFamily: classicFont,
-                              ),
-                            ),
-                          ]
-                              .where((o) => o != null)
-                              .toList(), // Remove the eventually null Text for the title
-                        ),
-                      ),
-                      //* Icon for each type of news
-                      Positioned(
-                        right: 0,
-                        bottom: 0,
-                        child: Transform.translate(
-                          offset: Offset(0, 20),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              _buildNewsIcons(n),
-                            ].where((o) => o != null).toList(),
-                          ),
-                        ),
-                      ),
+                        ],
+                      )
+                      //* Container with the date of the news
                     ],
                   ),
-                ],
-              ),
+                ),
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 5),
+                  height: 1,
+                  color: Colors.grey[500],
+                ),
+                Stack(
+                  children: [
+                    Container(
+                      //color: Colors.amber,
+                      padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          //* Title of the news
+                          _buildNewsTitle(n),
+                          SizedBox(height: 10),
+                          //* Description of the news
+                          Text(
+                            content,
+                            textAlign: TextAlign.justify,
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontFamily: classicFont,
+                            ),
+                          ),
+                        ]
+                            .where((o) => o != null)
+                            .toList(), // Remove the eventually null Text for the title
+                      ),
+                    ),
+                    //* Icon for each type of news
+                    Positioned(
+                      right: 0,
+                      bottom: 0,
+                      child: Transform.translate(
+                        offset: Offset(-5, 25),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            _buildNewsIcons(n),
+                          ].where((o) => o != null).toList(),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
         ),
@@ -231,7 +227,7 @@ class _NewsListWidgetState extends State<NewsListWidget> {
       return InkWell(
         borderRadius: splashBorderRadius,
         splashColor: splashColor,
-        child: Container(child: card),
+        child: card,
         onTap: () async {
           if (await canLaunch(n.link)) {
             await launch(n.link);
