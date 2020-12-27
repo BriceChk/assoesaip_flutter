@@ -212,7 +212,7 @@ class _CategoriesListState extends State<CategoriesList> {
               ),
             ),
             onTap: () {
-              Navigator.of(context).pushNamed("Category", arguments: c);
+              Navigator.of(context).pushNamed("/categories/category", arguments: c);
             }),
       ),
     );
