@@ -8,6 +8,7 @@ import 'package:assoesaip_flutter/services/api.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:floating_search_bar/floating_search_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class HomePage extends StatefulWidget {
   final User user;
@@ -67,8 +68,16 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
-              trailing: CircleAvatar(
-                backgroundImage: NetworkImage(avatarUrl),
+              trailing: Container(
+                padding: const EdgeInsets.symmetric(vertical: 5.0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(80),
+                  child: FadeInImage.memoryNetwork(
+                    placeholder: kTransparentImage,
+                    image: avatarUrl,
+                    fadeInDuration: Duration(milliseconds: 150),
+                  ),
+                ),
               ),
             ),
           ),
