@@ -1,6 +1,7 @@
 import 'package:assoesaip_flutter/models/projectMember.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProjectMembersTab extends StatelessWidget {
   final double nameSize = 18;
@@ -19,12 +20,27 @@ class ProjectMembersTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-      child: Column(
-        children: members.map((e) => _buildMemberCard(e)).toList()
-      ),
+    return Column(
+      children: _buildList()
     );
+  }
+
+  List<Widget> _buildList() {
+    List<Widget> list = List();
+    list.add(
+        Padding(
+            padding: EdgeInsets.fromLTRB(0, 0, 0, 15),
+            child: Text(
+                'Appuie sur une personne pour la contacter par mail !',
+              style: TextStyle(
+                fontStyle: FontStyle.italic
+              ),
+            )
+        )
+    );
+    list.addAll(members.map((e) => _buildMemberCard(e)).toList());
+
+    return list;
   }
 
   Widget _buildMemberCard(ProjectMember p) {
@@ -35,50 +51,67 @@ class ProjectMembersTab extends StatelessWidget {
       avatarUrl += 'images/profile-pics/' + p.user.avatarFileName;
     }
 
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 2.5),
-      child: Container(
-        width: double.infinity,
-        height: 100,
-        child: Card(
-          color: white,
-          shape: roundedCorner,
-          child: Row(
-            children: [
-              Container(
-                height: double.infinity,
-                width: 90,
-                decoration: BoxDecoration(
-                  //* have the same rounded corner as the big container
-                  borderRadius: roundedImage,
-                  image: DecorationImage(
-                    image: NetworkImage(avatarUrl),
-                    fit: BoxFit.cover,
+    return InkWell(
+      borderRadius: BorderRadius.circular(15),
+      splashColor: splashColor,
+      onTap: () async {
+        if (await canLaunch('mailto:' + p.user.username)) {
+          await launch('mailto:' + p.user.username);
+        } else {
+          throw 'Could not launch mailto:' + p.user.username;
+        }
+      },
+      child: Card(
+        color: white,
+        shape: roundedCorner,
+        margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 8, horizontal: 15),
+          child: IntrinsicHeight(
+            child: Row(
+              children: [
+                Container(
+                  height: 70,
+                  width: 70,
+                  decoration: BoxDecoration(
+                    //* have the same rounded corner as the big container
+                    borderRadius: BorderRadius.circular(80),
+                    image: DecorationImage(
+                      image: NetworkImage(avatarUrl),
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(width: 15),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    p.user.firstName + ' ' + p.user.lastName,
-                    style: TextStyle(
-                      fontFamily: classicFont,
-                      fontSize: nameSize,
-                    ),
+                SizedBox(width: 15),
+                Flexible(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        p.user.firstName + ' ' + p.user.lastName,
+                        style: TextStyle(
+                          fontFamily: classicFont,
+                          fontSize: nameSize,
+                          color: navyBlue
+                        ),
+                      ),
+                      Text(
+                        p.role,
+                        style: TextStyle(
+                          fontFamily: classicFont,
+                          fontSize: roleSize,
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        p.introduction,
+                        textAlign: TextAlign.justify,
+                      )
+                    ],
                   ),
-                  Text(
-                    p.role,
-                    style: TextStyle(
-                      fontFamily: classicFont,
-                      fontSize: roleSize,
-                    ),
-                  ),
-                ],
-              ),
-            ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
