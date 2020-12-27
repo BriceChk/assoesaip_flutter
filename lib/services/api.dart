@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:assoesaip_flutter/models/article.dart';
 import 'package:assoesaip_flutter/models/news.dart';
 import 'package:assoesaip_flutter/models/project.dart';
 import 'package:assoesaip_flutter/models/projectCategory.dart';
@@ -69,4 +70,13 @@ Future<List<News>> getCategoryNews(int categId) async {
   var jsonArray = jsonDecode(response.content()) as List;
 
   return jsonArray.map((e) => News.fromJson(e)).toList();
+}
+
+Future<Article> getArticle(int articleId) async {
+  final response = await Requests.get('$url/article/$articleId');
+  if (response.hasError) {
+    return null;
+  }
+
+  return articleFromJson(response.content());
 }
