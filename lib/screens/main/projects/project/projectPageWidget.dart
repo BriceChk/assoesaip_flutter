@@ -1,5 +1,6 @@
 import 'package:assoesaip_flutter/models/news.dart';
 import 'package:assoesaip_flutter/models/project.dart';
+import 'package:assoesaip_flutter/models/projectMember.dart';
 import 'package:assoesaip_flutter/models/projectPage.dart';
 import 'package:assoesaip_flutter/screens/main/homePage/newsList.dart';
 import 'package:assoesaip_flutter/screens/main/projects/project/tabs/projectMembersTab.dart';
@@ -30,6 +31,7 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
   Project project;
   List<News> news;
   List<ProjectPage> pages;
+  List<ProjectMember> members;
   Map<String, Widget> tabs;
   String selected;
 
@@ -47,6 +49,9 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
         pages = value;
       });
     });
+    getProjectMembers(widget.p.id).then((value) {
+      members = value;
+    });
     //TODO Get project news & events & pages
   }
 
@@ -54,7 +59,7 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
   Widget build(BuildContext context) {
     tabs = {
       'Accueil': project is Project ? CustomWebview(project.html) : CircularProgressPlaceholder(),
-      'Membres': project is Project ? ProjectMembersTab() : CircularProgressPlaceholder(),
+      'Membres': members is List<ProjectMember> ? ProjectMembersTab(members) : CircularProgressPlaceholder(),
       'Actus': news is List<News> ? NewsListWidget(news) : CircularProgressPlaceholder(),
       'Calendrier': CircularProgressPlaceholder(),
     };

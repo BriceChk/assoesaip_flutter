@@ -1,3 +1,4 @@
+import 'package:assoesaip_flutter/models/projectMember.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:flutter/material.dart';
 
@@ -5,80 +6,81 @@ class ProjectMembersTab extends StatelessWidget {
   final double nameSize = 18;
   final double roleSize = 16;
 
-  final List<List<String>> memberlist = [
-    ["assets/images/moi.jpg", "CHKIR Brice", "Président"],
-    ["assets/images/moi.jpg", "BENASSE Mickaël", "Trésorier"],
-    ["assets/images/moi.jpg", "COLLET Joffrey", "Fuck joff"],
-    ["assets/images/moi.jpg", "CHKIR Brice", "Président"],
-    ["assets/images/moi.jpg", "BENASSE Mickaël", "Trésorier"],
-  ];
+  final List<ProjectMember> members;
+
+  ProjectMembersTab(this.members);
+
+  final RoundedRectangleBorder roundedCorner = RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(10),
+  );
+  final BorderRadius roundedImage = BorderRadius.circular(10);
+
 
   @override
   Widget build(BuildContext context) {
-    final membersMap = memberlist.asMap();
-    final RoundedRectangleBorder roundedCorner = RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(10),
-    );
-    final BorderRadius roundedImage = BorderRadius.circular(10);
+
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       child: Column(
-        children: membersMap
-            .map(
-              (i, element) => MapEntry(
-                i,
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 2.5),
-                  child: Container(
-                    width: double.infinity,
-                    height: 100,
-                    child: Card(
-                      color: white,
-                      shape: roundedCorner,
-                      child: Row(
-                        children: [
-                          Container(
-                            height: double.infinity,
-                            width: 90,
-                            decoration: BoxDecoration(
-                              //* have the same rounded corner as the big container
-                              borderRadius: roundedImage,
-                              image: DecorationImage(
-                                image: AssetImage(element[0]),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 15),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                element[1],
-                                style: TextStyle(
-                                  fontFamily: classicFont,
-                                  fontSize: nameSize,
-                                ),
-                              ),
-                              Text(
-                                element[2],
-                                style: TextStyle(
-                                  fontFamily: classicFont,
-                                  fontSize: roleSize,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
+        children: members.map((e) => _buildMemberCard(e)).toList()
+      ),
+    );
+  }
+
+  Widget _buildMemberCard(ProjectMember p) {
+    String avatarUrl = 'https://asso-esaip.bricechk.fr/';
+    if (p.user.avatarFileName == null) {
+      avatarUrl += 'build/images/placeholder.png';
+    } else {
+      avatarUrl += 'images/profile-pics/' + p.user.avatarFileName;
+    }
+
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 2.5),
+      child: Container(
+        width: double.infinity,
+        height: 100,
+        child: Card(
+          color: white,
+          shape: roundedCorner,
+          child: Row(
+            children: [
+              Container(
+                height: double.infinity,
+                width: 90,
+                decoration: BoxDecoration(
+                  //* have the same rounded corner as the big container
+                  borderRadius: roundedImage,
+                  image: DecorationImage(
+                    image: NetworkImage(avatarUrl),
+                    fit: BoxFit.cover,
                   ),
                 ),
               ),
-            )
-            .values
-            .toList(),
+              SizedBox(width: 15),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    p.user.firstName + ' ' + p.user.lastName,
+                    style: TextStyle(
+                      fontFamily: classicFont,
+                      fontSize: nameSize,
+                    ),
+                  ),
+                  Text(
+                    p.role,
+                    style: TextStyle(
+                      fontFamily: classicFont,
+                      fontSize: roleSize,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
