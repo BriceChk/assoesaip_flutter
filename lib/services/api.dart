@@ -4,6 +4,7 @@ import 'package:assoesaip_flutter/models/article.dart';
 import 'package:assoesaip_flutter/models/news.dart';
 import 'package:assoesaip_flutter/models/project.dart';
 import 'package:assoesaip_flutter/models/projectCategory.dart';
+import 'package:assoesaip_flutter/models/projectPage.dart';
 import 'package:assoesaip_flutter/models/user.dart';
 import 'package:requests/requests.dart';
 
@@ -79,4 +80,24 @@ Future<Article> getArticle(int articleId) async {
   }
 
   return articleFromJson(response.content());
+}
+
+Future<Project> getProject(int projectId) async {
+  final response = await Requests.get('$url/project/$projectId');
+  if (response.hasError) {
+    return null;
+  }
+
+  return projectFromJson(response.content());
+}
+
+Future<List<ProjectPage>> getProjectPages(int projectId) async {
+  final response = await Requests.get('$url/project/$projectId/pages');
+  if (response.hasError) {
+    return null;
+  }
+
+  var jsonArray = jsonDecode(response.content()) as List;
+
+  return jsonArray.map((e) => ProjectPage.fromJson(e)).toList();
 }

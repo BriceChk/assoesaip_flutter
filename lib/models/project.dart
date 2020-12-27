@@ -56,7 +56,7 @@ class Project {
       parentProject: json['parent_project'] == null ? null : Project.fromJson(json['parent_project']),
       keywords: json['keywords'],
       email: json['email'],
-      social: json['social'],
+      social: json['social'] == null ? null : json['social'].toString(),
       description: json['description'],
       logoFileName: json['logo_file_name'],
       html: json['html'],
