@@ -71,6 +71,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
+              //* Menu + profile picture as button so see the menu
               trailing: Container(
                 padding: const EdgeInsets.symmetric(vertical: 5.0),
                 child: PopupMenuButton<MenuItem>(
@@ -89,15 +90,22 @@ class _HomePageState extends State<HomePage> {
                   ),
                   onSelected: (MenuItem result) {
                     switch (result) {
+                      //* Case when we hit "deconnexion" we log out
                       case MenuItem.logout:
                         final cookieManager = WebviewCookieManager();
                         cookieManager.clearCookies();
-                        Requests.clearStoredCookies('asso-esaip.bricechk.fr:443');
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => MyApp()));
+                        Requests.clearStoredCookies(
+                            'asso-esaip.bricechk.fr:443');
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (BuildContext context) => MyApp()));
                         break;
+                      //* Case when we hit "profile" we pushing to the page profile
                       case MenuItem.profile:
                         //TODO Go to profile page
                         break;
+                      //* Case when we hit "Actualisé" we're refreshing the whole page for news update
                       case MenuItem.refresh:
                         //TODO Refresh data
                         break;
@@ -105,6 +113,7 @@ class _HomePageState extends State<HomePage> {
                   },
                   tooltip: 'Menu',
                   itemBuilder: (BuildContext context) =>
+                      //* We have the menu display here
                       <PopupMenuEntry<MenuItem>>[
                     PopupMenuItem<MenuItem>(
                       value: MenuItem.profile,

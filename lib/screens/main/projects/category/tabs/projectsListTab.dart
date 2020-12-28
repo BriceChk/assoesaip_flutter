@@ -118,6 +118,7 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
               ),
             ],
           ),
+          //* Material then InkWell in order to have the ripple effect + ontap function
           child: Material(
             borderRadius: cardsBorderRadius,
             child: InkWell(
