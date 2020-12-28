@@ -70,118 +70,148 @@ class _ArticlePageState extends State<ArticlePage> {
   Widget _buildArticleWidget() {
     DateFormat formatter = DateFormat("dd/MM/yyyy · HH'h'mm", 'fr_FR');
     String date = formatter.format(a.datePublished.toLocal());
-
+/*
+    Widget _settingModalBottomSheet(context) {
+      showModalBottomSheet(
+          shape: RoundedRectangleBorder(borderRadius: cardsBorderRadius),
+          context: context,
+          builder: (BuildContext bc) {
+            return Container(
+              child: Wrap(
+                children: <Widget>[
+                  ListTile(
+                      leading: Icon(Icons.calendar_today),
+                      title: Text(date),
+                      onTap: () => {}),
+                ],
+              ),
+            );
+          });
+    }
+*/
     return IndexedStack(index: _stackToView, children: [
-      ListView(
-        children: [
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-            constraints: BoxConstraints(minHeight: 10),
-            width: MediaQuery.of(context).size.width,
-            color: Colors.grey[200],
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  a.title,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: titleSize,
-                      color: titleColor,
-                      fontFamily: classicFont),
-                ),
-                SizedBox(height: 10),
-                Text(
-                  a.abstract,
-                  textAlign: TextAlign.justify,
-                  style: TextStyle(fontFamily: classicFont, fontSize: 14),
-                ),
-                SizedBox(height: 10),
-                Text(
-                  a.project.name,
-                  textAlign: TextAlign.justify,
-                  style: TextStyle(fontFamily: classicFont, fontSize: 12),
-                ),
-                Text(
-                  date,
-                  textAlign: TextAlign.justify,
-                  style: TextStyle(fontFamily: classicFont, fontSize: 12),
-                ),
-                SizedBox(height: 15),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    FlatButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ProjectPageWidget(a.project),
+      Scaffold(
+        /*
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: starCommandBlue,
+          child: Icon(Icons.calendar_today),
+          onPressed: () {
+            _settingModalBottomSheet(context);
+          },
+        ),*/
+        body: ListView(
+          children: [
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+              constraints: BoxConstraints(minHeight: 10),
+              width: MediaQuery.of(context).size.width,
+              color: Colors.grey[200],
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    a.title,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontSize: titleSize,
+                        color: titleColor,
+                        fontFamily: classicFont),
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    a.abstract,
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(fontFamily: classicFont, fontSize: 14),
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    a.project.name,
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(fontFamily: classicFont, fontSize: 12),
+                  ),
+                  Text(
+                    date,
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(fontFamily: classicFont, fontSize: 12),
+                  ),
+                  SizedBox(height: 15),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      FlatButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  ProjectPageWidget(a.project),
+                            ),
+                          );
+                        },
+                        child: FittedBox(
+                          child: Text(
+                            a.project.name,
+                            style: TextStyle(
+                                fontFamily: classicFont, color: white),
                           ),
-                        );
-                      },
-                      child: FittedBox(
-                        child: Text(
-                          a.project.name,
-                          style:
-                              TextStyle(fontFamily: classicFont, color: white),
                         ),
+                        color: starCommandBlue,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: buttonBorderRadius),
                       ),
-                      color: starCommandBlue,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: buttonBorderRadius),
-                    ),
-                    FlatButton(
-                      onPressed: () async {
-                        if (await canLaunch('mailto:' + a.author.username)) {
-                          await launch('mailto:' + a.author.username);
-                        } else {
-                          throw 'Could not launch mailto:' + a.author.username;
-                        }
-                      },
-                      child: FittedBox(
-                        child: Text(
-                          a.author.firstName + ' ' + a.author.lastName,
-                          style:
-                              TextStyle(fontFamily: classicFont, color: white),
+                      FlatButton(
+                        onPressed: () async {
+                          if (await canLaunch('mailto:' + a.author.username)) {
+                            await launch('mailto:' + a.author.username);
+                          } else {
+                            throw 'Could not launch mailto:' +
+                                a.author.username;
+                          }
+                        },
+                        child: FittedBox(
+                          child: Text(
+                            a.author.firstName + ' ' + a.author.lastName,
+                            style: TextStyle(
+                                fontFamily: classicFont, color: white),
+                          ),
                         ),
+                        color: starCommandBlue,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: buttonBorderRadius),
                       ),
-                      color: starCommandBlue,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: buttonBorderRadius),
-                    ),
-                  ],
-                )
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-          SizedBox(
-            height: _height,
-            child: WebViewPlus(
-              onWebViewCreated: (controller) {
-                this._controller = controller;
-                _loadHtmlFromString();
-              },
-              onPageFinished: (url) {
-                _controller.getHeight().then((double height) {
-                  setState(() {
-                    _height = height;
-                    _stackToView = 0;
+            SizedBox(
+              height: _height,
+              child: WebViewPlus(
+                onWebViewCreated: (controller) {
+                  this._controller = controller;
+                  _loadHtmlFromString();
+                },
+                onPageFinished: (url) {
+                  _controller.getHeight().then((double height) {
+                    setState(() {
+                      _height = height;
+                      _stackToView = 0;
+                    });
                   });
-                });
-              },
-              javascriptMode: JavascriptMode.unrestricted,
-              navigationDelegate: (action) async {
-                if (await canLaunch(action.url)) {
-                  await launch(action.url);
-                } else {
-                  throw 'Could not launch ' + action.url;
-                }
-                return NavigationDecision.prevent;
-              },
+                },
+                javascriptMode: JavascriptMode.unrestricted,
+                navigationDelegate: (action) async {
+                  if (await canLaunch(action.url)) {
+                    await launch(action.url);
+                  } else {
+                    throw 'Could not launch ' + action.url;
+                  }
+                  return NavigationDecision.prevent;
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
       Column(
         children: [
