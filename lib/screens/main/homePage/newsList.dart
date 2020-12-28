@@ -51,9 +51,32 @@ class NewsListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: news.map((e) => _buildNewsWidget(e, context)).toList(),
-    );
+    if (news.length == 0) {
+      return Padding(
+        padding: EdgeInsets.only(top: 50),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              child: Image.asset(
+                "assets/images/no_data.png",
+                fit: BoxFit.contain,
+              ),
+              height: 200,
+            ),
+            SizedBox(height: 25),
+            Text(
+              "Aucune Actus",
+              style: TextStyle(fontSize: 18, fontFamily: classicFont),
+            ),
+          ],
+        ),
+      );
+    } else {
+      return Column(
+        children: news.map((e) => _buildNewsWidget(e, context)).toList(),
+      );
+    }
   }
 
   Widget _buildNewsTitle(News n) {
