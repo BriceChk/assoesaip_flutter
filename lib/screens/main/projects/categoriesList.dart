@@ -1,9 +1,9 @@
 import 'package:assoesaip_flutter/models/projectCategory.dart';
+import 'package:assoesaip_flutter/screens/main/homePage/newsList.dart';
 import 'package:assoesaip_flutter/services/api.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:shimmer/shimmer.dart';
 
 final Color fontColor = Colors.black;
 
@@ -96,52 +96,8 @@ class _CategoriesListState extends State<CategoriesList> {
         ),
       );
     } else {
-      return _categoryListPlaceholder();
+      return NewsListWidget.newsListPlaceholder();
     }
-  }
-
-  Widget _categoryListPlaceholder() {
-    List<Widget> list = List();
-
-    for (var i = 0; i < 10; i++) {
-      list.add(Shimmer.fromColors(
-        baseColor: cardColor,
-        highlightColor: Colors.grey[200],
-        child: Container(
-            padding: EdgeInsets.only(top: 17.5, right: 10, left: 10),
-            //! boxConstraints like this we can set a min height to the card and combine with flexible the height can be override
-            constraints: BoxConstraints(
-              minHeight: 100,
-            ),
-            //width: MediaQuery.of(context).size.width,
-            child: Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 7.5,
-                  vertical: 5,
-                ),
-                child: Row(
-                  children: [
-                    Flexible(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            )),
-      ));
-    }
-
-    return Column(
-      children: list,
-    );
   }
 
   Widget _buildCategoryCard(ProjectCategory c) {
