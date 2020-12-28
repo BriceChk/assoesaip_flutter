@@ -124,58 +124,60 @@ class _CategoriesListState extends State<CategoriesList> {
           ],
         ),
         //* InkWell like this we can integrate the ontap function
-        child: InkWell(
-            borderRadius: BorderRadius.circular(10),
-            splashColor: splashColor,
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: 7.5,
-                vertical: 5,
-              ),
-              child: Row(
-                children: [
-                  Container(
-                    width: 75,
-                    child: CachedNetworkImage(
-                      imageUrl: imgUrl,
-                      width: 75,
-                      height: 75,
-                      fit: BoxFit.contain,
-                    )
-                  ),
-                  SizedBox(width: 5),
-                  //! Wrap in flexible like this we can have text in multiline
-                  Flexible(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        //* Title of card
-                        Text(
-                          c.name,
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontFamily: classicFont,
-                              color: titleColor),
-                        ),
-                        //* Description of the card
-                        Text(
-                          c.description,
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontFamily: classicFont,
+        child: Material(
+          borderRadius: cardsBorderRadius,
+          child: InkWell(
+              borderRadius: BorderRadius.circular(15),
+              splashColor: splashColor,
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 7.5,
+                  vertical: 5,
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                        width: 75,
+                        child: CachedNetworkImage(
+                          imageUrl: imgUrl,
+                          width: 75,
+                          height: 75,
+                          fit: BoxFit.contain,
+                        )),
+                    SizedBox(width: 5),
+                    //! Wrap in flexible like this we can have text in multiline
+                    Flexible(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          //* Title of card
+                          Text(
+                            c.name,
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontFamily: classicFont,
+                                color: titleColor),
                           ),
-                        ),
-                      ],
+                          //* Description of the card
+                          Text(
+                            c.description,
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontFamily: classicFont,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            onTap: () {
-              Navigator.of(context)
-                  .pushNamed("/categories/category", arguments: c);
-            }),
+              onTap: () {
+                Navigator.of(context)
+                    .pushNamed("/categories/category", arguments: c);
+              }),
+        ),
       ),
     );
   }

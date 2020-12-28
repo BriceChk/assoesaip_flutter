@@ -48,42 +48,45 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
                   ),
                 ],
               ),
-              child: InkWell(
-                onTap: () {
-                  Navigator.of(context).pushNamed(
-                      '/categories/category/project',
-                      arguments: project);
-                },
-                borderRadius: BorderRadius.circular(10),
-                splashColor: splashColor,
-                child: Column(
-                  children: [
-                    Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                      child: Text(
-                        project.name,
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontFamily: classicFont,
-                          color: titleColor,
+              child: Material(
+                borderRadius: cardsBorderRadius,
+                child: InkWell(
+                  onTap: () {
+                    Navigator.of(context).pushNamed(
+                        '/categories/category/project',
+                        arguments: project);
+                  },
+                  borderRadius: BorderRadius.circular(15),
+                  splashColor: splashColor,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                        child: Text(
+                          project.name,
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontFamily: classicFont,
+                            color: titleColor,
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(height: 10),
-                    Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                      child: Text(
-                        project.description,
-                        textAlign: TextAlign.justify,
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontFamily: classicFont,
+                      SizedBox(height: 10),
+                      Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                        child: Text(
+                          project.description,
+                          textAlign: TextAlign.justify,
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontFamily: classicFont,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -115,35 +118,38 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
               ),
             ],
           ),
-          child: InkWell(
-            onTap: () {
-              Navigator.of(context)
-                  .pushNamed('/categories/category/project', arguments: p);
-            },
-            borderRadius: BorderRadius.circular(10),
-            splashColor: splashColor,
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              child: Column(
-                children: [
-                  Text(
-                    p.name,
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontFamily: classicFont,
-                      color: titleColor,
+          child: Material(
+            borderRadius: cardsBorderRadius,
+            child: InkWell(
+              onTap: () {
+                Navigator.of(context)
+                    .pushNamed('/categories/category/project', arguments: p);
+              },
+              borderRadius: BorderRadius.circular(15),
+              splashColor: splashColor,
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                child: Column(
+                  children: [
+                    Text(
+                      p.name,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontFamily: classicFont,
+                        color: titleColor,
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    p.description,
-                    textAlign: TextAlign.justify,
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontFamily: classicFont,
-                    ),
-                  )
-                ],
+                    SizedBox(height: 10),
+                    Text(
+                      p.description,
+                      textAlign: TextAlign.justify,
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontFamily: classicFont,
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           ),
