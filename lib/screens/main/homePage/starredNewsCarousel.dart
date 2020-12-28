@@ -1,5 +1,4 @@
 import 'package:assoesaip_flutter/models/news.dart';
-import 'package:assoesaip_flutter/services/api.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -7,97 +6,16 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
 
-class StarredNewsCarouselWidget extends StatefulWidget {
-  @override
-  _StarredNewsCarouselWidgetState createState() =>
-      _StarredNewsCarouselWidgetState();
-}
+class StarredNewsCarouselWidget extends StatelessWidget {
+  final List<News> news;
 
-class _StarredNewsCarouselWidgetState extends State<StarredNewsCarouselWidget> {
-  List<News> news;
-
-  final String classicFont = "Nunito";
-  final Color backgroundColor = whiteWhite;
   final Color titleColor = Colors.white;
   final Color fontColor = Colors.white;
 
-  @override
-  void initState() {
-    super.initState();
-    getStarredNews().then((value) {
-      setState(() {
-        news = value;
-      });
-    });
-  }
+  StarredNewsCarouselWidget(this.news);
 
   @override
   Widget build(BuildContext context) {
-    if (news is List<News>) {
-      return _buildCarouselWidget();
-    } else {
-      return _buildCarouselPlaceholder();
-    }
-  }
-
-  Widget _buildCarouselPlaceholder() {
-    return SliverAppBar(
-      automaticallyImplyLeading: false,
-      backgroundColor: whiteWhite,
-      //* Height of the picture (carousel)
-      expandedHeight: 310,
-      stretch: true,
-      //* Stretch mode remove or add some features
-      flexibleSpace: FlexibleSpaceBar(
-        stretchModes: [
-          StretchMode.zoomBackground,
-          StretchMode.blurBackground,
-        ],
-        background: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 10,
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 10, bottom: 10),
-              child: Text(
-                "À la une",
-                style: TextStyle(
-                  fontSize: 25,
-                  fontFamily: classicFont,
-                ),
-              ),
-            ),
-            CarouselSlider.builder(
-                //* All the option of the carousel see the pubdev page
-                options: CarouselOptions(
-                  height: 275,
-                  aspectRatio: 16 / 9,
-                  viewportFraction: 0.8,
-                  enlargeCenterPage: true,
-                ),
-                itemCount: 1,
-                itemBuilder: (BuildContext context, int currentIndex) {
-                  return Shimmer.fromColors(
-                    baseColor: cardColor,
-                    highlightColor: Colors.grey[200],
-                    child: Card(
-                      color: cardColor,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                          side: BorderSide(color: esaipBlue, width: 1)),
-                      child: Container(width: 500),
-                    ),
-                  );
-                }),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildCarouselWidget() {
     if (news.length == 0) {
       return SliverPadding(padding: EdgeInsets.zero);
     }
@@ -131,7 +49,7 @@ class _StarredNewsCarouselWidgetState extends State<StarredNewsCarouselWidget> {
               ),
             ),
             CarouselSlider.builder(
-                //* All the option of the carousel see the pubdev page
+              //* All the option of the carousel see the pubdev page
                 options: CarouselOptions(
                   height: 275,
                   aspectRatio: 16 / 9,
@@ -155,6 +73,7 @@ class _StarredNewsCarouselWidgetState extends State<StarredNewsCarouselWidget> {
       ),
     );
   }
+
 
   Widget _buildCarouselItem(News n) {
     String imageUrl = 'https://asso-esaip.bricechk.fr/';
@@ -243,6 +162,63 @@ class _StarredNewsCarouselWidgetState extends State<StarredNewsCarouselWidget> {
             ],
           ),
         ]),
+      ),
+    );
+  }
+
+  static Widget carouselPlaceholder() {
+    return SliverAppBar(
+      automaticallyImplyLeading: false,
+      backgroundColor: whiteWhite,
+      //* Height of the picture (carousel)
+      expandedHeight: 310,
+      stretch: true,
+      //* Stretch mode remove or add some features
+      flexibleSpace: FlexibleSpaceBar(
+        stretchModes: [
+          StretchMode.zoomBackground,
+          StretchMode.blurBackground,
+        ],
+        background: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 10,
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 10, bottom: 10),
+              child: Text(
+                "À la une",
+                style: TextStyle(
+                  fontSize: 25,
+                  fontFamily: classicFont,
+                ),
+              ),
+            ),
+            CarouselSlider.builder(
+              //* All the option of the carousel see the pubdev page
+                options: CarouselOptions(
+                  height: 275,
+                  aspectRatio: 16 / 9,
+                  viewportFraction: 0.8,
+                  enlargeCenterPage: true,
+                ),
+                itemCount: 1,
+                itemBuilder: (BuildContext context, int currentIndex) {
+                  return Shimmer.fromColors(
+                    baseColor: cardColor,
+                    highlightColor: Colors.grey[200],
+                    child: Card(
+                      color: cardColor,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          side: BorderSide(color: esaipBlue, width: 1)),
+                      child: Container(width: 500),
+                    ),
+                  );
+                }),
+          ],
+        ),
       ),
     );
   }

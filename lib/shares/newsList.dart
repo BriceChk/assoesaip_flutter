@@ -13,9 +13,6 @@ class NewsListWidget extends StatelessWidget {
 
   NewsListWidget(this.news);
 
-  final RoundedRectangleBorder roundedBorder = RoundedRectangleBorder(
-    borderRadius: BorderRadius.circular(15),
-  );
   final BorderRadius splashBorderRadius = BorderRadius.circular(15);
 
   static Widget newsListPlaceholder() {

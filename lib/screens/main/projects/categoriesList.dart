@@ -1,7 +1,7 @@
 import 'package:assoesaip_flutter/models/projectCategory.dart';
-import 'package:assoesaip_flutter/screens/main/homePage/newsList.dart';
 import 'package:assoesaip_flutter/services/api.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
+import 'package:assoesaip_flutter/shares/newsList.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 

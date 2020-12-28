@@ -1,13 +1,15 @@
+import 'package:assoesaip_flutter/models/eventOccurrence.dart';
 import 'package:assoesaip_flutter/models/news.dart';
 import 'package:assoesaip_flutter/models/project.dart';
 import 'package:assoesaip_flutter/models/projectMember.dart';
 import 'package:assoesaip_flutter/models/projectPage.dart';
-import 'package:assoesaip_flutter/screens/main/homePage/newsList.dart';
 import 'package:assoesaip_flutter/screens/main/projects/project/tabs/projectMembersTab.dart';
 import 'package:assoesaip_flutter/services/api.dart';
 import 'package:assoesaip_flutter/shares/circularProgressPlaceholder.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:assoesaip_flutter/shares/customWebviewWidget.dart';
+import 'package:assoesaip_flutter/shares/eventsOccurrencesList.dart';
+import 'package:assoesaip_flutter/shares/newsList.dart';
 import 'package:flutter/material.dart';
 
 class ProjectPageWidget extends StatefulWidget {
@@ -32,6 +34,8 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
   List<News> news;
   List<ProjectPage> pages;
   List<ProjectMember> members;
+  List<EventOccurrence> events;
+
   Map<String, Widget> tabs;
   String selected;
 
@@ -59,6 +63,7 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
         news = value;
       });
     });
+    events = List();
     //TODO Get project events
   }
 
@@ -66,9 +71,9 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
   Widget build(BuildContext context) {
     tabs = {
       'Accueil': project is Project ? CustomWebview(project.html) : CircularProgressPlaceholder(),
-      'Membres': members is List<ProjectMember> ? ProjectMembersTab(members) : CircularProgressPlaceholder(),
-      'Actus': news is List<News> ? NewsListWidget(news) : CircularProgressPlaceholder(),
-      'Calendrier': CircularProgressPlaceholder(),
+      'Membres': members is List<ProjectMember> ? ProjectMembersTab(members) : NewsListWidget.newsListPlaceholder(),
+      'Actus': news is List<News> ? NewsListWidget(news) : NewsListWidget.newsListPlaceholder(),
+      'Calendrier': events is List<EventOccurrence> ? EventsOccurrencesList(events) : NewsListWidget.newsListPlaceholder(),
     };
 
     if (pages is List<ProjectPage>) {
