@@ -50,9 +50,16 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
       });
     });
     getProjectMembers(widget.p.id).then((value) {
-      members = value;
+      setState(() {
+        members = value;
+      });
     });
-    //TODO Get project news & events & pages
+    getProjectNews(widget.p.id).then((value) {
+      setState(() {
+        news = value;
+      });
+    });
+    //TODO Get project events
   }
 
   @override

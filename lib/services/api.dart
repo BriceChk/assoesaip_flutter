@@ -113,3 +113,14 @@ Future<List<ProjectMember>> getProjectMembers(int projectId) async {
 
   return jsonArray.map((e) => ProjectMember.fromJson(e)).toList();
 }
+
+Future<List<News>> getProjectNews(int projectId) async {
+  final response = await Requests.get('$url/project/$projectId/news');
+  if (response.hasError) {
+    return null;
+  }
+
+  var jsonArray = jsonDecode(response.content()) as List;
+
+  return jsonArray.map((e) => News.fromJson(e)).toList();
+}
