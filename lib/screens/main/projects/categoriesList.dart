@@ -69,23 +69,22 @@ class _CategoriesListState extends State<CategoriesList> {
 
   Widget _headerFlexibleSpace() {
     return FlexibleSpaceBar(
-      collapseMode: CollapseMode.pin,
-      centerTitle: true,
-      background: Container(
-        padding: EdgeInsets.fromLTRB(15, 60, 15, 0),
-        child: Center(
-          child: Text(
-            "Découvre les clubs et associations ton campus !",
-            textAlign: TextAlign.justify,
-            style: TextStyle(
-              fontSize: 16,
-              color: headerTextColor,
-              fontFamily: classicFont,
+        collapseMode: CollapseMode.pin,
+        centerTitle: true,
+        background: Container(
+          padding: EdgeInsets.fromLTRB(15, 60, 15, 0),
+          child: Center(
+            child: Text(
+              "Découvre les clubs et associations ton campus !",
+              textAlign: TextAlign.justify,
+              style: TextStyle(
+                fontSize: 16,
+                color: headerTextColor,
+                fontFamily: classicFont,
+              ),
             ),
           ),
-        ),
-      )
-    );
+        ));
   }
 
   Widget _buildCategoryList() {
@@ -106,10 +105,10 @@ class _CategoriesListState extends State<CategoriesList> {
         baseColor: cardColor,
         highlightColor: Colors.grey[200],
         child: Container(
-            padding: EdgeInsets.only(top: 5, right: 10, left: 10),
+            padding: EdgeInsets.only(top: 17.5, right: 10, left: 10),
             //! boxConstraints like this we can set a min height to the card and combine with flexible the height can be override
             constraints: BoxConstraints(
-              minHeight: 90,
+              minHeight: 100,
             ),
             //width: MediaQuery.of(context).size.width,
             child: Card(
@@ -126,16 +125,14 @@ class _CategoriesListState extends State<CategoriesList> {
                     Flexible(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment:
-                        MainAxisAlignment.spaceAround,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [],
                       ),
                     ),
                   ],
                 ),
               ),
-            )
-        ),
+            )),
       ));
     }
 
@@ -145,22 +142,28 @@ class _CategoriesListState extends State<CategoriesList> {
   }
 
   Widget _buildCategoryCard(ProjectCategory c) {
-    String imgUrl = 'https://asso-esaip.bricechk.fr/images/category-logos/' + c.logoFileName;
+    String imgUrl = 'https://asso-esaip.bricechk.fr/images/category-logos/' +
+        c.logoFileName;
 
     return Container(
-      padding: EdgeInsets.only(top: 5, right: 10, left: 10),
+      padding: EdgeInsets.only(top: 17.5, right: 10, left: 10),
       //! boxConstraints like this we can set a min height to the card and combine with flexible the height can be override
       constraints: BoxConstraints(
-        minHeight: 90,
+        minHeight: 100,
       ),
       //width: MediaQuery.of(context).size.width,
-      child: Card(
-        elevation: 0.5,
-        shadowColor: shadowColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
+      child: Container(
+        decoration: BoxDecoration(
+          color: whiteWhite,
+          borderRadius: cardsBorderRadius,
+          boxShadow: <BoxShadow>[
+            new BoxShadow(
+              color: Colors.grey[400],
+              blurRadius: 3.0,
+              offset: new Offset(0.0, 0.0),
+            ),
+          ],
         ),
-        color: cardColor,
         //* InkWell like this we can integrate the ontap function
         child: InkWell(
             borderRadius: BorderRadius.circular(10),
@@ -186,8 +189,7 @@ class _CategoriesListState extends State<CategoriesList> {
                   Flexible(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment:
-                      MainAxisAlignment.spaceAround,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         //* Title of card
                         Text(
@@ -212,7 +214,8 @@ class _CategoriesListState extends State<CategoriesList> {
               ),
             ),
             onTap: () {
-              Navigator.of(context).pushNamed("/categories/category", arguments: c);
+              Navigator.of(context)
+                  .pushNamed("/categories/category", arguments: c);
             }),
       ),
     );

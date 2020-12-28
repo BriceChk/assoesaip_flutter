@@ -35,6 +35,7 @@ final BorderRadius headerBorder = BorderRadius.only(
   bottomLeft: Radius.circular(0),
   bottomRight: Radius.circular(0),
 );
+final BorderRadius cardsBorderRadius = BorderRadius.circular(15);
 
 int assoIndex = 0;
 

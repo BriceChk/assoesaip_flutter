@@ -141,7 +141,7 @@ class NewsListWidget extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: whiteWhite,
-          borderRadius: splashBorderRadius,
+          borderRadius: cardsBorderRadius,
           boxShadow: <BoxShadow>[
             new BoxShadow(
               color: Colors.grey[400],
