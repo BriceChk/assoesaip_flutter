@@ -22,13 +22,15 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin<HomePage> {
+class _HomePageState extends State<HomePage>
+    with AutomaticKeepAliveClientMixin<HomePage> {
   @override
   bool get wantKeepAlive => true;
 
   String avatarUrl = 'https://asso-esaip.bricechk.fr/';
 
   List<News> news;
+  List<News> starredNews;
 
   @override
   void initState() {
@@ -40,9 +42,18 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin<
       avatarUrl += 'images/profile-pics/' + widget.user.avatarFileName;
     }
 
+    loadData();
+  }
+
+  void loadData() {
     getNews().then((value) {
       setState(() {
         news = value;
+      });
+    });
+    getStarredNews().then((value) {
+      setState(() {
+        starredNews = value;
       });
     });
   }
@@ -111,7 +122,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin<
                         break;
                       //* Case when we hit "Actualisé" we're refreshing the whole page for news update
                       case MenuItem.refresh:
-                        //TODO Refresh data
+                        loadData();
                         break;
                     }
                   },
@@ -136,7 +147,9 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin<
               ),
             ),
           ),
-          StarredNewsCarouselWidget(),
+          starredNews is List<News>
+              ? StarredNewsCarouselWidget(starredNews)
+              : StarredNewsCarouselWidget.carouselPlaceholder(),
           SliverList(
             delegate: SliverChildListDelegate(
               [
