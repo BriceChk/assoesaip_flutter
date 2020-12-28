@@ -1,11 +1,11 @@
 import 'package:assoesaip_flutter/models/news.dart';
 import 'package:assoesaip_flutter/screens/articlePage.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:transparent_image/transparent_image.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class NewsListWidget extends StatelessWidget {
@@ -142,12 +142,9 @@ class NewsListWidget extends StatelessWidget {
                       Container(
                         height: 30,
                         width: 30,
-                        child: FadeInImage.memoryNetwork(
-                          placeholder: kTransparentImage,
-                          image: imageUrl,
-                          imageScale: 10,
-                          fadeInDuration: Duration(milliseconds: 150),
-                        ),
+                        child: CachedNetworkImage(
+                          imageUrl: imageUrl,
+                        )
                       ),
                       SizedBox(
                         width: 10,

@@ -1,5 +1,6 @@
 import 'package:assoesaip_flutter/models/projectMember.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -76,10 +77,7 @@ class ProjectMembersTab extends StatelessWidget {
                   decoration: BoxDecoration(
                     //* have the same rounded corner as the big container
                     borderRadius: BorderRadius.circular(80),
-                    image: DecorationImage(
-                      image: NetworkImage(avatarUrl),
-                      fit: BoxFit.cover,
-                    ),
+                    image: DecorationImage(image: CachedNetworkImageProvider(avatarUrl)),
                   ),
                 ),
                 SizedBox(width: 15),

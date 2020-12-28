@@ -1,11 +1,11 @@
 import 'package:assoesaip_flutter/models/news.dart';
 import 'package:assoesaip_flutter/services/api.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:transparent_image/transparent_image.dart';
 
 class StarredNewsCarouselWidget extends StatefulWidget {
   @override
@@ -184,11 +184,10 @@ class _StarredNewsCarouselWidgetState extends State<StarredNewsCarouselWidget> {
             child: ColorFiltered(
               colorFilter:
                   ColorFilter.mode(starCommandBlue.withOpacity(0.1), BlendMode.dstATop),
-              child: FadeInImage.memoryNetwork(
-                placeholder: kTransparentImage,
-                image: imageUrl,
-                imageScale: 10,
-                fadeInDuration: Duration(milliseconds: 150),
+              child: CachedNetworkImage(
+                imageUrl: imageUrl,
+                fit: BoxFit.contain,
+                height: 150,
               ),
             ),
           ),
