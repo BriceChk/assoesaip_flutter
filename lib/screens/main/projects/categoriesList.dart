@@ -34,7 +34,7 @@ class _CategoriesListState extends State<CategoriesList> {
       slivers: [
         //* We wrap our header inside the sliverAppBar with somme properties
         SliverAppBar(
-          automaticallyImplyLeading: true,
+          automaticallyImplyLeading: false,
           centerTitle: true,
           title: Text(
             "Parcourir les projets",

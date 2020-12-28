@@ -67,16 +67,6 @@ class _CategoryState extends State<Category> {
               ),
             ),
             centerTitle: true,
-            leading: GestureDetector(
-              child: Icon(
-                Icons.arrow_back,
-                color: headerTextColor,
-              ),
-              //* Pushing back to the AssociationCategories
-              onTap: () {
-                Navigator.of(context).pop();
-              },
-            ),
             pinned: true,
             floating: true,
             toolbarHeight: 60,
