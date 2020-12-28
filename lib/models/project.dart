@@ -82,6 +82,6 @@ class Project {
     'html': html,
     'date_added': dateAdded == null ? null : dateAdded.toIso8601String(),
     'date_modified': dateModified == null ? null : dateModified.toIso8601String(),
-    'children_projects': List<dynamic>.from(childrenProjects.map((e) => e.toJson())),
+    'children_projects': childrenProjects == null ? null : List<dynamic>.from(childrenProjects.map((e) => e.toJson())),
   };
 }
