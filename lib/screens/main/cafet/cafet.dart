@@ -14,7 +14,10 @@ class CafetWidget extends StatefulWidget {
   _CafetWidgetState createState() => _CafetWidgetState();
 }
 
-class _CafetWidgetState extends State<CafetWidget> {
+class _CafetWidgetState extends State<CafetWidget> with AutomaticKeepAliveClientMixin<CafetWidget> {
+  @override
+  bool get wantKeepAlive => true;
+
   final RoundedRectangleBorder roundedBorder = RoundedRectangleBorder(
     borderRadius: BorderRadius.only(
       bottomLeft: Radius.circular(25),
@@ -24,6 +27,7 @@ class _CafetWidgetState extends State<CafetWidget> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     //* Using the CustomScroolView in order to have the bouncingScrollPhysic
     return CustomScrollView(
       physics: BouncingScrollPhysics(),

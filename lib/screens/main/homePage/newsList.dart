@@ -66,7 +66,7 @@ class NewsListWidget extends StatelessWidget {
             ),
             SizedBox(height: 25),
             Text(
-              "Aucune Actus",
+              "Aucune actualité :(",
               style: TextStyle(fontSize: 18, fontFamily: classicFont),
             ),
           ],

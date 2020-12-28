@@ -12,7 +12,10 @@ class CategoriesList extends StatefulWidget {
   _CategoriesListState createState() => _CategoriesListState();
 }
 
-class _CategoriesListState extends State<CategoriesList> {
+class _CategoriesListState extends State<CategoriesList> with AutomaticKeepAliveClientMixin<CategoriesList> {
+  @override
+  bool get wantKeepAlive => true;
+
   List<ProjectCategory> categs;
 
   @override
@@ -28,6 +31,7 @@ class _CategoriesListState extends State<CategoriesList> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     //* Using the CustomScroolView in order to have the bouncingScrollPhysic
     return CustomScrollView(
       physics: BouncingScrollPhysics(),

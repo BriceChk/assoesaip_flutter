@@ -12,9 +12,13 @@ class CalendarWidget extends StatefulWidget {
   _CalendarWidgetState createState() => _CalendarWidgetState();
 }
 
-class _CalendarWidgetState extends State<CalendarWidget> {
+class _CalendarWidgetState extends State<CalendarWidget> with AutomaticKeepAliveClientMixin<CalendarWidget> {
+  @override
+  bool get wantKeepAlive => true;
+
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return CustomScrollView(
       physics: BouncingScrollPhysics(),
       slivers: [
