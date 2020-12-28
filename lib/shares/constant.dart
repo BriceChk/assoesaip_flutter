@@ -42,3 +42,5 @@ String assoNameString = '';
 String assoDescriptionString = '';
 int menuIndexSelected = 0;
 int menuAssoIndexSelected = 0;
+
+enum MenuItem { deconnexion, actualise, profil }

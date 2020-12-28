@@ -70,13 +70,45 @@ class _HomePageState extends State<HomePage> {
               ),
               trailing: Container(
                 padding: const EdgeInsets.symmetric(vertical: 5.0),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(80),
-                  child: FadeInImage.memoryNetwork(
-                    placeholder: kTransparentImage,
-                    image: avatarUrl,
-                    fadeInDuration: Duration(milliseconds: 150),
+                child: PopupMenuButton<MenuItem>(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10))),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(80),
+                    child: FadeInImage.memoryNetwork(
+                      placeholder: kTransparentImage,
+                      image: avatarUrl,
+                      fadeInDuration: Duration(milliseconds: 150),
+                    ),
                   ),
+                  onSelected: (MenuItem result) {
+                    setState(() {});
+                  },
+                  itemBuilder: (BuildContext context) =>
+                      <PopupMenuEntry<MenuItem>>[
+                    PopupMenuItem<MenuItem>(
+                      value: MenuItem.profil,
+                      child: Text('Profil'),
+                    ),
+                    PopupMenuItem<MenuItem>(
+                      value: MenuItem.actualise,
+                      //TODO Faire l'actualisation sur le ontap (rebuild la page voir si ca marche)
+                      child: GestureDetector(
+                        child: Text('Actualiser'),
+                        onTap: () {
+                          setState(() {});
+                        },
+                      ),
+                    ),
+                    PopupMenuItem<MenuItem>(
+                      value: MenuItem.deconnexion,
+                      //TODO Faire la déconnexion
+                      child: GestureDetector(
+                        child: Text('Déconnexion'),
+                        onTap: () {},
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -108,7 +140,9 @@ class _HomePageState extends State<HomePage> {
                         height: 10,
                       ),
                       //! Container of each news
-                      news is List<News> ? NewsListWidget(news) : NewsListWidget.newsListPlaceholder()
+                      news is List<News>
+                          ? NewsListWidget(news)
+                          : NewsListWidget.newsListPlaceholder()
                     ],
                   ),
                 ),
