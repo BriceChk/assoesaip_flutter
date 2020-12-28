@@ -1,9 +1,9 @@
 import 'package:assoesaip_flutter/models/projectCategory.dart';
-import 'package:assoesaip_flutter/shares/constant.dart';
-import 'package:flutter/material.dart';
 import 'package:assoesaip_flutter/services/api.dart';
+import 'package:assoesaip_flutter/shares/constant.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:transparent_image/transparent_image.dart';
 
 final Color fontColor = Colors.black;
 
@@ -34,7 +34,7 @@ class _CategoriesListState extends State<CategoriesList> {
       slivers: [
         //* We wrap our header inside the sliverAppBar with somme properties
         SliverAppBar(
-          automaticallyImplyLeading: true,
+          automaticallyImplyLeading: false,
           centerTitle: true,
           title: Text(
             "Parcourir les projets",
@@ -177,12 +177,12 @@ class _CategoriesListState extends State<CategoriesList> {
                 children: [
                   Container(
                     width: 75,
-                    child: FadeInImage.memoryNetwork(
-                      placeholder: kTransparentImage,
-                      image: imgUrl,
+                    child: CachedNetworkImage(
+                      imageUrl: imgUrl,
+                      width: 75,
+                      height: 75,
                       fit: BoxFit.contain,
-                      fadeInDuration: Duration(milliseconds: 150),
-                    ),
+                    )
                   ),
                   SizedBox(width: 5),
                   //! Wrap in flexible like this we can have text in multiline

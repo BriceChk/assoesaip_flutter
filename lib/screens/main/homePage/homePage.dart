@@ -2,13 +2,13 @@
 
 import 'package:assoesaip_flutter/models/news.dart';
 import 'package:assoesaip_flutter/models/user.dart';
-import 'package:assoesaip_flutter/screens/main/HomePage/starredNewsCarousel.dart';
 import 'package:assoesaip_flutter/screens/main/HomePage/newsList.dart';
+import 'package:assoesaip_flutter/screens/main/HomePage/starredNewsCarousel.dart';
 import 'package:assoesaip_flutter/services/api.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:floating_search_bar/floating_search_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:transparent_image/transparent_image.dart';
 
 class HomePage extends StatefulWidget {
   final User user;
@@ -75,15 +75,19 @@ class _HomePageState extends State<HomePage> {
                       borderRadius: BorderRadius.all(Radius.circular(10))),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(80),
-                    child: FadeInImage.memoryNetwork(
-                      placeholder: kTransparentImage,
-                      image: avatarUrl,
-                      fadeInDuration: Duration(milliseconds: 150),
+                    child: Container(
+                      width: 45,
+                      height: 45,
+                      child: CachedNetworkImage(
+                        imageUrl: avatarUrl,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                   onSelected: (MenuItem result) {
                     setState(() {});
                   },
+                  tooltip: 'Menu',
                   itemBuilder: (BuildContext context) =>
                       <PopupMenuEntry<MenuItem>>[
                     PopupMenuItem<MenuItem>(

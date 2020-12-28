@@ -44,6 +44,7 @@ dependencies:
   shimmer: ^1.1.2
   transparent_image: ^1.0.0
   webview_flutter_plus: ^0.1.1+10
+  cached_network_image: ^2.5.0
 
 dev_dependencies:
   flutter_test:
