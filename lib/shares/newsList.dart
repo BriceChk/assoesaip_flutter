@@ -1,5 +1,6 @@
 import 'package:assoesaip_flutter/models/news.dart';
 import 'package:assoesaip_flutter/screens/articlePage.dart';
+import 'package:assoesaip_flutter/screens/eventsPage.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -160,12 +161,11 @@ class NewsListWidget extends StatelessWidget {
                     children: [
                       //* Container with the picture of the Project
                       Container(
-                        height: 30,
-                        width: 30,
-                        child: CachedNetworkImage(
-                          imageUrl: imageUrl,
-                        )
-                      ),
+                          height: 30,
+                          width: 30,
+                          child: CachedNetworkImage(
+                            imageUrl: imageUrl,
+                          )),
                       SizedBox(
                         width: 10,
                       ),
@@ -262,6 +262,17 @@ class NewsListWidget extends StatelessWidget {
       );
     }
 
+    if (n.event != null) {
+      return InkWell(
+        borderRadius: splashBorderRadius,
+        splashColor: splashColor,
+        child: Container(child: card),
+        onTap: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => EventPage(n.event)));
+        },
+      );
+    }
     return card;
   }
 }
