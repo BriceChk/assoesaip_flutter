@@ -32,14 +32,22 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
     return Column(
       children: [
         Padding(
-          padding: EdgeInsets.only(top: 10, bottom: 10),
+          padding: EdgeInsets.only(top: 10, bottom: 15),
           child: Container(
             constraints: BoxConstraints(minHeight: 80),
             width: double.infinity,
-            child: Card(
-              shape: roundedCorner,
-              color: cardColor,
-              margin: EdgeInsets.all(0),
+            child: Container(
+              decoration: BoxDecoration(
+                color: whiteWhite,
+                borderRadius: cardsBorderRadius,
+                boxShadow: <BoxShadow>[
+                  new BoxShadow(
+                    color: Colors.grey[400],
+                    blurRadius: 3.0,
+                    offset: new Offset(0.0, 0.0),
+                  ),
+                ],
+              ),
               child: InkWell(
                 onTap: () {
                   Navigator.of(context).pushNamed(
@@ -91,14 +99,22 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
 
   Widget _buildClubWidget(Project p) {
     return Padding(
-      padding: EdgeInsets.only(right: 15, left: 15, bottom: 10),
+      padding: EdgeInsets.only(right: 15, left: 15, bottom: 15),
       child: Container(
         constraints: BoxConstraints(minHeight: 80),
         width: double.infinity,
-        child: Card(
-          shape: roundedCorner,
-          margin: EdgeInsets.all(0),
-          color: cardColor,
+        child: Container(
+          decoration: BoxDecoration(
+            color: whiteWhite,
+            borderRadius: cardsBorderRadius,
+            boxShadow: <BoxShadow>[
+              new BoxShadow(
+                color: Colors.grey[400],
+                blurRadius: 3.0,
+                offset: new Offset(0.0, 0.0),
+              ),
+            ],
+          ),
           child: InkWell(
             onTap: () {
               Navigator.of(context)
