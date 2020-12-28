@@ -16,28 +16,19 @@ class ProjectMembersTab extends StatelessWidget {
   );
   final BorderRadius roundedImage = BorderRadius.circular(10);
 
-
   @override
   Widget build(BuildContext context) {
-
-    return Column(
-      children: _buildList()
-    );
+    return Column(children: _buildList());
   }
 
   List<Widget> _buildList() {
     List<Widget> list = List();
-    list.add(
-        Padding(
-            padding: EdgeInsets.fromLTRB(0, 0, 0, 15),
-            child: Text(
-                'Appuie sur une personne pour la contacter par mail !',
-              style: TextStyle(
-                fontStyle: FontStyle.italic
-              ),
-            )
-        )
-    );
+    list.add(Padding(
+        padding: EdgeInsets.fromLTRB(0, 0, 0, 15),
+        child: Text(
+          'Appuie sur une personne pour la contacter par mail !',
+          style: TextStyle(fontStyle: FontStyle.italic),
+        )));
     list.addAll(members.map((e) => _buildMemberCard(e)).toList());
 
     return list;
@@ -61,10 +52,19 @@ class ProjectMembersTab extends StatelessWidget {
           throw 'Could not launch mailto:' + p.user.username;
         }
       },
-      child: Card(
-        color: white,
-        shape: roundedCorner,
-        margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+      child: Container(
+        decoration: BoxDecoration(
+          color: whiteWhite,
+          borderRadius: cardsBorderRadius,
+          boxShadow: <BoxShadow>[
+            new BoxShadow(
+              color: Colors.grey[400],
+              blurRadius: 3.0,
+              offset: new Offset(0.0, 0.0),
+            ),
+          ],
+        ),
+        margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 8, horizontal: 15),
           child: IntrinsicHeight(
@@ -90,10 +90,9 @@ class ProjectMembersTab extends StatelessWidget {
                       Text(
                         p.user.firstName + ' ' + p.user.lastName,
                         style: TextStyle(
-                          fontFamily: classicFont,
-                          fontSize: nameSize,
-                          color: navyBlue
-                        ),
+                            fontFamily: classicFont,
+                            fontSize: nameSize,
+                            color: navyBlue),
                       ),
                       Text(
                         p.role,
