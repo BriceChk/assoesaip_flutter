@@ -115,10 +115,18 @@ class NewsListWidget extends StatelessWidget {
 
     Widget card = Padding(
       padding: EdgeInsets.symmetric(vertical: 7),
-      child: Card(
-        elevation: 3,
-        color: whiteWhite,
-        shape: roundedBorder,
+      child: Container(
+        decoration: BoxDecoration(
+          color: whiteWhite,
+          borderRadius: splashBorderRadius,
+          boxShadow: <BoxShadow>[
+            new BoxShadow(
+              color: Colors.grey[400],
+              blurRadius: 3.0,
+              offset: new Offset(0.0, 0.0),
+            ),
+          ],
+        ),
         margin: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 8, horizontal: 15),
