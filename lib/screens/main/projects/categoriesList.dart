@@ -59,7 +59,7 @@ class _CategoriesListState extends State<CategoriesList> {
               //* Widget with all the name of the categories of the association
               _buildCategoryList(),
               //* Sizedbox of height 60 because otherwise the last one is under the navbar
-              SizedBox(height: 60),
+              SizedBox(height: 70),
             ],
           ),
         ),
@@ -89,8 +89,11 @@ class _CategoriesListState extends State<CategoriesList> {
 
   Widget _buildCategoryList() {
     if (categs is List<ProjectCategory>) {
-      return Column(
-        children: categs.map((c) => _buildCategoryCard(c)).toList(),
+      return Container(
+        color: Colors.white,
+        child: Column(
+          children: categs.map((c) => _buildCategoryCard(c)).toList(),
+        ),
       );
     } else {
       return _categoryListPlaceholder();
@@ -146,7 +149,7 @@ class _CategoriesListState extends State<CategoriesList> {
         c.logoFileName;
 
     return Container(
-      padding: EdgeInsets.only(top: 17.5, right: 10, left: 10),
+      padding: EdgeInsets.only(top: 6, right: 10, left: 10, bottom: 6),
       //! boxConstraints like this we can set a min height to the card and combine with flexible the height can be override
       constraints: BoxConstraints(
         minHeight: 100,
