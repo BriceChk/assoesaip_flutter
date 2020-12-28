@@ -149,7 +149,7 @@ class _CategoriesListState extends State<CategoriesList> {
         c.logoFileName;
 
     return Container(
-      padding: EdgeInsets.only(top: 17.5, right: 10, left: 10),
+      padding: EdgeInsets.only(top: 6, right: 10, left: 10, bottom: 6),
       //! boxConstraints like this we can set a min height to the card and combine with flexible the height can be override
       constraints: BoxConstraints(
         minHeight: 100,
