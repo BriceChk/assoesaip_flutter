@@ -3,10 +3,10 @@
 import 'package:assoesaip_flutter/main.dart';
 import 'package:assoesaip_flutter/models/news.dart';
 import 'package:assoesaip_flutter/models/user.dart';
-import 'package:assoesaip_flutter/screens/main/HomePage/newsList.dart';
 import 'package:assoesaip_flutter/screens/main/HomePage/starredNewsCarousel.dart';
 import 'package:assoesaip_flutter/services/api.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
+import 'package:assoesaip_flutter/shares/newsList.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:floating_search_bar/floating_search_bar.dart';
 import 'package:flutter/material.dart';

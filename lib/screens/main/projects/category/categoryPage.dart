@@ -1,10 +1,11 @@
+import 'package:assoesaip_flutter/models/eventOccurrence.dart';
 import 'package:assoesaip_flutter/models/news.dart';
 import 'package:assoesaip_flutter/models/project.dart';
 import 'package:assoesaip_flutter/models/projectCategory.dart';
-import 'package:assoesaip_flutter/screens/main/projects/category/tabs/categoryCalendarTab.dart';
 import 'package:assoesaip_flutter/screens/main/projects/category/tabs/projectsListTab.dart';
 import 'package:assoesaip_flutter/services/api.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
+import 'package:assoesaip_flutter/shares/eventsOccurrencesList.dart';
 import 'package:assoesaip_flutter/shares/newsList.dart';
 import 'package:flutter/material.dart';
 
@@ -24,6 +25,7 @@ class _CategoryState extends State<Category> {
 
   List<Project> projects;
   List<News> news;
+  List<EventOccurrence> events;
 
   @override
   void initState() {
@@ -39,6 +41,8 @@ class _CategoryState extends State<Category> {
         news = value;
       });
     });
+    events = List();
+    //TODO Fetch events
   }
 
   @override
@@ -46,7 +50,7 @@ class _CategoryState extends State<Category> {
     tabs = {
       "Clubs & assos": projects is List<Project> ? ProjectsListTab(projects) : NewsListWidget.newsListPlaceholder(),
       "Actus": news is List<News> ? NewsListWidget(news) : NewsListWidget.newsListPlaceholder(),
-      "Calendrier": CategoryCalendarTab(),
+      "Calendrier": events is List<EventOccurrence> ? EventsOccurrencesList(events) : NewsListWidget.newsListPlaceholder(),
     };
     return Container(
       color: backgroundColor,
