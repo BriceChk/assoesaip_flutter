@@ -2,12 +2,12 @@ import 'package:assoesaip_flutter/models/news.dart';
 import 'package:assoesaip_flutter/models/project.dart';
 import 'package:assoesaip_flutter/models/projectMember.dart';
 import 'package:assoesaip_flutter/models/projectPage.dart';
-import 'package:assoesaip_flutter/screens/main/homePage/newsList.dart';
 import 'package:assoesaip_flutter/screens/main/projects/project/tabs/projectMembersTab.dart';
 import 'package:assoesaip_flutter/services/api.dart';
 import 'package:assoesaip_flutter/shares/circularProgressPlaceholder.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:assoesaip_flutter/shares/customWebviewWidget.dart';
+import 'package:assoesaip_flutter/shares/newsList.dart';
 import 'package:flutter/material.dart';
 
 class ProjectPageWidget extends StatefulWidget {

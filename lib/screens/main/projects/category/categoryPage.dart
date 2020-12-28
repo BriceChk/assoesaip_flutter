@@ -1,11 +1,11 @@
 import 'package:assoesaip_flutter/models/news.dart';
 import 'package:assoesaip_flutter/models/project.dart';
 import 'package:assoesaip_flutter/models/projectCategory.dart';
-import 'package:assoesaip_flutter/screens/main/homePage/newsList.dart';
 import 'package:assoesaip_flutter/screens/main/projects/category/tabs/categoryCalendarTab.dart';
 import 'package:assoesaip_flutter/screens/main/projects/category/tabs/projectsListTab.dart';
 import 'package:assoesaip_flutter/services/api.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
+import 'package:assoesaip_flutter/shares/newsList.dart';
 import 'package:flutter/material.dart';
 
 class Category extends StatefulWidget {
