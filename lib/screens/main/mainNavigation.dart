@@ -18,7 +18,7 @@ class MainNavigation extends StatefulWidget {
 
 class _MainNavigationState extends State<MainNavigation> {
   //TODO_ variable
-  int _pageIndex = 0;
+  int _selectedIndex = 0;
   PageController _pageController;
 
   //TODO_ Page of the App
@@ -47,7 +47,7 @@ class _MainNavigationState extends State<MainNavigation> {
   @override
   void initState() {
     super.initState();
-    _pageController = PageController(initialPage: _pageIndex);
+    _pageController = PageController(initialPage: _selectedIndex);
 
     tabPages.add(HomePage(widget.user));
     tabPages.add(CalendarWidget());
@@ -82,15 +82,19 @@ class _MainNavigationState extends State<MainNavigation> {
           unselectedItemColor: unselectedIconColor,
           backgroundColor: navBarColor,
           showUnselectedLabels: true,
-          currentIndex: _pageIndex,
-          onTap: onTabTapped,
+          currentIndex: _selectedIndex,
+          onTap: (index) {
+            setState(() {
+              this._selectedIndex = index;
+              _pageController.jumpToPage(index);
+            });
+          },
           items: buildNavigationBarItems(),
         ),
       ),
       //* Here we have the changes of the page with the called function
       body: PageView(
         children: tabPages,
-        onPageChanged: onPageChanged,
         controller: _pageController,
         physics: NeverScrollableScrollPhysics(),
       ),
@@ -121,16 +125,5 @@ class _MainNavigationState extends State<MainNavigation> {
     }
 
     return items;
-  }
-
-  void onPageChanged(int page) {
-    setState(() {
-      this._pageIndex = page;
-    });
-  }
-
-  void onTabTapped(int index) {
-    this._pageController.animateToPage(index,
-        duration: const Duration(milliseconds: 1), curve: Curves.easeInOut);
   }
 }

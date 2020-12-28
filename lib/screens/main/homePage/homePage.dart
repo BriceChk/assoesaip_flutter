@@ -22,7 +22,10 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin<HomePage> {
+  @override
+  bool get wantKeepAlive => true;
+
   String avatarUrl = 'https://asso-esaip.bricechk.fr/';
 
   List<News> news;
@@ -46,6 +49,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Container(
       color: backgroundColor,
       child: CustomScrollView(
