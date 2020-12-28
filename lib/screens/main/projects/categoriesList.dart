@@ -89,8 +89,11 @@ class _CategoriesListState extends State<CategoriesList> {
 
   Widget _buildCategoryList() {
     if (categs is List<ProjectCategory>) {
-      return Column(
-        children: categs.map((c) => _buildCategoryCard(c)).toList(),
+      return Container(
+        color: Colors.white,
+        child: Column(
+          children: categs.map((c) => _buildCategoryCard(c)).toList(),
+        ),
       );
     } else {
       return _categoryListPlaceholder();
