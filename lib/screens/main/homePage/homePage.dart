@@ -1,5 +1,6 @@
 // HomePage when the user connect: AppBar + Carousel event + CustomScrollVertical vertical
 
+import 'package:assoesaip_flutter/main.dart';
 import 'package:assoesaip_flutter/models/news.dart';
 import 'package:assoesaip_flutter/models/user.dart';
 import 'package:assoesaip_flutter/screens/main/HomePage/newsList.dart';
@@ -9,6 +10,8 @@ import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:floating_search_bar/floating_search_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:requests/requests.dart';
+import 'package:webview_cookie_manager/webview_cookie_manager.dart';
 
 class HomePage extends StatefulWidget {
   final User user;
@@ -85,32 +88,35 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   onSelected: (MenuItem result) {
-                    setState(() {});
+                    switch (result) {
+                      case MenuItem.logout:
+                        final cookieManager = WebviewCookieManager();
+                        cookieManager.clearCookies();
+                        Requests.clearStoredCookies('asso-esaip.bricechk.fr:443');
+                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => MyApp()));
+                        break;
+                      case MenuItem.profile:
+                        //TODO Go to profile page
+                        break;
+                      case MenuItem.refresh:
+                        //TODO Refresh data
+                        break;
+                    }
                   },
                   tooltip: 'Menu',
                   itemBuilder: (BuildContext context) =>
                       <PopupMenuEntry<MenuItem>>[
                     PopupMenuItem<MenuItem>(
-                      value: MenuItem.profil,
+                      value: MenuItem.profile,
                       child: Text('Profil'),
                     ),
                     PopupMenuItem<MenuItem>(
-                      value: MenuItem.actualise,
-                      //TODO Faire l'actualisation sur le ontap (rebuild la page voir si ca marche)
-                      child: GestureDetector(
-                        child: Text('Actualiser'),
-                        onTap: () {
-                          setState(() {});
-                        },
-                      ),
+                      value: MenuItem.refresh,
+                      child: Text('Actualiser'),
                     ),
                     PopupMenuItem<MenuItem>(
-                      value: MenuItem.deconnexion,
-                      //TODO Faire la déconnexion
-                      child: GestureDetector(
-                        child: Text('Déconnexion'),
-                        onTap: () {},
-                      ),
+                      value: MenuItem.logout,
+                      child: Text('Déconnexion'),
                     ),
                   ],
                 ),
