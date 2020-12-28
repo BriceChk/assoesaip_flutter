@@ -7,7 +7,7 @@ class LoadingScreen extends StatelessWidget {
     return Scaffold(
       body: SizedBox.expand(
         child: Container(
-          color: esaipBlue,
+          color: starCommandBlue,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,

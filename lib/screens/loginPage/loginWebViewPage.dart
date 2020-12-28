@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:assoesaip_flutter/models/user.dart';
 import 'package:assoesaip_flutter/screens/main/mainNavigation.dart';
 import 'package:assoesaip_flutter/services/api.dart';
+import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:requests/requests.dart';
 import 'package:webview_cookie_manager/webview_cookie_manager.dart';
@@ -20,6 +21,7 @@ class LoginWebViewPage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text("Connexion à Asso'esaip"),
+          backgroundColor: starCommandBlue,
         ),
         body: WebView(
           navigationDelegate: (NavigationRequest request) async {

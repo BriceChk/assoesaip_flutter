@@ -12,7 +12,7 @@ class WelcomePage extends StatelessWidget {
       topLeft: Radius.circular(50),
     );
 
-    final Color backgroundColorBlue = skyBlueCrayola1.withOpacity(0.9);
+    final Color backgroundColorBlue = starCommandBlue;
     final Color backgroundColorWhite = whiteWhite;
     final String classicFont = "Nunito";
 
@@ -52,6 +52,7 @@ class WelcomePage extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 30,
                         fontFamily: classicFont,
+                        color: Colors.white
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -104,7 +105,7 @@ class WelcomePage extends StatelessWidget {
                           elevation: 5,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10)),
-                          color: navyBlue,
+                          color: starCommandBlue,
                           child: Padding(
                             padding: EdgeInsets.symmetric(vertical: 10),
                             //* Container in order to have the button which takes all the available width
