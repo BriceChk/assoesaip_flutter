@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:assoesaip_flutter/models/article.dart';
+import 'package:assoesaip_flutter/models/event.dart';
 import 'package:assoesaip_flutter/models/news.dart';
 import 'package:assoesaip_flutter/models/project.dart';
 import 'package:assoesaip_flutter/models/projectCategory.dart';
@@ -81,6 +82,15 @@ Future<Article> getArticle(int articleId) async {
   }
 
   return articleFromJson(response.content());
+}
+
+Future<Event> getEvent(int eventId) async {
+  final response = await Requests.get('$url/event/$eventId');
+  if (response.hasError) {
+    return null;
+  }
+
+  return eventFromJson(response.content());
 }
 
 Future<Project> getProject(int projectId) async {
