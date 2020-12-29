@@ -3,6 +3,7 @@ import 'package:assoesaip_flutter/models/user.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 class ProfilePage extends StatefulWidget {
   final User u;
@@ -21,6 +22,7 @@ class _ProfilePageState extends State<ProfilePage> {
   final BorderRadius buttonBorderRadius = BorderRadius.circular(10);
   String dropdownValue1 = MyApp.user.promo;
   String dropdownValue2 = MyApp.user.campus;
+  bool selected = true;
 
   @override
   Widget build(BuildContext context) {
@@ -161,24 +163,47 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ],
                 ),
-                SizedBox(width: 15),
-                SizedBox(height: 25),
-                SizedBox(height: 15),
-                FlatButton(
-                  onPressed: () {},
-                  child: FittedBox(
-                    child: Text(
-                      "Enregistrer",
-                      style: TextStyle(
-                          fontFamily: classicFont,
-                          color: white,
-                          fontSize: nameFontSize - 3),
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 15),
+                  child: FlatButton(
+                    onPressed: () {},
+                    child: FittedBox(
+                      child: Text(
+                        "Enregistrer",
+                        style: TextStyle(
+                            fontFamily: classicFont,
+                            color: white,
+                            fontSize: nameFontSize - 3),
+                      ),
                     ),
+                    color: starCommandBlue,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: buttonBorderRadius),
                   ),
-                  color: starCommandBlue,
-                  shape:
-                      RoundedRectangleBorder(borderRadius: buttonBorderRadius),
                 ),
+                MergeSemantics(
+                  child: ListTile(
+                    hoverColor: splashColor,
+                    title: Text(
+                      'BDE - Bureau des Etudiants',
+                      style: TextStyle(fontFamily: classicFont),
+                    ),
+                    trailing: CupertinoSwitch(
+                      activeColor: darkCornflowerBlue,
+                      value: selected,
+                      onChanged: (bool value) {
+                        setState(() {
+                          selected = value;
+                        });
+                      },
+                    ),
+                    onTap: () {
+                      setState(() {
+                        selected = !selected;
+                      });
+                    },
+                  ),
+                )
               ],
             ),
           ),
