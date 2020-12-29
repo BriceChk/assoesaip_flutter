@@ -1,5 +1,4 @@
 import 'package:assoesaip_flutter/models/project.dart';
-import 'package:assoesaip_flutter/screens/project/projectPageWidget.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:flutter/material.dart';
 
@@ -53,7 +52,7 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
                 borderRadius: cardsBorderRadius,
                 child: InkWell(
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (ctx) => ProjectPageWidget(p)));
+                    Navigator.pushNamed(context, '/categories/category/project', arguments: p);
                   },
                   borderRadius: BorderRadius.circular(15),
                   splashColor: splashColor,
@@ -122,7 +121,7 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
             borderRadius: cardsBorderRadius,
             child: InkWell(
               onTap: () {
-                Navigator.pushNamed(context, '/project', arguments: p);
+                Navigator.pushNamed(context, '/categories/category/project', arguments: p);
               },
               borderRadius: BorderRadius.circular(15),
               splashColor: splashColor,
