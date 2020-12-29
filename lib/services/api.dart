@@ -134,3 +134,11 @@ Future<List<News>> getProjectNews(int projectId) async {
 
   return jsonArray.map((e) => News.fromJson(e)).toList();
 }
+
+Future<User> updateProfile(User user) async {
+  final response = await Requests.post('$url/profile', json: user.toJson());
+  if (response.hasError) {
+    return null;
+  }
+  return userFromJson(response.content());
+}
