@@ -1,6 +1,4 @@
 import 'package:assoesaip_flutter/models/news.dart';
-import 'package:assoesaip_flutter/screens/articlePage.dart';
-import 'package:assoesaip_flutter/screens/eventsPage.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -256,8 +254,7 @@ class NewsListWidget extends StatelessWidget {
         splashColor: splashColor,
         child: Container(child: card),
         onTap: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => ArticlePage(n.article)));
+          Navigator.of(context, rootNavigator: true).pushNamed('/article', arguments: n.article);
         },
       );
     }
@@ -268,8 +265,7 @@ class NewsListWidget extends StatelessWidget {
         splashColor: splashColor,
         child: Container(child: card),
         onTap: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => EventPage(n.event)));
+          Navigator.of(context, rootNavigator: true).pushNamed('/event', arguments: n.event);
         },
       );
     }

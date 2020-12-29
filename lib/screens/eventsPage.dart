@@ -10,8 +10,6 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_plus/webview_flutter_plus.dart';
 
-import 'main/projects/project/projectPageWidget.dart';
-
 class EventPage extends StatefulWidget {
   EventPage(this.n);
 
@@ -45,7 +43,14 @@ class _EventPageState extends State<EventPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Voir l'événement"),
+        title: Text(
+          "Voir l'événement",
+          style: TextStyle(
+            fontSize: 30,
+            color: headerTextColor,
+            fontFamily: classicFont,
+          ),
+        ),
         centerTitle: true,
         backgroundColor: starCommandBlue,
       ),
@@ -70,31 +75,27 @@ class _EventPageState extends State<EventPage> {
     DateFormat formatter = DateFormat("dd/MM/yyyy · HH'h'mm", 'fr_FR');
     String date = formatter.format(e.datePublished.toLocal());
 
-    Widget _settingModalBottomSheet(context) {
-      showModalBottomSheet(
-          shape: RoundedRectangleBorder(borderRadius: cardsBorderRadius),
-          context: context,
-          builder: (BuildContext bc) {
-            return Container(
-              child: Wrap(
-                children: <Widget>[
-                  ListTile(
-                      leading: Icon(Icons.calendar_today),
-                      title: Text(e.dateStart.toString()),
-                      onTap: () => {}),
-                ],
-              ),
-            );
-          });
-    }
-
     return IndexedStack(index: _stackToView, children: [
       Scaffold(
         floatingActionButton: FloatingActionButton(
           backgroundColor: starCommandBlue,
           child: Icon(Icons.calendar_today),
           onPressed: () {
-            _settingModalBottomSheet(context);
+            showModalBottomSheet(
+                shape: RoundedRectangleBorder(borderRadius: cardsBorderRadius),
+                context: context,
+                builder: (BuildContext bc) {
+                  return Container(
+                    child: Wrap(
+                      children: <Widget>[
+                        ListTile(
+                            leading: Icon(Icons.calendar_today),
+                            title: Text(e.dateStart.toString()),
+                            onTap: () => {}),
+                      ],
+                    ),
+                  );
+                });
           },
         ),
         body: ListView(
@@ -138,13 +139,8 @@ class _EventPageState extends State<EventPage> {
                     children: [
                       FlatButton(
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  ProjectPageWidget(e.project),
-                            ),
-                          );
+                          Navigator.pushNamed(context, '/project',
+                              arguments: e.project);
                         },
                         child: FittedBox(
                           child: Text(
@@ -227,7 +223,7 @@ class _EventPageState extends State<EventPage> {
   }
 
   _loadHtmlFromString() async {
-    String fileText = await rootBundle.loadString('assets/event.html');
+    String fileText = await rootBundle.loadString('assets/article.html');
     fileText = fileText.replaceFirst('%body%', e.html);
     _controller.loadUrl(Uri.dataFromString(fileText,
             mimeType: 'text/html', encoding: Encoding.getByName('utf-8'))

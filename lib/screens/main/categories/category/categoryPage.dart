@@ -1,96 +1,68 @@
 import 'package:assoesaip_flutter/models/eventOccurrence.dart';
 import 'package:assoesaip_flutter/models/news.dart';
 import 'package:assoesaip_flutter/models/project.dart';
-import 'package:assoesaip_flutter/models/projectMember.dart';
-import 'package:assoesaip_flutter/models/projectPage.dart';
-import 'package:assoesaip_flutter/screens/main/projects/project/tabs/projectMembersTab.dart';
+import 'package:assoesaip_flutter/models/projectCategory.dart';
+import 'package:assoesaip_flutter/screens/main/categories/category/projectsListTab.dart';
 import 'package:assoesaip_flutter/services/api.dart';
-import 'package:assoesaip_flutter/shares/circularProgressPlaceholder.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
-import 'package:assoesaip_flutter/shares/customWebviewWidget.dart';
 import 'package:assoesaip_flutter/shares/eventsOccurrencesList.dart';
 import 'package:assoesaip_flutter/shares/newsList.dart';
 import 'package:flutter/material.dart';
 
-class ProjectPageWidget extends StatefulWidget {
-  final Project p;
+class Category extends StatefulWidget {
+  final ProjectCategory categ;
 
-  ProjectPageWidget(this.p);
+  Category(this.categ);
 
   @override
-  _ProjectPageWidgetState createState() => _ProjectPageWidgetState();
+  _CategoryState createState() => _CategoryState();
 }
 
-class _ProjectPageWidgetState extends State<ProjectPageWidget> {
-  final double paddinghorizontal = 15;
-  final RoundedRectangleBorder roundedBorder = RoundedRectangleBorder(
-    borderRadius: BorderRadius.only(
-      bottomLeft: Radius.circular(25),
-      bottomRight: Radius.circular(25),
-    ),
-  );
-
-  Project project;
-  List<News> news;
-  List<ProjectPage> pages;
-  List<ProjectMember> members;
-  List<EventOccurrence> events;
-
+class _CategoryState extends State<Category> {
   Map<String, Widget> tabs;
+
   String selected;
+
+  List<Project> projects;
+  List<News> news;
+  List<EventOccurrence> events;
 
   @override
   void initState() {
     super.initState();
-    selected = 'Accueil';
-    getProject(widget.p.id).then((value) {
+    selected = 'Clubs & assos';
+    getCategoryProjects(widget.categ.id).then((value) {
       setState(() {
-        project = value;
+        projects = value;
       });
     });
-    getProjectPages(widget.p.id).then((value) {
-      setState(() {
-        pages = value;
-      });
-    });
-    getProjectMembers(widget.p.id).then((value) {
-      setState(() {
-        members = value;
-      });
-    });
-    getProjectNews(widget.p.id).then((value) {
+    getCategoryNews(widget.categ.id).then((value) {
       setState(() {
         news = value;
       });
     });
     events = List();
-    //TODO Get project events
+    //TODO Fetch events
   }
 
   @override
   Widget build(BuildContext context) {
     tabs = {
-      'Accueil': project is Project ? CustomWebview(project.html) : CircularProgressPlaceholder(),
-      'Membres': members is List<ProjectMember> ? ProjectMembersTab(members) : NewsListWidget.newsListPlaceholder(),
-      'Actus': news is List<News> ? NewsListWidget(news) : NewsListWidget.newsListPlaceholder(),
-      'Calendrier': events is List<EventOccurrence> ? EventsOccurrencesList(events) : NewsListWidget.newsListPlaceholder(),
+      "Clubs & assos": projects is List<Project> ? ProjectsListTab(projects) : NewsListWidget.newsListPlaceholder(),
+      "Actus": news is List<News> ? NewsListWidget(news) : NewsListWidget.newsListPlaceholder(),
+      "Calendrier": events is List<EventOccurrence> ? EventsOccurrencesList(events) : NewsListWidget.newsListPlaceholder(),
     };
-
-    if (pages is List<ProjectPage>) {
-      pages.forEach((page) {
-        tabs[page.name] = CustomWebview(page.html);
-      });
-    }
-
     return Container(
-      color: whiteWhite,
+      color: backgroundColor,
+      //* CustomScrollView in order to have the bouncingScrollPhysic
       child: CustomScrollView(
         physics: BouncingScrollPhysics(),
         slivers: [
+          //* SliverAppBar in order to have the same as the page before
           SliverAppBar(
             title: FittedBox(
               child: Text(
-                widget.p.name,
+                widget.categ.name,
                 style: TextStyle(
                   fontSize: 30,
                   color: headerTextColor,
@@ -102,21 +74,21 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
             pinned: true,
             floating: true,
             toolbarHeight: 60,
-            expandedHeight: 160,
+            expandedHeight: 130,
             backgroundColor: headerColor,
-            flexibleSpace: _headerFlexibleSpace(),
+            flexibleSpace: _headerFlexibleSpace(widget.categ),
           ),
           //* All the other Widget
           SliverList(
             delegate: SliverChildListDelegate(
               [
-                Column(
-                  children: [
-                    _buildTabs(),
-                    tabs[selected],
-                    SizedBox(height: 70),
-                  ],
-                )
+                Column(children: [
+                  //* Widget with all the name of the categories of the association
+                  _buildCategoryTabs(),
+                  tabs[selected],
+                  //* Sizedbox of height 60 because otherwise the last one is under the navbar
+                  SizedBox(height: 70),
+                ])
               ],
             ),
           ),
@@ -125,7 +97,7 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
     );
   }
 
-  Widget _headerFlexibleSpace() {
+  Widget _headerFlexibleSpace(ProjectCategory c) {
     return FlexibleSpaceBar(
         collapseMode: CollapseMode.pin,
         centerTitle: true,
@@ -133,7 +105,7 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
           padding: EdgeInsets.fromLTRB(15, 60, 15, 0),
           child: Center(
             child: Text(
-              widget.p.description,
+              c.description,
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 16,
@@ -146,7 +118,7 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
     );
   }
 
-  Widget _buildTabs() {
+  Widget _buildCategoryTabs() {
     List<Widget> list = List();
 
     tabs.keys.forEach((tab) {
@@ -185,15 +157,9 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       child: Container(
-        height: 50,
-        child: ListView(
-          scrollDirection: Axis.horizontal,
-            children: [
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: list
-              ),
-            ]
+        child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: list
         ),
       ),
     );

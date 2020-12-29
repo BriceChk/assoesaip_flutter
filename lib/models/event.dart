@@ -79,7 +79,7 @@ class Event {
       dateEnd: json['date_end'] == null ? null : DateTime.parse(json['date_end']),
       duration: json['duration'],
       allDay: json['all_day'],
-      daysOfWeek: json['days_of_week'],
+      daysOfWeek: json['days_of_week'].toString(),
       intervalCount: json['interval_count'],
       intervalType: json['interval_type'],
       occurrencesCount: json['occurrences_count'],

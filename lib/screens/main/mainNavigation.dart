@@ -1,16 +1,18 @@
-import 'package:assoesaip_flutter/models/user.dart';
+import 'package:assoesaip_flutter/main.dart';
+import 'package:assoesaip_flutter/models/projectCategory.dart';
 import 'package:assoesaip_flutter/screens/main/cafet/cafet.dart';
 import 'package:assoesaip_flutter/screens/main/calendar/calendar.dart';
 import 'package:assoesaip_flutter/screens/main/homePage/homePage.dart';
-import 'package:assoesaip_flutter/screens/main/projects/projectsNavigator.dart';
+import 'package:assoesaip_flutter/screens/main/categories/categoriesNavigator.dart';
+import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
-import '../../shares/constant.dart';
 
 class MainNavigation extends StatefulWidget {
-  final User user;
+  final int tabIndex;
+  final ProjectCategory category;
 
-  MainNavigation(this.user);
+  MainNavigation({this.tabIndex = 0, this.category});
 
   @override
   _MainNavigationState createState() => new _MainNavigationState();
@@ -18,7 +20,7 @@ class MainNavigation extends StatefulWidget {
 
 class _MainNavigationState extends State<MainNavigation> {
   //TODO_ variable
-  int _selectedIndex = 0;
+  int _selectedIndex;
   PageController _pageController;
 
   //TODO_ Page of the App
@@ -47,12 +49,13 @@ class _MainNavigationState extends State<MainNavigation> {
   @override
   void initState() {
     super.initState();
+    _selectedIndex = widget.tabIndex;
     _pageController = PageController(initialPage: _selectedIndex);
 
-    tabPages.add(HomePage(widget.user));
+    tabPages.add(HomePage());
     tabPages.add(CalendarWidget());
     tabPages.add(ProjectsNavigator());
-    if (widget.user.campus == "Angers") {
+    if (MyApp.user.campus == "Angers") {
       tabPages.add(CafetWidget());
     }
   }
@@ -117,7 +120,7 @@ class _MainNavigationState extends State<MainNavigation> {
       ),
     ];
 
-    if (widget.user.campus == 'Angers') {
+    if (MyApp.user.campus == 'Angers') {
       items.add(BottomNavigationBarItem(
         icon: Icon(Icons.fastfood),
         label: 'Cafet\'',

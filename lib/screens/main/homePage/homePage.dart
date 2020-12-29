@@ -2,7 +2,6 @@
 
 import 'package:assoesaip_flutter/main.dart';
 import 'package:assoesaip_flutter/models/news.dart';
-import 'package:assoesaip_flutter/models/user.dart';
 import 'package:assoesaip_flutter/screens/main/HomePage/starredNewsCarousel.dart';
 import 'package:assoesaip_flutter/services/api.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
@@ -14,10 +13,6 @@ import 'package:requests/requests.dart';
 import 'package:webview_cookie_manager/webview_cookie_manager.dart';
 
 class HomePage extends StatefulWidget {
-  final User user;
-
-  HomePage(this.user);
-
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -36,10 +31,10 @@ class _HomePageState extends State<HomePage>
   void initState() {
     super.initState();
 
-    if (widget.user.avatarFileName == null) {
+    if (MyApp.user.avatarFileName == null) {
       avatarUrl += 'build/images/placeholder.png';
     } else {
-      avatarUrl += 'images/profile-pics/' + widget.user.avatarFileName;
+      avatarUrl += 'images/profile-pics/' + MyApp.user.avatarFileName;
     }
 
     loadData();
@@ -111,10 +106,7 @@ class _HomePageState extends State<HomePage>
                         cookieManager.clearCookies();
                         Requests.clearStoredCookies(
                             'asso-esaip.bricechk.fr:443');
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (BuildContext context) => MyApp()));
+                        Navigator.pushReplacementNamed(context, '/welcome');
                         break;
                       //* Case when we hit "profile" we pushing to the page profile
                       case MenuItem.profile:

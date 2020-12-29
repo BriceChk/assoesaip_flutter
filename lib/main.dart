@@ -1,14 +1,17 @@
+import 'package:assoesaip_flutter/models/user.dart';
 import 'package:assoesaip_flutter/screens/LoginPage/welcomePage.dart';
+import 'package:assoesaip_flutter/screens/articlePage.dart';
+import 'package:assoesaip_flutter/screens/eventsPage.dart';
 import 'package:assoesaip_flutter/screens/loginPage/loadingScreen.dart';
+import 'package:assoesaip_flutter/screens/loginPage/loginWebViewPage.dart';
 import 'package:assoesaip_flutter/screens/main/mainNavigation.dart';
+import 'package:assoesaip_flutter/screens/project/projectPageWidget.dart';
 import 'package:assoesaip_flutter/services/api.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/date_symbol_data_local.dart';
-
-import 'models/user.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,6 +21,8 @@ void main() {
 }
 
 class MyApp extends StatefulWidget {
+  static User user;
+  
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -28,8 +33,7 @@ class _MyAppState extends State<MyApp> {
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
-  String status = 'loading';
-  User user;
+  String _initialRoute = '';
 
   @override
   void initState() {
@@ -38,8 +42,12 @@ class _MyAppState extends State<MyApp> {
 
     getUser().then((value) {
       setState(() {
-        user = value;
-        status = 'ready';
+        MyApp.user = value;
+        if (value == null) {
+          _initialRoute = '/welcome';
+        } else {
+          _initialRoute = '/main/home';
+        }
       });
     });
 
@@ -64,19 +72,34 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    Widget widget;
-
-    if (status == 'loading') {
-      widget = LoadingScreen();
-    } else if (user == null) {
-      widget = WelcomePage();
-    } else {
-      widget = MainNavigation(user);
+    if (_initialRoute == '') {
+      return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: LoadingScreen(),
+      );
     }
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: widget,
+      home: _initialRoute == '/welcome' ? WelcomePage() : MainNavigation(tabIndex: 0),
+      onGenerateRoute: (settings) {
+        final arguments = settings.arguments;
+        var routes = {
+          '/main/home': (context) => MainNavigation(tabIndex: 0),
+          '/main/calendar': (context) => MainNavigation(tabIndex: 1),
+          '/main/categories': (context) => MainNavigation(tabIndex: 2),
+          '/main/cafet': (context) => MainNavigation(tabIndex: 3),
+          '/welcome': (context) => WelcomePage(),
+          '/welcome/login': (context) => LoginWebViewPage(),
+          '/loading': (context) => LoadingScreen(),
+          '/project': (context) => ProjectPageWidget(arguments),
+          '/article': (context) => ArticlePage(arguments),
+          '/event': (context) => EventPage(arguments),
+        };
+
+        WidgetBuilder builder = routes[settings.name];
+        return MaterialPageRoute(builder: (ctx) => builder(ctx));
+      },
     );
   }
 }

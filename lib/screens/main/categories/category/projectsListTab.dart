@@ -1,4 +1,5 @@
 import 'package:assoesaip_flutter/models/project.dart';
+import 'package:assoesaip_flutter/screens/project/projectPageWidget.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:flutter/material.dart';
 
@@ -28,7 +29,7 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
     );
   }
 
-  Widget _buildAssoWidget(Project project) {
+  Widget _buildAssoWidget(Project p) {
     return Column(
       children: [
         Padding(
@@ -52,9 +53,7 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
                 borderRadius: cardsBorderRadius,
                 child: InkWell(
                   onTap: () {
-                    Navigator.of(context).pushNamed(
-                        '/categories/category/project',
-                        arguments: project);
+                    Navigator.push(context, MaterialPageRoute(builder: (ctx) => ProjectPageWidget(p)));
                   },
                   borderRadius: BorderRadius.circular(15),
                   splashColor: splashColor,
@@ -64,7 +63,7 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
                         padding:
                             EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                         child: Text(
-                          project.name,
+                          p.name,
                           style: TextStyle(
                             fontSize: 18,
                             fontFamily: classicFont,
@@ -77,7 +76,7 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
                         padding:
                             EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                         child: Text(
-                          project.description,
+                          p.description,
                           textAlign: TextAlign.justify,
                           style: TextStyle(
                             fontSize: 15,
@@ -93,7 +92,7 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
           ),
         ),
         Column(
-            children: project.childrenProjects
+            children: p.childrenProjects
                 .map((club) => _buildClubWidget(club))
                 .toList())
       ],
@@ -123,8 +122,7 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
             borderRadius: cardsBorderRadius,
             child: InkWell(
               onTap: () {
-                Navigator.of(context)
-                    .pushNamed('/categories/category/project', arguments: p);
+                Navigator.pushNamed(context, '/project', arguments: p);
               },
               borderRadius: BorderRadius.circular(15),
               splashColor: splashColor,

@@ -10,8 +10,6 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_plus/webview_flutter_plus.dart';
 
-import 'main/projects/project/projectPageWidget.dart';
-
 class ArticlePage extends StatefulWidget {
   ArticlePage(this.n);
 
@@ -46,7 +44,14 @@ class _ArticlePageState extends State<ArticlePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Voir l'article"),
+        title: Text(
+          "Voir l'article",
+          style: TextStyle(
+            fontSize: 30,
+            color: headerTextColor,
+            fontFamily: classicFont,
+          ),
+        ),
         centerTitle: true,
         backgroundColor: starCommandBlue,
       ),
@@ -140,13 +145,8 @@ class _ArticlePageState extends State<ArticlePage> {
                     children: [
                       FlatButton(
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  ProjectPageWidget(a.project),
-                            ),
-                          );
+                          Navigator.pushNamed(context, '/project',
+                              arguments: a.project);
                         },
                         child: FittedBox(
                           child: Text(

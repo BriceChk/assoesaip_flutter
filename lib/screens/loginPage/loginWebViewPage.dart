@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:assoesaip_flutter/models/user.dart';
+import 'package:assoesaip_flutter/main.dart';
 import 'package:assoesaip_flutter/screens/main/mainNavigation.dart';
 import 'package:assoesaip_flutter/services/api.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
@@ -20,7 +20,15 @@ class LoginWebViewPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Connexion à Asso'esaip"),
+          centerTitle: true,
+          title: Text(
+            "Connexion",
+            style: TextStyle(
+              fontSize: 30,
+              color: headerTextColor,
+              fontFamily: classicFont,
+            ),
+          ),
           backgroundColor: starCommandBlue,
         ),
         body: WebView(
@@ -36,9 +44,9 @@ class LoginWebViewPage extends StatelessWidget {
                 }
               }
               Requests.setStoredCookies('asso-esaip.bricechk.fr:443', map);
-              User user = await getUser();
+              MyApp.user = await getUser();
               Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  builder: (BuildContext context) => MainNavigation(user))
+                  builder: (BuildContext context) => MainNavigation())
               );
               return NavigationDecision.prevent;
             } else {

@@ -1,4 +1,3 @@
-import 'package:assoesaip_flutter/screens/LoginPage/loginWebViewPage.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:flutter/material.dart';
 
@@ -124,11 +123,7 @@ class WelcomePage extends StatelessWidget {
                             ),
                           ),
                           onPressed: () {
-                            Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(
-                                    builder: (BuildContext context) => LoginWebViewPage()
-                                )
-                            );
+                            Navigator.of(context).pushNamed('/welcome/login');
                           },
                         ),
                       ),
