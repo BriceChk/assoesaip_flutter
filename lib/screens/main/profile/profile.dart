@@ -2,6 +2,7 @@ import 'package:assoesaip_flutter/main.dart';
 import 'package:assoesaip_flutter/models/user.dart';
 import 'package:assoesaip_flutter/services/api.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +16,6 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  String avatarUrl = 'https://asso-esaip.bricechk.fr/';
   final double titleSize = 27.5;
   final double nameFontSize = 20;
   final BorderRadius profilePictureRadius = BorderRadius.circular(10);
@@ -26,6 +26,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    String avatarUrl = 'https://asso-esaip.bricechk.fr/';
+
     if (MyApp.user.avatarFileName == null) {
       avatarUrl += 'build/images/placeholder.png';
     } else {
@@ -56,16 +58,10 @@ class _ProfilePageState extends State<ProfilePage> {
                 Container(
                   width: 125,
                   height: 125,
-                  /*child: CachedNetworkImage(
-                    imageUrl: avatarUrl,
-                    fit: BoxFit.cover,
-                  ),*/
                   child: ClipRRect(
                     borderRadius: profilePictureRadius,
-                    child: Image(
-                      image: AssetImage(
-                        "assets/images/moi.jpg",
-                      ),
+                    child: CachedNetworkImage(
+                      imageUrl: avatarUrl,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -74,7 +70,9 @@ class _ProfilePageState extends State<ProfilePage> {
                 Text(
                   MyApp.user.firstName + ' ' + MyApp.user.lastName,
                   style: TextStyle(
-                      fontFamily: classicFont, fontSize: nameFontSize),
+                      fontFamily: classicFont,
+                      fontSize: nameFontSize
+                  ),
                 ),
                 SizedBox(height: 15),
                 Row(
