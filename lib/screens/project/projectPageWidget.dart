@@ -11,6 +11,7 @@ import 'package:assoesaip_flutter/shares/customWebviewWidget.dart';
 import 'package:assoesaip_flutter/shares/eventsOccurrencesList.dart';
 import 'package:assoesaip_flutter/shares/newsList.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ProjectPageWidget extends StatefulWidget {
   final Project p;
@@ -38,6 +39,7 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
 
   Map<String, Widget> tabs;
   String selected;
+  bool iconSelected = false;
 
   @override
   void initState() {
@@ -67,13 +69,43 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
     //TODO Get project events
   }
 
+  Widget _buildIcon() {
+    if (iconSelected) {
+      return IconButton(
+        icon: Icon(FontAwesomeIcons.solidBell, color: Colors.yellow),
+        onPressed: () {
+          setState(() {
+            iconSelected = !iconSelected;
+          });
+        },
+      );
+    } else {
+      return IconButton(
+        icon: Icon(FontAwesomeIcons.bell),
+        onPressed: () {
+          setState(() {
+            iconSelected = !iconSelected;
+          });
+        },
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     tabs = {
-      'Accueil': project is Project ? CustomWebview(project.html) : CircularProgressPlaceholder(),
-      'Membres': members is List<ProjectMember> ? ProjectMembersTab(members) : NewsListWidget.newsListPlaceholder(),
-      'Actus': news is List<News> ? NewsListWidget(news) : NewsListWidget.newsListPlaceholder(),
-      'Calendrier': events is List<EventOccurrence> ? EventsOccurrencesList(events) : NewsListWidget.newsListPlaceholder(),
+      'Accueil': project is Project
+          ? CustomWebview(project.html)
+          : CircularProgressPlaceholder(),
+      'Membres': members is List<ProjectMember>
+          ? ProjectMembersTab(members)
+          : NewsListWidget.newsListPlaceholder(),
+      'Actus': news is List<News>
+          ? NewsListWidget(news)
+          : NewsListWidget.newsListPlaceholder(),
+      'Calendrier': events is List<EventOccurrence>
+          ? EventsOccurrencesList(events)
+          : NewsListWidget.newsListPlaceholder(),
     };
 
     if (pages is List<ProjectPage>) {
@@ -99,6 +131,7 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
                   ),
                 ),
               ),
+              actions: [_buildIcon()],
               centerTitle: true,
               pinned: true,
               floating: true,
@@ -144,8 +177,7 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
               ),
             ),
           ),
-        )
-    );
+        ));
   }
 
   Widget _buildTabs() {
@@ -155,11 +187,9 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
       Widget w = Container(
         decoration: BoxDecoration(
             color: selected == tab ? menuColorSelected : Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(10))
-        ),
+            borderRadius: BorderRadius.all(Radius.circular(10))),
         child: Padding(
-          padding: EdgeInsets.symmetric(
-              vertical: 5, horizontal: 10),
+          padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
           child: Text(
             tab,
             style: TextStyle(
@@ -188,15 +218,9 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       child: Container(
         height: 50,
-        child: ListView(
-          scrollDirection: Axis.horizontal,
-            children: [
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: list
-              ),
-            ]
-        ),
+        child: ListView(scrollDirection: Axis.horizontal, children: [
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: list),
+        ]),
       ),
     );
   }
