@@ -5,6 +5,7 @@ import 'package:assoesaip_flutter/screens/eventsPage.dart';
 import 'package:assoesaip_flutter/screens/loginPage/loadingScreen.dart';
 import 'package:assoesaip_flutter/screens/loginPage/loginWebViewPage.dart';
 import 'package:assoesaip_flutter/screens/main/mainNavigation.dart';
+import 'package:assoesaip_flutter/screens/main/profile/profile.dart';
 import 'package:assoesaip_flutter/screens/project/projectPageWidget.dart';
 import 'package:assoesaip_flutter/services/api.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -22,7 +23,7 @@ void main() {
 
 class MyApp extends StatefulWidget {
   static User user;
-  
+
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -81,7 +82,9 @@ class _MyAppState extends State<MyApp> {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: _initialRoute == '/welcome' ? WelcomePage() : MainNavigation(tabIndex: 0),
+      home: _initialRoute == '/welcome'
+          ? WelcomePage()
+          : MainNavigation(tabIndex: 0),
       onGenerateRoute: (settings) {
         final arguments = settings.arguments;
         var routes = {
@@ -93,6 +96,7 @@ class _MyAppState extends State<MyApp> {
           '/welcome/login': (context) => LoginWebViewPage(),
           '/loading': (context) => LoadingScreen(),
           '/project': (context) => ProjectPageWidget(arguments),
+          '/profile': (context) => ProfilePage(arguments),
           '/article': (context) => ArticlePage(arguments),
           '/event': (context) => EventPage(arguments),
         };

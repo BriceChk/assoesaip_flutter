@@ -110,7 +110,8 @@ class _HomePageState extends State<HomePage>
                         break;
                       //* Case when we hit "profile" we pushing to the page profile
                       case MenuItem.profile:
-                        //TODO Go to profile page
+                        Navigator.pushNamed(context, '/profile',
+                            arguments: MyApp.user);
                         break;
                       //* Case when we hit "Actualisé" we're refreshing the whole page for news update
                       case MenuItem.refresh:
