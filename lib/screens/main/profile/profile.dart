@@ -113,7 +113,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             style: TextStyle(color: starCommandBlue),
                             onChanged: (String newValue) {
                               setState(() {
-                                dropdownValue2 = newValue;
+                                campusValue = newValue;
                               });
                             },
                             items: <String>['Angers', 'Aix']
@@ -136,7 +136,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             style: TextStyle(color: starCommandBlue),
                             onChanged: (String newValue) {
                               setState(() {
-                                dropdownValue1 = newValue;
+                                promoValue = newValue;
                               });
                             },
                             items: <String>[
