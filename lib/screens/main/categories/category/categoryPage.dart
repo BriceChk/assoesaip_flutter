@@ -8,6 +8,7 @@ import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:assoesaip_flutter/shares/eventsOccurrencesList.dart';
 import 'package:assoesaip_flutter/shares/newsList.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Category extends StatefulWidget {
   final ProjectCategory categ;
@@ -22,6 +23,7 @@ class _CategoryState extends State<Category> {
   Map<String, Widget> tabs;
 
   String selected;
+  bool iconSelected = false;
 
   List<Project> projects;
   List<News> news;
@@ -45,12 +47,40 @@ class _CategoryState extends State<Category> {
     //TODO Fetch events
   }
 
+  Widget _buildIcon() {
+    if (iconSelected) {
+      return IconButton(
+        icon: Icon(FontAwesomeIcons.solidBell, color: Colors.yellow),
+        onPressed: () {
+          setState(() {
+            iconSelected = !iconSelected;
+          });
+        },
+      );
+    } else {
+      return IconButton(
+        icon: Icon(FontAwesomeIcons.bell),
+        onPressed: () {
+          setState(() {
+            iconSelected = !iconSelected;
+          });
+        },
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     tabs = {
-      "Clubs & assos": projects is List<Project> ? ProjectsListTab(projects) : NewsListWidget.newsListPlaceholder(),
-      "Actus": news is List<News> ? NewsListWidget(news) : NewsListWidget.newsListPlaceholder(),
-      "Calendrier": events is List<EventOccurrence> ? EventsOccurrencesList(events) : NewsListWidget.newsListPlaceholder(),
+      "Clubs & assos": projects is List<Project>
+          ? ProjectsListTab(projects)
+          : NewsListWidget.newsListPlaceholder(),
+      "Actus": news is List<News>
+          ? NewsListWidget(news)
+          : NewsListWidget.newsListPlaceholder(),
+      "Calendrier": events is List<EventOccurrence>
+          ? EventsOccurrencesList(events)
+          : NewsListWidget.newsListPlaceholder(),
     };
     return Container(
       color: backgroundColor,
@@ -70,6 +100,7 @@ class _CategoryState extends State<Category> {
                 ),
               ),
             ),
+            actions: [_buildIcon()],
             centerTitle: true,
             pinned: true,
             floating: true,
@@ -114,8 +145,7 @@ class _CategoryState extends State<Category> {
               ),
             ),
           ),
-        )
-    );
+        ));
   }
 
   Widget _buildCategoryTabs() {
@@ -125,11 +155,9 @@ class _CategoryState extends State<Category> {
       Widget w = Container(
         decoration: BoxDecoration(
             color: selected == tab ? menuColorSelected : Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(10))
-        ),
+            borderRadius: BorderRadius.all(Radius.circular(10))),
         child: Padding(
-          padding: EdgeInsets.symmetric(
-              vertical: 5, horizontal: 10),
+          padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
           child: Text(
             tab,
             style: TextStyle(
@@ -157,10 +185,7 @@ class _CategoryState extends State<Category> {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       child: Container(
-        child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: list
-        ),
+        child: Row(mainAxisAlignment: MainAxisAlignment.center, children: list),
       ),
     );
   }

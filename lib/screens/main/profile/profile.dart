@@ -102,62 +102,70 @@ class _ProfilePageState extends State<ProfilePage> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        DropdownButton<String>(
-                          value: campusValue,
-                          icon: Icon(Icons.arrow_drop_down),
-                          iconSize: 24,
-                          elevation: 16,
-                          style: TextStyle(color: starCommandBlue),
-                          onChanged: (String newValue) {
-                            setState(() {
-                              campusValue = newValue;
-                            });
-                          },
-                          items: <String>['Angers', 'Aix']
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
+                        Container(
+                          width: 125,
+                          child: DropdownButton<String>(
+                            value: campusValue,
+                            isExpanded: true,
+                            icon: Icon(Icons.arrow_drop_down),
+                            iconSize: 24,
+                            elevation: 16,
+                            style: TextStyle(color: starCommandBlue),
+                            onChanged: (String newValue) {
+                              setState(() {
+                                dropdownValue2 = newValue;
+                              });
+                            },
+                            items: <String>['Angers', 'Aix']
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                          ),
                         ),
-                        DropdownButton<String>(
-                          value: promoValue,
-                          icon: Icon(Icons.arrow_drop_down),
-                          iconSize: 24,
-                          elevation: 16,
-                          style: TextStyle(color: starCommandBlue),
-                          onChanged: (String newValue) {
-                            setState(() {
-                              promoValue = newValue;
-                            });
-                          },
-                          items: <String>[
-                            'ING1',
-                            'ING2',
-                            'IR3',
-                            'IR4',
-                            'IR5',
-                            'SEP3',
-                            'SEP4',
-                            'SEP5',
-                            'IRA3',
-                            'IRA4',
-                            'IRA5',
-                            'SEPA3',
-                            'SEPA4',
-                            'SEPA5',
-                            'BACH1',
-                            'BACH2',
-                            'BACH3',
-                            'CPI',
-                            'Personnel esaip',
-                          ].map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
+                        Container(
+                          width: 125,
+                          child: DropdownButton<String>(
+                            value: promoValue,
+                            isExpanded: true,
+                            icon: Icon(Icons.arrow_drop_down),
+                            iconSize: 24,
+                            elevation: 16,
+                            style: TextStyle(color: starCommandBlue),
+                            onChanged: (String newValue) {
+                              setState(() {
+                                dropdownValue1 = newValue;
+                              });
+                            },
+                            items: <String>[
+                              'ING1',
+                              'ING2',
+                              'IR3',
+                              'IR4',
+                              'IR5',
+                              'SEP3',
+                              'SEP4',
+                              'SEP5',
+                              'IRA3',
+                              'IRA4',
+                              'IRA5',
+                              'SEPA3',
+                              'SEPA4',
+                              'SEPA5',
+                              'BACH1',
+                              'BACH2',
+                              'BACH3',
+                              'CPI',
+                              'Personnel esaip',
+                            ].map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                          ),
                         ),
                       ],
                     ),
@@ -195,29 +203,6 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ),
                 ),
-                MergeSemantics(
-                  child: ListTile(
-                    hoverColor: splashColor,
-                    title: Text(
-                      'BDE - Bureau des Etudiants',
-                      style: TextStyle(fontFamily: classicFont),
-                    ),
-                    trailing: CupertinoSwitch(
-                      activeColor: darkCornflowerBlue,
-                      value: selected,
-                      onChanged: (bool value) {
-                        setState(() {
-                          selected = value;
-                        });
-                      },
-                    ),
-                    onTap: () {
-                      setState(() {
-                        selected = !selected;
-                      });
-                    },
-                  ),
-                )
               ],
             ),
           ),
