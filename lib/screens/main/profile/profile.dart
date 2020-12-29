@@ -1,9 +1,9 @@
 import 'package:assoesaip_flutter/main.dart';
 import 'package:assoesaip_flutter/models/user.dart';
+import 'package:assoesaip_flutter/services/api.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class ProfilePage extends StatefulWidget {
   final User u;
@@ -20,8 +20,8 @@ class _ProfilePageState extends State<ProfilePage> {
   final double nameFontSize = 20;
   final BorderRadius profilePictureRadius = BorderRadius.circular(10);
   final BorderRadius buttonBorderRadius = BorderRadius.circular(10);
-  String dropdownValue1 = MyApp.user.promo;
-  String dropdownValue2 = MyApp.user.campus;
+  String promoValue = MyApp.user.promo;
+  String campusValue = MyApp.user.campus;
   bool selected = true;
 
   @override
@@ -103,14 +103,14 @@ class _ProfilePageState extends State<ProfilePage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         DropdownButton<String>(
-                          value: dropdownValue2,
+                          value: campusValue,
                           icon: Icon(Icons.arrow_drop_down),
                           iconSize: 24,
                           elevation: 16,
                           style: TextStyle(color: starCommandBlue),
                           onChanged: (String newValue) {
                             setState(() {
-                              dropdownValue2 = newValue;
+                              campusValue = newValue;
                             });
                           },
                           items: <String>['Angers', 'Aix']
@@ -122,14 +122,14 @@ class _ProfilePageState extends State<ProfilePage> {
                           }).toList(),
                         ),
                         DropdownButton<String>(
-                          value: dropdownValue1,
+                          value: promoValue,
                           icon: Icon(Icons.arrow_drop_down),
                           iconSize: 24,
                           elevation: 16,
                           style: TextStyle(color: starCommandBlue),
                           onChanged: (String newValue) {
                             setState(() {
-                              dropdownValue1 = newValue;
+                              promoValue = newValue;
                             });
                           },
                           items: <String>[
@@ -163,22 +163,36 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ],
                 ),
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 15),
-                  child: FlatButton(
-                    onPressed: () {},
-                    child: FittedBox(
-                      child: Text(
-                        "Enregistrer",
-                        style: TextStyle(
-                            fontFamily: classicFont,
-                            color: white,
-                            fontSize: nameFontSize - 3),
+                Builder(
+                  builder: (context) => Padding(
+                    padding: EdgeInsets.symmetric(vertical: 15),
+                    child: FlatButton(
+                      onPressed: () {
+                        MyApp.user.campus = campusValue;
+                        MyApp.user.promo = promoValue;
+                        updateProfile(MyApp.user).then((value) {
+                          var sb;
+                          if (value == null) {
+                            sb = SnackBar(content: Text('Une erreur est survenue'));
+                          } else {
+                            sb = SnackBar(content: Text('Les modifications ont été enregistrées !'));
+                          }
+                          Scaffold.of(context).showSnackBar(sb);
+                        });
+                      },
+                      child: FittedBox(
+                        child: Text(
+                          "Enregistrer",
+                          style: TextStyle(
+                              fontFamily: classicFont,
+                              color: white,
+                              fontSize: nameFontSize - 3),
+                        ),
                       ),
+                      color: starCommandBlue,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: buttonBorderRadius),
                     ),
-                    color: starCommandBlue,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: buttonBorderRadius),
                   ),
                 ),
                 MergeSemantics(

@@ -136,7 +136,7 @@ Future<List<News>> getProjectNews(int projectId) async {
 }
 
 Future<User> updateProfile(User user) async {
-  final response = await Requests.post('$url/profile', json: user.toJson());
+  final response = await Requests.post('$url/profile', body: user.toJson(), bodyEncoding: RequestBodyEncoding.JSON);
   if (response.hasError) {
     return null;
   }
