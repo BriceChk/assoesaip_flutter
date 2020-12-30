@@ -1,7 +1,12 @@
 // HomePage when the user connect: AppBar + Carousel event + CustomScrollVertical vertical
 
+import 'dart:math';
+
 import 'package:assoesaip_flutter/main.dart';
+import 'package:assoesaip_flutter/models/article.dart';
+import 'package:assoesaip_flutter/models/event.dart';
 import 'package:assoesaip_flutter/models/news.dart';
+import 'package:assoesaip_flutter/screens/eventsPage.dart';
 import 'package:assoesaip_flutter/screens/main/HomePage/starredNewsCarousel.dart';
 import 'package:assoesaip_flutter/services/api.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
@@ -9,6 +14,7 @@ import 'package:assoesaip_flutter/shares/newsList.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:floating_search_bar/floating_search_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:requests/requests.dart';
 import 'package:webview_cookie_manager/webview_cookie_manager.dart';
 
@@ -53,8 +59,59 @@ class _HomePageState extends State<HomePage>
     });
   }
 
+  Widget _buildNewsTitle(News n) {
+    if (n.article == null && n.event == null) return null;
+
+    var title = n.article != null ? n.article.title : n.event.title;
+
+    return Text(
+      title,
+      style: TextStyle(
+        fontSize: 20,
+        fontFamily: classicFont,
+        color: titleColor,
+      ),
+    );
+  }
+
+  Widget _builderSearchResult(News n) {
+    return TypeAheadField(
+      itemBuilder: (context, suggestion) {
+        return ListTile(
+          //leading: Icon(Icons.shopping_cart),
+          title: Text(suggestion[_buildNewsTitle(n)]),
+          subtitle: Text(n.project.name),
+        );
+      },
+      suggestionsCallback: (pattern) {
+        return BackendService.getSuggestions(pattern);
+      },
+      onSuggestionSelected: (suggestion) {
+        if (suggestion is Event) {
+          //Navigator.of(context, rootNavigator: true).pushNamed('/event', arguments: n.event);
+          print("Je push sur la page event");
+        }
+        if (suggestion is Article) {
+          //Navigator.of(context, rootNavigator: true).pushNamed('/article', arguments: n.article);
+          print("Je push sur la page article");
+        } else {
+          print("Je push sur rien du tout");
+        }
+      },
+      textFieldConfiguration: TextFieldConfiguration(
+        decoration: InputDecoration.collapsed(
+          hintText: "Rechercher un club, une actu ...",
+        ),
+        style: TextStyle(
+          fontFamily: classicFont,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    News n;
     super.build(context);
     return Container(
       color: backgroundColor,
@@ -70,16 +127,7 @@ class _HomePageState extends State<HomePage>
               leading: Container(
                 height: double.infinity,
                 width: MediaQuery.of(context).size.width - 110,
-                child: Center(
-                  child: TextField(
-                    decoration: InputDecoration.collapsed(
-                      hintText: "Rechercher un club, une actu ...",
-                    ),
-                    style: TextStyle(
-                      fontFamily: classicFont,
-                    ),
-                  ),
-                ),
+                child: Center(child: _builderSearchResult(n)),
               ),
               //* Menu + profile picture as button so see the menu
               trailing: Container(
@@ -182,5 +230,12 @@ class _HomePageState extends State<HomePage>
         ],
       ),
     );
+  }
+}
+
+class BackendService {
+  static Future<List> getSuggestions(String query) async {
+    await Future.delayed(Duration(seconds: 1));
+    return getNews();
   }
 }
