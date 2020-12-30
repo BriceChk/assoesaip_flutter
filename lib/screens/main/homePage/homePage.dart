@@ -1,12 +1,11 @@
 // HomePage when the user connect: AppBar + Carousel event + CustomScrollVertical vertical
 
-import 'dart:math';
-
 import 'package:assoesaip_flutter/main.dart';
 import 'package:assoesaip_flutter/models/article.dart';
 import 'package:assoesaip_flutter/models/event.dart';
 import 'package:assoesaip_flutter/models/news.dart';
-import 'package:assoesaip_flutter/screens/eventsPage.dart';
+import 'package:assoesaip_flutter/models/project.dart';
+import 'package:assoesaip_flutter/models/searchResult.dart';
 import 'package:assoesaip_flutter/screens/main/HomePage/starredNewsCarousel.dart';
 import 'package:assoesaip_flutter/services/api.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
@@ -15,6 +14,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:floating_search_bar/floating_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:requests/requests.dart';
 import 'package:webview_cookie_manager/webview_cookie_manager.dart';
 
@@ -27,6 +27,8 @@ class _HomePageState extends State<HomePage>
     with AutomaticKeepAliveClientMixin<HomePage> {
   @override
   bool get wantKeepAlive => true;
+
+  final TextEditingController _typeAheadController = TextEditingController();
 
   String avatarUrl = 'https://asso-esaip.bricechk.fr/';
 
@@ -59,46 +61,53 @@ class _HomePageState extends State<HomePage>
     });
   }
 
-  Widget _buildNewsTitle(News n) {
-    if (n.article == null && n.event == null) return null;
-
-    var title = n.article != null ? n.article.title : n.event.title;
-
-    return Text(
-      title,
-      style: TextStyle(
-        fontSize: 20,
-        fontFamily: classicFont,
-        color: titleColor,
-      ),
-    );
-  }
-
   Widget _builderSearchResult(News n) {
     return TypeAheadField(
-      itemBuilder: (context, suggestion) {
+      itemBuilder: (context, SearchResult suggestion) {
+        IconData icon;
+        if (suggestion.type == "Article") {
+          icon = FontAwesomeIcons.newspaper;
+        } else if (suggestion.type == "Événement") {
+          icon = FontAwesomeIcons.calendarAlt;
+        } else {
+          icon = FontAwesomeIcons.userFriends;
+        }
         return ListTile(
-          //leading: Icon(Icons.shopping_cart),
-          title: Text(suggestion[_buildNewsTitle(n)]),
-          subtitle: Text(n.project.name),
+          leading: Container(child: Center(child: Icon(icon)), width: 5, height: 5),
+          title: Text(
+            suggestion.name,
+            style: TextStyle(
+              fontSize: 17,
+              fontFamily: classicFont,
+              color: titleColor,
+            ),
+          ),
+          subtitle: Text(suggestion.type),
         );
       },
-      suggestionsCallback: (pattern) {
-        return BackendService.getSuggestions(pattern);
+      suggestionsCallback: (pattern) async {
+        return await getSearchResults(pattern);
       },
-      onSuggestionSelected: (suggestion) {
-        if (suggestion is Event) {
-          //Navigator.of(context, rootNavigator: true).pushNamed('/event', arguments: n.event);
-          print("Je push sur la page event");
-        }
-        if (suggestion is Article) {
-          //Navigator.of(context, rootNavigator: true).pushNamed('/article', arguments: n.article);
-          print("Je push sur la page article");
+      onSuggestionSelected: (SearchResult suggestion) {
+        if (suggestion.type == "Article") {
+          Navigator.of(context, rootNavigator: true)
+              .pushNamed('/article', arguments: Article(id: suggestion.id));
+        } else if (suggestion.type == "Événement") {
+          Navigator.of(context, rootNavigator: true)
+              .pushNamed('/event', arguments: Event(id: suggestion.id));
         } else {
-          print("Je push sur rien du tout");
+          Navigator.of(context, rootNavigator: true).pushNamed('/project',
+              arguments: Project(
+                  id: suggestion.id,
+                  name: suggestion.name,
+                  description: suggestion.description
+              ),
+          );
         }
+        _typeAheadController.clear();
       },
       textFieldConfiguration: TextFieldConfiguration(
+        controller: _typeAheadController,
         decoration: InputDecoration.collapsed(
           hintText: "Rechercher un club, une actu ...",
         ),
@@ -106,6 +115,8 @@ class _HomePageState extends State<HomePage>
           fontFamily: classicFont,
         ),
       ),
+      hideOnLoading: true,
+      hideSuggestionsOnKeyboardHide: true,
     );
   }
 
@@ -230,12 +241,5 @@ class _HomePageState extends State<HomePage>
         ],
       ),
     );
-  }
-}
-
-class BackendService {
-  static Future<List> getSuggestions(String query) async {
-    await Future.delayed(Duration(seconds: 1));
-    return getNews();
   }
 }

@@ -7,6 +7,7 @@ import 'package:assoesaip_flutter/models/project.dart';
 import 'package:assoesaip_flutter/models/projectCategory.dart';
 import 'package:assoesaip_flutter/models/projectMember.dart';
 import 'package:assoesaip_flutter/models/projectPage.dart';
+import 'package:assoesaip_flutter/models/searchResult.dart';
 import 'package:assoesaip_flutter/models/user.dart';
 import 'package:requests/requests.dart';
 
@@ -141,4 +142,15 @@ Future<User> updateProfile(User user) async {
     return null;
   }
   return userFromJson(response.content());
+}
+
+Future<List<SearchResult>> getSearchResults(String query) async {
+  final response = await Requests.get('$url/search/$query');
+  if (response.hasError) {
+    return null;
+  }
+
+  var jsonArray = jsonDecode(response.content()) as List;
+
+  return jsonArray.map((e) => SearchResult.fromJson(e)).toList();
 }
