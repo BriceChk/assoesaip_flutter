@@ -49,7 +49,7 @@ class StarredNewsCarouselWidget extends StatelessWidget {
               ),
             ),
             CarouselSlider.builder(
-              //* All the option of the carousel see the pubdev page
+                //* All the option of the carousel see the pubdev page
                 options: CarouselOptions(
                   height: 275,
                   aspectRatio: 16 / 9,
@@ -67,15 +67,14 @@ class StarredNewsCarouselWidget extends StatelessWidget {
                 ),
                 itemCount: news.length,
                 itemBuilder: (BuildContext context, int currentIndex) =>
-                    _buildCarouselItem(news[currentIndex])),
+                    _buildCarouselItem(news[currentIndex], context)),
           ],
         ),
       ),
     );
   }
 
-
-  Widget _buildCarouselItem(News n) {
+  Widget _buildCarouselItem(News n, BuildContext context) {
     String imageUrl = 'https://asso-esaip.bricechk.fr/';
     if (n.project.logoFileName == null) {
       imageUrl += 'build/images/project-placeholder.png';
@@ -90,7 +89,7 @@ class StarredNewsCarouselWidget extends StatelessWidget {
     DateFormat formatter = DateFormat("dd MMMM yyyy · HH'h'mm", 'fr_FR');
     String date = formatter.format(n.datePublished.toLocal());
 
-    return Card(
+    Widget card = Card(
       elevation: 2,
       color: starCommandBlue,
       shape: RoundedRectangleBorder(
@@ -101,8 +100,8 @@ class StarredNewsCarouselWidget extends StatelessWidget {
         child: Stack(children: [
           Center(
             child: ColorFiltered(
-              colorFilter:
-                  ColorFilter.mode(starCommandBlue.withOpacity(0.1), BlendMode.dstATop),
+              colorFilter: ColorFilter.mode(
+                  starCommandBlue.withOpacity(0.1), BlendMode.dstATop),
               child: CachedNetworkImage(
                 imageUrl: imageUrl,
                 fit: BoxFit.contain,
@@ -164,6 +163,26 @@ class StarredNewsCarouselWidget extends StatelessWidget {
         ]),
       ),
     );
+
+    if (n.article != null) {
+      return GestureDetector(
+        child: Container(child: card),
+        onTap: () {
+          Navigator.of(context, rootNavigator: true)
+              .pushNamed('/article', arguments: n.article);
+        },
+      );
+    }
+
+    if (n.event != null) {
+      return GestureDetector(
+        child: Container(child: card),
+        onTap: () {
+          Navigator.of(context, rootNavigator: true)
+              .pushNamed('/event', arguments: n.event);
+        },
+      );
+    }
   }
 
   static Widget carouselPlaceholder() {
@@ -196,7 +215,7 @@ class StarredNewsCarouselWidget extends StatelessWidget {
               ),
             ),
             CarouselSlider.builder(
-              //* All the option of the carousel see the pubdev page
+                //* All the option of the carousel see the pubdev page
                 options: CarouselOptions(
                   height: 275,
                   aspectRatio: 16 / 9,
