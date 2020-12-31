@@ -22,7 +22,7 @@ class _ProfilePageState extends State<ProfilePage> {
   final BorderRadius buttonBorderRadius = BorderRadius.circular(10);
   String promoValue = MyApp.user.promo;
   String campusValue = MyApp.user.campus;
-  bool selected = true;
+  bool _selected = true;
 
   @override
   Widget build(BuildContext context) {
@@ -70,9 +70,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 Text(
                   MyApp.user.firstName + ' ' + MyApp.user.lastName,
                   style: TextStyle(
-                      fontFamily: classicFont,
-                      fontSize: nameFontSize
-                  ),
+                      fontFamily: classicFont, fontSize: nameFontSize),
                 ),
                 SizedBox(height: 15),
                 Row(
@@ -179,9 +177,12 @@ class _ProfilePageState extends State<ProfilePage> {
                         updateProfile(MyApp.user).then((value) {
                           var sb;
                           if (value == null) {
-                            sb = SnackBar(content: Text('Une erreur est survenue'));
+                            sb = SnackBar(
+                                content: Text('Une erreur est survenue'));
                           } else {
-                            sb = SnackBar(content: Text('Les modifications ont été enregistrées !'));
+                            sb = SnackBar(
+                                content: Text(
+                                    'Les modifications ont été enregistrées !'));
                           }
                           Scaffold.of(context).showSnackBar(sb);
                         });
@@ -201,6 +202,31 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ),
                 ),
+                SizedBox(height: 15),
+                //TODO Relier les notifications à chaque Users
+                MergeSemantics(
+                  child: ListTile(
+                    title: Text(
+                      'Notifications',
+                      style: TextStyle(
+                          fontFamily: classicFont, fontSize: nameFontSize - 3),
+                    ),
+                    trailing: CupertinoSwitch(
+                      activeColor: starCommandBlue,
+                      value: _selected,
+                      onChanged: (bool value) {
+                        setState(() {
+                          _selected = value;
+                        });
+                      },
+                    ),
+                    onTap: () {
+                      setState(() {
+                        _selected = !_selected;
+                      });
+                    },
+                  ),
+                )
               ],
             ),
           ),
