@@ -28,6 +28,10 @@ class _EventPageState extends State<EventPage> {
   num _stackToView = 1;
 
   final BorderRadius buttonBorderRadius = BorderRadius.circular(10);
+  final BorderRadius bottomSheetBorderRadius = BorderRadius.only(
+    topLeft: Radius.circular(10),
+    topRight: Radius.circular(10),
+  );
 
   @override
   void initState() {
@@ -82,7 +86,8 @@ class _EventPageState extends State<EventPage> {
           child: Icon(Icons.calendar_today),
           onPressed: () {
             showModalBottomSheet(
-                shape: RoundedRectangleBorder(borderRadius: cardsBorderRadius),
+                shape: RoundedRectangleBorder(
+                    borderRadius: bottomSheetBorderRadius),
                 context: context,
                 builder: (BuildContext bc) {
                   return Container(
