@@ -1,5 +1,6 @@
 import 'package:assoesaip_flutter/models/project.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class ProjectsListTab extends StatefulWidget {
@@ -29,6 +30,12 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
   }
 
   Widget _buildAssoWidget(Project p) {
+    String imageUrl = 'https://asso-esaip.bricechk.fr/';
+    if (p.logoFileName == null) {
+      imageUrl += 'build/images/project-placeholder.png';
+    } else {
+      imageUrl += 'images/project-logos/' + p.logoFileName;
+    }
     return Column(
       children: [
         Padding(
@@ -52,36 +59,55 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
                 borderRadius: cardsBorderRadius,
                 child: InkWell(
                   onTap: () {
-                    Navigator.pushNamed(context, '/categories/category/project', arguments: p);
+                    Navigator.pushNamed(context, '/categories/category/project',
+                        arguments: p);
                   },
                   borderRadius: BorderRadius.circular(15),
                   splashColor: splashColor,
-                  child: Column(
+                  //! Faire les images en fonction de la hauteur de la cards
+                  //! Pour les clubs et Asso
+                  child: Stack(
+                    alignment: Alignment.center,
                     children: [
-                      Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                        child: Text(
-                          p.name,
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontFamily: classicFont,
-                            color: titleColor,
+                      Center(
+                        child: ColorFiltered(
+                          colorFilter: ColorFilter.mode(
+                              whiteWhite.withOpacity(0.1), BlendMode.dstATop),
+                          child: CachedNetworkImage(
+                            imageUrl: imageUrl,
+                            fit: BoxFit.contain,
+                            height: 125,
                           ),
                         ),
                       ),
-                      SizedBox(height: 10),
-                      Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                        child: Text(
-                          p.description,
-                          textAlign: TextAlign.justify,
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontFamily: classicFont,
+                      Column(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 10),
+                            child: Text(
+                              p.name,
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontFamily: classicFont,
+                                color: titleColor,
+                              ),
+                            ),
                           ),
-                        ),
+                          SizedBox(height: 10),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 10),
+                            child: Text(
+                              p.description,
+                              textAlign: TextAlign.justify,
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontFamily: classicFont,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -99,6 +125,12 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
   }
 
   Widget _buildClubWidget(Project p) {
+    String imageUrl = 'https://asso-esaip.bricechk.fr/';
+    if (p.logoFileName == null) {
+      imageUrl += 'build/images/project-placeholder.png';
+    } else {
+      imageUrl += 'images/project-logos/' + p.logoFileName;
+    }
     return Padding(
       padding: EdgeInsets.only(right: 15, left: 15, bottom: 15),
       child: Container(
@@ -121,31 +153,48 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
             borderRadius: cardsBorderRadius,
             child: InkWell(
               onTap: () {
-                Navigator.pushNamed(context, '/categories/category/project', arguments: p);
+                Navigator.pushNamed(context, '/categories/category/project',
+                    arguments: p);
               },
               borderRadius: BorderRadius.circular(15),
               splashColor: splashColor,
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                child: Column(
+                child: Stack(
+                  alignment: Alignment.center,
                   children: [
-                    Text(
-                      p.name,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontFamily: classicFont,
-                        color: titleColor,
+                    Center(
+                      child: ColorFiltered(
+                        colorFilter: ColorFilter.mode(
+                            whiteWhite.withOpacity(0.1), BlendMode.dstATop),
+                        child: CachedNetworkImage(
+                          imageUrl: imageUrl,
+                          fit: BoxFit.contain,
+                          height: 90,
+                        ),
                       ),
                     ),
-                    SizedBox(height: 10),
-                    Text(
-                      p.description,
-                      textAlign: TextAlign.justify,
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontFamily: classicFont,
-                      ),
-                    )
+                    Column(
+                      children: [
+                        Text(
+                          p.name,
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontFamily: classicFont,
+                            color: titleColor,
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          p.description,
+                          textAlign: TextAlign.justify,
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontFamily: classicFont,
+                          ),
+                        )
+                      ],
+                    ),
                   ],
                 ),
               ),
