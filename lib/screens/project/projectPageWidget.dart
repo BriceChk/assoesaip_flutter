@@ -136,7 +136,7 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
               pinned: true,
               floating: true,
               toolbarHeight: 60,
-              expandedHeight: 160,
+              expandedHeight: 180,
               backgroundColor: headerColor,
               flexibleSpace: _headerFlexibleSpace(),
             ),
@@ -162,12 +162,15 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
 
   Widget _headerFlexibleSpace() {
     return FlexibleSpaceBar(
-        collapseMode: CollapseMode.pin,
-        centerTitle: true,
-        background: Container(
-          padding: EdgeInsets.fromLTRB(15, 60, 15, 0),
-          child: Center(
-            child: Text(
+      collapseMode: CollapseMode.pin,
+      centerTitle: true,
+      background: Container(
+        padding: EdgeInsets.fromLTRB(15, 80, 15, 0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
               widget.p.description,
               textAlign: TextAlign.center,
               style: TextStyle(
@@ -176,8 +179,63 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
                 fontFamily: classicFont,
               ),
             ),
-          ),
-        ));
+            SizedBox(height: 5),
+            //! POUR LA CONSTUCTION DU WIDGET BIEN LAISSER LE SIZEDBOX de 5 A
+            //! LA FIN
+            //! SINON VOIR POUR UNE BARRE AVEC TOUS LES RESEAUX OU
+            //! SEULEMENT CHACUN SON CONTAINER AVEC LE FOND (a voir)
+            IntrinsicWidth(
+              child: Row(
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: powderBlue),
+                    child: GestureDetector(
+                      child: Icon(
+                        Icons.email,
+                        color: navyBlue,
+                      ),
+                      onTap: () {},
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                  Container(
+                    padding: EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: powderBlue),
+                    child: GestureDetector(
+                      child: Icon(
+                        FontAwesomeIcons.facebookF,
+                        color: navyBlue,
+                      ),
+                      onTap: () {},
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                  Container(
+                    padding: EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: powderBlue),
+                    child: GestureDetector(
+                      child: Icon(
+                        FontAwesomeIcons.instagram,
+                        color: navyBlue,
+                      ),
+                      onTap: () {},
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 5)
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _buildTabs() {
