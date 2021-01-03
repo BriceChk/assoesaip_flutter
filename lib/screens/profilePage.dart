@@ -22,7 +22,7 @@ class _ProfilePageState extends State<ProfilePage> {
   final BorderRadius buttonBorderRadius = BorderRadius.circular(10);
   String promoValue = MyApp.user.promo;
   String campusValue = MyApp.user.campus;
-  bool _selected = true;
+  bool notificationsEnabled = MyApp.fcmToken.notificationsEnabled;
 
   @override
   Widget build(BuildContext context) {
@@ -174,6 +174,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       onPressed: () {
                         MyApp.user.campus = campusValue;
                         MyApp.user.promo = promoValue;
+                        MyApp.fcmToken.notificationsEnabled = notificationsEnabled;
+                        saveToken(MyApp.fcmToken);
                         updateProfile(MyApp.user).then((value) {
                           var sb;
                           if (value == null) {
@@ -213,16 +215,16 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     trailing: CupertinoSwitch(
                       activeColor: starCommandBlue,
-                      value: _selected,
+                      value: notificationsEnabled,
                       onChanged: (bool value) {
                         setState(() {
-                          _selected = value;
+                          notificationsEnabled = value;
                         });
                       },
                     ),
                     onTap: () {
                       setState(() {
-                        _selected = !_selected;
+                        notificationsEnabled = !notificationsEnabled;
                       });
                     },
                   ),

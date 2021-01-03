@@ -24,6 +24,7 @@ void main() {
 
 class MyApp extends StatefulWidget {
   static User user;
+  static FcmToken fcmToken;
 
   @override
   _MyAppState createState() => _MyAppState();
@@ -72,7 +73,9 @@ class _MyAppState extends State<MyApp> {
     _firebaseMessaging.getToken().then((String token) {
       assert(token != null);
       var t = FcmToken.fromTokenString(token);
-      saveToken(t);
+      saveToken(t).then((value) {
+        MyApp.fcmToken = value;
+      });
     });
   }
 
