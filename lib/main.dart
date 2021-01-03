@@ -48,6 +48,8 @@ class _MyAppState extends State<MyApp> {
         MyApp.user = value;
         if (value == null) {
           _initialRoute = '/welcome';
+        } else if (value.campus == "" || value.promo == "") {
+          _initialRoute = '/profile';
         } else {
           _initialRoute = '/main/home';
         }
@@ -88,11 +90,16 @@ class _MyAppState extends State<MyApp> {
       );
     }
 
+    Widget home;
+    switch (_initialRoute) {
+      case '/welcome': home = WelcomePage(); break;
+      case '/profile': home = ProfilePage(firstLogin: true); break;
+      default: home = MainNavigation(tabIndex: 0);
+    }
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: _initialRoute == '/welcome'
-          ? WelcomePage()
-          : MainNavigation(tabIndex: 0),
+      home: home,
       onGenerateRoute: (settings) {
         final arguments = settings.arguments;
         var routes = {
@@ -104,7 +111,7 @@ class _MyAppState extends State<MyApp> {
           '/welcome/login': (context) => LoginWebViewPage(),
           '/loading': (context) => LoadingScreen(),
           '/project': (context) => ProjectPageWidget(arguments),
-          '/profile': (context) => ProfilePage(arguments),
+          '/profile': (context) => ProfilePage(),
           '/article': (context) => ArticlePage(arguments),
           '/event': (context) => EventPage(arguments),
         };

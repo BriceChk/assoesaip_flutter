@@ -1,5 +1,4 @@
 import 'package:assoesaip_flutter/main.dart';
-import 'package:assoesaip_flutter/models/user.dart';
 import 'package:assoesaip_flutter/services/api.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -7,9 +6,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatefulWidget {
-  final User u;
+  final bool firstLogin;
 
-  ProfilePage(this.u);
+  ProfilePage({this.firstLogin = false});
 
   @override
   _ProfilePageState createState() => _ProfilePageState();
@@ -20,8 +19,8 @@ class _ProfilePageState extends State<ProfilePage> {
   final double nameFontSize = 20;
   final BorderRadius profilePictureRadius = BorderRadius.circular(10);
   final BorderRadius buttonBorderRadius = BorderRadius.circular(10);
-  String promoValue = MyApp.user.promo;
-  String campusValue = MyApp.user.campus;
+  String promoValue = MyApp.user.promo == '' ? 'ING1' : MyApp.user.promo;
+  String campusValue = MyApp.user.campus == '' ? 'Angers' : MyApp.user.campus;
   bool notificationsEnabled = MyApp.fcmToken.notificationsEnabled;
 
   @override
@@ -177,6 +176,9 @@ class _ProfilePageState extends State<ProfilePage> {
                         MyApp.fcmToken.notificationsEnabled = notificationsEnabled;
                         saveToken(MyApp.fcmToken);
                         updateProfile(MyApp.user).then((value) {
+                          if (widget.firstLogin) {
+                            Navigator.pushReplacementNamed(context, '/main/home');
+                          }
                           var sb;
                           if (value == null) {
                             sb = SnackBar(
