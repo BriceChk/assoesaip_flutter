@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:assoesaip_flutter/models/article.dart';
 import 'package:assoesaip_flutter/models/event.dart';
+import 'package:assoesaip_flutter/models/fcmToken.dart';
 import 'package:assoesaip_flutter/models/news.dart';
 import 'package:assoesaip_flutter/models/project.dart';
 import 'package:assoesaip_flutter/models/projectCategory.dart';
@@ -153,4 +154,12 @@ Future<List<SearchResult>> getSearchResults(String query) async {
   var jsonArray = jsonDecode(response.content()) as List;
 
   return jsonArray.map((e) => SearchResult.fromJson(e)).toList();
+}
+
+Future<FcmToken> saveToken(FcmToken token) async {
+  final response = await Requests.post('$url/profile/fcm-token', body: token.toJson(), bodyEncoding: RequestBodyEncoding.JSON);
+  if (response.hasError) {
+    return null;
+  }
+  return fcmTokenFromJson(response.content());
 }

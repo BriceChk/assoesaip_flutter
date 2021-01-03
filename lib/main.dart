@@ -1,3 +1,4 @@
+import 'package:assoesaip_flutter/models/fcmToken.dart';
 import 'package:assoesaip_flutter/models/user.dart';
 import 'package:assoesaip_flutter/screens/LoginPage/welcomePage.dart';
 import 'package:assoesaip_flutter/screens/articlePage.dart';
@@ -67,6 +68,12 @@ class _MyAppState extends State<MyApp> {
         //_navigateToItemDetail(message);
       },
     );
+
+    _firebaseMessaging.getToken().then((String token) {
+      assert(token != null);
+      var t = FcmToken.fromTokenString(token);
+      saveToken(t);
+    });
   }
 
   @override
