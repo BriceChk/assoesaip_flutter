@@ -6,7 +6,7 @@ import 'package:assoesaip_flutter/screens/eventsPage.dart';
 import 'package:assoesaip_flutter/screens/loginPage/loadingScreen.dart';
 import 'package:assoesaip_flutter/screens/loginPage/loginWebViewPage.dart';
 import 'package:assoesaip_flutter/screens/main/mainNavigation.dart';
-import 'package:assoesaip_flutter/screens/main/profile/profile.dart';
+import 'package:assoesaip_flutter/screens/profilePage.dart';
 import 'package:assoesaip_flutter/screens/project/projectPageWidget.dart';
 import 'package:assoesaip_flutter/services/api.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
