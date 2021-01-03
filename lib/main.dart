@@ -52,8 +52,6 @@ class _MyAppState extends State<MyApp> {
       });
     });
 
-    //TODO move all data fetching here so that it doesn't reload when switching tabs
-
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
         print("onMessage: $message");
