@@ -12,6 +12,7 @@ import 'package:assoesaip_flutter/shares/eventsOccurrencesList.dart';
 import 'package:assoesaip_flutter/shares/newsList.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProjectPageWidget extends StatefulWidget {
   final Project p;
@@ -136,7 +137,7 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
               pinned: true,
               floating: true,
               toolbarHeight: 60,
-              expandedHeight: 180,
+              expandedHeight: 200,
               backgroundColor: headerColor,
               flexibleSpace: _headerFlexibleSpace(),
             ),
@@ -186,49 +187,7 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
             //! SEULEMENT CHACUN SON CONTAINER AVEC LE FOND (a voir)
             IntrinsicWidth(
               child: Row(
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: powderBlue),
-                    child: GestureDetector(
-                      child: Icon(
-                        Icons.email,
-                        color: navyBlue,
-                      ),
-                      onTap: () {},
-                    ),
-                  ),
-                  SizedBox(width: 10),
-                  Container(
-                    padding: EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: powderBlue),
-                    child: GestureDetector(
-                      child: Icon(
-                        FontAwesomeIcons.facebookF,
-                        color: navyBlue,
-                      ),
-                      onTap: () {},
-                    ),
-                  ),
-                  SizedBox(width: 10),
-                  Container(
-                    padding: EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: powderBlue),
-                    child: GestureDetector(
-                      child: Icon(
-                        FontAwesomeIcons.instagram,
-                        color: navyBlue,
-                      ),
-                      onTap: () {},
-                    ),
-                  ),
-                ],
+                children: project == null ? [] : _buildSocialNetworks(),
               ),
             ),
             SizedBox(height: 5)
@@ -236,6 +195,90 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
         ),
       ),
     );
+  }
+
+  List<Widget> _buildSocialNetworks() {
+    List<Widget> list = List();
+
+    if (project.email != '') {
+      list.add(GestureDetector(
+        onTap: () async {
+          if (await canLaunch('mailto:' + project.email)) {
+          await launch('mailto:' + project.email);
+          } else {
+          throw 'Could not launch mailto:' + project.email;
+          }
+        },
+        child: Container(
+          width: 40,
+          height: 40,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: powderBlue
+          ),
+          child: Center(
+            child: Icon(
+              FontAwesomeIcons.solidEnvelope,
+              color: navyBlue,
+            ),
+          ),
+        ),
+      ));
+
+      list.add(SizedBox(width: 10));
+    }
+
+    if (project.social != null) {
+      var networkIcon = {
+        'fb': FontAwesomeIcons.facebookF,
+        'insta': FontAwesomeIcons.instagram,
+        'yt': FontAwesomeIcons.youtube,
+        'discord': FontAwesomeIcons.discord,
+        'twt': FontAwesomeIcons.twitter,
+        'snap': FontAwesomeIcons.snapchatGhost,
+      };
+
+      project.social.toJson().forEach((key, value) {
+        if (value != null) {
+          list.add(GestureDetector(
+            onTap: () async {
+              var link = '';
+
+              switch (key) {
+                case 'insta': link = 'https://instagram.com/' + value; break;
+                case 'twt': link = 'https://twitter.com/' + value; break;
+                case 'snap': link = 'https://snapchat.com/add/' + value; break;
+                default: link = value;
+              }
+
+              if (await canLaunch(link)) {
+                await launch(link);
+              } else {
+                throw 'Could not launch ' + link;
+              }
+            },
+            child: Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: powderBlue
+              ),
+              child: Center(
+                child: Icon(
+                  networkIcon[key],
+                  color: navyBlue,
+                ),
+              ),
+            ),
+          ));
+
+          list.add(SizedBox(width: 10));
+        }
+      });
+    }
+
+    return list;
   }
 
   Widget _buildTabs() {

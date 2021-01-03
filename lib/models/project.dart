@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:assoesaip_flutter/models/projectCategory.dart';
+import 'package:assoesaip_flutter/models/projectSocialInfo.dart';
 
 Project projectFromJson(String str) => Project.fromJson(json.decode(str));
 
@@ -35,7 +36,7 @@ class Project {
   Project parentProject;
   String keywords;
   String email;
-  String social;
+  ProjectSocialInfo social;
   String description;
   String logoFileName;
   String html;
@@ -56,7 +57,7 @@ class Project {
       parentProject: json['parent_project'] == null ? null : Project.fromJson(json['parent_project']),
       keywords: json['keywords'],
       email: json['email'],
-      social: json['social'] == null ? null : json['social'].toString(),
+      social: json['social'] is List ? null : ProjectSocialInfo.fromJson(json['social']),
       description: json['description'],
       logoFileName: json['logo_file_name'],
       html: json['html'],
@@ -76,7 +77,7 @@ class Project {
     'parent_project': parentProject == null ? null : parentProject.toJson(),
     'keywords': keywords,
     'email': email,
-    'social': social,
+    'social': social == null ? null : social.toJson(),
     'description': description,
     'logo_file_name': logoFileName,
     'html': html,
