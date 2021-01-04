@@ -79,7 +79,7 @@ class _CategoriesListState extends State<CategoriesList> with AutomaticKeepAlive
           padding: EdgeInsets.fromLTRB(15, 60, 15, 0),
           child: Center(
             child: Text(
-              "Découvre les clubs et associations ton campus !",
+              "Découvre les clubs et associations de ton campus !",
               textAlign: TextAlign.justify,
               style: TextStyle(
                 fontSize: 16,
