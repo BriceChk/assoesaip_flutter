@@ -5,8 +5,6 @@ import 'package:assoesaip_flutter/shares/newsList.dart';
 import 'package:assoesaip_flutter/services/api.dart';
 import 'package:flutter/material.dart';
 
-final String classicFont = "Nunito";
-
 final RoundedRectangleBorder roundedBorder = RoundedRectangleBorder(
   borderRadius: headerBorder,
 );

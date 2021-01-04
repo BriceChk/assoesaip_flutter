@@ -2,12 +2,6 @@ import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-final String classicFont = "Nunito";
-final Color cardColor = white;
-final Color shadowColor = navyBlue;
-final Color fontColor = Colors.white;
-final Color titleColor = navyBlue;
-final Color splashColor = skyBlueCrayola1;
 
 class CafetWidget extends StatefulWidget {
   @override
