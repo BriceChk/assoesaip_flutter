@@ -202,56 +202,54 @@ class _EventPageState extends State<EventPage> {
                   ),
                   SizedBox(height: 10),
                   Text(
-                    e.project.name,
-                    textAlign: TextAlign.justify,
-                    style: TextStyle(fontFamily: classicFont, fontSize: 12),
-                  ),
-                  Text(
-                    date,
+                    'Article publié le ' + date,
                     textAlign: TextAlign.justify,
                     style: TextStyle(fontFamily: classicFont, fontSize: 12),
                   ),
                   SizedBox(height: 15),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      FlatButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/project',
-                              arguments: e.project);
-                        },
-                        child: FittedBox(
-                          child: Text(
-                            e.project.name,
-                            style: TextStyle(
-                                fontFamily: classicFont, color: white),
+                  Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        FlatButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/project',
+                                arguments: e.project);
+                          },
+                          child: FittedBox(
+                            child: Text(
+                              e.project.name,
+                              style: TextStyle(
+                                  fontFamily: classicFont, color: white),
+                            ),
                           ),
+                          color: starCommandBlue,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: buttonBorderRadius),
                         ),
-                        color: starCommandBlue,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: buttonBorderRadius),
-                      ),
-                      FlatButton(
-                        onPressed: () async {
-                          if (await canLaunch('mailto:' + e.author.username)) {
-                            await launch('mailto:' + e.author.username);
-                          } else {
-                            throw 'Could not launch mailto:' +
-                                e.author.username;
-                          }
-                        },
-                        child: FittedBox(
-                          child: Text(
-                            e.author.firstName + ' ' + e.author.lastName,
-                            style: TextStyle(
-                                fontFamily: classicFont, color: white),
+                        FlatButton(
+                          onPressed: () async {
+                            if (await canLaunch(
+                                'mailto:' + e.author.username)) {
+                              await launch('mailto:' + e.author.username);
+                            } else {
+                              throw 'Could not launch mailto:' +
+                                  e.author.username;
+                            }
+                          },
+                          child: FittedBox(
+                            child: Text(
+                              e.author.firstName + ' ' + e.author.lastName,
+                              style: TextStyle(
+                                  fontFamily: classicFont, color: white),
+                            ),
                           ),
+                          color: starCommandBlue,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: buttonBorderRadius),
                         ),
-                        color: starCommandBlue,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: buttonBorderRadius),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ],
               ),
