@@ -1,4 +1,5 @@
 import 'package:assoesaip_flutter/models/eventOccurrence.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import 'constant.dart';
@@ -33,29 +34,40 @@ class EventsOccurrencesList extends StatelessWidget {
       );
     } else {
       return Column(
-        children: events.map((e) => _buildEventWidget(e)).toList(),
+        children: events.map((e) => _buildEventWidget(e, context)).toList(),
       );
     }
   }
 
-  Widget _buildEventWidget(EventOccurrence n) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 7),
-      child: Container(
-        decoration: BoxDecoration(
-          color: whiteWhite,
-          borderRadius: cardsBorderRadius,
-          boxShadow: <BoxShadow>[
-            new BoxShadow(
-              color: Colors.grey[400],
-              blurRadius: 3.0,
-              offset: new Offset(0.0, 0.0),
-            ),
-          ],
-        ),
-        margin: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-        child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 8, horizontal: 15),
+  Widget _buildEventWidget(EventOccurrence n, BuildContext context) {
+    String imageUrl = 'https://asso-esaip.bricechk.fr/';
+    if (n.event.project.logoFileName == null) {
+      imageUrl += 'build/images/project-placeholder.png';
+    } else {
+      imageUrl += 'images/project-logos/' + n.event.project.logoFileName;
+    }
+
+    return Container(
+      decoration: BoxDecoration(
+        color: whiteWhite,
+        borderRadius: cardsBorderRadius,
+        boxShadow: <BoxShadow>[
+          new BoxShadow(
+            color: Colors.grey[400],
+            blurRadius: 3.0,
+            offset: new Offset(0.0, 0.0),
+          ),
+        ],
+      ),
+      margin: EdgeInsets.all(8),
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: 8, horizontal: 15),
+        child: InkWell(
+          splashColor: splashColor,
+          borderRadius: BorderRadius.circular(15),
+          onTap: () {
+            Navigator.of(context, rootNavigator: true).pushNamed('/event', arguments: n.event);
+          },
           child: IntrinsicHeight(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,14 +80,16 @@ class EventsOccurrencesList extends StatelessWidget {
                       Container(
                           height: 30,
                           width: 30,
-                          child: Text('image?')
+                          child: CachedNetworkImage(
+                            imageUrl: imageUrl,
+                          )
                       ),
                       SizedBox(
                         width: 10,
                       ),
                       //* Container with the name of the project
                       Text(
-                        'Lorem ipsum',
+                        n.event.project.name,
                         style: TextStyle(
                           fontSize: 12,
                           fontFamily: classicFont,
@@ -98,7 +112,15 @@ class EventsOccurrencesList extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Text(
-                        'Lorem ipsum',
+                        n.event.title,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontFamily: classicFont,
+                          color: titleColor,
+                        ),
+                      ),
+                      Text(
+                        n.event.abstract,
                         textAlign: TextAlign.justify,
                         style: TextStyle(
                           fontSize: 14,

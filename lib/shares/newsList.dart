@@ -163,7 +163,8 @@ class NewsListWidget extends StatelessWidget {
                           width: 30,
                           child: CachedNetworkImage(
                             imageUrl: imageUrl,
-                          )),
+                          )
+                      ),
                       SizedBox(
                         width: 10,
                       ),

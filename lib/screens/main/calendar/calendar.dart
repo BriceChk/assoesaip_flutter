@@ -2,6 +2,7 @@ import 'package:assoesaip_flutter/models/eventOccurrence.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:assoesaip_flutter/shares/eventsOccurrencesList.dart';
 import 'package:assoesaip_flutter/shares/newsList.dart';
+import 'package:assoesaip_flutter/services/api.dart';
 import 'package:flutter/material.dart';
 
 final String classicFont = "Nunito";
@@ -24,8 +25,11 @@ class _CalendarWidgetState extends State<CalendarWidget> with AutomaticKeepAlive
   @override
   void initState() {
     super.initState();
-    events = List();
-    //TODO Fetch events
+    getNextEventOccurrences().then((value) {
+      setState(() {
+        events = value;
+      });
+    });
   }
 
   @override

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:assoesaip_flutter/models/article.dart';
 import 'package:assoesaip_flutter/models/event.dart';
+import 'package:assoesaip_flutter/models/eventOccurrence.dart';
 import 'package:assoesaip_flutter/models/fcmToken.dart';
 import 'package:assoesaip_flutter/models/news.dart';
 import 'package:assoesaip_flutter/models/project.dart';
@@ -162,4 +163,13 @@ Future<FcmToken> saveToken(FcmToken token) async {
     return null;
   }
   return fcmTokenFromJson(response.content());
+}
+
+Future<List<EventOccurrence>> getNextEventOccurrences() async {
+  final response = await Requests.get('$url/event/next-occurrences');
+  if (response.hasError) {
+    return null;
+  }
+  var jsonArray = jsonDecode(response.content()) as List;
+  return jsonArray.map((e) => EventOccurrence.fromJson(e)).toList();
 }

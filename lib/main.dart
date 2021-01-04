@@ -103,7 +103,7 @@ class _MyAppState extends State<MyApp> {
       });
     });
 
-    const AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('launcher_icon');
+    const AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('notif_icon');
     final IOSInitializationSettings initializationSettingsIOS = IOSInitializationSettings(
       requestSoundPermission: false,
       requestBadgePermission: false,
@@ -141,12 +141,9 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> handleNotificationNavigation(String payload) async {
-    print('Handling notification... payload: ' + payload);
     var data = jsonDecode(payload);
-    print('decoded data: $data');
     var route = '/main/home';
     var obj;
-    print('type: ' + data['type']);
     if (data['type'] == 'article') {
       route = '/article';
       obj = Article(id: int.parse(data['id']));
@@ -157,8 +154,6 @@ class _MyAppState extends State<MyApp> {
       route = '/project';
       obj = Project(id: int.parse(data['id']), name: data['name'], description: data['description']);
     }
-    print('route: $route');
-    print('obj type: ' + obj.runtimeType.toString());
 
     await MyApp.navigatorKey.currentState.pushNamed(route, arguments: obj);
   }
