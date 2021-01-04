@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:assoesaip_flutter/models/article.dart';
@@ -30,6 +31,7 @@ void main() {
 class MyApp extends StatefulWidget {
   static User user;
   static FcmToken fcmToken;
+  static final navigatorKey = new GlobalKey<NavigatorState>();
   static FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
   FlutterLocalNotificationsPlugin();
 
@@ -66,23 +68,29 @@ class _MyAppState extends State<MyApp> {
         // Display a custom notification!
         var data = message['data'] ?? message;
         if (data['notify'] == '1') {
-          print('condition true');
           buildNotification(jsonEncode(data));
         }
       },
       onBackgroundMessage: myBackgroundMessageHandler,
       onLaunch: (Map<String, dynamic> message) async {
-        // The notification is received when the app is terminated.
-        // The app starts, navigate to the desired page!
+        // A time loop to give time to the app to initialize the navigator
+        // Otherwise the screen will not load ¯\_(ツ)_/¯
         var data = message['data'] ?? message;
-        print('onLaunch');
-        handleNotificationNavigation(jsonEncode(data));
+        Timer.periodic(
+          Duration(milliseconds: 500),
+            (timer) {
+              if (MyApp.navigatorKey.currentState == null) return;
+              // The notification is received when the app is terminated.
+              // The app starts, navigate to the desired page!
+              handleNotificationNavigation(jsonEncode(data));
+              timer.cancel();
+            }
+        );
       },
       onResume: (Map<String, dynamic> message) async {
         // The notification is received when the app is running in the background.
         // The app resumes, navigate to the desired page!
         var data = message['data'] ?? message;
-        print('onResume');
         handleNotificationNavigation(jsonEncode(data));
       },
     );
@@ -120,16 +128,18 @@ class _MyAppState extends State<MyApp> {
         'all', 'Toutes les notifications', "Toutes les notifications de l'application.",
         importance: Importance.max,
         priority: Priority.high,
-        showWhen: false);
+        showWhen: false,
+        styleInformation: BigTextStyleInformation(''),
+    );
     const NotificationDetails platformChannelSpecifics =
     NotificationDetails(android: androidPlatformChannelSpecifics);
-    MyApp.flutterLocalNotificationsPlugin.show(0, data['title'], data['abstract'], platformChannelSpecifics, payload: jsonEncode(data));
+    MyApp.flutterLocalNotificationsPlugin.show(int.parse(data['id']), data['title'], data['abstract'], platformChannelSpecifics, payload: jsonEncode(data));
   }
 
   Future selectNotification(String payload) async {
     if (payload != null) {
       print('local payload');
-      await handleNotificationNavigation(payload);
+      handleNotificationNavigation(payload);
     }
   }
 
@@ -142,18 +152,18 @@ class _MyAppState extends State<MyApp> {
     print('type: ' + data['type']);
     if (data['type'] == 'article') {
       route = '/article';
-      obj = Article(id: data['id']);
+      obj = Article(id: int.parse(data['id']));
     } else if (data['type'] == 'event') {
       route = '/event';
-      obj = Event(id: data['id']);
+      obj = Event(id: int.parse(data['id']));
     } else if (data['type'] == 'project') {
       route = '/project';
-      obj = Project(id: data['id'], name: data['name'], description: data['description']);
+      obj = Project(id: int.parse(data['id']), name: data['name'], description: data['description']);
     }
     print('route: $route');
     print('obj type: ' + obj.runtimeType.toString());
 
-     await Navigator.pushNamed(context, route, arguments: obj);
+    await MyApp.navigatorKey.currentState.pushNamed(route, arguments: obj);
   }
 
   @override
@@ -175,6 +185,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: home,
+      navigatorKey: MyApp.navigatorKey,
       onGenerateRoute: (settings) {
         final arguments = settings.arguments;
         var routes = {
@@ -202,7 +213,6 @@ Future<dynamic> myBackgroundMessageHandler(Map<String, dynamic> message) async {
   if (message.containsKey('data')) {
     // This is executed when there is only data and no notification payload.
     var data = message['data'] ?? message;
-
   }
 
   if (message.containsKey('notification')) {
