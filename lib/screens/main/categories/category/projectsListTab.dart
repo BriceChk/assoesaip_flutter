@@ -66,48 +66,48 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
                   splashColor: splashColor,
                   //! Faire les images en fonction de la hauteur de la cards
                   //! Pour les clubs et Asso
-                  child: Stack(
-                    alignment: Alignment.center,
+                  child: Column(
                     children: [
-                      Center(
-                        child: ColorFiltered(
-                          colorFilter: ColorFilter.mode(
-                              whiteWhite.withOpacity(0.1), BlendMode.dstATop),
-                          child: CachedNetworkImage(
-                            imageUrl: imageUrl,
-                            fit: BoxFit.contain,
-                            height: 125,
-                          ),
+                      Container(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              child: Center(
+                                child: CachedNetworkImage(
+                                  imageUrl: imageUrl,
+                                  fit: BoxFit.contain,
+                                  height: 50,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 2.5),
+                              child: Text(
+                                p.name,
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontFamily: classicFont,
+                                  color: titleColor,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      Column(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 10),
-                            child: Text(
-                              p.name,
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontFamily: classicFont,
-                                color: titleColor,
-                              ),
-                            ),
+                      Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                        child: Text(
+                          p.description,
+                          textAlign: TextAlign.justify,
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontFamily: classicFont,
                           ),
-                          SizedBox(height: 10),
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 10),
-                            child: Text(
-                              p.description,
-                              textAlign: TextAlign.justify,
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontFamily: classicFont,
-                              ),
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
                     ],
                   ),
