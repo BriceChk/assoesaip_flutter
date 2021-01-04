@@ -120,9 +120,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   void buildNotification(String json) {
-    print('Build la notif');
     var data = jsonDecode(json);
-    print(data);
     const AndroidNotificationDetails androidPlatformChannelSpecifics =
     AndroidNotificationDetails(
         'all', 'Toutes les notifications', "Toutes les notifications de l'application.",
@@ -138,7 +136,6 @@ class _MyAppState extends State<MyApp> {
 
   Future selectNotification(String payload) async {
     if (payload != null) {
-      print('local payload');
       handleNotificationNavigation(payload);
     }
   }
