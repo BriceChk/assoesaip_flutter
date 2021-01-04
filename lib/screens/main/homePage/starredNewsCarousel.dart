@@ -174,15 +174,13 @@ class StarredNewsCarouselWidget extends StatelessWidget {
       );
     }
 
-    if (n.event != null) {
-      return GestureDetector(
-        child: Container(child: card),
-        onTap: () {
-          Navigator.of(context, rootNavigator: true)
-              .pushNamed('/event', arguments: n.event);
-        },
-      );
-    }
+    return GestureDetector(
+      child: Container(child: card),
+      onTap: () {
+        Navigator.of(context, rootNavigator: true)
+            .pushNamed('/event', arguments: n.event);
+      },
+    );
   }
 
   static Widget carouselPlaceholder() {
