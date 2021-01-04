@@ -59,7 +59,8 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
                 borderRadius: cardsBorderRadius,
                 child: InkWell(
                   onTap: () {
-                    Navigator.pushNamed(context, '/categories/category/project',
+                    Navigator.of(context, rootNavigator: true).pushNamed(
+                        '/project',
                         arguments: p);
                   },
                   borderRadius: BorderRadius.circular(15),
@@ -74,7 +75,8 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 5),
                               child: Center(
                                 child: CachedNetworkImage(
                                   imageUrl: imageUrl,
@@ -149,7 +151,8 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
             borderRadius: cardsBorderRadius,
             child: InkWell(
               onTap: () {
-                Navigator.pushNamed(context, '/categories/category/project',
+                Navigator.of(context, rootNavigator: true).pushNamed(
+                    '/project',
                     arguments: p);
               },
               borderRadius: BorderRadius.circular(15),
@@ -164,7 +167,8 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                           child: Center(
                             child: CachedNetworkImage(
                               imageUrl: imageUrl,
