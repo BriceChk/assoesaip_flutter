@@ -67,13 +67,14 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
                   //! Faire les images en fonction de la hauteur de la cards
                   //! Pour les clubs et Asso
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
+                      FittedBox(
                         child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                               child: Center(
                                 child: CachedNetworkImage(
                                   imageUrl: imageUrl,
@@ -82,24 +83,20 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
                                 ),
                               ),
                             ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 2.5),
-                              child: Text(
-                                p.name,
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontFamily: classicFont,
-                                  color: titleColor,
-                                ),
+                            Text(
+                              p.name,
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontFamily: classicFont,
+                                color: titleColor,
                               ),
                             ),
+                            SizedBox(width: 10),
                           ],
                         ),
                       ),
                       Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                        padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
                         child: Text(
                           p.description,
                           textAlign: TextAlign.justify,
@@ -148,7 +145,6 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
               ),
             ],
           ),
-          //* Material then InkWell in order to have the ripple effect + ontap function
           child: Material(
             borderRadius: cardsBorderRadius,
             child: InkWell(
@@ -158,24 +154,25 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
               },
               borderRadius: BorderRadius.circular(15),
               splashColor: splashColor,
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    Center(
-                      child: ColorFiltered(
-                        colorFilter: ColorFilter.mode(
-                            whiteWhite.withOpacity(0.1), BlendMode.dstATop),
-                        child: CachedNetworkImage(
-                          imageUrl: imageUrl,
-                          fit: BoxFit.contain,
-                          height: 90,
-                        ),
-                      ),
-                    ),
-                    Column(
+              //! Faire les images en fonction de la hauteur de la cards
+              //! Pour les clubs et Asso
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  FittedBox(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                          child: Center(
+                            child: CachedNetworkImage(
+                              imageUrl: imageUrl,
+                              fit: BoxFit.contain,
+                              height: 50,
+                            ),
+                          ),
+                        ),
                         Text(
                           p.name,
                           style: TextStyle(
@@ -184,19 +181,22 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
                             color: titleColor,
                           ),
                         ),
-                        SizedBox(height: 10),
-                        Text(
-                          p.description,
-                          textAlign: TextAlign.justify,
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontFamily: classicFont,
-                          ),
-                        )
+                        SizedBox(width: 10),
                       ],
                     ),
-                  ],
-                ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
+                    child: Text(
+                      p.description,
+                      textAlign: TextAlign.justify,
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontFamily: classicFont,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
