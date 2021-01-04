@@ -98,7 +98,10 @@ class _EventPageState extends State<EventPage> {
         if (dateStart == dateEnd) {
           return ListTile(
             leading: Icon(Icons.calendar_today),
-            title: Text(dateStart),
+            title: Text(
+              dateStart,
+              style: TextStyle(fontFamily: classicFont),
+            ),
             onTap: () => {},
           );
         } else {
@@ -107,8 +110,40 @@ class _EventPageState extends State<EventPage> {
             title: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Début : ' + dateStart),
-                Text('Fin : ' + dateEnd)
+                Row(
+                  children: [
+                    Container(
+                      width: 60,
+                      child: Text(
+                        'Début : ',
+                        style: TextStyle(fontFamily: classicFont),
+                      ),
+                    ),
+                    Container(
+                      child: Text(
+                        dateStart,
+                        style: TextStyle(fontFamily: classicFont),
+                      ),
+                    )
+                  ],
+                ),
+                Row(
+                  children: [
+                    Container(
+                      width: 60,
+                      child: Text(
+                        'Fin : ',
+                        style: TextStyle(fontFamily: classicFont),
+                      ),
+                    ),
+                    Container(
+                      child: Text(
+                        dateEnd,
+                        style: TextStyle(fontFamily: classicFont),
+                      ),
+                    )
+                  ],
+                )
               ],
             ),
             onTap: () => {},
@@ -126,7 +161,10 @@ class _EventPageState extends State<EventPage> {
                 children: occurenceList.map((occur) {
               return ListTile(
                 leading: Icon(Icons.calendar_today),
-                title: Text(occur + ', toute la journée'),
+                title: Text(
+                  occur + ', toute la journée',
+                  style: TextStyle(fontFamily: classicFont),
+                ),
                 onTap: () => {},
               );
             }).toList());
@@ -140,7 +178,10 @@ class _EventPageState extends State<EventPage> {
                 children: occurenceList.map((occur) {
               return ListTile(
                 leading: Icon(Icons.calendar_today),
-                title: Text(occur),
+                title: Text(
+                  occur,
+                  style: TextStyle(fontFamily: classicFont),
+                ),
                 onTap: () => {},
               );
             }).toList());
