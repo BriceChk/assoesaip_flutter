@@ -166,6 +166,31 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ],
                 ),
+                SizedBox(height: 25),
+                //TODO Relier les notifications à chaque Users
+                MergeSemantics(
+                  child: ListTile(
+                    title: Text(
+                      'Notifications',
+                      style: TextStyle(
+                          fontFamily: classicFont, fontSize: nameFontSize - 3),
+                    ),
+                    trailing: CupertinoSwitch(
+                      activeColor: starCommandBlue,
+                      value: notificationsEnabled,
+                      onChanged: (bool value) {
+                        setState(() {
+                          notificationsEnabled = value;
+                        });
+                      },
+                    ),
+                    onTap: () {
+                      setState(() {
+                        notificationsEnabled = !notificationsEnabled;
+                      });
+                    },
+                  ),
+                ),
                 Builder(
                   builder: (context) => Padding(
                     padding: EdgeInsets.symmetric(vertical: 15),
@@ -173,11 +198,13 @@ class _ProfilePageState extends State<ProfilePage> {
                       onPressed: () {
                         MyApp.user.campus = campusValue;
                         MyApp.user.promo = promoValue;
-                        MyApp.fcmToken.notificationsEnabled = notificationsEnabled;
+                        MyApp.fcmToken.notificationsEnabled =
+                            notificationsEnabled;
                         saveToken(MyApp.fcmToken);
                         updateProfile(MyApp.user).then((value) {
                           if (widget.firstLogin) {
-                            Navigator.pushReplacementNamed(context, '/main/home');
+                            Navigator.pushReplacementNamed(
+                                context, '/main/home');
                           }
                           var sb;
                           if (value == null) {
@@ -206,31 +233,6 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ),
                 ),
-                SizedBox(height: 15),
-                //TODO Relier les notifications à chaque Users
-                MergeSemantics(
-                  child: ListTile(
-                    title: Text(
-                      'Notifications',
-                      style: TextStyle(
-                          fontFamily: classicFont, fontSize: nameFontSize - 3),
-                    ),
-                    trailing: CupertinoSwitch(
-                      activeColor: starCommandBlue,
-                      value: notificationsEnabled,
-                      onChanged: (bool value) {
-                        setState(() {
-                          notificationsEnabled = value;
-                        });
-                      },
-                    ),
-                    onTap: () {
-                      setState(() {
-                        notificationsEnabled = !notificationsEnabled;
-                      });
-                    },
-                  ),
-                )
               ],
             ),
           ),
