@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 import 'package:assoesaip_flutter/models/event.dart';
+import 'package:assoesaip_flutter/models/eventOccurrence.dart';
 import 'package:assoesaip_flutter/services/api.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
+import 'package:assoesaip_flutter/shares/eventsOccurrencesList.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -33,8 +35,6 @@ class _EventPageState extends State<EventPage> {
     topRight: Radius.circular(10),
   );
 
-  DateFormat formatter = DateFormat("dd/MM/yyyy · HH'h'mm", 'fr_FR');
-
   @override
   void initState() {
     super.initState();
@@ -61,7 +61,7 @@ class _EventPageState extends State<EventPage> {
         backgroundColor: starCommandBlue,
       ),
       body: e is Event
-          ? _buildEventBody()
+          ? _buildEventWidget()
           : Column(
               children: [
                 Expanded(
@@ -77,8 +77,136 @@ class _EventPageState extends State<EventPage> {
     );
   }
 
-  Widget _buildEventBody() {
+  Widget _buildEventWidget() {
+    DateFormat formatter = DateFormat("dd/MM/yyyy · HH'h'mm", 'fr_FR');
+    DateFormat formatterAllDay = DateFormat("EEEE dd MMM", 'fr_FR');
     String date = formatter.format(e.datePublished.toLocal());
+    String dateStart;
+    String dateEnd;
+    List<String> occurenceList = [];
+
+    Widget _buildDate() {
+      if (e.occurrencesCount == 1) {
+        if (e.allDay) {
+          dateStart =
+              formatterAllDay.format(e.dateStart) + ', toute la journée';
+          dateEnd = formatterAllDay.format(e.dateEnd) + ', toute la journée';
+        } else {
+          dateStart = formatter.format(e.dateStart.toLocal());
+          dateEnd = formatter.format(e.dateEnd.toLocal());
+        }
+        if (dateStart == dateEnd) {
+          return ListTile(
+            leading: Icon(Icons.calendar_today),
+            title: Text(
+              dateStart,
+              style: TextStyle(fontFamily: classicFont),
+            ),
+            onTap: () => {},
+          );
+        } else {
+          return ListTile(
+            leading: Icon(Icons.calendar_today),
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      width: 60,
+                      child: Text(
+                        'Début : ',
+                        style: TextStyle(fontFamily: classicFont),
+                      ),
+                    ),
+                    Container(
+                      child: Text(
+                        dateStart,
+                        style: TextStyle(fontFamily: classicFont),
+                      ),
+                    )
+                  ],
+                ),
+                Row(
+                  children: [
+                    Container(
+                      width: 60,
+                      child: Text(
+                        'Fin : ',
+                        style: TextStyle(fontFamily: classicFont),
+                      ),
+                    ),
+                    Container(
+                      child: Text(
+                        dateEnd,
+                        style: TextStyle(fontFamily: classicFont),
+                      ),
+                    )
+                  ],
+                )
+              ],
+            ),
+            onTap: () => {},
+          );
+        }
+      } else {
+        if (e.occurrences.length == 0) {
+          return Text("Toutes les dates sont passées");
+        } else {
+          if (e.allDay) {
+            for (var item in e.occurrences) {
+              occurenceList.add(formatterAllDay.format(item.date));
+            }
+            return Column(
+                children: occurenceList.map((occur) {
+              return ListTile(
+                leading: Icon(Icons.calendar_today),
+                title: Text(
+                  occur + ', toute la journée',
+                  style: TextStyle(fontFamily: classicFont),
+                ),
+                onTap: () => {},
+              );
+            }).toList());
+          } else {
+            for (var item in e.occurrences) {
+              occurenceList.add(formatter.format(item.date));
+            }
+            //! Je sais pas comment faire pour ce cas la avec les minutes
+            //! et la méthode que j'ai fait !?
+            return Column(
+                children: occurenceList.map((occur) {
+              return ListTile(
+                leading: Icon(Icons.calendar_today),
+                title: Text(
+                  occur,
+                  style: TextStyle(fontFamily: classicFont),
+                ),
+                onTap: () => {},
+              );
+            }).toList());
+          }
+        }
+      }
+    }
+
+    Widget _showBottomSheet() {
+      showModalBottomSheet(
+        shape: RoundedRectangleBorder(borderRadius: bottomSheetBorderRadius),
+        context: context,
+        builder: (BuildContext bc) {
+          return ListView(children: [
+            Container(
+              child: Wrap(
+                children: <Widget>[
+                  _buildDate(),
+                ],
+              ),
+            ),
+          ]);
+        },
+      );
+    }
 
     return IndexedStack(index: _stackToView, children: [
       Scaffold(
@@ -115,56 +243,54 @@ class _EventPageState extends State<EventPage> {
                   ),
                   SizedBox(height: 10),
                   Text(
-                    e.project.name,
-                    textAlign: TextAlign.justify,
-                    style: TextStyle(fontFamily: classicFont, fontSize: 12),
-                  ),
-                  Text(
-                    date,
+                    'Article publié le ' + date,
                     textAlign: TextAlign.justify,
                     style: TextStyle(fontFamily: classicFont, fontSize: 12),
                   ),
                   SizedBox(height: 15),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      FlatButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/project',
-                              arguments: e.project);
-                        },
-                        child: FittedBox(
-                          child: Text(
-                            e.project.name,
-                            style: TextStyle(
-                                fontFamily: classicFont, color: white),
+                  Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        FlatButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/project',
+                                arguments: e.project);
+                          },
+                          child: FittedBox(
+                            child: Text(
+                              e.project.name,
+                              style: TextStyle(
+                                  fontFamily: classicFont, color: white),
+                            ),
                           ),
+                          color: starCommandBlue,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: buttonBorderRadius),
                         ),
-                        color: starCommandBlue,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: buttonBorderRadius),
-                      ),
-                      FlatButton(
-                        onPressed: () async {
-                          if (await canLaunch('mailto:' + e.author.username)) {
-                            await launch('mailto:' + e.author.username);
-                          } else {
-                            throw 'Could not launch mailto:' +
-                                e.author.username;
-                          }
-                        },
-                        child: FittedBox(
-                          child: Text(
-                            e.author.firstName + ' ' + e.author.lastName,
-                            style: TextStyle(
-                                fontFamily: classicFont, color: white),
+                        FlatButton(
+                          onPressed: () async {
+                            if (await canLaunch(
+                                'mailto:' + e.author.username)) {
+                              await launch('mailto:' + e.author.username);
+                            } else {
+                              throw 'Could not launch mailto:' +
+                                  e.author.username;
+                            }
+                          },
+                          child: FittedBox(
+                            child: Text(
+                              e.author.firstName + ' ' + e.author.lastName,
+                              style: TextStyle(
+                                  fontFamily: classicFont, color: white),
+                            ),
                           ),
+                          color: starCommandBlue,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: buttonBorderRadius),
                         ),
-                        color: starCommandBlue,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: buttonBorderRadius),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -213,98 +339,11 @@ class _EventPageState extends State<EventPage> {
     ]);
   }
 
-  Widget _buildDate() {
-    DateFormat formatterAllDay = DateFormat("EEEE dd MMM", 'fr_FR');
-    String dateStart;
-    String dateEnd;
-    List<String> occurenceList = [];
-
-    if (e.occurrencesCount == 1) {
-      if (e.allDay) {
-        dateStart =
-            formatterAllDay.format(e.dateStart) + ', toute la journée';
-        dateEnd = formatterAllDay.format(e.dateEnd) + ', toute la journée';
-      } else {
-        dateStart = formatter.format(e.dateStart.toLocal());
-        dateEnd = formatter.format(e.dateEnd.toLocal());
-      }
-      if (dateStart == dateEnd) {
-        return ListTile(
-          leading: Icon(Icons.calendar_today),
-          title: Text(dateStart),
-          onTap: () => {},
-        );
-      } else {
-        return ListTile(
-          leading: Icon(Icons.calendar_today),
-          title: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('Début : ' + dateStart),
-              Text('Fin : ' + dateEnd)
-            ],
-          ),
-          onTap: () => {},
-        );
-      }
-    } else {
-      if (e.occurrences.length == 0) {
-        return Text("Toutes les dates sont passées");
-      } else {
-        if (e.allDay) {
-          for (var item in e.occurrences) {
-            occurenceList.add(formatterAllDay.format(item.date));
-          }
-          return Column(
-              children: occurenceList.map((occur) {
-                return ListTile(
-                  leading: Icon(Icons.calendar_today),
-                  title: Text(occur + ', toute la journée'),
-                  onTap: () => {},
-                );
-              }).toList());
-        } else {
-          for (var item in e.occurrences) {
-            occurenceList.add(formatter.format(item.date));
-          }
-          //! Je sais pas comment faire pour ce cas la avec les minutes
-          //! et la méthode que j'ai fait !?
-          return Column(
-              children: occurenceList.map((occur) {
-                return ListTile(
-                  leading: Icon(Icons.calendar_today),
-                  title: Text(occur),
-                  onTap: () => {},
-                );
-              }).toList());
-        }
-      }
-    }
-  }
-
-  void _showBottomSheet() {
-    showModalBottomSheet(
-      shape: RoundedRectangleBorder(borderRadius: bottomSheetBorderRadius),
-      context: context,
-      builder: (BuildContext bc) {
-        return ListView(children: [
-          Container(
-            child: Wrap(
-              children: <Widget>[
-                _buildDate(),
-              ],
-            ),
-          ),
-        ]);
-      },
-    );
-  }
-
   _loadHtmlFromString() async {
     String fileText = await rootBundle.loadString('assets/article.html');
     fileText = fileText.replaceFirst('%body%', e.html);
     _controller.loadUrl(Uri.dataFromString(fileText,
-        mimeType: 'text/html', encoding: Encoding.getByName('utf-8'))
+            mimeType: 'text/html', encoding: Encoding.getByName('utf-8'))
         .toString());
   }
 }
