@@ -103,7 +103,7 @@ class _MyAppState extends State<MyApp> {
       });
     });
 
-    const AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('launcher_icon');
+    const AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('notif_icon');
     final IOSInitializationSettings initializationSettingsIOS = IOSInitializationSettings(
       requestSoundPermission: false,
       requestBadgePermission: false,
