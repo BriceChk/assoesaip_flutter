@@ -30,7 +30,7 @@ dependencies:
   firebase_messaging: ^7.0.3
   floating_search_bar: ^0.3.0
   flutter_launcher_icons: ^0.8.1
-  flutter_local_notifications: ^3.0.1
+  flutter_local_notifications: ^3.0.2
   webview_flutter: ^1.0.7
   intl: ^0.16.1
   # The following adds the Cupertino Icons font to your application.

@@ -1,4 +1,9 @@
+import 'dart:convert';
+
+import 'package:assoesaip_flutter/models/article.dart';
+import 'package:assoesaip_flutter/models/event.dart';
 import 'package:assoesaip_flutter/models/fcmToken.dart';
+import 'package:assoesaip_flutter/models/project.dart';
 import 'package:assoesaip_flutter/models/user.dart';
 import 'package:assoesaip_flutter/screens/LoginPage/welcomePage.dart';
 import 'package:assoesaip_flutter/screens/articlePage.dart';
@@ -25,6 +30,8 @@ void main() {
 class MyApp extends StatefulWidget {
   static User user;
   static FcmToken fcmToken;
+  static FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+  FlutterLocalNotificationsPlugin();
 
   @override
   _MyAppState createState() => _MyAppState();
@@ -32,9 +39,6 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
-
-  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
 
   String _initialRoute = '';
 
@@ -58,17 +62,28 @@ class _MyAppState extends State<MyApp> {
 
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
-        print("onMessage: $message");
-        //_showItemDialog(message);
+        // The notification is received when the app is running in the foreground.
+        // Display a custom notification!
+        var data = message['data'] ?? message;
+        if (data['notify'] == '1') {
+          print('condition true');
+          buildNotification(jsonEncode(data));
+        }
       },
       onBackgroundMessage: myBackgroundMessageHandler,
       onLaunch: (Map<String, dynamic> message) async {
-        print("onLaunch: $message");
-        //_navigateToItemDetail(message);
+        // The notification is received when the app is terminated.
+        // The app starts, navigate to the desired page!
+        var data = message['data'] ?? message;
+        print('onLaunch');
+        handleNotificationNavigation(jsonEncode(data));
       },
       onResume: (Map<String, dynamic> message) async {
-        print("onResume: $message");
-        //_navigateToItemDetail(message);
+        // The notification is received when the app is running in the background.
+        // The app resumes, navigate to the desired page!
+        var data = message['data'] ?? message;
+        print('onResume');
+        handleNotificationNavigation(jsonEncode(data));
       },
     );
 
@@ -79,6 +94,66 @@ class _MyAppState extends State<MyApp> {
         MyApp.fcmToken = value;
       });
     });
+
+    const AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('launcher_icon');
+    final IOSInitializationSettings initializationSettingsIOS = IOSInitializationSettings(
+      requestSoundPermission: false,
+      requestBadgePermission: false,
+      requestAlertPermission: false,
+    );
+    final InitializationSettings initializationSettings = InitializationSettings(
+      android: initializationSettingsAndroid,
+      iOS: initializationSettingsIOS,
+    );
+    MyApp.flutterLocalNotificationsPlugin.initialize(
+        initializationSettings,
+        onSelectNotification: selectNotification
+    );
+  }
+
+  void buildNotification(String json) {
+    print('Build la notif');
+    var data = jsonDecode(json);
+    print(data);
+    const AndroidNotificationDetails androidPlatformChannelSpecifics =
+    AndroidNotificationDetails(
+        'all', 'Toutes les notifications', "Toutes les notifications de l'application.",
+        importance: Importance.max,
+        priority: Priority.high,
+        showWhen: false);
+    const NotificationDetails platformChannelSpecifics =
+    NotificationDetails(android: androidPlatformChannelSpecifics);
+    MyApp.flutterLocalNotificationsPlugin.show(0, data['title'], data['abstract'], platformChannelSpecifics, payload: jsonEncode(data));
+  }
+
+  Future selectNotification(String payload) async {
+    if (payload != null) {
+      print('local payload');
+      await handleNotificationNavigation(payload);
+    }
+  }
+
+  Future<void> handleNotificationNavigation(String payload) async {
+    print('Handling notification... payload: ' + payload);
+    var data = jsonDecode(payload);
+    print('decoded data: $data');
+    var route = '/main/home';
+    var obj;
+    print('type: ' + data['type']);
+    if (data['type'] == 'article') {
+      route = '/article';
+      obj = Article(id: data['id']);
+    } else if (data['type'] == 'event') {
+      route = '/event';
+      obj = Event(id: data['id']);
+    } else if (data['type'] == 'project') {
+      route = '/project';
+      obj = Project(id: data['id'], name: data['name'], description: data['description']);
+    }
+    print('route: $route');
+    print('obj type: ' + obj.runtimeType.toString());
+
+     await Navigator.pushNamed(context, route, arguments: obj);
   }
 
   @override
@@ -125,9 +200,9 @@ class _MyAppState extends State<MyApp> {
 
 Future<dynamic> myBackgroundMessageHandler(Map<String, dynamic> message) async {
   if (message.containsKey('data')) {
-    // Handle data message
-    final dynamic data = message['data'];
-    print(data);
+    // This is executed when there is only data and no notification payload.
+    var data = message['data'] ?? message;
+
   }
 
   if (message.containsKey('notification')) {
