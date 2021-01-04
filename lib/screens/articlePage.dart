@@ -75,35 +75,9 @@ class _ArticlePageState extends State<ArticlePage> {
   Widget _buildArticleWidget() {
     DateFormat formatter = DateFormat("dd/MM/yyyy · HH'h'mm", 'fr_FR');
     String date = formatter.format(a.datePublished.toLocal());
-/*
-    Widget _settingModalBottomSheet(context) {
-      showModalBottomSheet(
-          shape: RoundedRectangleBorder(borderRadius: cardsBorderRadius),
-          context: context,
-          builder: (BuildContext bc) {
-            return Container(
-              child: Wrap(
-                children: <Widget>[
-                  ListTile(
-                      leading: Icon(Icons.calendar_today),
-                      title: Text(date),
-                      onTap: () => {}),
-                ],
-              ),
-            );
-          });
-    }
-*/
+
     return IndexedStack(index: _stackToView, children: [
       Scaffold(
-        /*
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: starCommandBlue,
-          child: Icon(Icons.calendar_today),
-          onPressed: () {
-            _settingModalBottomSheet(context);
-          },
-        ),*/
         body: ListView(
           children: [
             Container(
@@ -130,56 +104,54 @@ class _ArticlePageState extends State<ArticlePage> {
                   ),
                   SizedBox(height: 10),
                   Text(
-                    a.project.name,
-                    textAlign: TextAlign.justify,
-                    style: TextStyle(fontFamily: classicFont, fontSize: 12),
-                  ),
-                  Text(
-                    date,
+                    'Article publié le ' + date,
                     textAlign: TextAlign.justify,
                     style: TextStyle(fontFamily: classicFont, fontSize: 12),
                   ),
                   SizedBox(height: 15),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      FlatButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/project',
-                              arguments: a.project);
-                        },
-                        child: FittedBox(
-                          child: Text(
-                            a.project.name,
-                            style: TextStyle(
-                                fontFamily: classicFont, color: white),
+                  Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        FlatButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/project',
+                                arguments: a.project);
+                          },
+                          child: FittedBox(
+                            child: Text(
+                              a.project.name,
+                              style: TextStyle(
+                                  fontFamily: classicFont, color: white),
+                            ),
                           ),
+                          color: starCommandBlue,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: buttonBorderRadius),
                         ),
-                        color: starCommandBlue,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: buttonBorderRadius),
-                      ),
-                      FlatButton(
-                        onPressed: () async {
-                          if (await canLaunch('mailto:' + a.author.username)) {
-                            await launch('mailto:' + a.author.username);
-                          } else {
-                            throw 'Could not launch mailto:' +
-                                a.author.username;
-                          }
-                        },
-                        child: FittedBox(
-                          child: Text(
-                            a.author.firstName + ' ' + a.author.lastName,
-                            style: TextStyle(
-                                fontFamily: classicFont, color: white),
+                        FlatButton(
+                          onPressed: () async {
+                            if (await canLaunch(
+                                'mailto:' + a.author.username)) {
+                              await launch('mailto:' + a.author.username);
+                            } else {
+                              throw 'Could not launch mailto:' +
+                                  a.author.username;
+                            }
+                          },
+                          child: FittedBox(
+                            child: Text(
+                              a.author.firstName + ' ' + a.author.lastName,
+                              style: TextStyle(
+                                  fontFamily: classicFont, color: white),
+                            ),
                           ),
+                          color: starCommandBlue,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: buttonBorderRadius),
                         ),
-                        color: starCommandBlue,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: buttonBorderRadius),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ],
               ),
