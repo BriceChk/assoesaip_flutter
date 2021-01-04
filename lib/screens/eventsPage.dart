@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 import 'package:assoesaip_flutter/models/event.dart';
+import 'package:assoesaip_flutter/models/eventOccurrence.dart';
 import 'package:assoesaip_flutter/services/api.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
+import 'package:assoesaip_flutter/shares/eventsOccurrencesList.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -77,7 +79,93 @@ class _EventPageState extends State<EventPage> {
 
   Widget _buildEventWidget() {
     DateFormat formatter = DateFormat("dd/MM/yyyy · HH'h'mm", 'fr_FR');
+    DateFormat formatterAllDay = DateFormat("EEEE dd MMM", 'fr_FR');
     String date = formatter.format(e.datePublished.toLocal());
+    String dateStart;
+    String dateEnd;
+    List<String> occurenceList = [];
+
+    Widget _buildDate() {
+      if (e.occurrencesCount == 1) {
+        if (e.allDay) {
+          dateStart =
+              formatterAllDay.format(e.dateStart) + ', toute la journée';
+          dateEnd = formatterAllDay.format(e.dateEnd) + ', toute la journée';
+        } else {
+          dateStart = formatter.format(e.dateStart.toLocal());
+          dateEnd = formatter.format(e.dateEnd.toLocal());
+        }
+        if (dateStart == dateEnd) {
+          return ListTile(
+            leading: Icon(Icons.calendar_today),
+            title: Text(dateStart),
+            onTap: () => {},
+          );
+        } else {
+          return ListTile(
+            leading: Icon(Icons.calendar_today),
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Début : ' + dateStart),
+                Text('Fin : ' + dateEnd)
+              ],
+            ),
+            onTap: () => {},
+          );
+        }
+      } else {
+        if (e.occurrences.length == 0) {
+          return Text("Toutes les dates sont passées");
+        } else {
+          if (e.allDay) {
+            for (var item in e.occurrences) {
+              occurenceList.add(formatterAllDay.format(item.date));
+            }
+            return Column(
+                children: occurenceList.map((occur) {
+              return ListTile(
+                leading: Icon(Icons.calendar_today),
+                title: Text(occur + ', toute la journée'),
+                onTap: () => {},
+              );
+            }).toList());
+          } else {
+            for (var item in e.occurrences) {
+              occurenceList.add(formatter.format(item.date));
+            }
+            //! Je sais pas comment faire pour ce cas la avec les minutes
+            //! et la méthode que j'ai fait !?
+            return Column(
+                children: occurenceList.map((occur) {
+              return ListTile(
+                leading: Icon(Icons.calendar_today),
+                title: Text(occur),
+                onTap: () => {},
+              );
+            }).toList());
+          }
+        }
+      }
+    }
+
+    Widget _showBottomSheet() {
+      showModalBottomSheet(
+        shape: RoundedRectangleBorder(borderRadius: bottomSheetBorderRadius),
+        context: context,
+        builder: (BuildContext bc) {
+          return ListView(children: [
+            Container(
+              child: Wrap(
+                children: <Widget>[
+                  _buildDate(),
+                ],
+              ),
+            ),
+          ]);
+        },
+      );
+    }
 
     return IndexedStack(index: _stackToView, children: [
       Scaffold(
@@ -85,22 +173,7 @@ class _EventPageState extends State<EventPage> {
           backgroundColor: starCommandBlue,
           child: Icon(Icons.calendar_today),
           onPressed: () {
-            showModalBottomSheet(
-                shape: RoundedRectangleBorder(
-                    borderRadius: bottomSheetBorderRadius),
-                context: context,
-                builder: (BuildContext bc) {
-                  return Container(
-                    child: Wrap(
-                      children: <Widget>[
-                        ListTile(
-                            leading: Icon(Icons.calendar_today),
-                            title: Text(e.dateStart.toString()),
-                            onTap: () => {}),
-                      ],
-                    ),
-                  );
-                });
+            _showBottomSheet();
           },
         ),
         body: ListView(
