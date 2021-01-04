@@ -1,6 +1,8 @@
 import 'package:assoesaip_flutter/models/eventOccurrence.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 
 import 'constant.dart';
 
@@ -39,12 +41,53 @@ class EventsOccurrencesList extends StatelessWidget {
     }
   }
 
-  Widget _buildEventWidget(EventOccurrence n, BuildContext context) {
+  Widget _buildEventWidget(EventOccurrence occ, BuildContext context) {
     String imageUrl = 'https://asso-esaip.bricechk.fr/';
-    if (n.event.project.logoFileName == null) {
+    if (occ.event.project.logoFileName == null) {
       imageUrl += 'build/images/project-placeholder.png';
     } else {
-      imageUrl += 'images/project-logos/' + n.event.project.logoFileName;
+      imageUrl += 'images/project-logos/' + occ.event.project.logoFileName;
+    }
+
+    DateFormat formatterAllDay = DateFormat("EEE dd MMM", 'fr_FR');
+    DateFormat formatter = DateFormat("EEE dd MMM H'h'mm", 'fr_FR');
+    var startDate;
+    var endString = ' - ';
+
+    if (occ.event.allDay) {
+      startDate = formatterAllDay.format(occ.date);
+    } else {
+      startDate = formatter.format(occ.date);
+    }
+
+    if (occ.event.occurrencesCount == 1) {
+      if (occ.event.allDay) {
+        endString = formatterAllDay.format(occ.event.dateEnd);
+        if (endString == startDate) {
+          endString = '';
+        } else {
+          endString = ' - ' + endString;
+        }
+      } else {
+        endString += formatter.format(occ.event.dateEnd);
+      }
+    } else {
+      var endDate = occ.date.add(Duration(minutes: occ.event.duration));
+      if (occ.event.allDay) {
+        if (occ.event.duration > 0) {
+          // More than a day: show end date
+          endString += formatterAllDay.format(endDate);
+        } else {
+          endString = '';
+        }
+      } else {
+        var formatterTime = DateFormat("H'h'mm", 'fr_FR');
+        if (formatterAllDay.format(occ.date) == formatterAllDay.format(endDate)) {
+          endString += formatterTime.format(endDate);
+        } else {
+          endString += formatter.format(endDate);
+        }
+      }
     }
 
     return Container(
@@ -59,14 +102,14 @@ class EventsOccurrencesList extends StatelessWidget {
           ),
         ],
       ),
-      margin: EdgeInsets.all(8),
+      margin: EdgeInsets.fromLTRB(8, 10, 8, 15),
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 8, horizontal: 15),
+        padding: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
         child: InkWell(
           splashColor: splashColor,
           borderRadius: BorderRadius.circular(15),
           onTap: () {
-            Navigator.of(context, rootNavigator: true).pushNamed('/event', arguments: n.event);
+            Navigator.of(context, rootNavigator: true).pushNamed('/event', arguments: occ.event);
           },
           child: IntrinsicHeight(
             child: Column(
@@ -89,7 +132,7 @@ class EventsOccurrencesList extends StatelessWidget {
                       ),
                       //* Container with the name of the project
                       Text(
-                        n.event.project.name,
+                        occ.event.project.name,
                         style: TextStyle(
                           fontSize: 12,
                           fontFamily: classicFont,
@@ -105,30 +148,80 @@ class EventsOccurrencesList extends StatelessWidget {
                   height: 1,
                   color: Colors.grey[500],
                 ),
-                Container(
-                  //color: Colors.amber,
-                  padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Text(
-                        n.event.title,
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontFamily: classicFont,
-                          color: titleColor,
+                Stack(
+                  children: [
+                    Container(
+                      //color: Colors.amber,
+                      padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Text(
+                            occ.event.title,
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontFamily: classicFont,
+                              color: titleColor,
+                            ),
+                          ),
+                          Text(
+                            occ.event.abstract,
+                            textAlign: TextAlign.justify,
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontFamily: classicFont,
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Icon(
+                                FontAwesomeIcons.solidCalendarAlt,
+                                size: 15,
+                              ),
+                              SizedBox(width: 5),
+                              Text(
+                                startDate + endString,
+                                style: TextStyle(
+                                    fontFamily: classicFont
+                                ),
+                              ),
+                            ],
+                          ),
+                        ]
+                      ),
+                    ),
+                    Positioned(
+                      right: 0,
+                      bottom: 0,
+                      child: Transform.translate(
+                        offset: Offset(0, 18),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(13),
+                                color: HexColor.fromHex(occ.event.category.color),
+                              ),
+                              height: 25,
+                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              child: Center(
+                                  child: Text(
+                                    occ.event.category.name,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: classicFont
+                                    ),
+                                  ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      Text(
-                        n.event.abstract,
-                        textAlign: TextAlign.justify,
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontFamily: classicFont,
-                        ),
-                      ),
-                    ]
-                  ),
+                    ),
+                  ],
                 ),
               ],
             ),
