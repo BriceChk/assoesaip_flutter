@@ -59,6 +59,7 @@ class _HomePageState extends State<HomePage>
         starredNews = value;
       });
     });
+    //TODO Load events here!
   }
 
   Widget _builderSearchResult(News n) {
