@@ -49,19 +49,6 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     initializeDateFormatting('fr_FR');
 
-    getUser().then((value) {
-      setState(() {
-        MyApp.user = value;
-        if (value == null) {
-          _initialRoute = '/welcome';
-        } else if (value.campus == "" || value.promo == "") {
-          _initialRoute = '/profile';
-        } else {
-          _initialRoute = '/main/home';
-        }
-      });
-    });
-
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
         // The notification is received when the app is running in the foreground.
@@ -95,11 +82,23 @@ class _MyAppState extends State<MyApp> {
       },
     );
 
-    _firebaseMessaging.getToken().then((String token) {
-      assert(token != null);
-      var t = FcmToken.fromTokenString(token);
-      saveToken(t).then((value) {
-        MyApp.fcmToken = value;
+    getUser().then((value) {
+      setState(() {
+        MyApp.user = value;
+        if (value == null) {
+          _initialRoute = '/welcome';
+        } else if (value.campus == "" || value.promo == "") {
+          _initialRoute = '/profile';
+        } else {
+          _initialRoute = '/main/home';
+        }
+      });
+      _firebaseMessaging.getToken().then((String token) {
+        assert(token != null);
+        var t = FcmToken.fromTokenString(token);
+        saveToken(t).then((value) {
+          MyApp.fcmToken = value;
+        });
       });
     });
 
