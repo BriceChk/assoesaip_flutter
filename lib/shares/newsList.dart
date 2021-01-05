@@ -14,10 +14,10 @@ class NewsListWidget extends StatelessWidget {
 
   final BorderRadius splashBorderRadius = BorderRadius.circular(15);
 
-  static Widget newsListPlaceholder() {
+  static Widget newsListPlaceholder({count: 10}) {
     List<Widget> list = List();
 
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i < count; i++) {
       list.add(Card(
         elevation: 0.5,
         color: cardColor,
