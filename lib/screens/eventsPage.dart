@@ -291,7 +291,7 @@ class _EventPageState extends State<EventPage> {
               occurenceList
                   .add(formatter.format(item.date.toLocal()) + ' - ' + dateEnd);
             } else {
-              dateEnd = formatter.format(e.dateEnd.toLocal());
+              dateEnd = formatter.format(endDate);
               occurenceList
                   .add(formatter.format(item.date.toLocal()) + ' - ' + dateEnd);
             }
@@ -300,9 +300,11 @@ class _EventPageState extends State<EventPage> {
               children: occurenceList.map((occur) {
             return ListTile(
               leading: Icon(Icons.calendar_today),
-              title: Text(
-                occur,
-                style: TextStyle(fontFamily: classicFont),
+              title: FittedBox(
+                child: Text(
+                  occur,
+                  style: TextStyle(fontFamily: classicFont),
+                ),
               ),
               onTap: () => {},
             );
