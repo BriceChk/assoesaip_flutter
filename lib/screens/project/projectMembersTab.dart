@@ -77,7 +77,8 @@ class ProjectMembersTab extends StatelessWidget {
                   decoration: BoxDecoration(
                     //* have the same rounded corner as the big container
                     borderRadius: BorderRadius.circular(80),
-                    image: DecorationImage(image: CachedNetworkImageProvider(avatarUrl)),
+                    image: DecorationImage(
+                        image: CachedNetworkImageProvider(avatarUrl)),
                   ),
                 ),
                 SizedBox(width: 15),
@@ -93,7 +94,7 @@ class ProjectMembersTab extends StatelessWidget {
                             color: navyBlue),
                       ),
                       Text(
-                        p.role,
+                        p.role + ' - ' + p.user.promo,
                         style: TextStyle(
                           fontFamily: classicFont,
                           fontSize: roleSize,
