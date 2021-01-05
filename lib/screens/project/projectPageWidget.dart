@@ -66,8 +66,11 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
         news = value;
       });
     });
-    events = List();
-    //TODO Get project events
+    getProjectNextEventOccurrences(widget.p.id).then((value) {
+      setState(() {
+        events = value;
+      });
+    });
   }
 
   Widget _buildIcon() {
