@@ -129,6 +129,7 @@ class _CategoriesListState extends State<CategoriesList> with AutomaticKeepAlive
         ),
         //* Material then InkWell in order to have the ripple effect + ontap function
         child: Material(
+          color: Colors.white,
           borderRadius: cardsBorderRadius,
           child: InkWell(
               borderRadius: BorderRadius.circular(15),
