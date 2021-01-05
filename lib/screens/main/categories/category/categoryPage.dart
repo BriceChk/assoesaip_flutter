@@ -43,8 +43,11 @@ class _CategoryState extends State<Category> {
         news = value;
       });
     });
-    events = List();
-    //TODO Fetch events
+    getCategoryNextEventOccurrences(widget.categ.id).then((value) {
+      setState(() {
+        events = value;
+      });
+    });
   }
 
   Widget _buildIcon() {

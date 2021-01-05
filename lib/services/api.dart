@@ -173,3 +173,21 @@ Future<List<EventOccurrence>> getNextEventOccurrences() async {
   var jsonArray = jsonDecode(response.content()) as List;
   return jsonArray.map((e) => EventOccurrence.fromJson(e)).toList();
 }
+
+Future<List<EventOccurrence>> getCategoryNextEventOccurrences(int categId) async {
+  final response = await Requests.get('$url/project-category/$categId/next-event-occurrences');
+  if (response.hasError) {
+    return null;
+  }
+  var jsonArray = jsonDecode(response.content()) as List;
+  return jsonArray.map((e) => EventOccurrence.fromJson(e)).toList();
+}
+
+Future<List<EventOccurrence>> getProjectNextEventOccurrences(int projectId) async {
+  final response = await Requests.get('$url/project/$projectId/next-event-occurrences');
+  if (response.hasError) {
+    return null;
+  }
+  var jsonArray = jsonDecode(response.content()) as List;
+  return jsonArray.map((e) => EventOccurrence.fromJson(e)).toList();
+}
