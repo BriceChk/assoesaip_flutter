@@ -104,6 +104,9 @@ class ProjectMembersTab extends StatelessWidget {
                       Text(
                         p.introduction,
                         textAlign: TextAlign.justify,
+                        style: TextStyle(
+                          fontFamily: classicFont
+                        ),
                       )
                     ],
                   ),
