@@ -112,6 +112,7 @@ class _ArticlePageState extends State<ArticlePage> {
                   Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         FlatButton(
                           onPressed: () {
