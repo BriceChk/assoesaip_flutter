@@ -189,11 +189,15 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
             //! LA FIN
             //! SINON VOIR POUR UNE BARRE AVEC TOUS LES RESEAUX OU
             //! SEULEMENT CHACUN SON CONTAINER AVEC LE FOND (a voir)
-            Expanded(
-              child: ListView(
-                physics: BouncingScrollPhysics(),
-                scrollDirection: Axis.horizontal,
-                children: project == null ? [] : _buildSocialNetworks(),
+            Container(
+              height: 40,
+              child: Center(
+                child: ListView(
+                  shrinkWrap: true,
+                  physics: BouncingScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  children: project == null ? [] : _buildSocialNetworks(),
+                ),
               ),
             ),
             SizedBox(height: 5)
@@ -216,6 +220,7 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
           }
         },
         child: Container(
+          margin: EdgeInsets.fromLTRB(5, 0, 5, 0),
           width: 40,
           height: 40,
           decoration: BoxDecoration(
@@ -228,8 +233,6 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
           ),
         ),
       ));
-
-      list.add(SizedBox(width: 10));
     }
 
     if (project.social != null) {
@@ -269,6 +272,7 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
               }
             },
             child: Container(
+              margin: EdgeInsets.fromLTRB(5, 0, 5, 0),
               width: 40,
               height: 40,
               decoration: BoxDecoration(
@@ -281,8 +285,6 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
               ),
             ),
           ));
-
-          list.add(SizedBox(width: 10));
         }
       });
     }
