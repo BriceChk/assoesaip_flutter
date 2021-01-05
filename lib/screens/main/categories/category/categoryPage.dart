@@ -43,7 +43,7 @@ class _CategoryState extends State<Category> {
         news = value;
       });
     });
-    getNextCategoryEventOccurrences(widget.categ.id).then((value) {
+    getCategoryNextEventOccurrences(widget.categ.id).then((value) {
       setState(() {
         events = value;
       });

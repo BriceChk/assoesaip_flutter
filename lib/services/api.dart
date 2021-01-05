@@ -174,7 +174,7 @@ Future<List<EventOccurrence>> getNextEventOccurrences() async {
   return jsonArray.map((e) => EventOccurrence.fromJson(e)).toList();
 }
 
-Future<List<EventOccurrence>> getNextCategoryEventOccurrences(int categId) async {
+Future<List<EventOccurrence>> getCategoryNextEventOccurrences(int categId) async {
   final response = await Requests.get('$url/project-category/$categId/next-event-occurrences');
   if (response.hasError) {
     return null;
