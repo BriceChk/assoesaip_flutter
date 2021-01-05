@@ -330,9 +330,14 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       child: Container(
         height: 50,
-        child: ListView(scrollDirection: Axis.horizontal, children: [
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: list),
-        ]),
+        child: Center(
+          child: ListView(
+              scrollDirection: Axis.horizontal,
+              shrinkWrap: true,
+              children: [
+                Row(mainAxisAlignment: MainAxisAlignment.center, children: list),
+              ]),
+        ),
       ),
     );
   }
