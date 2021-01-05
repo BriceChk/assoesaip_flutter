@@ -143,8 +143,7 @@ class _EventPageState extends State<EventPage> {
                       ),
                       FlatButton(
                         onPressed: () async {
-                          if (await canLaunch(
-                              'mailto:' + e.author.username)) {
+                          if (await canLaunch('mailto:' + e.author.username)) {
                             await launch('mailto:' + e.author.username);
                           } else {
                             throw 'Could not launch mailto:' +
@@ -219,8 +218,7 @@ class _EventPageState extends State<EventPage> {
 
     if (e.occurrencesCount == 1) {
       if (e.allDay) {
-        dateStart =
-            formatterAllDay.format(e.dateStart) + ', toute la journée';
+        dateStart = formatterAllDay.format(e.dateStart) + ', toute la journée';
         dateEnd = formatterAllDay.format(e.dateEnd) + ', toute la journée';
       } else {
         dateStart = formatter.format(e.dateStart.toLocal());
@@ -242,8 +240,7 @@ class _EventPageState extends State<EventPage> {
           children: [
             ListTile(
               leading: Icon(Icons.calendar_today),
-              title:
-              Container(
+              title: Container(
                 width: 60,
                 child: Text(
                   'Début : ' + dateStart,
@@ -270,36 +267,46 @@ class _EventPageState extends State<EventPage> {
       } else {
         if (e.allDay) {
           for (var item in e.occurrences) {
-            occurenceList.add(formatterAllDay.format(item.date));
+            occurenceList.add(formatterAllDay.format(item.date.toLocal()));
           }
           return Column(
               children: occurenceList.map((occur) {
-                return ListTile(
-                  leading: Icon(Icons.calendar_today),
-                  title: Text(
-                    occur + ', toute la journée',
-                    style: TextStyle(fontFamily: classicFont),
-                  ),
-                  onTap: () => {},
-                );
-              }).toList());
+            return ListTile(
+              leading: Icon(Icons.calendar_today),
+              title: Text(
+                occur + ', toute la journée',
+                style: TextStyle(fontFamily: classicFont),
+              ),
+              onTap: () => {},
+            );
+          }).toList());
         } else {
           for (var item in e.occurrences) {
-            occurenceList.add(formatter.format(item.date));
+            //! Ici pour 'titre de l'evenement' vas dans le else alors qu'il ne devrait pas
+            var formatterTime = DateFormat("HH'h'mm", 'fr_FR');
+            var endDate = item.date.add(Duration(minutes: e.duration));
+            if (formatterAllDay.format(item.date.toLocal()) ==
+                formatterAllDay.format(endDate)) {
+              dateEnd = formatterTime.format(endDate.toLocal());
+              occurenceList
+                  .add(formatter.format(item.date.toLocal()) + ' - ' + dateEnd);
+            } else {
+              dateEnd = formatter.format(e.dateEnd.toLocal());
+              occurenceList
+                  .add(formatter.format(item.date.toLocal()) + ' - ' + dateEnd);
+            }
           }
-          //! Je sais pas comment faire pour ce cas la avec les minutes
-          //! et la méthode que j'ai fait !?
           return Column(
               children: occurenceList.map((occur) {
-                return ListTile(
-                  leading: Icon(Icons.calendar_today),
-                  title: Text(
-                    occur,
-                    style: TextStyle(fontFamily: classicFont),
-                  ),
-                  onTap: () => {},
-                );
-              }).toList());
+            return ListTile(
+              leading: Icon(Icons.calendar_today),
+              title: Text(
+                occur,
+                style: TextStyle(fontFamily: classicFont),
+              ),
+              onTap: () => {},
+            );
+          }).toList());
         }
       }
     }
