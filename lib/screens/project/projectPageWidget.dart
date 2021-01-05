@@ -10,6 +10,7 @@ import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:assoesaip_flutter/shares/customWebviewWidget.dart';
 import 'package:assoesaip_flutter/shares/eventsOccurrencesList.dart';
 import 'package:assoesaip_flutter/shares/newsList.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -188,8 +189,10 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
             //! LA FIN
             //! SINON VOIR POUR UNE BARRE AVEC TOUS LES RESEAUX OU
             //! SEULEMENT CHACUN SON CONTAINER AVEC LE FOND (a voir)
-            IntrinsicWidth(
-              child: Row(
+            Expanded(
+              child: ListView(
+                physics: BouncingScrollPhysics(),
+                scrollDirection: Axis.horizontal,
                 children: project == null ? [] : _buildSocialNetworks(),
               ),
             ),
@@ -207,18 +210,16 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
       list.add(GestureDetector(
         onTap: () async {
           if (await canLaunch('mailto:' + project.email)) {
-          await launch('mailto:' + project.email);
+            await launch('mailto:' + project.email);
           } else {
-          throw 'Could not launch mailto:' + project.email;
+            throw 'Could not launch mailto:' + project.email;
           }
         },
         child: Container(
           width: 40,
           height: 40,
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: powderBlue
-          ),
+              borderRadius: BorderRadius.circular(10), color: powderBlue),
           child: Center(
             child: Icon(
               FontAwesomeIcons.solidEnvelope,
@@ -248,10 +249,17 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
               var link = '';
 
               switch (key) {
-                case 'insta': link = 'https://instagram.com/' + value; break;
-                case 'twt': link = 'https://twitter.com/' + value; break;
-                case 'snap': link = 'https://snapchat.com/add/' + value; break;
-                default: link = value;
+                case 'insta':
+                  link = 'https://instagram.com/' + value;
+                  break;
+                case 'twt':
+                  link = 'https://twitter.com/' + value;
+                  break;
+                case 'snap':
+                  link = 'https://snapchat.com/add/' + value;
+                  break;
+                default:
+                  link = value;
               }
 
               if (await canLaunch(link)) {
@@ -264,9 +272,7 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
               width: 40,
               height: 40,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: powderBlue
-              ),
+                  borderRadius: BorderRadius.circular(10), color: powderBlue),
               child: Center(
                 child: Icon(
                   networkIcon[key],

@@ -74,7 +74,8 @@ class _HomePageState extends State<HomePage>
           icon = FontAwesomeIcons.userFriends;
         }
         return ListTile(
-          leading: Container(child: Center(child: Icon(icon)), width: 5, height: 5),
+          leading:
+              Container(child: Center(child: Icon(icon)), width: 5, height: 5),
           title: Text(
             suggestion.name,
             style: TextStyle(
@@ -97,16 +98,18 @@ class _HomePageState extends State<HomePage>
           Navigator.of(context, rootNavigator: true)
               .pushNamed('/event', arguments: Event(id: suggestion.id));
         } else {
-          Navigator.of(context, rootNavigator: true).pushNamed('/project',
-              arguments: Project(
-                  id: suggestion.id,
-                  name: suggestion.name,
-                  description: suggestion.description
-              ),
+          Navigator.of(context, rootNavigator: true).pushNamed(
+            '/project',
+            arguments: Project(
+                id: suggestion.id,
+                name: suggestion.name,
+                description: suggestion.description),
           );
         }
         _typeAheadController.clear();
       },
+      suggestionsBoxDecoration: SuggestionsBoxDecoration(
+          borderRadius: BorderRadius.circular(10), color: whiteWhite),
       textFieldConfiguration: TextFieldConfiguration(
         controller: _typeAheadController,
         decoration: InputDecoration.collapsed(
@@ -116,6 +119,15 @@ class _HomePageState extends State<HomePage>
           fontFamily: classicFont,
         ),
       ),
+      noItemsFoundBuilder: (context) {
+        return ListTile(
+          leading: Icon(FontAwesomeIcons.ban),
+          title: Text(
+            "Aucun résultat",
+            style: TextStyle(fontFamily: classicFont, fontSize: 17),
+          ),
+        );
+      },
       hideOnLoading: true,
       hideSuggestionsOnKeyboardHide: true,
     );
