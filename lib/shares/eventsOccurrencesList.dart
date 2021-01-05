@@ -55,37 +55,38 @@ class EventsOccurrencesList extends StatelessWidget {
     var endString = ' - ';
 
     if (occ.event.allDay) {
-      startDate = formatterAllDay.format(occ.date);
+      startDate = formatterAllDay.format(occ.date.toLocal());
     } else {
-      startDate = formatter.format(occ.date);
+      startDate = formatter.format(occ.date.toLocal());
     }
 
     if (occ.event.occurrencesCount == 1) {
       if (occ.event.allDay) {
-        endString = formatterAllDay.format(occ.event.dateEnd);
+        endString = formatterAllDay.format(occ.event.dateEnd.toLocal());
         if (endString == startDate) {
           endString = '';
         } else {
           endString = ' - ' + endString;
         }
       } else {
-        endString += formatter.format(occ.event.dateEnd);
+        endString += formatter.format(occ.event.dateEnd.toLocal());
       }
     } else {
       var endDate = occ.date.add(Duration(minutes: occ.event.duration));
       if (occ.event.allDay) {
         if (occ.event.duration > 0) {
           // More than a day: show end date
-          endString += formatterAllDay.format(endDate);
+          endString += formatterAllDay.format(endDate.toLocal());
         } else {
           endString = '';
         }
       } else {
         var formatterTime = DateFormat("H'h'mm", 'fr_FR');
-        if (formatterAllDay.format(occ.date) == formatterAllDay.format(endDate)) {
-          endString += formatterTime.format(endDate);
+        if (formatterAllDay.format(occ.date.toLocal()) ==
+            formatterAllDay.format(endDate.toLocal())) {
+          endString += formatterTime.format(endDate.toLocal());
         } else {
-          endString += formatter.format(endDate);
+          endString += formatter.format(endDate.toLocal());
         }
       }
     }
@@ -109,7 +110,8 @@ class EventsOccurrencesList extends StatelessWidget {
           splashColor: splashColor,
           borderRadius: BorderRadius.circular(15),
           onTap: () {
-            Navigator.of(context, rootNavigator: true).pushNamed('/event', arguments: occ.event);
+            Navigator.of(context, rootNavigator: true)
+                .pushNamed('/event', arguments: occ.event);
           },
           child: IntrinsicHeight(
             child: Column(
@@ -125,8 +127,7 @@ class EventsOccurrencesList extends StatelessWidget {
                           width: 30,
                           child: CachedNetworkImage(
                             imageUrl: imageUrl,
-                          )
-                      ),
+                          )),
                       SizedBox(
                         width: 10,
                       ),
@@ -154,43 +155,40 @@ class EventsOccurrencesList extends StatelessWidget {
                       //color: Colors.amber,
                       padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Text(
-                            occ.event.title,
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontFamily: classicFont,
-                              color: titleColor,
-                            ),
-                          ),
-                          Text(
-                            occ.event.abstract,
-                            textAlign: TextAlign.justify,
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontFamily: classicFont,
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Icon(
-                                FontAwesomeIcons.solidCalendarAlt,
-                                size: 15,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Text(
+                              occ.event.title,
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontFamily: classicFont,
+                                color: titleColor,
                               ),
-                              SizedBox(width: 5),
-                              Text(
-                                startDate + endString,
-                                style: TextStyle(
-                                    fontFamily: classicFont
+                            ),
+                            Text(
+                              occ.event.abstract,
+                              textAlign: TextAlign.justify,
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontFamily: classicFont,
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Icon(
+                                  FontAwesomeIcons.solidCalendarAlt,
+                                  size: 15,
                                 ),
-                              ),
-                            ],
-                          ),
-                        ]
-                      ),
+                                SizedBox(width: 5),
+                                Text(
+                                  startDate + endString,
+                                  style: TextStyle(fontFamily: classicFont),
+                                ),
+                              ],
+                            ),
+                          ]),
                     ),
                     Positioned(
                       right: 0,
@@ -203,18 +201,18 @@ class EventsOccurrencesList extends StatelessWidget {
                             Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(13),
-                                color: HexColor.fromHex(occ.event.category.color),
+                                color:
+                                    HexColor.fromHex(occ.event.category.color),
                               ),
                               height: 25,
                               padding: EdgeInsets.symmetric(horizontal: 10),
                               child: Center(
-                                  child: Text(
-                                    occ.event.category.name,
-                                    style: TextStyle(
+                                child: Text(
+                                  occ.event.category.name,
+                                  style: TextStyle(
                                       color: Colors.white,
-                                      fontFamily: classicFont
-                                    ),
-                                  ),
+                                      fontFamily: classicFont),
+                                ),
                               ),
                             ),
                           ],
