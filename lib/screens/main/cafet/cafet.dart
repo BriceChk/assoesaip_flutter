@@ -1,4 +1,9 @@
+import 'package:assoesaip_flutter/models/cafetItem.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
+import 'package:assoesaip_flutter/services/api.dart';
+import 'package:assoesaip_flutter/shares/newsList.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -12,12 +17,45 @@ class _CafetWidgetState extends State<CafetWidget> with AutomaticKeepAliveClient
   @override
   bool get wantKeepAlive => true;
 
+  List<CafetItem> items;
+  Map<CafetItemType, List<CafetItem>> itemsMap = {
+    CafetItemType.REPAS: List(),
+    CafetItemType.BOISSON: List(),
+    CafetItemType.DESSERT: List(),
+  };
+
+  String day;
+
   final RoundedRectangleBorder roundedBorder = RoundedRectangleBorder(
     borderRadius: BorderRadius.only(
       bottomLeft: Radius.circular(25),
       bottomRight: Radius.circular(25),
     ),
   );
+
+  @override
+  void initState() {
+    super.initState();
+
+    var now = DateTime.now();
+    var testString = now.toString().split(' ')[0] + ' 12:45:00.000000';
+    var testDate = DateTime.parse(testString);
+    if (now.isAfter(testDate)) {
+      now = now.add(Duration(days: 1));
+    }
+    day = DateFormat('EEEE', 'fr_FR').format(now);
+
+    getCafetItems().then((value) {
+      setState(() {
+        items = value;
+        items.forEach((i) {
+          if (i.day == day || i.day == 'lundi,mardi,mercredi,vendredi') {
+            itemsMap[i.type].add(i);
+          }
+        });
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,12 +66,20 @@ class _CafetWidgetState extends State<CafetWidget> with AutomaticKeepAliveClient
       slivers: [
         //* We wrap our header inside the sliverAppBar with somme properties
         SliverAppBar(
-          shape: roundedBorder,
+          automaticallyImplyLeading: false,
           centerTitle: true,
-          actions: [
-            Header(),
-          ],
-          toolbarHeight: 130,
+          title: Text(
+            "La Cafet'",
+            style: TextStyle(
+              fontSize: 30,
+              color: headerTextColor,
+              fontFamily: classicFont,
+            ),
+          ),
+          flexibleSpace: _headerFlexibleSpace(),
+          toolbarHeight: 60,
+          expandedHeight: 100,
+          floating: true,
           pinned: true,
           backgroundColor: headerColor,
         ),
@@ -41,25 +87,39 @@ class _CafetWidgetState extends State<CafetWidget> with AutomaticKeepAliveClient
         SliverList(
           delegate: SliverChildListDelegate(
             [
-              SizedBox(
-                height: 5,
+              Padding(
+                padding: EdgeInsets.only(top: 5, left: 10),
+                child: Text(
+                  "Repas",
+                  style: TextStyle(
+                    fontSize: 25,
+                    fontFamily: classicFont,
+                  ),
+                ),
               ),
-              //* Widget with all cards for meals, drinks and desserts
-              TextField(
-                decoration: InputDecoration(
-                    border: InputBorder.none, hintText: 'Liste des repas'),
+              _buildItemList(itemsMap[CafetItemType.REPAS]),
+              Padding(
+                padding: EdgeInsets.only(top: 5, left: 10),
+                child: Text(
+                  "Boissons",
+                  style: TextStyle(
+                    fontSize: 25,
+                    fontFamily: classicFont,
+                  ),
+                ),
               ),
-              Repas(),
-              TextField(
-                decoration: InputDecoration(
-                    border: InputBorder.none, hintText: 'Liste des boissons'),
+              _buildItemList(itemsMap[CafetItemType.BOISSON]),
+              Padding(
+                padding: EdgeInsets.only(top: 5, left: 10),
+                child: Text(
+                  "Desserts",
+                  style: TextStyle(
+                    fontSize: 25,
+                    fontFamily: classicFont,
+                  ),
+                ),
               ),
-              Boisson(),
-              TextField(
-                decoration: InputDecoration(
-                    border: InputBorder.none, hintText: 'Liste des desserts'),
-              ),
-              Dessert(),
+              _buildItemList(itemsMap[CafetItemType.DESSERT]),
               //* Sizedbox of height 60 because otherwise the last one is under the navbar
               SizedBox(height: 60),
             ],
@@ -68,319 +128,118 @@ class _CafetWidgetState extends State<CafetWidget> with AutomaticKeepAliveClient
       ],
     );
   }
-}
 
-class Header extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    var formatDate = DateFormat('EEEE', 'fr_FR').format(DateTime.now());
-    //TODO Si passé 13h, afficher le menu du lendemain
-
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
-        color: headerColor,
-        borderRadius: headerBorder,
-      ),
-
-      //* In order to have a padding horizontaly
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 15),
-        //* Column in order to have 2 differents text widget one under the others
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "Menu de " + '$formatDate',
+  Widget _headerFlexibleSpace() {
+    return FlexibleSpaceBar(
+        collapseMode: CollapseMode.pin,
+        centerTitle: true,
+        background: Container(
+          padding: EdgeInsets.fromLTRB(15, 60, 15, 0),
+          child: Center(
+            child: Text(
+              "Au menu de $day, il y a ...",
+              textAlign: TextAlign.justify,
               style: TextStyle(
-                fontSize: 30,
+                fontSize: 16,
                 color: headerTextColor,
                 fontFamily: classicFont,
               ),
             ),
-            SizedBox(height: 10),
-          ],
+          ),
+        ));
+  }
+
+  Widget _buildItemList(List<CafetItem> itemsMap) {
+    if (!(items is List)) return NewsListWidget.newsListPlaceholder(count: 3);
+
+    var widgets = itemsMap.map((e) {
+      String imageUrl = 'https://asso-esaip.bricechk.fr/';
+      if (e.imageFileName == null) {
+        imageUrl += 'build/images/project-placeholder.png';
+      } else {
+        imageUrl += 'images/cafet-images/' + e.imageFileName;
+      }
+
+      return Container(
+        padding: EdgeInsets.only(top: 6, right: 10, left: 10, bottom: 6),
+        //! boxConstraints like this we can set a min height to the card and combine with flexible the height can be override
+        constraints: BoxConstraints(
+          minHeight: 100,
         ),
-      ),
-    );
-  }
-}
-
-class Repas extends StatelessWidget {
-  final List<List<String>> repasList = [
-    [
-      "Repas 1",
-      "Composant 1, Composant 2, ....",
-      "assets/images/Cafet/Repas/repas1.jpeg"
-    ],
-    [
-      "Repas 2",
-      "Composant 1, Composant 2, ....",
-      "assets/images/Cafet/Repas/repas2.jpg"
-    ],
-    [
-      "Repas 3",
-      "Composant 1, Composant 2, ....",
-      "assets/images/Cafet/Repas/repas3.jpg"
-    ],
-    [
-      "Repas 4",
-      "Composant 1, Composant 2, ....",
-      "assets/images/Cafet/Repas/repas4.jpg"
-    ],
-    [
-      "Repas 5",
-      "Composant 1, Composant 2, ....",
-      "assets/images/Cafet/Repas/repas5.jpg"
-    ],
-    [
-      "Repas 6",
-      "Composant 1, Composant 2, ....",
-      "assets/images/Cafet/Repas/repas6.jpg"
-    ],
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    final repasMap = repasList.asMap();
-    return Column(
-      //* Display the cafet menu
-      children: repasMap
-          .map(
-            (i, element) => MapEntry(
-              i,
-              //* Here we're building each card with each name of the specific meal
-              Padding(
-                padding: EdgeInsets.only(top: 5, right: 10, left: 10),
-                child: Container(
-                  //! boxConstraints like this we can set a min height to the card and combine with flexible the height can be override
-                  constraints: BoxConstraints(
-                    minHeight: 90,
-                  ),
-                  width: MediaQuery.of(context).size.width,
-                  child: Card(
-                    elevation: 0.5,
-                    shadowColor: shadowColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    color: cardColor,
-                    //* InkWell like this we can integrate the ontap function
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(10),
-                      splashColor: splashColor,
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 7.5,
-                          vertical: 5,
+        //width: MediaQuery.of(context).size.width,
+        child: Container(
+          decoration: BoxDecoration(
+            color: whiteWhite,
+            borderRadius: cardsBorderRadius,
+            boxShadow: <BoxShadow>[
+              new BoxShadow(
+                color: Colors.grey[400],
+                blurRadius: 3.0,
+                offset: new Offset(0.0, 0.0),
+              ),
+            ],
+          ),
+          //* Material then InkWell in order to have the ripple effect + ontap function
+          child: Material(
+            borderRadius: cardsBorderRadius,
+            color: Colors.white,
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: 7.5,
+                vertical: 5,
+              ),
+              child: Row(
+                children: [
+                  Container(
+                      width: 75,
+                      child: CachedNetworkImage(
+                        imageUrl: imageUrl,
+                        width: 75,
+                        height: 75,
+                        fit: BoxFit.contain,
+                      )),
+                  SizedBox(width: 5),
+                  //! Wrap in flexible like this we can have text in multiline
+                  Flexible(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        //* Title of card
+                        FittedBox(
+                          child: Text(
+                            e.name + ' · ' + format(e.price) + '€',
+                            style: TextStyle(
+                                fontSize: 18,
+                                fontFamily: classicFont,
+                                color: titleColor),
+                          ),
                         ),
-                        child: Row(
-                          children: [
-                            Container(
-                              width: 75,
-                              child: Image.asset(element[2]),
-                            ),
-                            SizedBox(width: 5),
-                            //! Wrap in flexible like this we can have text in multiline
-                            Flexible(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  //* Title of card
-                                  Text(
-                                    element[0],
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        fontFamily: classicFont,
-                                        color: titleColor),
-                                  ),
-                                  //* Description of the card
-                                  Text(
-                                    element[1],
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontFamily: classicFont,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
+                        //* Description of the card
+                        Text(
+                          e.description,
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontFamily: classicFont,
+                          ),
                         ),
-                      ),
+                      ],
                     ),
                   ),
-                ),
+                ],
               ),
             ),
-          )
-          .values
-          .toList(),
+          ),
+        ),
+      );
+    }).toList();
+
+    return Column(
+      children: widgets,
     );
   }
-}
 
-class Boisson extends StatelessWidget {
-  final List<List<String>> boissonsList = [
-    ["Coca", "assets/images/Cafet/Boissons/coca.png"],
-    ["Fanta", "assets/images/Cafet/Boissons/fanta.jpg"],
-    ["S.Pellegrino", "assets/images/Cafet/Boissons/SanPe.png"],
-    ["Sprite", "assets/images/Cafet/Boissons/Sprite.png"],
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    final boissonsMap = boissonsList.asMap();
-    return Column(
-      //* Display the drinks menu
-      children: boissonsMap
-          .map(
-            (i, element) => MapEntry(
-              i,
-              //* Here we're building each card with each name of the specific drink
-              Padding(
-                padding: EdgeInsets.only(top: 5, right: 10, left: 10),
-                child: Container(
-                  //! boxConstraints like this we can set a min height to the card and combine with flexible the height can be override
-                  constraints: BoxConstraints(
-                    minHeight: 90,
-                  ),
-                  width: MediaQuery.of(context).size.width,
-                  child: Card(
-                    elevation: 0.5,
-                    shadowColor: shadowColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    color: cardColor,
-                    //* InkWell like this we can integrate the ontap function
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(10),
-                      splashColor: splashColor,
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 7.5,
-                          vertical: 5,
-                        ),
-                        child: Row(
-                          children: [
-                            Container(
-                              width: 75,
-                              child: Image.asset(element[1]),
-                            ),
-                            SizedBox(width: 5),
-                            //! Wrap in flexible like this we can have text in multiline
-                            Flexible(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  //* Title of card
-                                  Text(
-                                    element[0],
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        fontFamily: classicFont,
-                                        color: titleColor),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          )
-          .values
-          .toList(),
-    );
-  }
-}
-
-class Dessert extends StatelessWidget {
-  final List<List<String>> dessertsList = [
-    ["Fincancier x3", "assets/images/Cafet/Desserts/dessert1.jpg"],
-    ["Cookies x2", "assets/images/Cafet/Desserts/dessert2.jpg"],
-    ["Brownie", "assets/images/Cafet/Desserts/dessert3.jpg"],
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    final dessertsMap = dessertsList.asMap();
-    return Column(
-      //* Display the desserts menu
-      children: dessertsMap
-          .map(
-            (i, element) => MapEntry(
-              i,
-              //* Here we're building each card with each name of the specific dessert
-              Padding(
-                padding: EdgeInsets.only(top: 5, right: 10, left: 10),
-                child: Container(
-                  //! boxConstraints like this we can set a min height to the card and combine with flexible the height can be override
-                  constraints: BoxConstraints(
-                    minHeight: 90,
-                  ),
-                  width: MediaQuery.of(context).size.width,
-                  child: Card(
-                    elevation: 0.5,
-                    shadowColor: shadowColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    color: cardColor,
-                    //* InkWell like this we can integrate the ontap function
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(10),
-                      splashColor: splashColor,
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 7.5,
-                          vertical: 5,
-                        ),
-                        child: Row(
-                          children: [
-                            Container(
-                              width: 75,
-                              child: Image.asset(element[1]),
-                            ),
-                            SizedBox(width: 5),
-                            //! Wrap in flexible like this we can have text in multiline
-                            Flexible(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  //* Title of card
-                                  Text(
-                                    element[0],
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        fontFamily: classicFont,
-                                        color: titleColor),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          )
-          .values
-          .toList(),
-    );
+  String format(double n) {
+    return n.toStringAsFixed(n.truncateToDouble() == n ? 0 : 2);
   }
 }
