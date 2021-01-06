@@ -300,12 +300,8 @@ class _EventPageState extends State<EventPage> {
               children: occurenceList.map((occur) {
             return ListTile(
               leading: Icon(Icons.calendar_today),
-              title: FittedBox(
-                child: Text(
-                  occur,
-                  style: TextStyle(fontFamily: classicFont),
-                ),
-              ),
+              title: Text(occur,
+                  style: TextStyle(fontFamily: classicFont, fontSize: 14)),
               onTap: () => {},
             );
           }).toList());
