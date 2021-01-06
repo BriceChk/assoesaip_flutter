@@ -77,10 +77,10 @@ class _CategoriesListState extends State<CategoriesList>
         collapseMode: CollapseMode.pin,
         centerTitle: true,
         background: Container(
-          padding: EdgeInsets.fromLTRB(15, 75, 15, 0),
+          padding: EdgeInsets.fromLTRB(15, 60, 15, 0),
           child: Center(
             child: Text(
-              "Découvre les clubs et associations de ton campus !",
+              "Découvre les clubs et assos de ton campus !",
               textAlign: TextAlign.justify,
               style: TextStyle(
                 fontSize: 16,
