@@ -12,7 +12,8 @@ class CategoriesList extends StatefulWidget {
   _CategoriesListState createState() => _CategoriesListState();
 }
 
-class _CategoriesListState extends State<CategoriesList> with AutomaticKeepAliveClientMixin<CategoriesList> {
+class _CategoriesListState extends State<CategoriesList>
+    with AutomaticKeepAliveClientMixin<CategoriesList> {
   @override
   bool get wantKeepAlive => true;
 
@@ -76,7 +77,7 @@ class _CategoriesListState extends State<CategoriesList> with AutomaticKeepAlive
         collapseMode: CollapseMode.pin,
         centerTitle: true,
         background: Container(
-          padding: EdgeInsets.fromLTRB(15, 60, 15, 0),
+          padding: EdgeInsets.fromLTRB(15, 75, 15, 0),
           child: Center(
             child: Text(
               "Découvre les clubs et associations de ton campus !",
