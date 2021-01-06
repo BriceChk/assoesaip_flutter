@@ -218,8 +218,8 @@ class _EventPageState extends State<EventPage> {
 
     if (e.occurrencesCount == 1) {
       if (e.allDay) {
-        dateStart = formatterAllDay.format(e.dateStart) + ', toute la journée';
-        dateEnd = formatterAllDay.format(e.dateEnd) + ', toute la journée';
+        dateStart = formatterAllDay.format(e.dateStart.toLocal()) + ', toute la journée';
+        dateEnd = formatterAllDay.format(e.dateEnd.toLocal()) + ', toute la journée';
       } else {
         dateStart = formatter.format(e.dateStart.toLocal());
         dateEnd = formatter.format(e.dateEnd.toLocal());
@@ -270,14 +270,20 @@ class _EventPageState extends State<EventPage> {
             occurenceList.add(formatterAllDay.format(item.date.toLocal()));
           }
           return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
               children: occurenceList.map((occur) {
             return ListTile(
               leading: Icon(Icons.calendar_today),
-              title: Text(
-                occur + ', toute la journée',
-                style: TextStyle(fontFamily: classicFont),
+              title: Container(
+                height: 20,
+                child: FittedBox(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    occur + ', toute la journée',
+                    style: TextStyle(fontFamily: classicFont, fontSize: 20),
+                  ),
+                ),
               ),
-              onTap: () => {},
             );
           }).toList());
         } else {
@@ -285,13 +291,13 @@ class _EventPageState extends State<EventPage> {
             //! Ici pour 'titre de l'evenement' vas dans le else alors qu'il ne devrait pas
             var formatterTime = DateFormat("HH'h'mm", 'fr_FR');
             var endDate = item.date.add(Duration(minutes: e.duration));
-            if (formatterAllDay.format(item.date.toLocal()) ==
+            if (formatterAllDay.format(item.date) ==
                 formatterAllDay.format(endDate)) {
               dateEnd = formatterTime.format(endDate.toLocal());
               occurenceList
                   .add(formatter.format(item.date.toLocal()) + ' - ' + dateEnd);
             } else {
-              dateEnd = formatter.format(endDate);
+              dateEnd = formatter.format(endDate.toLocal());
               occurenceList
                   .add(formatter.format(item.date.toLocal()) + ' - ' + dateEnd);
             }
@@ -300,9 +306,16 @@ class _EventPageState extends State<EventPage> {
               children: occurenceList.map((occur) {
             return ListTile(
               leading: Icon(Icons.calendar_today),
-              title: Text(occur,
-                  style: TextStyle(fontFamily: classicFont, fontSize: 14)),
-              onTap: () => {},
+              title: Container(
+                height: 20,
+                child: FittedBox(
+                  alignment: Alignment.centerLeft,
+                  child: FittedBox(
+                    child: Text(occur,
+                        style: TextStyle(fontFamily: classicFont, fontSize: 20)),
+                  ),
+                ),
+              ),
             );
           }).toList());
         }
