@@ -44,12 +44,16 @@ class _CafetWidgetState extends State<CafetWidget> with AutomaticKeepAliveClient
       now = now.add(Duration(days: 1));
     }
     day = DateFormat('EEEE', 'fr_FR').format(now);
+    if (day == 'jeudi') {
+      now = now.add(Duration(days: 1));
+      day = 'vendredi';
+    }
 
     getCafetItems().then((value) {
       setState(() {
         items = value;
         items.forEach((i) {
-          if (i.day == day || i.day == 'lundi,mardi,mercredi,vendredi') {
+          if (i.day == day || 'lundi,mardi,mercredi,vendredi'.contains(i.day)) {
             itemsMap[i.type].add(i);
           }
         });
