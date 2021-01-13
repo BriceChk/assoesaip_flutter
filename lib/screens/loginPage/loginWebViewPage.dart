@@ -4,6 +4,7 @@ import 'package:assoesaip_flutter/main.dart';
 import 'package:assoesaip_flutter/screens/main/mainNavigation.dart';
 import 'package:assoesaip_flutter/services/api.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
+import 'package:assoesaip_flutter/screens/profilePage.dart';
 import 'package:flutter/material.dart';
 import 'package:requests/requests.dart';
 import 'package:webview_cookie_manager/webview_cookie_manager.dart';
@@ -45,9 +46,16 @@ class LoginWebViewPage extends StatelessWidget {
               }
               Requests.setStoredCookies('asso-esaip.bricechk.fr:443', map);
               MyApp.user = await getUser();
-              Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  builder: (BuildContext context) => MainNavigation())
-              );
+              await MyApp.getAndSaveToken();
+              if (MyApp.user.campus == "" || MyApp.user.promo == "") {
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (BuildContext context) => ProfilePage())
+                );
+              } else {
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (BuildContext context) => MainNavigation())
+                );
+              }
               return NavigationDecision.prevent;
             } else {
               return NavigationDecision.navigate;

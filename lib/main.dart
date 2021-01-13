@@ -32,15 +32,23 @@ class MyApp extends StatefulWidget {
   static User user;
   static FcmToken fcmToken;
   static final navigatorKey = new GlobalKey<NavigatorState>();
-  static FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+  static final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
   FlutterLocalNotificationsPlugin();
+  static final FirebaseMessaging firebaseMessaging = FirebaseMessaging();
+
+  static Future<void> getAndSaveToken() async {
+    var token = await firebaseMessaging.getToken();
+    assert(token != null);
+    var t = FcmToken.fromTokenString(token);
+    var value = await saveToken(t);
+    MyApp.fcmToken = value;
+  }
 
   @override
   _MyAppState createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
   String _initialRoute = '';
 
@@ -49,7 +57,7 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     initializeDateFormatting('fr_FR');
 
-    _firebaseMessaging.configure(
+    MyApp.firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
         // The notification is received when the app is running in the foreground.
         // Display a custom notification!
@@ -93,13 +101,13 @@ class _MyAppState extends State<MyApp> {
           _initialRoute = '/main/home';
         }
       });
-      _firebaseMessaging.getToken().then((String token) {
-        assert(token != null);
-        var t = FcmToken.fromTokenString(token);
-        saveToken(t).then((value) {
-          MyApp.fcmToken = value;
+      if (MyApp.user != null) {
+        MyApp.getAndSaveToken().then((value) {
+          setState(() {
+            //TODO Try to do nothing?
+          });
         });
-      });
+      }
     });
 
     const AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('notif_icon');
@@ -159,7 +167,8 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    if (_initialRoute == '') {
+    // If we have to show the profile page on first login, wait for the fcmToken to be ready
+    if (_initialRoute == '' || (_initialRoute == '/profile' && MyApp.fcmToken == null)) {
       return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: LoadingScreen(),
