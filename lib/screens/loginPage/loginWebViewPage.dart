@@ -49,7 +49,7 @@ class LoginWebViewPage extends StatelessWidget {
               await MyApp.getAndSaveToken();
               if (MyApp.user.campus == "" || MyApp.user.promo == "") {
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (BuildContext context) => ProfilePage())
+                    builder: (BuildContext context) => ProfilePage(firstLogin: true))
                 );
               } else {
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
