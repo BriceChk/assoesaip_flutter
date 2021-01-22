@@ -40,23 +40,31 @@ class _CafetWidgetState extends State<CafetWidget> with AutomaticKeepAliveClient
     var now = DateTime.now();
     var testString = now.toString().split(' ')[0] + ' 12:45:00.000000';
     var testDate = DateTime.parse(testString);
+    day = DateFormat('EEEE', 'fr_FR').format(now);
+
     if (now.isAfter(testDate)) {
       now = now.add(Duration(days: 1));
-    }
-    day = DateFormat('EEEE', 'fr_FR').format(now);
-    if (day == 'jeudi') {
-      now = now.add(Duration(days: 1));
-      day = 'vendredi';
     }
 
     getCafetItems().then((value) {
       setState(() {
         items = value;
-        items.forEach((i) {
-          if (i.day == day || 'lundi,mardi,mercredi,vendredi'.contains(i.day)) {
-            itemsMap[i.type].add(i);
+        while (itemsMap[CafetItemType.REPAS].length == 0) {
+          var weekDayNumber = now.weekday.toString();
+          itemsMap[CafetItemType.REPAS].clear();
+          itemsMap[CafetItemType.BOISSON].clear();
+          itemsMap[CafetItemType.DESSERT].clear();
+
+          items.forEach((i) {
+            if (i.day.contains(weekDayNumber)) {
+              itemsMap[i.type].add(i);
+            }
+          });
+          if (itemsMap[CafetItemType.REPAS].length == 0) {
+            now = now.add(Duration(days: 1));
           }
-        });
+        }
+        day = DateFormat('EEEE', 'fr_FR').format(now);
       });
     });
   }
