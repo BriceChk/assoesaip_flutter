@@ -33,7 +33,7 @@ class ProjectCategory {
       description: json['description'],
       logoFileName: json['logo_file_name'],
       visible: json['visible'],
-      order: json['order'],
+      order: json['list_order'],
     );
   }
 
@@ -44,6 +44,6 @@ class ProjectCategory {
     'description': description,
     'logo_file_name': logoFileName,
     'visible': visible,
-    'order': order,
+    'list_order': order,
   };
 }
