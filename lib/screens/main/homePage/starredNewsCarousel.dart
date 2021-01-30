@@ -66,7 +66,7 @@ class StarredNewsCarouselWidget extends StatelessWidget {
                   onPageChanged: (index, reason) {},
                 ),
                 itemCount: news.length,
-                itemBuilder: (BuildContext context, int currentIndex) =>
+                itemBuilder: (BuildContext context, int currentIndex, int realIdx) =>
                     _buildCarouselItem(news[currentIndex], context)),
           ],
         ),
@@ -221,7 +221,7 @@ class StarredNewsCarouselWidget extends StatelessWidget {
                   enlargeCenterPage: true,
                 ),
                 itemCount: 1,
-                itemBuilder: (BuildContext context, int currentIndex) {
+                itemBuilder: (BuildContext context, int currentIndex, int realIdx) {
                   return Shimmer.fromColors(
                     baseColor: cardColor,
                     highlightColor: Colors.grey[200],
