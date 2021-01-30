@@ -78,18 +78,66 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
       return IconButton(
         icon: Icon(FontAwesomeIcons.solidBell, color: Colors.yellow),
         onPressed: () {
-          setState(() {
-            iconSelected = !iconSelected;
-          });
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('Se désabonner des notifications'),
+                content: Text("Tu ne recevras plus de notification lors de la publication d'actus."),
+                actions: [
+                  FlatButton(
+                      onPressed: () {
+                        //TODO Call API désabonnement
+                        Navigator.of(context).pop();
+                        setState(() {
+                          iconSelected = !iconSelected;
+                        });
+                      },
+                      child: Text('Confirmer')
+                  ),
+                  FlatButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text('Annuler')
+                  ),
+                ],
+              );
+            }
+          );
         },
       );
     } else {
       return IconButton(
         icon: Icon(FontAwesomeIcons.bell),
         onPressed: () {
-          setState(() {
-            iconSelected = !iconSelected;
-          });
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text("S'abonner aux notifications"),
+                  content: Text("Tu recevras une notification lors de la publication d'actus (articles, événements ...)."),
+                  actions: [
+                    FlatButton(
+                        onPressed: () {
+                          //TODO Call API abonnement
+                          Navigator.of(context).pop();
+                          setState(() {
+                            iconSelected = !iconSelected;
+                          });
+                        },
+                        child: Text('Confirmer')
+                    ),
+                    FlatButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Text('Annuler')
+                    ),
+                  ],
+                );
+              }
+          );
         },
       );
     }

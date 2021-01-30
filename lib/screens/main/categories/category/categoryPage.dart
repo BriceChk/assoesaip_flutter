@@ -51,25 +51,42 @@ class _CategoryState extends State<Category> {
   }
 
   Widget _buildIcon() {
-    if (iconSelected) {
-      return IconButton(
-        icon: Icon(FontAwesomeIcons.solidBell, color: Colors.yellow),
-        onPressed: () {
-          setState(() {
-            iconSelected = !iconSelected;
-          });
-        },
-      );
-    } else {
       return IconButton(
         icon: Icon(FontAwesomeIcons.bell),
         onPressed: () {
-          setState(() {
-            iconSelected = !iconSelected;
-          });
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text('Notifications'),
+                  content: Text("Tu peux choisir de t'abonner ou te désabonner aux notifications de tous les projets de cette catégorie en même temps. Pour choisir au cas par cas, clique sur un projet !"),
+                  actions: [
+                    FlatButton(
+                        onPressed: () {
+                          //TODO Call API abonnement
+                          Navigator.of(context).pop();
+                        },
+                        child: Text("M'abonner à toutes les notifications")
+                    ),
+                    FlatButton(
+                        onPressed: () {
+                          //TODO Call API désabonnement
+                          Navigator.of(context).pop();
+                        },
+                        child: Text("Me désabonner de toutes les notifications")
+                    ),
+                    FlatButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Text("Annuler")
+                    ),
+                  ],
+                );
+              }
+          );
         },
       );
-    }
   }
 
   @override
