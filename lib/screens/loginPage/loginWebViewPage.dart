@@ -34,7 +34,7 @@ class LoginWebViewPage extends StatelessWidget {
         ),
         body: WebView(
           navigationDelegate: (NavigationRequest request) async {
-            if (request.url == 'https://asso-esaip.bricechk.fr/') {
+            if (request.url == 'https://asso-esaip.bricechk.fr/' || request.url == 'https://asso-esaip.bricechk.fr/profil') {
               // When we get to the home screen of the website, store the session cookie and go to the main screen app
               final cookies = await cookieManager.getCookies('https://asso-esaip.bricechk.fr/');
               Map<String, String> map = Map();
