@@ -10,7 +10,6 @@ import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:assoesaip_flutter/shares/customWebviewWidget.dart';
 import 'package:assoesaip_flutter/shares/eventsOccurrencesList.dart';
 import 'package:assoesaip_flutter/shares/newsList.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
