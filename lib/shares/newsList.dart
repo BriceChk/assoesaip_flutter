@@ -103,14 +103,38 @@ class NewsListWidget extends StatelessWidget {
       return null;
     }
 
+    var color = starCommandBlue;
+    List<Widget> widgets = [];
+
+    widgets.add(Transform.translate(
+      child: Icon(icon, size: 15, color: white),
+      offset: Offset(0, -1),
+    ));
+
+    if (n.event != null || n.article != null) {
+      widgets.add(SizedBox(width: 8));
+      widgets.add(Text(
+        n.event == null ? n.article.category.name : n.event.category.name,
+        style: TextStyle(
+            color: Colors.white,
+            fontFamily: classicFont),
+      ));
+
+      color = n.event == null ? HexColor.fromHex(n.article.category.color) : HexColor.fromHex(n.event.category.color);
+    }
+
+
     return Container(
       decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: starCommandBlue,
+        borderRadius: BorderRadius.circular(13),
+        color: color,
       ),
-      height: 35,
-      width: 35,
-      child: Icon(icon, size: 15, color: white),
+      height: 25,
+      padding: EdgeInsets.symmetric(horizontal: 10),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: widgets,
+      ),
     );
   }
 
@@ -216,7 +240,7 @@ class NewsListWidget extends StatelessWidget {
                       right: 0,
                       bottom: 0,
                       child: Transform.translate(
-                        offset: Offset(-5, 25),
+                        offset: Offset(-5, 20),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
