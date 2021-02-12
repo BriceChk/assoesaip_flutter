@@ -40,6 +40,10 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
     } else {
       imageUrl += 'images/project-logos/' + p.logoFileName;
     }
+
+    // Sort children projects
+    p.childrenProjects.sort((a, b) => a.name.compareTo(b.name));
+
     return Column(
       children: [
         Padding(
