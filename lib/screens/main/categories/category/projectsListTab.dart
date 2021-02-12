@@ -24,7 +24,11 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
       child: Container(
         width: double.infinity,
         child: Column(
-            children: widget.projects.map((e) => _buildAssoWidget(e)).toList()),
+            children: widget.projects.map((e) {
+              if (e.type == 'Association')
+                return _buildAssoWidget(e);
+              return _buildClubWidget(e);
+            }).toList()),
       ),
     );
   }
