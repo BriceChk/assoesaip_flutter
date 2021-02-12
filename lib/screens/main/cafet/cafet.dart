@@ -1,4 +1,5 @@
 import 'package:assoesaip_flutter/models/cafetItem.dart';
+import 'package:assoesaip_flutter/models/cafetProperties.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
 import 'package:assoesaip_flutter/services/api.dart';
 import 'package:assoesaip_flutter/shares/newsList.dart';
@@ -17,7 +18,7 @@ class _CafetWidgetState extends State<CafetWidget> with AutomaticKeepAliveClient
   @override
   bool get wantKeepAlive => true;
 
-  List<CafetItem> items;
+  CafetProperties cafetProperties;
   Map<CafetItemType, List<CafetItem>> itemsMap = {
     CafetItemType.REPAS: List(),
     CafetItemType.BOISSON: List(),
@@ -37,40 +38,131 @@ class _CafetWidgetState extends State<CafetWidget> with AutomaticKeepAliveClient
   void initState() {
     super.initState();
 
+    var date = DateTime.now();
     var now = DateTime.now();
-    var testString = now.toString().split(' ')[0] + ' 12:45:00.000000';
+    var testString = date.toString().split(' ')[0] + ' 12:45:00.000000';
     var testDate = DateTime.parse(testString);
-    day = DateFormat('EEEE', 'fr_FR').format(now);
+    day = DateFormat('EEEE', 'fr_FR').format(date);
 
-    if (now.isAfter(testDate)) {
-      now = now.add(Duration(days: 1));
+    if (date.isAfter(testDate)) {
+      date = date.add(Duration(days: 1));
     }
 
-    getCafetItems().then((value) {
+    getCafetProperties().then((value) {
       setState(() {
-        items = value;
+        cafetProperties = value;
         while (itemsMap[CafetItemType.REPAS].length == 0) {
-          var weekDayNumber = now.weekday.toString();
+          var weekDayNumber = date.weekday.toString();
           itemsMap[CafetItemType.REPAS].clear();
           itemsMap[CafetItemType.BOISSON].clear();
           itemsMap[CafetItemType.DESSERT].clear();
 
-          items.forEach((i) {
+          cafetProperties.items.forEach((i) {
             if (i.day.contains(weekDayNumber)) {
               itemsMap[i.type].add(i);
             }
           });
           if (itemsMap[CafetItemType.REPAS].length == 0) {
-            now = now.add(Duration(days: 1));
+            date = date.add(Duration(days: 1));
+            if (date.difference(now).inDays > 7) {
+              break;
+            }
           }
         }
-        day = DateFormat('EEEE', 'fr_FR').format(now);
+        day = DateFormat('EEEE', 'fr_FR').format(date);
       });
     });
   }
 
   @override
   Widget build(BuildContext context) {
+
+    var body;
+
+    if (itemsMap[CafetItemType.REPAS].isEmpty) {
+      body = [
+        Padding(
+          padding: EdgeInsets.only(top: 50),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                child: Image.asset(
+                  "assets/images/no_data.png",
+                  fit: BoxFit.contain,
+                ),
+                height: 200,
+              ),
+              SizedBox(height: 25),
+              Text(
+                "Aucun repas n'est prévu à la Cafet'",
+                style: TextStyle(fontSize: 18, fontFamily: classicFont),
+              ),
+            ],
+          ),
+        )
+      ];
+    } else {
+      body = [
+        Padding(
+          padding: EdgeInsets.only(top: 5, left: 10, right: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Menu de " + day,
+                style: TextStyle(
+                  fontSize: 30,
+                  fontFamily: classicFont,
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(vertical: 5),
+                height: 1,
+                color: Colors.grey[200],
+              ),
+            ],
+          ),
+        ),
+
+        Padding(
+          padding: EdgeInsets.only(top: 5, left: 10),
+          child: Text(
+            "Repas",
+            style: TextStyle(
+              fontSize: 25,
+              fontFamily: classicFont,
+            ),
+          ),
+        ),
+        _buildItemList(itemsMap[CafetItemType.REPAS]),
+        Padding(
+          padding: EdgeInsets.only(top: 5, left: 10),
+          child: Text(
+            "Boissons",
+            style: TextStyle(
+              fontSize: 25,
+              fontFamily: classicFont,
+            ),
+          ),
+        ),
+        _buildItemList(itemsMap[CafetItemType.BOISSON]),
+        Padding(
+          padding: EdgeInsets.only(top: 5, left: 10),
+          child: Text(
+            "Desserts",
+            style: TextStyle(
+              fontSize: 25,
+              fontFamily: classicFont,
+            ),
+          ),
+        ),
+        _buildItemList(itemsMap[CafetItemType.DESSERT]),
+        //* Sizedbox of height 60 because otherwise the last one is under the navbar
+        SizedBox(height: 60),
+      ];
+    }
+
     super.build(context);
     //* Using the CustomScroolView in order to have the bouncingScrollPhysic
     return CustomScrollView(
@@ -89,8 +181,19 @@ class _CafetWidgetState extends State<CafetWidget> with AutomaticKeepAliveClient
             ),
           ),
           flexibleSpace: _headerFlexibleSpace(),
+          actions: [
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: cardsBorderRadius,
+                color: cafetProperties is CafetProperties ? (cafetProperties.isOpen ? Colors.green : Colors.red) : starCommandBlue,
+              ),
+              margin: EdgeInsets.fromLTRB(0, 15, 10, 15),
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: Center(child: Text(cafetProperties is CafetProperties ? (cafetProperties.isOpen ? 'Ouverte' : 'Fermée') : '')),
+            )
+          ],
           toolbarHeight: 60,
-          expandedHeight: 100,
+          expandedHeight: 150,
           floating: true,
           pinned: true,
           backgroundColor: headerColor,
@@ -98,43 +201,7 @@ class _CafetWidgetState extends State<CafetWidget> with AutomaticKeepAliveClient
         //* We wrap the rest of the page inside the SliverList: like this everything scrool vertically except the header
         SliverList(
           delegate: SliverChildListDelegate(
-            [
-              Padding(
-                padding: EdgeInsets.only(top: 5, left: 10),
-                child: Text(
-                  "Repas",
-                  style: TextStyle(
-                    fontSize: 25,
-                    fontFamily: classicFont,
-                  ),
-                ),
-              ),
-              _buildItemList(itemsMap[CafetItemType.REPAS]),
-              Padding(
-                padding: EdgeInsets.only(top: 5, left: 10),
-                child: Text(
-                  "Boissons",
-                  style: TextStyle(
-                    fontSize: 25,
-                    fontFamily: classicFont,
-                  ),
-                ),
-              ),
-              _buildItemList(itemsMap[CafetItemType.BOISSON]),
-              Padding(
-                padding: EdgeInsets.only(top: 5, left: 10),
-                child: Text(
-                  "Desserts",
-                  style: TextStyle(
-                    fontSize: 25,
-                    fontFamily: classicFont,
-                  ),
-                ),
-              ),
-              _buildItemList(itemsMap[CafetItemType.DESSERT]),
-              //* Sizedbox of height 60 because otherwise the last one is under the navbar
-              SizedBox(height: 60),
-            ],
+            body,
           ),
         ),
       ],
@@ -149,7 +216,7 @@ class _CafetWidgetState extends State<CafetWidget> with AutomaticKeepAliveClient
           padding: EdgeInsets.fromLTRB(15, 60, 15, 0),
           child: Center(
             child: Text(
-              "Au menu de $day, il y a ...",
+              cafetProperties is CafetProperties ? cafetProperties.message : '',
               textAlign: TextAlign.justify,
               style: TextStyle(
                 fontSize: 16,
@@ -162,7 +229,7 @@ class _CafetWidgetState extends State<CafetWidget> with AutomaticKeepAliveClient
   }
 
   Widget _buildItemList(List<CafetItem> itemsMap) {
-    if (!(items is List)) return NewsListWidget.newsListPlaceholder(count: 3);
+    if (!(cafetProperties is CafetProperties)) return NewsListWidget.newsListPlaceholder(count: 3);
 
     var widgets = itemsMap.map((e) {
       String imageUrl = 'https://asso-esaip.bricechk.fr/';

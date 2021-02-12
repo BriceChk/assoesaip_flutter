@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:assoesaip_flutter/models/article.dart';
-import 'package:assoesaip_flutter/models/cafetItem.dart';
+import 'package:assoesaip_flutter/models/cafetProperties.dart';
 import 'package:assoesaip_flutter/models/event.dart';
 import 'package:assoesaip_flutter/models/eventOccurrence.dart';
 import 'package:assoesaip_flutter/models/fcmToken.dart';
@@ -193,11 +193,10 @@ Future<List<EventOccurrence>> getProjectNextEventOccurrences(int projectId) asyn
   return jsonArray.map((e) => EventOccurrence.fromJson(e)).toList();
 }
 
-Future<List<CafetItem>> getCafetItems() async {
+Future<CafetProperties> getCafetProperties() async {
   final response = await Requests.get('$url/cafet');
   if (response.hasError) {
     return null;
   }
-  var jsonArray = jsonDecode(response.content()) as List;
-  return jsonArray.map((e) => CafetItem.fromJson(e)).toList();
+  return cafetPropertiesFromJson(response.content());
 }
