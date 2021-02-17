@@ -232,7 +232,7 @@ class _CafetWidgetState extends State<CafetWidget> with AutomaticKeepAliveClient
     if (!(cafetProperties is CafetProperties)) return NewsListWidget.newsListPlaceholder(count: 3);
 
     var widgets = itemsMap.map((e) {
-      String imageUrl = 'https://asso-esaip.bricechk.fr/';
+      String imageUrl = 'https://asso.esaip.org/';
       if (e.imageFileName == null) {
         imageUrl += 'build/images/project-placeholder.png';
       } else {

@@ -75,7 +75,7 @@ class StarredNewsCarouselWidget extends StatelessWidget {
   }
 
   Widget _buildCarouselItem(News n, BuildContext context) {
-    String imageUrl = 'https://asso-esaip.bricechk.fr/';
+    String imageUrl = 'https://asso.esaip.org/';
     if (n.project.logoFileName == null) {
       imageUrl += 'build/images/project-placeholder.png';
     } else {

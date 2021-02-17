@@ -25,7 +25,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    String avatarUrl = 'https://asso-esaip.bricechk.fr/';
+    String avatarUrl = 'https://asso.esaip.org/';
 
     if (MyApp.user.avatarFileName == null) {
       avatarUrl += 'build/images/placeholder.png';

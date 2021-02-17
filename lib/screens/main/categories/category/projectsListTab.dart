@@ -34,7 +34,7 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
   }
 
   Widget _buildAssoWidget(Project p) {
-    String imageUrl = 'https://asso-esaip.bricechk.fr/';
+    String imageUrl = 'https://asso.esaip.org/';
     if (p.logoFileName == null) {
       imageUrl += 'build/images/project-placeholder.png';
     } else {
@@ -133,7 +133,7 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
   }
 
   Widget _buildClubWidget(Project p) {
-    String imageUrl = 'https://asso-esaip.bricechk.fr/';
+    String imageUrl = 'https://asso.esaip.org/';
     if (p.logoFileName == null) {
       imageUrl += 'build/images/project-placeholder.png';
     } else {

@@ -34,9 +34,9 @@ class LoginWebViewPage extends StatelessWidget {
         ),
         body: WebView(
           navigationDelegate: (NavigationRequest request) async {
-            if (request.url == 'https://asso-esaip.bricechk.fr/' || request.url == 'https://asso-esaip.bricechk.fr/profil') {
+            if (request.url == 'https://asso.esaip.org/' || request.url == 'https://asso.esaip.org/profil') {
               // When we get to the home screen of the website, store the session cookie and go to the main screen app
-              final cookies = await cookieManager.getCookies('https://asso-esaip.bricechk.fr/');
+              final cookies = await cookieManager.getCookies('https://asso.esaip.org/');
               Map<String, String> map = Map();
               for (var c in cookies) {
                 if (c.name == "PHPSESSID") {
@@ -44,7 +44,7 @@ class LoginWebViewPage extends StatelessWidget {
                   break;
                 }
               }
-              Requests.setStoredCookies('asso-esaip.bricechk.fr:443', map);
+              Requests.setStoredCookies('asso.esaip.org:443', map);
               MyApp.user = await getUser();
               await MyApp.getAndSaveToken();
               if (MyApp.user.campus == "" || MyApp.user.promo == "") {
@@ -61,7 +61,7 @@ class LoginWebViewPage extends StatelessWidget {
               return NavigationDecision.navigate;
             }
           },
-          initialUrl: "https://asso-esaip.bricechk.fr/login",
+          initialUrl: "https://asso.esaip.org/login",
           javascriptMode: JavascriptMode.unrestricted,
           onWebViewCreated: (WebViewController webViewController) {
             _controller.complete(webViewController);

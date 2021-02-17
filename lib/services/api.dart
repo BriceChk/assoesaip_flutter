@@ -14,7 +14,7 @@ import 'package:assoesaip_flutter/models/searchResult.dart';
 import 'package:assoesaip_flutter/models/user.dart';
 import 'package:requests/requests.dart';
 
-String url = 'https://asso-esaip.bricechk.fr/api';
+String url = 'https://asso.esaip.org/api';
 
 Future<User> getUser() async {
   final response = await Requests.get('$url/profile');

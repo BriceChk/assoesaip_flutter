@@ -106,7 +106,7 @@ class _CategoriesListState extends State<CategoriesList>
   }
 
   Widget _buildCategoryCard(ProjectCategory c) {
-    String imgUrl = 'https://asso-esaip.bricechk.fr/images/category-logos/' +
+    String imgUrl = 'https://asso.esaip.org/images/category-logos/' +
         c.logoFileName;
 
     return Container(

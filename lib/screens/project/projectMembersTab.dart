@@ -36,7 +36,7 @@ class ProjectMembersTab extends StatelessWidget {
   }
 
   Widget _buildMemberCard(ProjectMember p) {
-    String avatarUrl = 'https://asso-esaip.bricechk.fr/';
+    String avatarUrl = 'https://asso.esaip.org/';
     if (p.user.avatarFileName == null) {
       avatarUrl += 'build/images/placeholder.png';
     } else {

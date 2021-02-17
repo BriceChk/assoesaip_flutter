@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage>
 
   final TextEditingController _typeAheadController = TextEditingController();
 
-  String avatarUrl = 'https://asso-esaip.bricechk.fr/';
+  String avatarUrl = 'https://asso.esaip.org/';
 
   List<News> news;
   List<News> starredNews;
@@ -177,7 +177,7 @@ class _HomePageState extends State<HomePage>
                         final cookieManager = WebviewCookieManager();
                         cookieManager.clearCookies();
                         Requests.clearStoredCookies(
-                            'asso-esaip.bricechk.fr:443');
+                            'asso.esaip.org:443');
                         Navigator.pushReplacementNamed(context, '/welcome');
                         break;
                       //* Case when we hit "profile" we pushing to the page profile

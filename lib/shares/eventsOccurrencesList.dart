@@ -42,7 +42,7 @@ class EventsOccurrencesList extends StatelessWidget {
   }
 
   Widget _buildEventWidget(EventOccurrence occ, BuildContext context) {
-    String imageUrl = 'https://asso-esaip.bricechk.fr/';
+    String imageUrl = 'https://asso.esaip.org/';
     if (occ.event.project.logoFileName == null) {
       imageUrl += 'build/images/project-placeholder.png';
     } else {
