@@ -54,6 +54,8 @@ class _CategoryState extends State<Category> {
       return IconButton(
         icon: Icon(FontAwesomeIcons.bell),
         onPressed: () {
+          notNowDialog(context);
+          return;
           showDialog(
               context: context,
               builder: (BuildContext context) {

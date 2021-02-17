@@ -89,6 +89,7 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
                       onPressed: () {
                         //TODO Call API désabonnement
                         Navigator.of(context).pop();
+                        notNowDialog(context);
                         setState(() {
                           iconSelected = !iconSelected;
                         });
@@ -111,6 +112,8 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
       return IconButton(
         icon: Icon(FontAwesomeIcons.bell),
         onPressed: () {
+          notNowDialog(context);
+          return;
           showDialog(
               context: context,
               builder: (BuildContext context) {

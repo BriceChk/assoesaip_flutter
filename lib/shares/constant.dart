@@ -62,3 +62,23 @@ extension HexColor on Color {
       '${green.toRadixString(16).padLeft(2, '0')}'
       '${blue.toRadixString(16).padLeft(2, '0')}';
 }
+
+void notNowDialog(context) {
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Notifications'),
+          content: Text("L'abonnement aux notifications arrivera dans une prochaine mise à jour. En attendant, tu peux les activer ou désactiver globalement sur la page profil, en haut à droite de l'accueil."),
+          actions: [
+            FlatButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text("Ok")
+            ),
+          ],
+        );
+      }
+  );
+}
