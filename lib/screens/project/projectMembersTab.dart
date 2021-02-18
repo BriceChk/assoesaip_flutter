@@ -47,10 +47,15 @@ class ProjectMembersTab extends StatelessWidget {
       borderRadius: BorderRadius.circular(15),
       splashColor: splashColor,
       onTap: () async {
-        if (await canLaunch('mailto:' + p.user.username)) {
-          await launch('mailto:' + p.user.username);
+        final Uri params = Uri(
+          scheme: 'mailto',
+          path: p.user.username
+        );
+        String url = params.toString();
+        if (await canLaunch(url)) {
+          await launch(url);
         } else {
-          throw 'Could not launch mailto:' + p.user.username;
+          throw 'Could not launch $url';
         }
       },
       child: Container(
