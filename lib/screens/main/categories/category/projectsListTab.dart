@@ -65,6 +65,7 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
               ),
               child: Material(
                 borderRadius: cardsBorderRadius,
+                color: Colors.white,
                 child: InkWell(
                   onTap: () {
                     Navigator.of(context, rootNavigator: true).pushNamed(
@@ -158,6 +159,7 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
           ),
           child: Material(
             borderRadius: cardsBorderRadius,
+            color: Colors.white,
             child: InkWell(
               onTap: () {
                 Navigator.of(context, rootNavigator: true).pushNamed(
