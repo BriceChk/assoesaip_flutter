@@ -64,7 +64,7 @@ class _CalendarWidgetState extends State<CalendarWidget> with AutomaticKeepAlive
               //* Widget with all the name of the categories of the association
               _buildEventsList(),
               //* Sizedbox of height 60 because otherwise the last one is under the navbar
-              SizedBox(height: 70),
+              SizedBox(height: 100),
             ],
           ),
         ),

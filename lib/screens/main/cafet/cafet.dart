@@ -159,7 +159,7 @@ class _CafetWidgetState extends State<CafetWidget> with AutomaticKeepAliveClient
         ),
         _buildItemList(itemsMap[CafetItemType.DESSERT]),
         //* Sizedbox of height 60 because otherwise the last one is under the navbar
-        SizedBox(height: 60),
+        SizedBox(height: 100),
       ];
     }
 

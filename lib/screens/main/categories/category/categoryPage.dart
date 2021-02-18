@@ -140,7 +140,7 @@ class _CategoryState extends State<Category> {
                   _buildCategoryTabs(),
                   tabs[selected],
                   //* Sizedbox of height 60 because otherwise the last one is under the navbar
-                  SizedBox(height: 70),
+                  SizedBox(height: 100),
                 ])
               ],
             ),
