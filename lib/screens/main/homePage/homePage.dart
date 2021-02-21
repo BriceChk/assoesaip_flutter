@@ -9,6 +9,7 @@ import 'package:assoesaip_flutter/models/searchResult.dart';
 import 'package:assoesaip_flutter/screens/main/HomePage/starredNewsCarousel.dart';
 import 'package:assoesaip_flutter/services/api.dart';
 import 'package:assoesaip_flutter/shares/constant.dart';
+import 'package:assoesaip_flutter/shares/lifecycleEventHandler.dart';
 import 'package:assoesaip_flutter/shares/newsList.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:floating_search_bar/floating_search_bar.dart';
@@ -45,6 +46,12 @@ class _HomePageState extends State<HomePage>
       avatarUrl += 'images/profile-pics/' + MyApp.user.avatarFileName;
     }
 
+    WidgetsBinding.instance.addObserver(
+        LifecycleEventHandler(resumeCallBack: () async => setState(() {
+          loadData();
+        }))
+    );
+
     loadData();
   }
 
@@ -59,7 +66,6 @@ class _HomePageState extends State<HomePage>
         starredNews = value;
       });
     });
-    //TODO Load events here!
   }
 
   Widget _builderSearchResult(News n) {
