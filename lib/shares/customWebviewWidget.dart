@@ -41,10 +41,12 @@ class _CustomWebviewState extends State<CustomWebview> {
               },
               onPageFinished: (url) {
                 _controller.getHeight().then((double height) {
-                  setState(() {
-                    _height = height;
-                    _stackToView = 0;
-                  });
+                  if (_height != height) {
+                    setState(() {
+                      _height = height;
+                      _stackToView = 0;
+                    });
+                  }
                 });
               },
               javascriptMode: JavascriptMode.unrestricted,
