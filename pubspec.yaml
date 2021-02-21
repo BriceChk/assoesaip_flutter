@@ -71,7 +71,7 @@ flutter:
     - assets/images/logo.png
     - assets/images/key.png
     - assets/images/no_data.png
-    - assets/article.html
+    - assets/webview_template.html
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

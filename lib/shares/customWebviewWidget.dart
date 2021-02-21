@@ -64,8 +64,15 @@ class _CustomWebviewState extends State<CustomWebview> {
   }
 
   _loadHtmlFromString() async {
-    String fileText = await rootBundle.loadString('assets/article.html');
-    fileText = fileText.replaceFirst('%body%', widget.html);
+    String fileText = await rootBundle.loadString('assets/webview_template.html');
+
+    // Load the Nunito font
+    final fontFile = await rootBundle.load('assets/fonts/Nunito/Nunito-Regular.ttf');
+    final buffer = fontFile.buffer;
+    final fontUri = Uri.dataFromBytes(buffer.asUint8List(fontFile.offsetInBytes, fontFile.lengthInBytes), mimeType: 'font/opentype');
+    final fontCss = '@font-face { font-family: customFont; src: url($fontUri); } * { font-family: customFont; }';
+
+    fileText = '<style>$fontCss</style>' + fileText.replaceFirst('%body%', widget.html);
     _controller.loadUrl( Uri.dataFromString(
         fileText,
         mimeType: 'text/html',
