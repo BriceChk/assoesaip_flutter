@@ -1,5 +1,5 @@
 import 'package:assoesaip_flutter/models/project.dart';
-import 'package:assoesaip_flutter/shares/constant.dart';
+import 'package:assoesaip_flutter/shares/constants.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -34,7 +34,7 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
   }
 
   Widget _buildAssoWidget(Project p) {
-    String imageUrl = 'https://asso.esaip.org/';
+    String imageUrl = 'https://$AE_HOST/';
     if (p.logoFileName == null) {
       imageUrl += 'build/images/project-placeholder.png';
     } else {
@@ -53,8 +53,8 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
             width: double.infinity,
             child: Container(
               decoration: BoxDecoration(
-                color: whiteWhite,
-                borderRadius: cardsBorderRadius,
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(BORDER_RADIUS_CARD),
                 boxShadow: <BoxShadow>[
                   new BoxShadow(
                     color: Colors.grey[400],
@@ -64,7 +64,7 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
                 ],
               ),
               child: Material(
-                borderRadius: cardsBorderRadius,
+                borderRadius: BorderRadius.circular(BORDER_RADIUS_CARD),
                 color: Colors.white,
                 child: InkWell(
                   onTap: () {
@@ -73,7 +73,7 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
                         arguments: p);
                   },
                   borderRadius: BorderRadius.circular(15),
-                  splashColor: splashColor,
+                  splashColor: COLOR_AE_BLUE,
                   //! Faire les images en fonction de la hauteur de la cards
                   //! Pour les clubs et Asso
                   child: Column(
@@ -99,8 +99,8 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
                               p.name,
                               style: TextStyle(
                                 fontSize: 18,
-                                fontFamily: classicFont,
-                                color: titleColor,
+                                fontFamily: FONT_NUNITO,
+                                color: COLOR_NAVY_BLUE,
                               ),
                             ),
                             SizedBox(width: 10),
@@ -114,7 +114,7 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
                           textAlign: TextAlign.justify,
                           style: TextStyle(
                             fontSize: 15,
-                            fontFamily: classicFont,
+                            fontFamily: FONT_NUNITO,
                           ),
                         ),
                       ),
@@ -134,7 +134,7 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
   }
 
   Widget _buildClubWidget(Project p) {
-    String imageUrl = 'https://asso.esaip.org/';
+    String imageUrl = 'https://$AE_HOST/';
     if (p.logoFileName == null) {
       imageUrl += 'build/images/project-placeholder.png';
     } else {
@@ -147,8 +147,8 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
         width: double.infinity,
         child: Container(
           decoration: BoxDecoration(
-            color: whiteWhite,
-            borderRadius: cardsBorderRadius,
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(BORDER_RADIUS_CARD),
             boxShadow: <BoxShadow>[
               new BoxShadow(
                 color: Colors.grey[400],
@@ -158,7 +158,7 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
             ],
           ),
           child: Material(
-            borderRadius: cardsBorderRadius,
+            borderRadius: BorderRadius.circular(BORDER_RADIUS_CARD),
             color: Colors.white,
             child: InkWell(
               onTap: () {
@@ -167,7 +167,7 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
                     arguments: p);
               },
               borderRadius: BorderRadius.circular(15),
-              splashColor: splashColor,
+              splashColor: COLOR_AE_BLUE,
               //! Faire les images en fonction de la hauteur de la cards
               //! Pour les clubs et Asso
               child: Column(
@@ -193,8 +193,8 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
                           p.name,
                           style: TextStyle(
                             fontSize: 18,
-                            fontFamily: classicFont,
-                            color: titleColor,
+                            fontFamily: FONT_NUNITO,
+                            color: COLOR_NAVY_BLUE,
                           ),
                         ),
                         SizedBox(width: 10),
@@ -208,7 +208,7 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
                       textAlign: TextAlign.justify,
                       style: TextStyle(
                         fontSize: 15,
-                        fontFamily: classicFont,
+                        fontFamily: FONT_NUNITO,
                       ),
                     ),
                   ),

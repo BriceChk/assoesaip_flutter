@@ -1,7 +1,7 @@
 
 import 'package:assoesaip_flutter/models/article.dart';
 import 'package:assoesaip_flutter/services/api.dart';
-import 'package:assoesaip_flutter/shares/constant.dart';
+import 'package:assoesaip_flutter/shares/constants.dart';
 import 'package:assoesaip_flutter/shares/customWebviewWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -40,12 +40,12 @@ class _ArticlePageState extends State<ArticlePage> {
           "Voir l'article",
           style: TextStyle(
             fontSize: 30,
-            color: headerTextColor,
-            fontFamily: classicFont,
+            color: Colors.white,
+            fontFamily: FONT_NUNITO,
           ),
         ),
         centerTitle: true,
-        backgroundColor: starCommandBlue,
+        backgroundColor: COLOR_AE_BLUE,
       ),
       body: a is Article
           ? _buildArticleWidget()
@@ -84,20 +84,20 @@ class _ArticlePageState extends State<ArticlePage> {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontSize: titleSize,
-                      color: titleColor,
-                      fontFamily: classicFont),
+                      color: COLOR_NAVY_BLUE,
+                      fontFamily: FONT_NUNITO),
                 ),
                 SizedBox(height: 10),
                 Text(
                   a.abstract,
                   textAlign: TextAlign.justify,
-                  style: TextStyle(fontFamily: classicFont, fontSize: 14),
+                  style: TextStyle(fontFamily: FONT_NUNITO, fontSize: 14),
                 ),
                 SizedBox(height: 10),
                 Text(
                   'Article publié le ' + date,
                   textAlign: TextAlign.justify,
-                  style: TextStyle(fontFamily: classicFont, fontSize: 12),
+                  style: TextStyle(fontFamily: FONT_NUNITO, fontSize: 12),
                 ),
                 SizedBox(height: 15),
                 Center(
@@ -114,10 +114,10 @@ class _ArticlePageState extends State<ArticlePage> {
                           child: Text(
                             a.project.name,
                             style: TextStyle(
-                                fontFamily: classicFont, color: white),
+                                fontFamily: FONT_NUNITO, color: Colors.white),
                           ),
                         ),
-                        color: starCommandBlue,
+                        color: COLOR_AE_BLUE,
                         shape: RoundedRectangleBorder(
                             borderRadius: buttonBorderRadius),
                       ),
@@ -135,10 +135,10 @@ class _ArticlePageState extends State<ArticlePage> {
                           child: Text(
                             a.author.firstName + ' ' + a.author.lastName,
                             style: TextStyle(
-                                fontFamily: classicFont, color: white),
+                                fontFamily: FONT_NUNITO, color: Colors.white),
                           ),
                         ),
-                        color: starCommandBlue,
+                        color: COLOR_AE_BLUE,
                         shape: RoundedRectangleBorder(
                             borderRadius: buttonBorderRadius),
                       ),

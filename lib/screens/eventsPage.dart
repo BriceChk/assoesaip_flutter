@@ -1,6 +1,6 @@
 import 'package:assoesaip_flutter/models/event.dart';
 import 'package:assoesaip_flutter/services/api.dart';
-import 'package:assoesaip_flutter/shares/constant.dart';
+import 'package:assoesaip_flutter/shares/constants.dart';
 import 'package:assoesaip_flutter/shares/customWebviewWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -45,12 +45,12 @@ class _EventPageState extends State<EventPage> {
           "Voir l'événement",
           style: TextStyle(
             fontSize: 30,
-            color: headerTextColor,
-            fontFamily: classicFont,
+            color: Colors.white,
+            fontFamily: FONT_NUNITO,
           ),
         ),
         centerTitle: true,
-        backgroundColor: starCommandBlue,
+        backgroundColor: COLOR_AE_BLUE,
       ),
       body: e is Event
           ? _buildEventWidget()
@@ -74,7 +74,7 @@ class _EventPageState extends State<EventPage> {
 
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
-        backgroundColor: starCommandBlue,
+        backgroundColor: COLOR_AE_BLUE,
         icon: Icon(Icons.calendar_today),
         label: Text('Voir les dates'),
         onPressed: () {
@@ -96,20 +96,20 @@ class _EventPageState extends State<EventPage> {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontSize: titleSize,
-                      color: titleColor,
-                      fontFamily: classicFont),
+                      color: COLOR_NAVY_BLUE,
+                      fontFamily: FONT_NUNITO),
                 ),
                 SizedBox(height: 10),
                 Text(
                   e.abstract,
                   textAlign: TextAlign.justify,
-                  style: TextStyle(fontFamily: classicFont, fontSize: 14),
+                  style: TextStyle(fontFamily: FONT_NUNITO, fontSize: 14),
                 ),
                 SizedBox(height: 10),
                 Text(
                   'Article publié le ' + date,
                   textAlign: TextAlign.justify,
-                  style: TextStyle(fontFamily: classicFont, fontSize: 12),
+                  style: TextStyle(fontFamily: FONT_NUNITO, fontSize: 12),
                 ),
                 SizedBox(height: 15),
                 Column(
@@ -125,10 +125,10 @@ class _EventPageState extends State<EventPage> {
                         child: Text(
                           e.project.name,
                           style: TextStyle(
-                              fontFamily: classicFont, color: white),
+                              fontFamily: FONT_NUNITO, color: Colors.white),
                         ),
                       ),
-                      color: starCommandBlue,
+                      color: COLOR_AE_BLUE,
                       shape: RoundedRectangleBorder(
                           borderRadius: buttonBorderRadius),
                     ),
@@ -145,10 +145,10 @@ class _EventPageState extends State<EventPage> {
                         child: Text(
                           e.author.firstName + ' ' + e.author.lastName,
                           style: TextStyle(
-                              fontFamily: classicFont, color: white),
+                              fontFamily: FONT_NUNITO, color: Colors.white),
                         ),
                       ),
-                      color: starCommandBlue,
+                      color: COLOR_AE_BLUE,
                       shape: RoundedRectangleBorder(
                           borderRadius: buttonBorderRadius),
                     ),
@@ -183,7 +183,7 @@ class _EventPageState extends State<EventPage> {
           leading: Icon(Icons.calendar_today),
           title: Text(
             dateStart,
-            style: TextStyle(fontFamily: classicFont),
+            style: TextStyle(fontFamily: FONT_NUNITO),
           ),
           onTap: () => {},
         );
@@ -197,7 +197,7 @@ class _EventPageState extends State<EventPage> {
                 width: 60,
                 child: Text(
                   'Début : ' + dateStart,
-                  style: TextStyle(fontFamily: classicFont),
+                  style: TextStyle(fontFamily: FONT_NUNITO),
                 ),
               ),
             ),
@@ -207,7 +207,7 @@ class _EventPageState extends State<EventPage> {
                 width: 60,
                 child: Text(
                   'Fin : ' + dateEnd,
-                  style: TextStyle(fontFamily: classicFont),
+                  style: TextStyle(fontFamily: FONT_NUNITO),
                 ),
               ),
             )
@@ -233,7 +233,7 @@ class _EventPageState extends State<EventPage> {
                   alignment: Alignment.centerLeft,
                   child: Text(
                     occur + ', toute la journée',
-                    style: TextStyle(fontFamily: classicFont, fontSize: 20),
+                    style: TextStyle(fontFamily: FONT_NUNITO, fontSize: 20),
                   ),
                 ),
               ),
@@ -265,7 +265,7 @@ class _EventPageState extends State<EventPage> {
                   alignment: Alignment.centerLeft,
                   child: FittedBox(
                     child: Text(occur,
-                        style: TextStyle(fontFamily: classicFont, fontSize: 20)),
+                        style: TextStyle(fontFamily: FONT_NUNITO, fontSize: 20)),
                   ),
                 ),
               ),

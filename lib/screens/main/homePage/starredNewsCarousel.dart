@@ -1,5 +1,5 @@
 import 'package:assoesaip_flutter/models/news.dart';
-import 'package:assoesaip_flutter/shares/constant.dart';
+import 'package:assoesaip_flutter/shares/constants.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -9,8 +9,6 @@ import 'package:shimmer/shimmer.dart';
 class StarredNewsCarouselWidget extends StatelessWidget {
   final List<News> news;
 
-  final Color titleColor = Colors.white;
-  final Color fontColor = Colors.white;
 
   StarredNewsCarouselWidget(this.news);
 
@@ -22,7 +20,7 @@ class StarredNewsCarouselWidget extends StatelessWidget {
 
     return SliverAppBar(
       automaticallyImplyLeading: false,
-      backgroundColor: whiteWhite,
+      backgroundColor: Colors.white,
       //* Height of the picture (carousel)
       expandedHeight: 310,
       stretch: true,
@@ -44,7 +42,7 @@ class StarredNewsCarouselWidget extends StatelessWidget {
                 "À la une",
                 style: TextStyle(
                   fontSize: 25,
-                  fontFamily: classicFont,
+                  fontFamily: FONT_NUNITO,
                 ),
               ),
             ),
@@ -75,7 +73,7 @@ class StarredNewsCarouselWidget extends StatelessWidget {
   }
 
   Widget _buildCarouselItem(News n, BuildContext context) {
-    String imageUrl = 'https://asso.esaip.org/';
+    String imageUrl = 'https://$AE_HOST/';
     if (n.project.logoFileName == null) {
       imageUrl += 'build/images/project-placeholder.png';
     } else {
@@ -91,17 +89,17 @@ class StarredNewsCarouselWidget extends StatelessWidget {
 
     Widget card = Card(
       elevation: 2,
-      color: starCommandBlue,
+      color: COLOR_AE_BLUE,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
-          side: BorderSide(color: starCommandBlue, width: 1)),
+          side: BorderSide(color: COLOR_AE_BLUE, width: 1)),
       child: Padding(
         padding: EdgeInsets.only(top: 15, bottom: 10, right: 15, left: 15),
         child: Stack(children: [
           Center(
             child: ColorFiltered(
               colorFilter: ColorFilter.mode(
-                  starCommandBlue.withOpacity(0.1), BlendMode.dstATop),
+                  COLOR_AE_BLUE.withOpacity(0.1), BlendMode.dstATop),
               child: CachedNetworkImage(
                 imageUrl: imageUrl,
                 fit: BoxFit.contain,
@@ -120,16 +118,16 @@ class StarredNewsCarouselWidget extends StatelessWidget {
                     title,
                     style: TextStyle(
                         fontSize: 20,
-                        color: titleColor,
-                        fontFamily: classicFont,
+                        color: Colors.white,
+                        fontFamily: FONT_NUNITO,
                         fontWeight: FontWeight.bold),
                   ),
                   Text(
                     content,
                     style: TextStyle(
                       fontSize: 16,
-                      color: fontColor,
-                      fontFamily: classicFont,
+                      color: Colors.white,
+                      fontFamily: FONT_NUNITO,
                     ),
                     overflow: TextOverflow.clip,
                   ),
@@ -142,8 +140,8 @@ class StarredNewsCarouselWidget extends StatelessWidget {
                     n.project.name,
                     style: TextStyle(
                       fontSize: 12,
-                      color: fontColor,
-                      fontFamily: classicFont,
+                      color: Colors.white,
+                      fontFamily: FONT_NUNITO,
                     ),
                   ),
                   SizedBox(height: 2),
@@ -152,8 +150,8 @@ class StarredNewsCarouselWidget extends StatelessWidget {
                     date,
                     style: TextStyle(
                       fontSize: 12,
-                      color: fontColor,
-                      fontFamily: classicFont,
+                      color: Colors.white,
+                      fontFamily: FONT_NUNITO,
                     ),
                   ),
                 ],
@@ -186,7 +184,7 @@ class StarredNewsCarouselWidget extends StatelessWidget {
   static Widget carouselPlaceholder() {
     return SliverAppBar(
       automaticallyImplyLeading: false,
-      backgroundColor: whiteWhite,
+      backgroundColor: Colors.white,
       //* Height of the picture (carousel)
       expandedHeight: 310,
       stretch: true,
@@ -208,7 +206,7 @@ class StarredNewsCarouselWidget extends StatelessWidget {
                 "À la une",
                 style: TextStyle(
                   fontSize: 25,
-                  fontFamily: classicFont,
+                  fontFamily: FONT_NUNITO,
                 ),
               ),
             ),
@@ -223,13 +221,13 @@ class StarredNewsCarouselWidget extends StatelessWidget {
                 itemCount: 1,
                 itemBuilder: (BuildContext context, int currentIndex, int realIdx) {
                   return Shimmer.fromColors(
-                    baseColor: cardColor,
+                    baseColor: COLOR_SHIMMER_WHITE,
                     highlightColor: Colors.grey[200],
                     child: Card(
-                      color: cardColor,
+                      color: Colors.white,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15),
-                          side: BorderSide(color: esaipBlue, width: 1)),
+                          side: BorderSide(color: COLOR_AE_BLUE, width: 1)),
                       child: Container(width: 500),
                     ),
                   );

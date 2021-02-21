@@ -4,7 +4,7 @@ import 'package:assoesaip_flutter/screens/main/cafet/cafet.dart';
 import 'package:assoesaip_flutter/screens/main/calendar/calendar.dart';
 import 'package:assoesaip_flutter/screens/main/homePage/homePage.dart';
 import 'package:assoesaip_flutter/screens/main/categories/categoriesNavigator.dart';
-import 'package:assoesaip_flutter/shares/constant.dart';
+import 'package:assoesaip_flutter/shares/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 
@@ -27,12 +27,10 @@ class _MainNavigationState extends State<MainNavigation> {
   List<Widget> tabPages = [];
 
   //TODO_ Colors
-  Color navBarColor = starCommandBlue;
+  Color navBarColor = COLOR_AE_BLUE;
   Color selectedCircleColor = Colors.white;
   Color unselectedIconColor = Colors.white;
-  Color selectedIconColor = starCommandBlue;
-
-  Color scaffoldBackgroundColor = white;
+  Color selectedIconColor = COLOR_AE_BLUE;
 
   ShapeBorder bottomBarShape = RoundedRectangleBorder(
     borderRadius: BorderRadius.only(
@@ -72,7 +70,7 @@ class _MainNavigationState extends State<MainNavigation> {
       extendBody: true,
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          color: white,
+          color: Colors.white,
           borderRadius: bottomBarBorder,
         ),
         child: SnakeNavigationBar.color(

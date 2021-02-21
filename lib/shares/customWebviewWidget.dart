@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:assoesaip_flutter/shares/circularProgressPlaceholder.dart';
+import 'package:assoesaip_flutter/shares/circularProgressPlaceholderWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';

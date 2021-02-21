@@ -5,11 +5,11 @@ import 'package:assoesaip_flutter/models/projectMember.dart';
 import 'package:assoesaip_flutter/models/projectPage.dart';
 import 'package:assoesaip_flutter/screens/project/projectMembersTab.dart';
 import 'package:assoesaip_flutter/services/api.dart';
-import 'package:assoesaip_flutter/shares/circularProgressPlaceholder.dart';
-import 'package:assoesaip_flutter/shares/constant.dart';
+import 'package:assoesaip_flutter/shares/circularProgressPlaceholderWidget.dart';
+import 'package:assoesaip_flutter/shares/constants.dart';
 import 'package:assoesaip_flutter/shares/customWebviewWidget.dart';
-import 'package:assoesaip_flutter/shares/eventsOccurrencesList.dart';
-import 'package:assoesaip_flutter/shares/newsList.dart';
+import 'package:assoesaip_flutter/shares/eventsOccurrencesListWidget.dart';
+import 'package:assoesaip_flutter/shares/newsListWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -171,7 +171,7 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
 
     return Scaffold(
       body: Container(
-        color: whiteWhite,
+        color: Colors.white,
         child: CustomScrollView(
           physics: BouncingScrollPhysics(),
           slivers: [
@@ -181,8 +181,8 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
                   widget.p.name,
                   style: TextStyle(
                     fontSize: 30,
-                    color: headerTextColor,
-                    fontFamily: classicFont,
+                    color: Colors.white,
+                    fontFamily: FONT_NUNITO,
                   ),
                 ),
               ),
@@ -192,7 +192,7 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
               floating: true,
               toolbarHeight: 60,
               expandedHeight: 200,
-              backgroundColor: headerColor,
+              backgroundColor: COLOR_AE_BLUE,
               flexibleSpace: _headerFlexibleSpace(),
             ),
             //* All the other Widget
@@ -230,8 +230,8 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 16,
-                color: headerTextColor,
-                fontFamily: classicFont,
+                color: Colors.white,
+                fontFamily: FONT_NUNITO,
               ),
             ),
             SizedBox(height: 5),
@@ -274,11 +274,11 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
           width: 40,
           height: 40,
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10), color: powderBlue),
+              borderRadius: BorderRadius.circular(10), color: COLOR_POWDER_BLUE),
           child: Center(
             child: Icon(
               FontAwesomeIcons.solidEnvelope,
-              color: navyBlue,
+              color: COLOR_NAVY_BLUE,
             ),
           ),
         ),
@@ -326,11 +326,11 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
               width: 40,
               height: 40,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10), color: powderBlue),
+                  borderRadius: BorderRadius.circular(10), color: COLOR_POWDER_BLUE),
               child: Center(
                 child: Icon(
                   networkIcon[key],
-                  color: navyBlue,
+                  color: COLOR_NAVY_BLUE,
                 ),
               ),
             ),
@@ -348,7 +348,7 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
     tabs.keys.forEach((tab) {
       Widget w = Container(
         decoration: BoxDecoration(
-            color: selected == tab ? menuColorSelected : Colors.white,
+            color: selected == tab ? COLOR_POWDER_BLUE : Colors.white,
             borderRadius: BorderRadius.all(Radius.circular(10))),
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
@@ -356,7 +356,7 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
             tab,
             style: TextStyle(
               fontSize: 18,
-              fontFamily: classicFont,
+              fontFamily: FONT_NUNITO,
             ),
           ),
         ),

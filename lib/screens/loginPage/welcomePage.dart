@@ -1,4 +1,4 @@
-import 'package:assoesaip_flutter/shares/constant.dart';
+import 'package:assoesaip_flutter/shares/constants.dart';
 import 'package:flutter/material.dart';
 
 class WelcomePage extends StatelessWidget {
@@ -11,8 +11,7 @@ class WelcomePage extends StatelessWidget {
       topLeft: Radius.circular(50),
     );
 
-    final Color backgroundColorBlue = starCommandBlue;
-    final Color backgroundColorWhite = whiteWhite;
+    final Color backgroundColorBlue = COLOR_AE_BLUE;
     final String classicFont = "Nunito";
 
     //* Return a Scaffold widget because of the text we are including inside
@@ -21,7 +20,7 @@ class WelcomePage extends StatelessWidget {
         //* First container which taking all the screen space (responsive to all size)
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
-        color: backgroundColorWhite,
+        color: Colors.white,
         //* Column because we want to display 2 distinct container (blue and white one)
         child: Column(
           children: [
@@ -68,7 +67,7 @@ class WelcomePage extends StatelessWidget {
                 //* Container with all the others object inside with the color white
                 child: Container(
                   decoration: BoxDecoration(
-                    color: backgroundColorWhite,
+                    color: Colors.white,
                     borderRadius: roundedTopLeftBorder,
                   ),
                   //* Column with the all the object align to each other
@@ -104,7 +103,7 @@ class WelcomePage extends StatelessWidget {
                           elevation: 5,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10)),
-                          color: starCommandBlue,
+                          color: COLOR_AE_BLUE,
                           child: Padding(
                             padding: EdgeInsets.symmetric(vertical: 10),
                             //* Container in order to have the button which takes all the available width
@@ -114,7 +113,7 @@ class WelcomePage extends StatelessWidget {
                                 'Connexion',
                                 style: TextStyle(
                                   fontSize: 20,
-                                  color: white,
+                                  color: Colors.white,
                                   fontFamily: "Nunito",
                                   letterSpacing: 1.25,
                                 ),

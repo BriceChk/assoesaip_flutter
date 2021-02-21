@@ -1,7 +1,7 @@
 import 'package:assoesaip_flutter/models/projectCategory.dart';
 import 'package:assoesaip_flutter/services/api.dart';
-import 'package:assoesaip_flutter/shares/constant.dart';
-import 'package:assoesaip_flutter/shares/newsList.dart';
+import 'package:assoesaip_flutter/shares/constants.dart';
+import 'package:assoesaip_flutter/shares/newsListWidget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -45,8 +45,8 @@ class _CategoriesListState extends State<CategoriesList>
             "Parcourir les projets",
             style: TextStyle(
               fontSize: 30,
-              color: headerTextColor,
-              fontFamily: classicFont,
+              color: Colors.white,
+              fontFamily: FONT_NUNITO,
             ),
           ),
           flexibleSpace: _headerFlexibleSpace(),
@@ -54,7 +54,7 @@ class _CategoriesListState extends State<CategoriesList>
           expandedHeight: 100,
           floating: true,
           pinned: true,
-          backgroundColor: headerColor,
+          backgroundColor: COLOR_AE_BLUE,
         ),
         //* We wrap the rest of the page inside the SliverList: like this everything scrool vertically except the header
         SliverList(
@@ -84,8 +84,8 @@ class _CategoriesListState extends State<CategoriesList>
               textAlign: TextAlign.justify,
               style: TextStyle(
                 fontSize: 16,
-                color: headerTextColor,
-                fontFamily: classicFont,
+                color: Colors.white,
+                fontFamily: FONT_NUNITO,
               ),
             ),
           ),
@@ -106,7 +106,7 @@ class _CategoriesListState extends State<CategoriesList>
   }
 
   Widget _buildCategoryCard(ProjectCategory c) {
-    String imgUrl = 'https://asso.esaip.org/images/category-logos/' +
+    String imgUrl = 'https://$AE_HOST/images/category-logos/' +
         c.logoFileName;
 
     return Container(
@@ -118,8 +118,8 @@ class _CategoriesListState extends State<CategoriesList>
       //width: MediaQuery.of(context).size.width,
       child: Container(
         decoration: BoxDecoration(
-          color: whiteWhite,
-          borderRadius: cardsBorderRadius,
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(BORDER_RADIUS_CARD),
           boxShadow: <BoxShadow>[
             new BoxShadow(
               color: Colors.grey[400],
@@ -131,10 +131,10 @@ class _CategoriesListState extends State<CategoriesList>
         //* Material then InkWell in order to have the ripple effect + ontap function
         child: Material(
           color: Colors.white,
-          borderRadius: cardsBorderRadius,
+          borderRadius: BorderRadius.circular(BORDER_RADIUS_CARD),
           child: InkWell(
               borderRadius: BorderRadius.circular(15),
-              splashColor: splashColor,
+              splashColor: COLOR_AE_BLUE,
               child: Padding(
                 padding: EdgeInsets.symmetric(
                   horizontal: 7.5,
@@ -162,15 +162,15 @@ class _CategoriesListState extends State<CategoriesList>
                             c.name,
                             style: TextStyle(
                                 fontSize: 20,
-                                fontFamily: classicFont,
-                                color: titleColor),
+                                fontFamily: FONT_NUNITO,
+                                color: COLOR_NAVY_BLUE),
                           ),
                           //* Description of the card
                           Text(
                             c.description,
                             style: TextStyle(
                               fontSize: 14,
-                              fontFamily: classicFont,
+                              fontFamily: FONT_NUNITO,
                             ),
                           ),
                         ],

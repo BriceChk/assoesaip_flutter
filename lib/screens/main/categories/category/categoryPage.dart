@@ -4,9 +4,9 @@ import 'package:assoesaip_flutter/models/project.dart';
 import 'package:assoesaip_flutter/models/projectCategory.dart';
 import 'package:assoesaip_flutter/screens/main/categories/category/projectsListTab.dart';
 import 'package:assoesaip_flutter/services/api.dart';
-import 'package:assoesaip_flutter/shares/constant.dart';
-import 'package:assoesaip_flutter/shares/eventsOccurrencesList.dart';
-import 'package:assoesaip_flutter/shares/newsList.dart';
+import 'package:assoesaip_flutter/shares/constants.dart';
+import 'package:assoesaip_flutter/shares/eventsOccurrencesListWidget.dart';
+import 'package:assoesaip_flutter/shares/newsListWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -105,7 +105,7 @@ class _CategoryState extends State<Category> {
           : NewsListWidget.newsListPlaceholder(),
     };
     return Container(
-      color: backgroundColor,
+      color: Colors.white,
       //* CustomScrollView in order to have the bouncingScrollPhysic
       child: CustomScrollView(
         physics: BouncingScrollPhysics(),
@@ -117,8 +117,8 @@ class _CategoryState extends State<Category> {
                 widget.categ.name,
                 style: TextStyle(
                   fontSize: 30,
-                  color: headerTextColor,
-                  fontFamily: classicFont,
+                  color: Colors.white,
+                  fontFamily: FONT_NUNITO,
                 ),
               ),
             ),
@@ -128,7 +128,7 @@ class _CategoryState extends State<Category> {
             floating: true,
             toolbarHeight: 60,
             expandedHeight: 130,
-            backgroundColor: headerColor,
+            backgroundColor: COLOR_AE_BLUE,
             flexibleSpace: _headerFlexibleSpace(widget.categ),
           ),
           //* All the other Widget
@@ -162,8 +162,8 @@ class _CategoryState extends State<Category> {
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 16,
-                color: headerTextColor,
-                fontFamily: classicFont,
+                color: Colors.white,
+                fontFamily: FONT_NUNITO,
               ),
             ),
           ),
@@ -176,7 +176,7 @@ class _CategoryState extends State<Category> {
     tabs.keys.forEach((tab) {
       Widget w = Container(
         decoration: BoxDecoration(
-            color: selected == tab ? menuColorSelected : Colors.white,
+            color: selected == tab ? COLOR_POWDER_BLUE : Colors.white,
             borderRadius: BorderRadius.all(Radius.circular(10))),
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
@@ -184,7 +184,7 @@ class _CategoryState extends State<Category> {
             tab,
             style: TextStyle(
               fontSize: 18,
-              fontFamily: classicFont,
+              fontFamily: FONT_NUNITO,
             ),
           ),
         ),

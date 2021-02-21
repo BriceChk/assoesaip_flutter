@@ -12,9 +12,10 @@ import 'package:assoesaip_flutter/models/projectMember.dart';
 import 'package:assoesaip_flutter/models/projectPage.dart';
 import 'package:assoesaip_flutter/models/searchResult.dart';
 import 'package:assoesaip_flutter/models/user.dart';
+import 'package:assoesaip_flutter/shares/constants.dart';
 import 'package:requests/requests.dart';
 
-String url = 'https://asso.esaip.org/api';
+String url = 'https://$AE_HOST/api';
 
 Future<User> getUser() async {
   final response = await Requests.get('$url/profile');

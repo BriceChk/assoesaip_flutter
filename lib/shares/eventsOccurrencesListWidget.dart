@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 
-import 'constant.dart';
+import 'constants.dart';
 
 class EventsOccurrencesList extends StatelessWidget {
   final List<EventOccurrence> events;
@@ -29,7 +29,7 @@ class EventsOccurrencesList extends StatelessWidget {
             SizedBox(height: 25),
             Text(
               "Aucun événement :(",
-              style: TextStyle(fontSize: 18, fontFamily: classicFont),
+              style: TextStyle(fontSize: 18, fontFamily: FONT_NUNITO),
             ),
           ],
         ),
@@ -42,7 +42,7 @@ class EventsOccurrencesList extends StatelessWidget {
   }
 
   Widget _buildEventWidget(EventOccurrence occ, BuildContext context) {
-    String imageUrl = 'https://asso.esaip.org/';
+    String imageUrl = 'https://$AE_HOST/';
     if (occ.event.project.logoFileName == null) {
       imageUrl += 'build/images/project-placeholder.png';
     } else {
@@ -93,8 +93,8 @@ class EventsOccurrencesList extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: whiteWhite,
-        borderRadius: cardsBorderRadius,
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(BORDER_RADIUS_CARD),
         boxShadow: <BoxShadow>[
           new BoxShadow(
             color: Colors.grey[400],
@@ -107,7 +107,7 @@ class EventsOccurrencesList extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
         child: InkWell(
-          splashColor: splashColor,
+          splashColor: COLOR_AE_BLUE,
           borderRadius: BorderRadius.circular(15),
           onTap: () {
             Navigator.of(context, rootNavigator: true)
@@ -136,8 +136,8 @@ class EventsOccurrencesList extends StatelessWidget {
                         occ.event.project.name,
                         style: TextStyle(
                           fontSize: 12,
-                          fontFamily: classicFont,
-                          color: greyfontColor,
+                          fontFamily: FONT_NUNITO,
+                          color: COLOR_GREY_TEXT,
                         ),
                       ),
                       //* Container with the date of the news
@@ -161,8 +161,8 @@ class EventsOccurrencesList extends StatelessWidget {
                               occ.event.title,
                               style: TextStyle(
                                 fontSize: 20,
-                                fontFamily: classicFont,
-                                color: titleColor,
+                                fontFamily: FONT_NUNITO,
+                                color: COLOR_NAVY_BLUE,
                               ),
                             ),
                             Text(
@@ -170,7 +170,7 @@ class EventsOccurrencesList extends StatelessWidget {
                               textAlign: TextAlign.justify,
                               style: TextStyle(
                                 fontSize: 14,
-                                fontFamily: classicFont,
+                                fontFamily: FONT_NUNITO,
                               ),
                             ),
                             SizedBox(height: 10),
@@ -184,7 +184,7 @@ class EventsOccurrencesList extends StatelessWidget {
                                 SizedBox(width: 5),
                                 Text(
                                   startDate + endString,
-                                  style: TextStyle(fontFamily: classicFont),
+                                  style: TextStyle(fontFamily: FONT_NUNITO),
                                 ),
                               ],
                             ),
@@ -211,7 +211,7 @@ class EventsOccurrencesList extends StatelessWidget {
                                   occ.event.category.name,
                                   style: TextStyle(
                                       color: Colors.white,
-                                      fontFamily: classicFont),
+                                      fontFamily: FONT_NUNITO),
                                 ),
                               ),
                             ),

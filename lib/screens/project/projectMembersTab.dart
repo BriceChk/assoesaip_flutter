@@ -1,5 +1,5 @@
 import 'package:assoesaip_flutter/models/projectMember.dart';
-import 'package:assoesaip_flutter/shares/constant.dart';
+import 'package:assoesaip_flutter/shares/constants.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -36,7 +36,7 @@ class ProjectMembersTab extends StatelessWidget {
   }
 
   Widget _buildMemberCard(ProjectMember p) {
-    String avatarUrl = 'https://asso.esaip.org/';
+    String avatarUrl = 'https://$AE_HOST/';
     if (p.user.avatarFileName == null) {
       avatarUrl += 'build/images/placeholder.png';
     } else {
@@ -45,7 +45,7 @@ class ProjectMembersTab extends StatelessWidget {
 
     return InkWell(
       borderRadius: BorderRadius.circular(15),
-      splashColor: splashColor,
+      splashColor: COLOR_AE_BLUE,
       onTap: () async {
         final Uri params = Uri(
           scheme: 'mailto',
@@ -60,8 +60,8 @@ class ProjectMembersTab extends StatelessWidget {
       },
       child: Container(
         decoration: BoxDecoration(
-          color: whiteWhite,
-          borderRadius: cardsBorderRadius,
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(BORDER_RADIUS_CARD),
           boxShadow: <BoxShadow>[
             new BoxShadow(
               color: Colors.grey[400],
@@ -94,14 +94,14 @@ class ProjectMembersTab extends StatelessWidget {
                       Text(
                         p.user.firstName + ' ' + p.user.lastName,
                         style: TextStyle(
-                            fontFamily: classicFont,
+                            fontFamily: FONT_NUNITO,
                             fontSize: nameSize,
-                            color: navyBlue),
+                            color: COLOR_NAVY_BLUE),
                       ),
                       Text(
                         p.role + ' - ' + p.user.promo,
                         style: TextStyle(
-                          fontFamily: classicFont,
+                          fontFamily: FONT_NUNITO,
                           fontSize: roleSize,
                         ),
                       ),
@@ -110,7 +110,7 @@ class ProjectMembersTab extends StatelessWidget {
                         p.introduction,
                         textAlign: TextAlign.justify,
                         style: TextStyle(
-                          fontFamily: classicFont
+                          fontFamily: FONT_NUNITO
                         ),
                       )
                     ],

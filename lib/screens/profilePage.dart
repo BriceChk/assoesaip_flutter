@@ -1,6 +1,6 @@
 import 'package:assoesaip_flutter/main.dart';
 import 'package:assoesaip_flutter/services/api.dart';
-import 'package:assoesaip_flutter/shares/constant.dart';
+import 'package:assoesaip_flutter/shares/constants.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +25,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    String avatarUrl = 'https://asso.esaip.org/';
+    String avatarUrl = 'https://$AE_HOST/';
 
     if (MyApp.user.avatarFileName == null) {
       avatarUrl += 'build/images/placeholder.png';
@@ -33,18 +33,18 @@ class _ProfilePageState extends State<ProfilePage> {
       avatarUrl += 'images/profile-pics/' + MyApp.user.avatarFileName;
     }
     return Scaffold(
-      backgroundColor: whiteWhite,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
           "Profil",
           style: TextStyle(
             fontSize: 30,
-            color: headerTextColor,
-            fontFamily: classicFont,
+            color: Colors.white,
+            fontFamily: FONT_NUNITO,
           ),
         ),
         centerTitle: true,
-        backgroundColor: starCommandBlue,
+        backgroundColor: COLOR_AE_BLUE,
       ),
       body: Container(
         width: MediaQuery.of(context).size.width,
@@ -69,7 +69,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 Text(
                   MyApp.user.firstName + ' ' + MyApp.user.lastName,
                   style: TextStyle(
-                      fontFamily: classicFont, fontSize: nameFontSize),
+                      fontFamily: FONT_NUNITO, fontSize: nameFontSize),
                 ),
                 SizedBox(height: 15),
                 Row(
@@ -82,14 +82,14 @@ class _ProfilePageState extends State<ProfilePage> {
                         Text(
                           "Campus : ",
                           style: TextStyle(
-                              fontFamily: classicFont,
+                              fontFamily: FONT_NUNITO,
                               fontSize: nameFontSize - 3),
                         ),
                         SizedBox(height: 25),
                         Text(
                           "Promotion : ",
                           style: TextStyle(
-                              fontFamily: classicFont,
+                              fontFamily: FONT_NUNITO,
                               fontSize: nameFontSize - 3),
                         ),
                       ],
@@ -105,7 +105,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             icon: Icon(Icons.arrow_drop_down),
                             iconSize: 24,
                             elevation: 16,
-                            style: TextStyle(color: starCommandBlue),
+                            style: TextStyle(color: COLOR_AE_BLUE),
                             onChanged: (String newValue) {
                               setState(() {
                                 campusValue = newValue;
@@ -128,7 +128,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             icon: Icon(Icons.arrow_drop_down),
                             iconSize: 24,
                             elevation: 16,
-                            style: TextStyle(color: starCommandBlue),
+                            style: TextStyle(color: COLOR_AE_BLUE),
                             onChanged: (String newValue) {
                               setState(() {
                                 promoValue = newValue;
@@ -173,10 +173,10 @@ class _ProfilePageState extends State<ProfilePage> {
                     title: Text(
                       'Notifications',
                       style: TextStyle(
-                          fontFamily: classicFont, fontSize: nameFontSize - 3),
+                          fontFamily: FONT_NUNITO, fontSize: nameFontSize - 3),
                     ),
                     trailing: CupertinoSwitch(
-                      activeColor: starCommandBlue,
+                      activeColor: COLOR_AE_BLUE,
                       value: notificationsEnabled,
                       onChanged: (bool value) {
                         setState(() {
@@ -225,12 +225,12 @@ class _ProfilePageState extends State<ProfilePage> {
                         child: Text(
                           "Enregistrer",
                           style: TextStyle(
-                              fontFamily: classicFont,
-                              color: white,
+                              fontFamily: FONT_NUNITO,
+                              color: Colors.white,
                               fontSize: nameFontSize - 3),
                         ),
                       ),
-                      color: starCommandBlue,
+                      color: COLOR_AE_BLUE,
                       shape: RoundedRectangleBorder(
                           borderRadius: buttonBorderRadius),
                     ),

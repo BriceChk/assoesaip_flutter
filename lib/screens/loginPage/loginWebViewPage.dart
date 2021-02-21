@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:assoesaip_flutter/main.dart';
 import 'package:assoesaip_flutter/screens/main/mainNavigation.dart';
 import 'package:assoesaip_flutter/services/api.dart';
-import 'package:assoesaip_flutter/shares/constant.dart';
+import 'package:assoesaip_flutter/shares/constants.dart';
 import 'package:assoesaip_flutter/screens/profilePage.dart';
 import 'package:flutter/material.dart';
 import 'package:requests/requests.dart';
@@ -26,17 +26,17 @@ class LoginWebViewPage extends StatelessWidget {
             "Connexion",
             style: TextStyle(
               fontSize: 30,
-              color: headerTextColor,
-              fontFamily: classicFont,
+              color: Colors.white,
+              fontFamily: FONT_NUNITO,
             ),
           ),
-          backgroundColor: starCommandBlue,
+          backgroundColor: COLOR_AE_BLUE,
         ),
         body: WebView(
           navigationDelegate: (NavigationRequest request) async {
-            if (request.url == 'https://asso.esaip.org/' || request.url == 'https://asso.esaip.org/profil') {
+            if (request.url == 'https://$AE_HOST/' || request.url == 'https://$AE_HOST/profil') {
               // When we get to the home screen of the website, store the session cookie and go to the main screen app
-              final cookies = await cookieManager.getCookies('https://asso.esaip.org/');
+              final cookies = await cookieManager.getCookies('https://$AE_HOST/');
               Map<String, String> map = Map();
               for (var c in cookies) {
                 if (c.name == "PHPSESSID" || c.name == "REMEMBERME") {
@@ -44,7 +44,7 @@ class LoginWebViewPage extends StatelessWidget {
                   break;
                 }
               }
-              Requests.setStoredCookies('asso.esaip.org:443', map);
+              Requests.setStoredCookies('$AE_HOST:443', map);
               MyApp.user = await getUser();
               await MyApp.getAndSaveToken();
               if (MyApp.user.campus == "" || MyApp.user.promo == "") {
@@ -61,7 +61,7 @@ class LoginWebViewPage extends StatelessWidget {
               return NavigationDecision.navigate;
             }
           },
-          initialUrl: "https://asso.esaip.org/login",
+          initialUrl: "https://$AE_HOST/login",
           javascriptMode: JavascriptMode.unrestricted,
           onWebViewCreated: (WebViewController webViewController) {
             _controller.complete(webViewController);

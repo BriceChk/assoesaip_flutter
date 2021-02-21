@@ -1,4 +1,4 @@
-import 'package:assoesaip_flutter/shares/constant.dart';
+import 'package:assoesaip_flutter/shares/constants.dart';
 import 'package:flutter/material.dart';
 
 class LoadingScreen extends StatelessWidget {
@@ -7,7 +7,7 @@ class LoadingScreen extends StatelessWidget {
     return Scaffold(
       body: SizedBox.expand(
         child: Container(
-          color: starCommandBlue,
+          color: COLOR_AE_BLUE,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,

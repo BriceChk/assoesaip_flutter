@@ -1,14 +1,10 @@
 import 'package:assoesaip_flutter/models/eventOccurrence.dart';
-import 'package:assoesaip_flutter/shares/constant.dart';
-import 'package:assoesaip_flutter/shares/eventsOccurrencesList.dart';
+import 'package:assoesaip_flutter/shares/constants.dart';
+import 'package:assoesaip_flutter/shares/eventsOccurrencesListWidget.dart';
 import 'package:assoesaip_flutter/shares/lifecycleEventHandler.dart';
-import 'package:assoesaip_flutter/shares/newsList.dart';
+import 'package:assoesaip_flutter/shares/newsListWidget.dart';
 import 'package:assoesaip_flutter/services/api.dart';
 import 'package:flutter/material.dart';
-
-final RoundedRectangleBorder roundedBorder = RoundedRectangleBorder(
-  borderRadius: headerBorder,
-);
 
 class CalendarWidget extends StatefulWidget {
   @override
@@ -49,7 +45,7 @@ class _CalendarWidgetState extends State<CalendarWidget> with AutomaticKeepAlive
     return RefreshIndicator(
       key: _refreshIndicatorKey,
       onRefresh: _loadData,
-      color: starCommandBlue,
+      color: COLOR_AE_BLUE,
       child: CustomScrollView(
         physics: BouncingScrollPhysics(),
         slivers: [
@@ -61,8 +57,8 @@ class _CalendarWidgetState extends State<CalendarWidget> with AutomaticKeepAlive
               "Calendrier",
               style: TextStyle(
                 fontSize: 30,
-                color: headerTextColor,
-                fontFamily: classicFont,
+                color: Colors.white,
+                fontFamily: FONT_NUNITO,
               ),
             ),
             flexibleSpace: _headerFlexibleSpace(),
@@ -70,7 +66,7 @@ class _CalendarWidgetState extends State<CalendarWidget> with AutomaticKeepAlive
             expandedHeight: 100,
             floating: true,
             pinned: true,
-            backgroundColor: headerColor,
+            backgroundColor: COLOR_AE_BLUE,
           ),
           //* We wrap the rest of the page inside the SliverList: like this everything scrool vertically except the header
           SliverList(
@@ -109,8 +105,8 @@ class _CalendarWidgetState extends State<CalendarWidget> with AutomaticKeepAlive
               textAlign: TextAlign.justify,
               style: TextStyle(
                 fontSize: 16,
-                color: headerTextColor,
-                fontFamily: classicFont,
+                color: Colors.white,
+                fontFamily: FONT_NUNITO,
               ),
             ),
           ),

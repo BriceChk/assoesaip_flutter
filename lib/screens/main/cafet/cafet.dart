@@ -1,8 +1,8 @@
 import 'package:assoesaip_flutter/models/cafetItem.dart';
 import 'package:assoesaip_flutter/models/cafetProperties.dart';
-import 'package:assoesaip_flutter/shares/constant.dart';
+import 'package:assoesaip_flutter/shares/constants.dart';
 import 'package:assoesaip_flutter/services/api.dart';
-import 'package:assoesaip_flutter/shares/newsList.dart';
+import 'package:assoesaip_flutter/shares/newsListWidget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -96,7 +96,7 @@ class _CafetWidgetState extends State<CafetWidget> with AutomaticKeepAliveClient
               SizedBox(height: 25),
               Text(
                 "Aucun repas n'est prévu à la Cafet'",
-                style: TextStyle(fontSize: 18, fontFamily: classicFont),
+                style: TextStyle(fontSize: 18, fontFamily: FONT_NUNITO),
               ),
             ],
           ),
@@ -113,7 +113,7 @@ class _CafetWidgetState extends State<CafetWidget> with AutomaticKeepAliveClient
                 "Menu de " + day,
                 style: TextStyle(
                   fontSize: 30,
-                  fontFamily: classicFont,
+                  fontFamily: FONT_NUNITO,
                 ),
               ),
               Container(
@@ -131,7 +131,7 @@ class _CafetWidgetState extends State<CafetWidget> with AutomaticKeepAliveClient
             "Repas",
             style: TextStyle(
               fontSize: 25,
-              fontFamily: classicFont,
+              fontFamily: FONT_NUNITO,
             ),
           ),
         ),
@@ -142,7 +142,7 @@ class _CafetWidgetState extends State<CafetWidget> with AutomaticKeepAliveClient
             "Boissons",
             style: TextStyle(
               fontSize: 25,
-              fontFamily: classicFont,
+              fontFamily: FONT_NUNITO,
             ),
           ),
         ),
@@ -153,7 +153,7 @@ class _CafetWidgetState extends State<CafetWidget> with AutomaticKeepAliveClient
             "Desserts",
             style: TextStyle(
               fontSize: 25,
-              fontFamily: classicFont,
+              fontFamily: FONT_NUNITO,
             ),
           ),
         ),
@@ -176,16 +176,16 @@ class _CafetWidgetState extends State<CafetWidget> with AutomaticKeepAliveClient
             "La Cafet'",
             style: TextStyle(
               fontSize: 30,
-              color: headerTextColor,
-              fontFamily: classicFont,
+              color: Colors.white,
+              fontFamily: FONT_NUNITO,
             ),
           ),
           flexibleSpace: _headerFlexibleSpace(),
           actions: [
             Container(
               decoration: BoxDecoration(
-                borderRadius: cardsBorderRadius,
-                color: cafetProperties is CafetProperties ? (cafetProperties.isOpen ? Colors.green : Colors.red) : starCommandBlue,
+                borderRadius: BorderRadius.circular(BORDER_RADIUS_CARD),
+                color: cafetProperties is CafetProperties ? (cafetProperties.isOpen ? Colors.green : Colors.red) : COLOR_AE_BLUE,
               ),
               margin: EdgeInsets.fromLTRB(0, 15, 10, 15),
               padding: EdgeInsets.symmetric(horizontal: 10),
@@ -196,7 +196,7 @@ class _CafetWidgetState extends State<CafetWidget> with AutomaticKeepAliveClient
           expandedHeight: 150,
           floating: true,
           pinned: true,
-          backgroundColor: headerColor,
+          backgroundColor: COLOR_AE_BLUE,
         ),
         //* We wrap the rest of the page inside the SliverList: like this everything scrool vertically except the header
         SliverList(
@@ -220,8 +220,8 @@ class _CafetWidgetState extends State<CafetWidget> with AutomaticKeepAliveClient
               textAlign: TextAlign.justify,
               style: TextStyle(
                 fontSize: 16,
-                color: headerTextColor,
-                fontFamily: classicFont,
+                color: Colors.white,
+                fontFamily: FONT_NUNITO,
               ),
             ),
           ),
@@ -232,7 +232,7 @@ class _CafetWidgetState extends State<CafetWidget> with AutomaticKeepAliveClient
     if (!(cafetProperties is CafetProperties)) return NewsListWidget.newsListPlaceholder(count: 3);
 
     var widgets = itemsMap.map((e) {
-      String imageUrl = 'https://asso.esaip.org/';
+      String imageUrl = 'https://$AE_HOST/';
       if (e.imageFileName == null) {
         imageUrl += 'build/images/project-placeholder.png';
       } else {
@@ -248,8 +248,8 @@ class _CafetWidgetState extends State<CafetWidget> with AutomaticKeepAliveClient
         //width: MediaQuery.of(context).size.width,
         child: Container(
           decoration: BoxDecoration(
-            color: whiteWhite,
-            borderRadius: cardsBorderRadius,
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(BORDER_RADIUS_CARD),
             boxShadow: <BoxShadow>[
               new BoxShadow(
                 color: Colors.grey[400],
@@ -260,7 +260,7 @@ class _CafetWidgetState extends State<CafetWidget> with AutomaticKeepAliveClient
           ),
           //* Material then InkWell in order to have the ripple effect + ontap function
           child: Material(
-            borderRadius: cardsBorderRadius,
+            borderRadius: BorderRadius.circular(BORDER_RADIUS_CARD),
             color: Colors.white,
             child: Padding(
               padding: EdgeInsets.symmetric(
@@ -290,8 +290,8 @@ class _CafetWidgetState extends State<CafetWidget> with AutomaticKeepAliveClient
                             e.name + ' · ' + format(e.price) + '€',
                             style: TextStyle(
                                 fontSize: 18,
-                                fontFamily: classicFont,
-                                color: titleColor),
+                                fontFamily: FONT_NUNITO,
+                                color: COLOR_NAVY_BLUE),
                           ),
                         ),
                         //* Description of the card
@@ -299,7 +299,7 @@ class _CafetWidgetState extends State<CafetWidget> with AutomaticKeepAliveClient
                           e.description,
                           style: TextStyle(
                             fontSize: 14,
-                            fontFamily: classicFont,
+                            fontFamily: FONT_NUNITO,
                           ),
                         ),
                       ],

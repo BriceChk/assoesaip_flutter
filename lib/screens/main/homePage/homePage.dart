@@ -8,9 +8,9 @@ import 'package:assoesaip_flutter/models/project.dart';
 import 'package:assoesaip_flutter/models/searchResult.dart';
 import 'package:assoesaip_flutter/screens/main/HomePage/starredNewsCarousel.dart';
 import 'package:assoesaip_flutter/services/api.dart';
-import 'package:assoesaip_flutter/shares/constant.dart';
+import 'package:assoesaip_flutter/shares/constants.dart';
 import 'package:assoesaip_flutter/shares/lifecycleEventHandler.dart';
-import 'package:assoesaip_flutter/shares/newsList.dart';
+import 'package:assoesaip_flutter/shares/newsListWidget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:floating_search_bar/floating_search_bar.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +24,8 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
+enum MenuItem { logout, refresh, profile }
+
 class _HomePageState extends State<HomePage>
     with AutomaticKeepAliveClientMixin<HomePage> {
   @override
@@ -31,7 +33,7 @@ class _HomePageState extends State<HomePage>
 
   final TextEditingController _typeAheadController = TextEditingController();
 
-  String avatarUrl = 'https://asso.esaip.org/';
+  String avatarUrl = 'https://$AE_HOST/';
 
   List<News> news;
   List<News> starredNews;
@@ -86,8 +88,8 @@ class _HomePageState extends State<HomePage>
             suggestion.name,
             style: TextStyle(
               fontSize: 17,
-              fontFamily: classicFont,
-              color: titleColor,
+              fontFamily: FONT_NUNITO,
+              color: COLOR_NAVY_BLUE,
             ),
           ),
           subtitle: Text(suggestion.type),
@@ -115,14 +117,14 @@ class _HomePageState extends State<HomePage>
         _typeAheadController.clear();
       },
       suggestionsBoxDecoration: SuggestionsBoxDecoration(
-          borderRadius: BorderRadius.circular(10), color: whiteWhite),
+          borderRadius: BorderRadius.circular(10), color: Colors.white),
       textFieldConfiguration: TextFieldConfiguration(
         controller: _typeAheadController,
         decoration: InputDecoration.collapsed(
           hintText: "Rechercher un club, une actu ...",
         ),
         style: TextStyle(
-          fontFamily: classicFont,
+          fontFamily: FONT_NUNITO,
         ),
       ),
       noItemsFoundBuilder: (context) {
@@ -130,7 +132,7 @@ class _HomePageState extends State<HomePage>
           leading: Icon(FontAwesomeIcons.ban),
           title: Text(
             "Aucun résultat",
-            style: TextStyle(fontFamily: classicFont, fontSize: 17),
+            style: TextStyle(fontFamily: FONT_NUNITO, fontSize: 17),
           ),
         );
       },
@@ -144,7 +146,7 @@ class _HomePageState extends State<HomePage>
     News n;
     super.build(context);
     return Container(
-      color: backgroundColor,
+      color: Colors.white,
       child: CustomScrollView(
         //! I don't know why but apparently that the things i was missing
         physics: BouncingScrollPhysics(),
@@ -153,7 +155,7 @@ class _HomePageState extends State<HomePage>
             padding: EdgeInsets.only(top: 10),
             sliver: SliverFloatingBar(
               elevation: 2,
-              backgroundColor: backgroundColor,
+              backgroundColor: Colors.white,
               leading: Container(
                 height: double.infinity,
                 width: MediaQuery.of(context).size.width - 110,
@@ -183,7 +185,7 @@ class _HomePageState extends State<HomePage>
                         final cookieManager = WebviewCookieManager();
                         cookieManager.clearCookies();
                         Requests.clearStoredCookies(
-                            'asso.esaip.org:443');
+                            '$AE_HOST:443');
                         Navigator.pushReplacementNamed(context, '/welcome');
                         break;
                       //* Case when we hit "profile" we pushing to the page profile
@@ -224,7 +226,7 @@ class _HomePageState extends State<HomePage>
             delegate: SliverChildListDelegate(
               [
                 Container(
-                  color: backgroundColor,
+                  color: Colors.white,
                   width: MediaQuery.of(context).size.width,
                   //* Container of the white widget with the rounded corner
                   child: Column(
@@ -237,7 +239,7 @@ class _HomePageState extends State<HomePage>
                           "Actualités",
                           style: TextStyle(
                             fontSize: 25,
-                            fontFamily: classicFont,
+                            fontFamily: FONT_NUNITO,
                           ),
                         ),
                       ),

@@ -1,5 +1,5 @@
 import 'package:assoesaip_flutter/models/news.dart';
-import 'package:assoesaip_flutter/shares/constant.dart';
+import 'package:assoesaip_flutter/shares/constants.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -20,7 +20,7 @@ class NewsListWidget extends StatelessWidget {
     for (var i = 0; i < count; i++) {
       list.add(Card(
         elevation: 0.5,
-        color: cardColor,
+        color: Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
         ),
@@ -38,7 +38,7 @@ class NewsListWidget extends StatelessWidget {
     }
 
     return Shimmer.fromColors(
-        baseColor: cardColor,
+        baseColor: COLOR_SHIMMER_WHITE,
         highlightColor: Colors.grey[200],
         child: Column(
           children: list,
@@ -63,7 +63,7 @@ class NewsListWidget extends StatelessWidget {
             SizedBox(height: 25),
             Text(
               "Aucune actualité :(",
-              style: TextStyle(fontSize: 18, fontFamily: classicFont),
+              style: TextStyle(fontSize: 18, fontFamily: FONT_NUNITO),
             ),
           ],
         ),
@@ -84,8 +84,8 @@ class NewsListWidget extends StatelessWidget {
       title,
       style: TextStyle(
         fontSize: 20,
-        fontFamily: classicFont,
-        color: titleColor,
+        fontFamily: FONT_NUNITO,
+        color: COLOR_NAVY_BLUE,
       ),
     );
   }
@@ -103,11 +103,11 @@ class NewsListWidget extends StatelessWidget {
       return null;
     }
 
-    var color = starCommandBlue;
+    var color = COLOR_AE_BLUE;
     List<Widget> widgets = [];
 
     widgets.add(Transform.translate(
-      child: Icon(icon, size: 15, color: white),
+      child: Icon(icon, size: 15, color: Colors.white),
       offset: Offset(0, -1),
     ));
 
@@ -117,7 +117,7 @@ class NewsListWidget extends StatelessWidget {
         n.event == null ? n.article.category.name : n.event.category.name,
         style: TextStyle(
             color: Colors.white,
-            fontFamily: classicFont),
+            fontFamily: FONT_NUNITO),
       ));
 
       color = n.event == null ? HexColor.fromHex(n.article.category.color) : HexColor.fromHex(n.event.category.color);
@@ -139,7 +139,7 @@ class NewsListWidget extends StatelessWidget {
   }
 
   Widget _buildNewsWidget(News n, BuildContext context) {
-    String imageUrl = 'https://asso.esaip.org/';
+    String imageUrl = 'https://$AE_HOST/';
     if (n.project.logoFileName == null) {
       imageUrl += 'build/images/project-placeholder.png';
     } else {
@@ -160,8 +160,8 @@ class NewsListWidget extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 7),
       child: Container(
         decoration: BoxDecoration(
-          color: whiteWhite,
-          borderRadius: cardsBorderRadius,
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(BORDER_RADIUS_CARD),
           boxShadow: <BoxShadow>[
             new BoxShadow(
               color: Colors.grey[400],
@@ -197,8 +197,8 @@ class NewsListWidget extends StatelessWidget {
                         n.project.name + ' | ' + date,
                         style: TextStyle(
                           fontSize: 12,
-                          fontFamily: classicFont,
-                          color: greyfontColor,
+                          fontFamily: FONT_NUNITO,
+                          color: COLOR_GREY_TEXT,
                         ),
                       ),
                       //* Container with the date of the news
@@ -227,7 +227,7 @@ class NewsListWidget extends StatelessWidget {
                             textAlign: TextAlign.justify,
                             style: TextStyle(
                               fontSize: 14,
-                              fontFamily: classicFont,
+                              fontFamily: FONT_NUNITO,
                             ),
                           ),
                         ]
@@ -261,7 +261,7 @@ class NewsListWidget extends StatelessWidget {
     if (n.link != null) {
       return InkWell(
         borderRadius: splashBorderRadius,
-        splashColor: splashColor,
+        splashColor: COLOR_AE_BLUE,
         child: card,
         onTap: () async {
           if (await canLaunch(n.link)) {
@@ -276,7 +276,7 @@ class NewsListWidget extends StatelessWidget {
     if (n.article != null) {
       return InkWell(
         borderRadius: splashBorderRadius,
-        splashColor: splashColor,
+        splashColor: COLOR_AE_BLUE,
         child: Container(child: card),
         onTap: () {
           Navigator.of(context, rootNavigator: true).pushNamed('/article', arguments: n.article);
@@ -287,7 +287,7 @@ class NewsListWidget extends StatelessWidget {
     if (n.event != null) {
       return InkWell(
         borderRadius: splashBorderRadius,
-        splashColor: splashColor,
+        splashColor: COLOR_AE_BLUE,
         child: Container(child: card),
         onTap: () {
           Navigator.of(context, rootNavigator: true).pushNamed('/event', arguments: n.event);
