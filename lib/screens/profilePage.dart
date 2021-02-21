@@ -200,6 +200,9 @@ class _ProfilePageState extends State<ProfilePage> {
                         MyApp.user.promo = promoValue;
                         MyApp.fcmToken.notificationsEnabled =
                             notificationsEnabled;
+                        if (notificationsEnabled) {
+                          MyApp.firebaseMessaging.requestNotificationPermissions();
+                        }
                         saveToken(MyApp.fcmToken);
                         updateProfile(MyApp.user).then((value) {
                           if (widget.firstLogin) {
