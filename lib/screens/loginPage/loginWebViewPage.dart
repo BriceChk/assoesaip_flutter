@@ -39,7 +39,7 @@ class LoginWebViewPage extends StatelessWidget {
               final cookies = await cookieManager.getCookies('https://asso.esaip.org/');
               Map<String, String> map = Map();
               for (var c in cookies) {
-                if (c.name == "PHPSESSID") {
+                if (c.name == "PHPSESSID" || c.name == "REMEMBERME") {
                   map[c.name] = c.value;
                   break;
                 }
