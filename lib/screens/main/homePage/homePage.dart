@@ -20,6 +20,9 @@ import 'package:requests/requests.dart';
 import 'package:webview_cookie_manager/webview_cookie_manager.dart';
 
 class HomePage extends StatefulWidget {
+  final ScrollController controller;
+  HomePage(this.controller);
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -148,7 +151,7 @@ class _HomePageState extends State<HomePage>
     return Container(
       color: Colors.white,
       child: CustomScrollView(
-        //! I don't know why but apparently that the things i was missing
+        controller: widget.controller,
         physics: BouncingScrollPhysics(),
         slivers: [
           SliverPadding(

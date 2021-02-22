@@ -10,6 +10,9 @@ import 'package:intl/intl.dart';
 
 
 class CafetWidget extends StatefulWidget {
+  final ScrollController controller;
+  CafetWidget(this.controller);
+
   @override
   _CafetWidgetState createState() => _CafetWidgetState();
 }
@@ -166,6 +169,7 @@ class _CafetWidgetState extends State<CafetWidget> with AutomaticKeepAliveClient
     super.build(context);
     //* Using the CustomScroolView in order to have the bouncingScrollPhysic
     return CustomScrollView(
+      controller: widget.controller,
       physics: BouncingScrollPhysics(),
       slivers: [
         //* We wrap our header inside the sliverAppBar with somme properties

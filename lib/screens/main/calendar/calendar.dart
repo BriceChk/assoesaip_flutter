@@ -7,6 +7,9 @@ import 'package:assoesaip_flutter/services/api.dart';
 import 'package:flutter/material.dart';
 
 class CalendarWidget extends StatefulWidget {
+  final ScrollController controller;
+  CalendarWidget(this.controller);
+
   @override
   _CalendarWidgetState createState() => _CalendarWidgetState();
 }
@@ -47,6 +50,7 @@ class _CalendarWidgetState extends State<CalendarWidget> with AutomaticKeepAlive
       onRefresh: _loadData,
       color: COLOR_AE_BLUE,
       child: CustomScrollView(
+        controller: widget.controller,
         physics: BouncingScrollPhysics(),
         slivers: [
           //* We wrap our header inside the sliverAppBar with somme properties

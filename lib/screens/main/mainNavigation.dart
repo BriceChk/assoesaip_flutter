@@ -44,17 +44,22 @@ class _MainNavigationState extends State<MainNavigation> {
     topLeft: Radius.circular(25),
   );
 
+  // Scroll controllers
+  final ScrollController _homeController = ScrollController();
+  final ScrollController _calendarController = ScrollController();
+  final ScrollController _cafetController = ScrollController();
+
   @override
   void initState() {
     super.initState();
     _selectedIndex = widget.tabIndex;
     _pageController = PageController(initialPage: _selectedIndex);
 
-    tabPages.add(HomePage());
-    tabPages.add(CalendarWidget());
+    tabPages.add(HomePage(_homeController));
+    tabPages.add(CalendarWidget(_calendarController));
     tabPages.add(ProjectsNavigator());
     if (MyApp.user.campus == "Angers") {
-      tabPages.add(CafetWidget());
+      tabPages.add(CafetWidget(_cafetController));
     }
   }
 
@@ -86,8 +91,14 @@ class _MainNavigationState extends State<MainNavigation> {
           currentIndex: _selectedIndex,
           onTap: (index) {
             setState(() {
-              this._selectedIndex = index;
-              _pageController.jumpToPage(index);
+              if (this._selectedIndex == index) {
+                var controller = index == 0 ? _homeController : index == 1 ? _calendarController : _cafetController;
+                controller.animateTo(0.0, duration: const Duration(milliseconds: 300), curve: Curves.easeOut);
+                print('Meme bouton ! scroll up bitch');
+              } else {
+                this._selectedIndex = index;
+                _pageController.jumpToPage(index);
+              }
             });
           },
           items: buildNavigationBarItems(),
