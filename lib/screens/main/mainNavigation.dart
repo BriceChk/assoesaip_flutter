@@ -92,9 +92,9 @@ class _MainNavigationState extends State<MainNavigation> {
           onTap: (index) {
             setState(() {
               if (this._selectedIndex == index) {
+                // Scroll up if we are already on the same tab
                 var controller = index == 0 ? _homeController : index == 1 ? _calendarController : _cafetController;
                 controller.animateTo(0.0, duration: const Duration(milliseconds: 300), curve: Curves.easeOut);
-                print('Meme bouton ! scroll up bitch');
               } else {
                 this._selectedIndex = index;
                 _pageController.jumpToPage(index);
