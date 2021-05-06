@@ -7,13 +7,13 @@ import 'package:intl/intl.dart';
 import 'constants.dart';
 
 class EventsOccurrencesList extends StatelessWidget {
-  final List<EventOccurrence> events;
+  final List<EventOccurrence>? events;
 
   EventsOccurrencesList(this.events);
 
   @override
   Widget build(BuildContext context) {
-    if (events.length == 0) {
+    if (events!.length == 0) {
       return Padding(
         padding: EdgeInsets.only(top: 50),
         child: Column(
@@ -36,17 +36,17 @@ class EventsOccurrencesList extends StatelessWidget {
       );
     } else {
       return Column(
-        children: events.map((e) => _buildEventWidget(e, context)).toList(),
+        children: events!.map((e) => _buildEventWidget(e, context)).toList(),
       );
     }
   }
 
   Widget _buildEventWidget(EventOccurrence occ, BuildContext context) {
     String imageUrl = 'https://$AE_HOST/';
-    if (occ.event.project.logoFileName == null) {
+    if (occ.event!.project!.logoFileName == null) {
       imageUrl += 'build/images/project-placeholder.png';
     } else {
-      imageUrl += 'images/project-logos/' + occ.event.project.logoFileName;
+      imageUrl += 'images/project-logos/' + occ.event!.project!.logoFileName!;
     }
 
     DateFormat formatterAllDay = DateFormat("EEE dd MMM", 'fr_FR');
@@ -54,27 +54,27 @@ class EventsOccurrencesList extends StatelessWidget {
     var startDate;
     var endString = ' - ';
 
-    if (occ.event.allDay) {
-      startDate = formatterAllDay.format(occ.date.toLocal());
+    if (occ.event!.allDay!) {
+      startDate = formatterAllDay.format(occ.date!.toLocal());
     } else {
-      startDate = formatter.format(occ.date.toLocal());
+      startDate = formatter.format(occ.date!.toLocal());
     }
 
-    if (occ.event.occurrencesCount == 1) {
-      if (occ.event.allDay) {
-        endString = formatterAllDay.format(occ.event.dateEnd.toLocal());
+    if (occ.event!.occurrencesCount == 1) {
+      if (occ.event!.allDay!) {
+        endString = formatterAllDay.format(occ.event!.dateEnd!.toLocal());
         if (endString == startDate) {
           endString = '';
         } else {
           endString = ' - ' + endString;
         }
       } else {
-        endString += formatter.format(occ.event.dateEnd.toLocal());
+        endString += formatter.format(occ.event!.dateEnd!.toLocal());
       }
     } else {
-      var endDate = occ.date.add(Duration(minutes: occ.event.duration));
-      if (occ.event.allDay) {
-        if (occ.event.duration > 0) {
+      var endDate = occ.date!.add(Duration(minutes: occ.event!.duration!));
+      if (occ.event!.allDay!) {
+        if (occ.event!.duration! > 0) {
           // More than a day: show end date
           endString += formatterAllDay.format(endDate.toLocal());
         } else {
@@ -82,7 +82,7 @@ class EventsOccurrencesList extends StatelessWidget {
         }
       } else {
         var formatterTime = DateFormat("H'h'mm", 'fr_FR');
-        if (formatterAllDay.format(occ.date.toLocal()) ==
+        if (formatterAllDay.format(occ.date!.toLocal()) ==
             formatterAllDay.format(endDate.toLocal())) {
           endString += formatterTime.format(endDate.toLocal());
         } else {
@@ -97,7 +97,7 @@ class EventsOccurrencesList extends StatelessWidget {
         borderRadius: BorderRadius.circular(BORDER_RADIUS_CARD),
         boxShadow: <BoxShadow>[
           new BoxShadow(
-            color: Colors.grey[400],
+            color: Colors.grey[400]!,
             blurRadius: 3.0,
             offset: new Offset(0.0, 0.0),
           ),
@@ -133,7 +133,7 @@ class EventsOccurrencesList extends StatelessWidget {
                       ),
                       //* Container with the name of the project
                       Text(
-                        occ.event.project.name,
+                        occ.event!.project!.name!,
                         style: TextStyle(
                           fontSize: 12,
                           fontFamily: FONT_NUNITO,
@@ -158,7 +158,7 @@ class EventsOccurrencesList extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             Text(
-                              occ.event.title,
+                              occ.event!.title!,
                               style: TextStyle(
                                 fontSize: 20,
                                 fontFamily: FONT_NUNITO,
@@ -166,7 +166,7 @@ class EventsOccurrencesList extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              occ.event.abstract,
+                              occ.event!.abstract!,
                               textAlign: TextAlign.justify,
                               style: TextStyle(
                                 fontSize: 14,
@@ -202,13 +202,13 @@ class EventsOccurrencesList extends StatelessWidget {
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(13),
                                 color:
-                                    HexColor.fromHex(occ.event.category.color),
+                                    HexColor.fromHex(occ.event!.category!.color!),
                               ),
                               height: 25,
                               padding: EdgeInsets.symmetric(horizontal: 10),
                               child: Center(
                                 child: Text(
-                                  occ.event.category.name,
+                                  occ.event!.category!.name!,
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontFamily: FONT_NUNITO),

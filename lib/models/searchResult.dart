@@ -13,11 +13,11 @@ class SearchResult {
     this.description,
   });
 
-  String name;
-  String type;
-  String url;
-  int id;
-  String description;
+  String? name;
+  String? type;
+  String? url;
+  int? id;
+  String? description;
 
   factory SearchResult.fromJson(Map<String, dynamic> json) => SearchResult(
     name: json["name"],

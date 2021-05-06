@@ -40,7 +40,7 @@ void notNowDialog(context) {
           title: Text('Notifications'),
           content: Text("L'abonnement aux notifications arrivera dans une prochaine mise à jour. En attendant, tu peux les activer ou désactiver globalement sur la page profil, en haut à droite de l'accueil."),
           actions: [
-            FlatButton(
+            TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },

@@ -13,11 +13,11 @@ class ProjectPage {
     this.published,
   });
 
-  int id;
-  String name;
-  String html;
-  int orderPosition;
-  bool published;
+  int? id;
+  String? name;
+  String? html;
+  int? orderPosition;
+  bool? published;
 
   factory ProjectPage.fromJson(Map<String, dynamic> json) => ProjectPage(
     id: json["id"],

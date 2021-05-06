@@ -10,7 +10,7 @@ import 'package:url_launcher/url_launcher.dart';
 class ArticlePage extends StatefulWidget {
   ArticlePage(this.n);
 
-  final Article n;
+  final Article? n;
 
   @override
   _ArticlePageState createState() => _ArticlePageState();
@@ -19,13 +19,13 @@ class ArticlePage extends StatefulWidget {
 class _ArticlePageState extends State<ArticlePage> {
   final double titleSize = 27.5;
 
-  Article a;
+  Article? a;
   final BorderRadius buttonBorderRadius = BorderRadius.circular(10);
 
   @override
   void initState() {
     super.initState();
-    getArticle(widget.n.id).then((value) {
+    getArticle(widget.n!.id).then((value) {
       setState(() {
         a = value;
       });
@@ -66,7 +66,7 @@ class _ArticlePageState extends State<ArticlePage> {
 
   Widget _buildArticleWidget() {
     DateFormat formatter = DateFormat("dd/MM/yyyy · HH'h'mm", 'fr_FR');
-    String date = formatter.format(a.datePublished.toLocal());
+    String date = formatter.format(a!.datePublished!.toLocal());
 
     return Scaffold(
       body: ListView(
@@ -80,7 +80,7 @@ class _ArticlePageState extends State<ArticlePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  a.title,
+                  a!.title!,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontSize: titleSize,
@@ -89,7 +89,7 @@ class _ArticlePageState extends State<ArticlePage> {
                 ),
                 SizedBox(height: 10),
                 Text(
-                  a.abstract,
+                  a!.abstract!,
                   textAlign: TextAlign.justify,
                   style: TextStyle(fontFamily: FONT_NUNITO, fontSize: 14),
                 ),
@@ -105,42 +105,46 @@ class _ArticlePageState extends State<ArticlePage> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      FlatButton(
+                      OutlinedButton(
                         onPressed: () {
                           Navigator.pushNamed(context, '/project',
-                              arguments: a.project);
+                              arguments: a!.project);
                         },
                         child: FittedBox(
                           child: Text(
-                            a.project.name,
+                            a!.project!.name!,
                             style: TextStyle(
                                 fontFamily: FONT_NUNITO, color: Colors.white),
                           ),
                         ),
-                        color: COLOR_AE_BLUE,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: buttonBorderRadius),
+                        style: OutlinedButton.styleFrom(
+                          backgroundColor: COLOR_AE_BLUE,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: buttonBorderRadius),
+                        ),
                       ),
-                      FlatButton(
+                      OutlinedButton(
                         onPressed: () async {
                           if (await canLaunch(
-                              'mailto:' + a.author.username)) {
-                            await launch('mailto:' + a.author.username);
+                              'mailto:' + a!.author!.username!)) {
+                            await launch('mailto:' + a!.author!.username!);
                           } else {
                             throw 'Could not launch mailto:' +
-                                a.author.username;
+                                a!.author!.username!;
                           }
                         },
                         child: FittedBox(
                           child: Text(
-                            a.author.firstName + ' ' + a.author.lastName,
+                            a!.author!.firstName! + ' ' + a!.author!.lastName!,
                             style: TextStyle(
                                 fontFamily: FONT_NUNITO, color: Colors.white),
                           ),
                         ),
-                        color: COLOR_AE_BLUE,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: buttonBorderRadius),
+                        style: OutlinedButton.styleFrom(
+                          backgroundColor: COLOR_AE_BLUE,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: buttonBorderRadius),
+                        ),
                       ),
                     ],
                   ),
@@ -148,7 +152,7 @@ class _ArticlePageState extends State<ArticlePage> {
               ],
             ),
           ),
-          CustomWebview(a.html)
+          CustomWebview(a!.html)
         ],
       ),
     );

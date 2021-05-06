@@ -15,16 +15,16 @@ class ProjectCategory {
     this.order,
   });
 
-  int id;
-  String url;
-  String name;
-  String description;
-  String logoFileName;
-  bool visible;
-  int order;
+  int? id;
+  String? url;
+  String? name;
+  String? description;
+  String? logoFileName;
+  bool? visible;
+  int? order;
 
-  factory ProjectCategory.fromJson(Map<String, dynamic> json) {
-    if (json == null) return null;
+  factory ProjectCategory.fromJson(Map<String, dynamic>? json) {
+    if (json == null) return ProjectCategory();
 
     return ProjectCategory(
       id: json['id'],

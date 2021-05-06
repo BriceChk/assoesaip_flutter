@@ -44,18 +44,23 @@ class LoginWebViewPage extends StatelessWidget {
                   break;
                 }
               }
+
               Requests.setStoredCookies('$AE_HOST:443', map);
-              MyApp.user = await getUser();
-              await MyApp.getAndSaveToken();
-              if (MyApp.user.campus == "" || MyApp.user.promo == "") {
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (BuildContext context) => ProfilePage(firstLogin: true))
-                );
-              } else {
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (BuildContext context) => MainNavigation())
-                );
-              }
+              getUser().then((value) {
+                MyApp.user = value;
+                MyApp.getAndSaveToken().then((value) {
+                  if (MyApp.user!.campus == "" || MyApp.user!.promo == "") {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (BuildContext context) => ProfilePage(firstLogin: true))
+                    );
+                  } else {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (BuildContext context) => MainNavigation())
+                    );
+                  }
+                });
+              });
+
               return NavigationDecision.prevent;
             } else {
               return NavigationDecision.navigate;

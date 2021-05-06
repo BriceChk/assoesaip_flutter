@@ -21,14 +21,14 @@ class _CafetWidgetState extends State<CafetWidget> with AutomaticKeepAliveClient
   @override
   bool get wantKeepAlive => true;
 
-  CafetProperties cafetProperties;
+  CafetProperties? cafetProperties;
   Map<CafetItemType, List<CafetItem>> itemsMap = {
-    CafetItemType.REPAS: List(),
-    CafetItemType.BOISSON: List(),
-    CafetItemType.DESSERT: List(),
+    CafetItemType.REPAS: [],
+    CafetItemType.BOISSON:[],
+    CafetItemType.DESSERT: [],
   };
 
-  String day;
+  late String day;
 
   final RoundedRectangleBorder roundedBorder = RoundedRectangleBorder(
     borderRadius: BorderRadius.only(
@@ -54,18 +54,18 @@ class _CafetWidgetState extends State<CafetWidget> with AutomaticKeepAliveClient
     getCafetProperties().then((value) {
       setState(() {
         cafetProperties = value;
-        while (itemsMap[CafetItemType.REPAS].length == 0) {
+        while (itemsMap[CafetItemType.REPAS]!.length == 0) {
           var weekDayNumber = date.weekday.toString();
-          itemsMap[CafetItemType.REPAS].clear();
-          itemsMap[CafetItemType.BOISSON].clear();
-          itemsMap[CafetItemType.DESSERT].clear();
+          itemsMap[CafetItemType.REPAS]!.clear();
+          itemsMap[CafetItemType.BOISSON]!.clear();
+          itemsMap[CafetItemType.DESSERT]!.clear();
 
-          cafetProperties.items.forEach((i) {
-            if (i.day.contains(weekDayNumber)) {
-              itemsMap[i.type].add(i);
+          cafetProperties!.items!.forEach((i) {
+            if (i.day!.contains(weekDayNumber)) {
+              itemsMap[i.type!]!.add(i);
             }
           });
-          if (itemsMap[CafetItemType.REPAS].length == 0) {
+          if (itemsMap[CafetItemType.REPAS]!.length == 0) {
             date = date.add(Duration(days: 1));
             if (date.difference(now).inDays > 7) {
               break;
@@ -82,7 +82,7 @@ class _CafetWidgetState extends State<CafetWidget> with AutomaticKeepAliveClient
 
     var body;
 
-    if (itemsMap[CafetItemType.REPAS].isEmpty) {
+    if (itemsMap[CafetItemType.REPAS]!.isEmpty) {
       body = [
         Padding(
           padding: EdgeInsets.only(top: 50),
@@ -189,11 +189,11 @@ class _CafetWidgetState extends State<CafetWidget> with AutomaticKeepAliveClient
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(BORDER_RADIUS_CARD),
-                color: cafetProperties is CafetProperties ? (cafetProperties.isOpen ? Colors.green : Colors.red) : COLOR_AE_BLUE,
+                color: cafetProperties is CafetProperties ? (cafetProperties!.isOpen! ? Colors.green : Colors.red) : COLOR_AE_BLUE,
               ),
               margin: EdgeInsets.fromLTRB(0, 15, 10, 15),
               padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Center(child: Text(cafetProperties is CafetProperties ? (cafetProperties.isOpen ? 'Ouverte' : 'Fermée') : '')),
+              child: Center(child: Text(cafetProperties is CafetProperties ? (cafetProperties!.isOpen! ? 'Ouverte' : 'Fermée') : '')),
             )
           ],
           toolbarHeight: 60,
@@ -220,7 +220,7 @@ class _CafetWidgetState extends State<CafetWidget> with AutomaticKeepAliveClient
           padding: EdgeInsets.fromLTRB(15, 60, 15, 0),
           child: Center(
             child: Text(
-              cafetProperties is CafetProperties ? cafetProperties.message : '',
+              cafetProperties is CafetProperties ? cafetProperties!.message! : '',
               textAlign: TextAlign.justify,
               style: TextStyle(
                 fontSize: 16,
@@ -232,10 +232,10 @@ class _CafetWidgetState extends State<CafetWidget> with AutomaticKeepAliveClient
         ));
   }
 
-  Widget _buildItemList(List<CafetItem> itemsMap) {
+  Widget _buildItemList(List<CafetItem>? itemsMap) {
     if (!(cafetProperties is CafetProperties)) return NewsListWidget.newsListPlaceholder(count: 3);
 
-    var widgets = itemsMap.map((e) {
+    var widgets = itemsMap!.map((e) {
       String imageUrl = 'https://$AE_HOST/';
       if (e.imageFileName == null) {
         imageUrl += 'build/images/project-placeholder.png';
@@ -256,7 +256,7 @@ class _CafetWidgetState extends State<CafetWidget> with AutomaticKeepAliveClient
             borderRadius: BorderRadius.circular(BORDER_RADIUS_CARD),
             boxShadow: <BoxShadow>[
               new BoxShadow(
-                color: Colors.grey[400],
+                color: Colors.grey[400]!,
                 blurRadius: 3.0,
                 offset: new Offset(0.0, 0.0),
               ),
@@ -291,7 +291,7 @@ class _CafetWidgetState extends State<CafetWidget> with AutomaticKeepAliveClient
                         //* Title of card
                         FittedBox(
                           child: Text(
-                            e.name + ' · ' + format(e.price) + '€',
+                            e.name! + ' · ' + format(e.price!) + '€',
                             style: TextStyle(
                                 fontSize: 18,
                                 fontFamily: FONT_NUNITO,
@@ -300,7 +300,7 @@ class _CafetWidgetState extends State<CafetWidget> with AutomaticKeepAliveClient
                         ),
                         //* Description of the card
                         Text(
-                          e.description,
+                          e.description!,
                           style: TextStyle(
                             fontSize: 14,
                             fontFamily: FONT_NUNITO,

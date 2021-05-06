@@ -1,3 +1,5 @@
+import 'package:assoesaip_flutter/models/project.dart';
+import 'package:assoesaip_flutter/models/projectCategory.dart';
 import 'package:assoesaip_flutter/screens/main/categories/categoriesList.dart';
 import 'package:assoesaip_flutter/screens/main/categories/category/categoryPage.dart';
 import 'package:assoesaip_flutter/screens/project/projectPageWidget.dart';
@@ -14,8 +16,7 @@ class _ProjectsNavigatorState extends State<ProjectsNavigator> {
   // The use of a navigatorKey and a WillPopScope allows the use of the android native back button
   // to go back in the categories navigator without closing the whole app
   Future<bool> didPopRoute() async {
-    final NavigatorState navigator = widget.navigatorKey.currentState;
-    assert(navigator != null);
+    final NavigatorState navigator = widget.navigatorKey.currentState!;
     return await navigator.maybePop();
   }
 
@@ -32,13 +33,13 @@ class _ProjectsNavigatorState extends State<ProjectsNavigator> {
           var routes = <String, WidgetBuilder>{
             '/categories': (context) => WillPopScope(
                 child: CategoriesList(), onWillPop: () async => false),
-            '/categories/category': (context) => Category(settings.arguments),
+            '/categories/category': (context) => Category(settings.arguments as ProjectCategory?),
             '/categories/category/project': (context) =>
-                ProjectPageWidget(settings.arguments),
+                ProjectPageWidget(settings.arguments as Project?),
           };
 
-          WidgetBuilder builder = routes[settings.name];
-          return MaterialPageRoute(builder: (ctx) => builder(ctx));
+          WidgetBuilder? builder = routes[settings.name!];
+          return MaterialPageRoute(builder: (ctx) => builder!(ctx));
         },
       ),
     );

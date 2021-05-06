@@ -99,11 +99,14 @@ class WelcomePage extends StatelessWidget {
                       Padding(
                         padding:
                             EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                        child: RaisedButton(
-                          elevation: 5,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                          color: COLOR_AE_BLUE,
+                        child: OutlinedButton(
+                          style: OutlinedButton.styleFrom(
+                            backgroundColor: COLOR_AE_BLUE,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            elevation: 5,
+
+                          ),
                           child: Padding(
                             padding: EdgeInsets.symmetric(vertical: 10),
                             //* Container in order to have the button which takes all the available width

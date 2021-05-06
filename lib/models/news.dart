@@ -20,17 +20,17 @@ class News {
     this.starred,
   });
 
-  int id;
-  String content;
-  String link;
-  Article article;
-  Event event;
-  DateTime datePublished;
-  Project project;
-  bool starred;
+  int? id;
+  String? content;
+  String? link;
+  Article? article;
+  Event? event;
+  DateTime? datePublished;
+  Project? project;
+  bool? starred;
 
-  factory News.fromJson(Map<String, dynamic> json) {
-    if (json == null) return null;
+  factory News.fromJson(Map<String, dynamic>? json) {
+    if (json == null) return News();
 
     return News(
       id: json['id'],
@@ -48,10 +48,10 @@ class News {
     'id': id,
     'content': content,
     'link': link,
-    'article': article == null ? null : article.toJson(),
-    'event': event == null ? null : event.toJson(),
-    'date_published': datePublished == null ? null : datePublished.toIso8601String(),
-    'project': project == null ? null : project.toJson(),
+    'article': article == null ? null : article!.toJson(),
+    'event': event == null ? null : event!.toJson(),
+    'date_published': datePublished == null ? null : datePublished!.toIso8601String(),
+    'project': project == null ? null : project!.toJson(),
     'starred': starred,
   };
 }

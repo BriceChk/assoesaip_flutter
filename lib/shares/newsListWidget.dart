@@ -15,7 +15,7 @@ class NewsListWidget extends StatelessWidget {
   final BorderRadius splashBorderRadius = BorderRadius.circular(15);
 
   static Widget newsListPlaceholder({count: 10}) {
-    List<Widget> list = List();
+    List<Widget> list = [];
 
     for (var i = 0; i < count; i++) {
       list.add(Card(
@@ -39,7 +39,7 @@ class NewsListWidget extends StatelessWidget {
 
     return Shimmer.fromColors(
         baseColor: COLOR_SHIMMER_WHITE,
-        highlightColor: Colors.grey[200],
+        highlightColor: Colors.grey[200]!,
         child: Column(
           children: list,
         ));
@@ -76,9 +76,9 @@ class NewsListWidget extends StatelessWidget {
   }
 
   Widget _buildNewsTitle(News n) {
-    if (n.article == null && n.event == null) return null;
+    if (n.article == null && n.event == null) return Container();
 
-    var title = n.article != null ? n.article.title : n.event.title;
+    var title = n.article != null ? n.article!.title! : n.event!.title!;
 
     return Text(
       title,
@@ -100,7 +100,7 @@ class NewsListWidget extends StatelessWidget {
     } else if (n.link != null) {
       icon = FontAwesomeIcons.externalLinkAlt;
     } else {
-      return null;
+      return Container();
     }
 
     var color = COLOR_AE_BLUE;
@@ -114,13 +114,13 @@ class NewsListWidget extends StatelessWidget {
     if (n.event != null || n.article != null) {
       widgets.add(SizedBox(width: 8));
       widgets.add(Text(
-        n.event == null ? n.article.category.name : n.event.category.name,
+        n.event == null ? n.article!.category!.name! : n.event!.category!.name!,
         style: TextStyle(
             color: Colors.white,
             fontFamily: FONT_NUNITO),
       ));
 
-      color = n.event == null ? HexColor.fromHex(n.article.category.color) : HexColor.fromHex(n.event.category.color);
+      color = n.event == null ? HexColor.fromHex(n.article!.category!.color!) : HexColor.fromHex(n.event!.category!.color!);
     }
 
 
@@ -140,21 +140,21 @@ class NewsListWidget extends StatelessWidget {
 
   Widget _buildNewsWidget(News n, BuildContext context) {
     String imageUrl = 'https://$AE_HOST/';
-    if (n.project.logoFileName == null) {
+    if (n.project!.logoFileName == null) {
       imageUrl += 'build/images/project-placeholder.png';
     } else {
-      imageUrl += 'images/project-logos/' + n.project.logoFileName;
+      imageUrl += 'images/project-logos/' + n.project!.logoFileName!;
     }
 
-    String content = n.content;
+    String? content = n.content;
     if (n.article != null) {
-      content = n.article.abstract;
+      content = n.article!.abstract;
     } else if (n.event != null) {
-      content = n.event.abstract;
+      content = n.event!.abstract;
     }
 
     DateFormat formatter = DateFormat("dd/MM/yyyy · HH'h'mm", 'fr_FR');
-    String date = formatter.format(n.datePublished.toLocal());
+    String date = formatter.format(n.datePublished!.toLocal());
 
     Widget card = Padding(
       padding: EdgeInsets.symmetric(vertical: 7),
@@ -164,7 +164,7 @@ class NewsListWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(BORDER_RADIUS_CARD),
           boxShadow: <BoxShadow>[
             new BoxShadow(
-              color: Colors.grey[400],
+              color: Colors.grey[400]!,
               blurRadius: 3.0,
               offset: new Offset(0.0, 0.0),
             ),
@@ -194,7 +194,7 @@ class NewsListWidget extends StatelessWidget {
                       ),
                       //* Container with the name of the project
                       Text(
-                        n.project.name + ' | ' + date,
+                        n.project!.name! + ' | ' + date,
                         style: TextStyle(
                           fontSize: 12,
                           fontFamily: FONT_NUNITO,
@@ -223,7 +223,7 @@ class NewsListWidget extends StatelessWidget {
                           SizedBox(height: 10),
                           //* Description of the news
                           Text(
-                            content,
+                            content!,
                             textAlign: TextAlign.justify,
                             style: TextStyle(
                               fontSize: 14,
@@ -231,8 +231,6 @@ class NewsListWidget extends StatelessWidget {
                             ),
                           ),
                         ]
-                            .where((o) => o != null)
-                            .toList(), // Remove the eventually null Text for the title
                       ),
                     ),
                     //* Icon for each type of news
@@ -245,7 +243,7 @@ class NewsListWidget extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             _buildNewsIcons(n),
-                          ].where((o) => o != null).toList(),
+                          ],
                         ),
                       ),
                     ),
@@ -264,10 +262,10 @@ class NewsListWidget extends StatelessWidget {
         splashColor: COLOR_AE_BLUE,
         child: card,
         onTap: () async {
-          if (await canLaunch(n.link)) {
-            await launch(n.link);
+          if (await canLaunch(n.link!)) {
+            await launch(n.link!);
           } else {
-            throw 'Could not launch ' + n.link;
+            throw 'Could not launch ' + n.link!;
           }
         },
       );

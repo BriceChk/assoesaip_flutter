@@ -17,7 +17,7 @@ class _CategoriesListState extends State<CategoriesList>
   @override
   bool get wantKeepAlive => true;
 
-  List<ProjectCategory> categs;
+  List<ProjectCategory>? categs;
 
   @override
   void initState() {
@@ -97,7 +97,7 @@ class _CategoriesListState extends State<CategoriesList>
       return Container(
         color: Colors.white,
         child: Column(
-          children: categs.map((c) => _buildCategoryCard(c)).toList(),
+          children: categs!.map((c) => _buildCategoryCard(c)).toList(),
         ),
       );
     } else {
@@ -107,7 +107,7 @@ class _CategoriesListState extends State<CategoriesList>
 
   Widget _buildCategoryCard(ProjectCategory c) {
     String imgUrl = 'https://$AE_HOST/images/category-logos/' +
-        c.logoFileName;
+        c.logoFileName!;
 
     return Container(
       padding: EdgeInsets.only(top: 6, right: 10, left: 10, bottom: 6),
@@ -122,7 +122,7 @@ class _CategoriesListState extends State<CategoriesList>
           borderRadius: BorderRadius.circular(BORDER_RADIUS_CARD),
           boxShadow: <BoxShadow>[
             new BoxShadow(
-              color: Colors.grey[400],
+              color: Colors.grey[400]!,
               blurRadius: 3.0,
               offset: new Offset(0.0, 0.0),
             ),
@@ -159,7 +159,7 @@ class _CategoriesListState extends State<CategoriesList>
                         children: [
                           //* Title of card
                           Text(
-                            c.name,
+                            c.name!,
                             style: TextStyle(
                                 fontSize: 20,
                                 fontFamily: FONT_NUNITO,
@@ -167,7 +167,7 @@ class _CategoriesListState extends State<CategoriesList>
                           ),
                           //* Description of the card
                           Text(
-                            c.description,
+                            c.description!,
                             style: TextStyle(
                               fontSize: 14,
                               fontFamily: FONT_NUNITO,

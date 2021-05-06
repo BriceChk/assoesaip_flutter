@@ -11,12 +11,12 @@ class ArticleCategory {
     this.color,
   });
 
-  int id;
-  String name;
-  String color;
+  int? id;
+  String? name;
+  String? color;
 
-  factory ArticleCategory.fromJson(Map<String, dynamic> json) {
-    if (json == null) return null;
+  factory ArticleCategory.fromJson(Map<String, dynamic>? json) {
+    if (json == null) return ArticleCategory();
 
     return ArticleCategory(
       id: json['id'],

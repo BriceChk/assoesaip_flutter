@@ -8,7 +8,7 @@ class ProjectMembersTab extends StatelessWidget {
   final double nameSize = 18;
   final double roleSize = 16;
 
-  final List<ProjectMember> members;
+  final List<ProjectMember>? members;
 
   ProjectMembersTab(this.members);
 
@@ -23,24 +23,24 @@ class ProjectMembersTab extends StatelessWidget {
   }
 
   List<Widget> _buildList() {
-    List<Widget> list = List();
+    List<Widget> list = [];
     list.add(Padding(
         padding: EdgeInsets.fromLTRB(0, 0, 0, 15),
         child: Text(
           'Appuie sur une personne pour la contacter par mail !',
           style: TextStyle(fontStyle: FontStyle.italic),
         )));
-    list.addAll(members.map((e) => _buildMemberCard(e)).toList());
+    list.addAll(members!.map((e) => _buildMemberCard(e)).toList());
 
     return list;
   }
 
   Widget _buildMemberCard(ProjectMember p) {
     String avatarUrl = 'https://$AE_HOST/';
-    if (p.user.avatarFileName == null) {
+    if (p.user!.avatarFileName == null) {
       avatarUrl += 'build/images/placeholder.png';
     } else {
-      avatarUrl += 'images/profile-pics/' + p.user.avatarFileName;
+      avatarUrl += 'images/profile-pics/' + p.user!.avatarFileName!;
     }
 
     return InkWell(
@@ -49,7 +49,7 @@ class ProjectMembersTab extends StatelessWidget {
       onTap: () async {
         final Uri params = Uri(
           scheme: 'mailto',
-          path: p.user.username
+          path: p.user!.username
         );
         String url = params.toString();
         if (await canLaunch(url)) {
@@ -64,7 +64,7 @@ class ProjectMembersTab extends StatelessWidget {
           borderRadius: BorderRadius.circular(BORDER_RADIUS_CARD),
           boxShadow: <BoxShadow>[
             new BoxShadow(
-              color: Colors.grey[400],
+              color: Colors.grey[400]!,
               blurRadius: 3.0,
               offset: new Offset(0.0, 0.0),
             ),
@@ -92,14 +92,14 @@ class ProjectMembersTab extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        p.user.firstName + ' ' + p.user.lastName,
+                        p.user!.firstName! + ' ' + p.user!.lastName!,
                         style: TextStyle(
                             fontFamily: FONT_NUNITO,
                             fontSize: nameSize,
                             color: COLOR_NAVY_BLUE),
                       ),
                       Text(
-                        p.role + ' - ' + p.user.promo,
+                        p.role! + ' - ' + p.user!.promo!,
                         style: TextStyle(
                           fontFamily: FONT_NUNITO,
                           fontSize: roleSize,
@@ -107,7 +107,7 @@ class ProjectMembersTab extends StatelessWidget {
                       ),
                       SizedBox(height: 10),
                       Text(
-                        p.introduction,
+                        p.introduction!,
                         textAlign: TextAlign.justify,
                         style: TextStyle(
                           fontFamily: FONT_NUNITO

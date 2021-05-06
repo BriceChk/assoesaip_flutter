@@ -27,25 +27,25 @@ class Project {
     this.childrenProjects,
   });
 
-  int id;
-  String name;
-  String url;
-  String type;
-  ProjectCategory category;
-  String campus;
-  Project parentProject;
-  String keywords;
-  String email;
-  ProjectSocialInfo social;
-  String description;
-  String logoFileName;
-  String html;
-  DateTime dateAdded;
-  DateTime dateModified;
-  List<Project> childrenProjects;
+  int? id;
+  String? name;
+  String? url;
+  String? type;
+  ProjectCategory? category;
+  String? campus;
+  Project? parentProject;
+  String? keywords;
+  String? email;
+  ProjectSocialInfo? social;
+  String? description;
+  String? logoFileName;
+  String? html;
+  DateTime? dateAdded;
+  DateTime? dateModified;
+  List<Project>? childrenProjects;
 
-  factory Project.fromJson(Map<String, dynamic> json) {
-    if (json == null) return null;
+  factory Project.fromJson(Map<String, dynamic>? json) {
+    if (json == null) return Project();
 
     return Project(
       id: json['id'],
@@ -72,17 +72,17 @@ class Project {
     'name': name,
     'url': url,
     'type': type,
-    'category': category == null ? null : category.toJson(),
+    'category': category == null ? null : category!.toJson(),
     'campus': campus,
-    'parent_project': parentProject == null ? null : parentProject.toJson(),
+    'parent_project': parentProject == null ? null : parentProject!.toJson(),
     'keywords': keywords,
     'email': email,
-    'social': social == null ? null : social.toJson(),
+    'social': social == null ? null : social!.toJson(),
     'description': description,
     'logo_file_name': logoFileName,
     'html': html,
-    'date_added': dateAdded == null ? null : dateAdded.toIso8601String(),
-    'date_modified': dateModified == null ? null : dateModified.toIso8601String(),
-    'children_projects': childrenProjects == null ? null : List<dynamic>.from(childrenProjects.map((e) => e.toJson())),
+    'date_added': dateAdded == null ? null : dateAdded!.toIso8601String(),
+    'date_modified': dateModified == null ? null : dateModified!.toIso8601String(),
+    'children_projects': childrenProjects == null ? null : List<dynamic>.from(childrenProjects!.map((e) => e.toJson())),
   };
 }

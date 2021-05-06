@@ -22,7 +22,7 @@ class StarredNewsCarouselWidget extends StatelessWidget {
       automaticallyImplyLeading: false,
       backgroundColor: Colors.white,
       //* Height of the picture (carousel)
-      expandedHeight: 310,
+      expandedHeight: 330,
       stretch: true,
       //* Stretch mode remove or add some features
       flexibleSpace: FlexibleSpaceBar(
@@ -74,18 +74,18 @@ class StarredNewsCarouselWidget extends StatelessWidget {
 
   Widget _buildCarouselItem(News n, BuildContext context) {
     String imageUrl = 'https://$AE_HOST/';
-    if (n.project.logoFileName == null) {
+    if (n.project!.logoFileName == null) {
       imageUrl += 'build/images/project-placeholder.png';
     } else {
-      imageUrl += 'images/project-logos/' + n.project.logoFileName;
+      imageUrl += 'images/project-logos/' + n.project!.logoFileName!;
     }
 
     // The title is the Article title or the Event title ...
-    String title = n.article != null ? n.article.title : n.event.title;
-    String content = n.article != null ? n.article.abstract : n.event.abstract;
+    String title = n.article != null ? n.article!.title! : n.event!.title!;
+    String content = n.article != null ? n.article!.abstract! : n.event!.abstract!;
 
     DateFormat formatter = DateFormat("dd MMMM yyyy · HH'h'mm", 'fr_FR');
-    String date = formatter.format(n.datePublished.toLocal());
+    String date = formatter.format(n.datePublished!.toLocal());
 
     Widget card = Card(
       elevation: 2,
@@ -137,7 +137,7 @@ class StarredNewsCarouselWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    n.project.name,
+                    n.project!.name!,
                     style: TextStyle(
                       fontSize: 12,
                       color: Colors.white,
@@ -222,7 +222,7 @@ class StarredNewsCarouselWidget extends StatelessWidget {
                 itemBuilder: (BuildContext context, int currentIndex, int realIdx) {
                   return Shimmer.fromColors(
                     baseColor: COLOR_SHIMMER_WHITE,
-                    highlightColor: Colors.grey[200],
+                    highlightColor: Colors.grey[200]!,
                     child: Card(
                       color: Colors.white,
                       shape: RoundedRectangleBorder(

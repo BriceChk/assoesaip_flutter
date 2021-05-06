@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Category extends StatefulWidget {
-  final ProjectCategory categ;
+  final ProjectCategory? categ;
 
   Category(this.categ);
 
@@ -20,32 +20,44 @@ class Category extends StatefulWidget {
 }
 
 class _CategoryState extends State<Category> {
-  Map<String, Widget> tabs;
+  late Map<String, Widget> tabs;
 
-  String selected;
+  String? selected;
   bool iconSelected = false;
 
-  List<Project> projects;
-  List<News> news;
-  List<EventOccurrence> events;
+  List<Project> projects = [];
+  List<News> news = [];
+  List<EventOccurrence> events = [];
 
   @override
   void initState() {
     super.initState();
     selected = 'Clubs & assos';
-    getCategoryProjects(widget.categ.id).then((value) {
+    getCategoryProjects(widget.categ!.id).then((value) {
       setState(() {
-        projects = value;
+        if (value == null) {
+          //TODO Error
+        } else {
+          projects = value;
+        }
       });
     });
-    getCategoryNews(widget.categ.id).then((value) {
+    getCategoryNews(widget.categ!.id).then((value) {
       setState(() {
-        news = value;
+        if (value == null) {
+          //TODO Error
+        } else {
+          news = value;
+        }
       });
     });
-    getCategoryNextEventOccurrences(widget.categ.id).then((value) {
+    getCategoryNextEventOccurrences(widget.categ!.id).then((value) {
       setState(() {
-        events = value;
+        if (value == null) {
+          //TODO Error
+        } else {
+          events = value;
+        }
       });
     });
   }
@@ -63,21 +75,21 @@ class _CategoryState extends State<Category> {
                   title: Text('Notifications'),
                   content: Text("Tu peux choisir de t'abonner ou te désabonner aux notifications de tous les projets de cette catégorie en même temps. Pour choisir au cas par cas, clique sur un projet !"),
                   actions: [
-                    FlatButton(
+                    TextButton(
                         onPressed: () {
                           //TODO Call API abonnement
                           Navigator.of(context).pop();
                         },
                         child: Text("M'abonner à toutes les notifications")
                     ),
-                    FlatButton(
+                    TextButton(
                         onPressed: () {
                           //TODO Call API désabonnement
                           Navigator.of(context).pop();
                         },
                         child: Text("Me désabonner de toutes les notifications")
                     ),
-                    FlatButton(
+                    TextButton(
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
@@ -94,13 +106,13 @@ class _CategoryState extends State<Category> {
   @override
   Widget build(BuildContext context) {
     tabs = {
-      "Clubs & assos": projects is List<Project>
+      "Clubs & assos": projects.isNotEmpty
           ? ProjectsListTab(projects)
           : NewsListWidget.newsListPlaceholder(),
-      "Actus": news is List<News>
+      "Actus": news.isNotEmpty
           ? NewsListWidget(news)
           : NewsListWidget.newsListPlaceholder(),
-      "Calendrier": events is List<EventOccurrence>
+      "Calendrier": events.isNotEmpty
           ? EventsOccurrencesList(events)
           : NewsListWidget.newsListPlaceholder(),
     };
@@ -114,7 +126,7 @@ class _CategoryState extends State<Category> {
           SliverAppBar(
             title: FittedBox(
               child: Text(
-                widget.categ.name,
+                widget.categ!.name!,
                 style: TextStyle(
                   fontSize: 30,
                   color: Colors.white,
@@ -129,7 +141,7 @@ class _CategoryState extends State<Category> {
             toolbarHeight: 60,
             expandedHeight: 130,
             backgroundColor: COLOR_AE_BLUE,
-            flexibleSpace: _headerFlexibleSpace(widget.categ),
+            flexibleSpace: _headerFlexibleSpace(widget.categ!),
           ),
           //* All the other Widget
           SliverList(
@@ -138,7 +150,7 @@ class _CategoryState extends State<Category> {
                 Column(children: [
                   //* Widget with all the name of the categories of the association
                   _buildCategoryTabs(),
-                  tabs[selected],
+                  tabs[selected!]!,
                   //* Sizedbox of height 60 because otherwise the last one is under the navbar
                   SizedBox(height: 100),
                 ])
@@ -158,7 +170,7 @@ class _CategoryState extends State<Category> {
           padding: EdgeInsets.fromLTRB(15, 60, 15, 0),
           child: Center(
             child: Text(
-              c.description,
+              c.description!,
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 16,
@@ -171,7 +183,7 @@ class _CategoryState extends State<Category> {
   }
 
   Widget _buildCategoryTabs() {
-    List<Widget> list = List();
+    List<Widget> list = [];
 
     tabs.keys.forEach((tab) {
       Widget w = Container(

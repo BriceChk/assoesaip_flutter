@@ -7,7 +7,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter_plus/webview_flutter_plus.dart';
 
 class CustomWebview extends StatefulWidget {
-  final String html;
+  final String? html;
 
   CustomWebview(this.html);
 
@@ -16,7 +16,7 @@ class CustomWebview extends StatefulWidget {
 }
 
 class _CustomWebviewState extends State<CustomWebview> {
-  WebViewPlusController _controller;
+  WebViewPlusController? _controller;
   double _height = 1;
 
   num _stackToView = 1;
@@ -24,12 +24,12 @@ class _CustomWebviewState extends State<CustomWebview> {
   @override
   Widget build(BuildContext context) {
 
-    if (_controller is WebViewPlusController) {
+    if (_controller != null) {
       _loadHtmlFromString();
     }
 
     return IndexedStack(
-        index: _stackToView,
+        index: _stackToView as int?,
         children: [
 
           SizedBox(
@@ -40,14 +40,17 @@ class _CustomWebviewState extends State<CustomWebview> {
                 _loadHtmlFromString();
               },
               onPageFinished: (url) {
-                _controller.getHeight().then((double height) {
-                  if (_height != height) {
-                    setState(() {
-                      _height = height;
-                      _stackToView = 0;
-                    });
-                  }
-                });
+                if (_controller != null) {
+                  _controller!.getHeight().then((double height) {
+                    if (_height != height) {
+                      setState(() {
+                        _height = height;
+                        _stackToView = 0;
+                      });
+                    }
+                  });
+                }
+
               },
               javascriptMode: JavascriptMode.unrestricted,
               navigationDelegate: (action) async {
@@ -74,8 +77,9 @@ class _CustomWebviewState extends State<CustomWebview> {
     final fontUri = Uri.dataFromBytes(buffer.asUint8List(fontFile.offsetInBytes, fontFile.lengthInBytes), mimeType: 'font/opentype');
     final fontCss = '@font-face { font-family: customFont; src: url($fontUri); } * { font-family: customFont; }';
 
-    fileText = '<style>$fontCss</style>' + fileText.replaceFirst('%body%', widget.html);
-    _controller.loadUrl( Uri.dataFromString(
+    fileText = '<style>$fontCss</style>' + fileText.replaceFirst('%body%', widget.html!);
+
+    _controller!.loadUrl( Uri.dataFromString(
         fileText,
         mimeType: 'text/html',
         encoding: Encoding.getByName('utf-8')

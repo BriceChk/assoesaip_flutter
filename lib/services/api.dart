@@ -17,7 +17,7 @@ import 'package:requests/requests.dart';
 
 String url = 'https://$AE_HOST/api';
 
-Future<User> getUser() async {
+Future<User?> getUser() async {
   final response = await Requests.get('$url/profile');
   if (response.hasError) {
     return null;
@@ -25,7 +25,7 @@ Future<User> getUser() async {
   return userFromJson(response.content());
 }
 
-Future<List<News>> getNews() async {
+Future<List<News>?> getNews() async {
   final response = await Requests.get('$url/news');
   if (response.hasError) {
     return null;
@@ -36,7 +36,7 @@ Future<List<News>> getNews() async {
   return jsonArray.map((e) => News.fromJson(e)).toList();
 }
 
-Future<List<News>> getStarredNews() async {
+Future<List<News>?> getStarredNews() async {
   final response = await Requests.get('$url/news/starred');
   if (response.hasError) {
     return null;
@@ -47,7 +47,7 @@ Future<List<News>> getStarredNews() async {
   return jsonArray.map((e) => News.fromJson(e)).toList();
 }
 
-Future<List<ProjectCategory>> getProjectCategories() async {
+Future<List<ProjectCategory>?> getProjectCategories() async {
   final response = await Requests.get('$url/project-category');
   if (response.hasError) {
     return null;
@@ -58,7 +58,7 @@ Future<List<ProjectCategory>> getProjectCategories() async {
   return jsonArray.map((e) => ProjectCategory.fromJson(e)).toList();
 }
 
-Future<List<Project>> getCategoryProjects(int categId) async {
+Future<List<Project>?> getCategoryProjects(int? categId) async {
   final response = await Requests.get('$url/project-category/$categId');
   if (response.hasError) {
     return null;
@@ -69,7 +69,7 @@ Future<List<Project>> getCategoryProjects(int categId) async {
   return jsonArray.map((e) => Project.fromJson(e)).toList();
 }
 
-Future<List<News>> getCategoryNews(int categId) async {
+Future<List<News>?> getCategoryNews(int? categId) async {
   final response = await Requests.get('$url/project-category/$categId/news');
   if (response.hasError) {
     return null;
@@ -80,7 +80,7 @@ Future<List<News>> getCategoryNews(int categId) async {
   return jsonArray.map((e) => News.fromJson(e)).toList();
 }
 
-Future<Article> getArticle(int articleId) async {
+Future<Article?> getArticle(int? articleId) async {
   final response = await Requests.get('$url/article/$articleId');
   if (response.hasError) {
     return null;
@@ -89,7 +89,7 @@ Future<Article> getArticle(int articleId) async {
   return articleFromJson(response.content());
 }
 
-Future<Event> getEvent(int eventId) async {
+Future<Event?> getEvent(int? eventId) async {
   final response = await Requests.get('$url/event/$eventId');
   if (response.hasError) {
     return null;
@@ -98,7 +98,7 @@ Future<Event> getEvent(int eventId) async {
   return eventFromJson(response.content());
 }
 
-Future<Project> getProject(int projectId) async {
+Future<Project?> getProject(int? projectId) async {
   final response = await Requests.get('$url/project/$projectId');
   if (response.hasError) {
     return null;
@@ -107,7 +107,7 @@ Future<Project> getProject(int projectId) async {
   return projectFromJson(response.content());
 }
 
-Future<List<ProjectPage>> getProjectPages(int projectId) async {
+Future<List<ProjectPage>?> getProjectPages(int? projectId) async {
   final response = await Requests.get('$url/project/$projectId/pages');
   if (response.hasError) {
     return null;
@@ -118,7 +118,7 @@ Future<List<ProjectPage>> getProjectPages(int projectId) async {
   return jsonArray.map((e) => ProjectPage.fromJson(e)).toList();
 }
 
-Future<List<ProjectMember>> getProjectMembers(int projectId) async {
+Future<List<ProjectMember>?> getProjectMembers(int? projectId) async {
   final response = await Requests.get('$url/project/$projectId/members');
   if (response.hasError) {
     return null;
@@ -129,7 +129,7 @@ Future<List<ProjectMember>> getProjectMembers(int projectId) async {
   return jsonArray.map((e) => ProjectMember.fromJson(e)).toList();
 }
 
-Future<List<News>> getProjectNews(int projectId) async {
+Future<List<News>?> getProjectNews(int? projectId) async {
   final response = await Requests.get('$url/project/$projectId/news');
   if (response.hasError) {
     return null;
@@ -140,7 +140,7 @@ Future<List<News>> getProjectNews(int projectId) async {
   return jsonArray.map((e) => News.fromJson(e)).toList();
 }
 
-Future<User> updateProfile(User user) async {
+Future<User?> updateProfile(User user) async {
   final response = await Requests.post('$url/profile', body: user.toJson(), bodyEncoding: RequestBodyEncoding.JSON);
   if (response.hasError) {
     return null;
@@ -148,7 +148,7 @@ Future<User> updateProfile(User user) async {
   return userFromJson(response.content());
 }
 
-Future<List<SearchResult>> getSearchResults(String query) async {
+Future<List<SearchResult>?> getSearchResults(String query) async {
   final response = await Requests.get('$url/search/$query');
   if (response.hasError) {
     return null;
@@ -159,7 +159,7 @@ Future<List<SearchResult>> getSearchResults(String query) async {
   return jsonArray.map((e) => SearchResult.fromJson(e)).toList();
 }
 
-Future<FcmToken> saveToken(FcmToken token) async {
+Future<FcmToken?> saveToken(FcmToken token) async {
   final response = await Requests.post('$url/profile/fcm-token', body: token.toJson(), bodyEncoding: RequestBodyEncoding.JSON);
   if (response.hasError) {
     return null;
@@ -167,7 +167,7 @@ Future<FcmToken> saveToken(FcmToken token) async {
   return fcmTokenFromJson(response.content());
 }
 
-Future<List<EventOccurrence>> getNextEventOccurrences() async {
+Future<List<EventOccurrence>?> getNextEventOccurrences() async {
   final response = await Requests.get('$url/event/next-occurrences');
   if (response.hasError) {
     return null;
@@ -176,7 +176,7 @@ Future<List<EventOccurrence>> getNextEventOccurrences() async {
   return jsonArray.map((e) => EventOccurrence.fromJson(e)).toList();
 }
 
-Future<List<EventOccurrence>> getCategoryNextEventOccurrences(int categId) async {
+Future<List<EventOccurrence>?> getCategoryNextEventOccurrences(int? categId) async {
   final response = await Requests.get('$url/project-category/$categId/next-event-occurrences');
   if (response.hasError) {
     return null;
@@ -185,7 +185,7 @@ Future<List<EventOccurrence>> getCategoryNextEventOccurrences(int categId) async
   return jsonArray.map((e) => EventOccurrence.fromJson(e)).toList();
 }
 
-Future<List<EventOccurrence>> getProjectNextEventOccurrences(int projectId) async {
+Future<List<EventOccurrence>?> getProjectNextEventOccurrences(int? projectId) async {
   final response = await Requests.get('$url/project/$projectId/next-event-occurrences');
   if (response.hasError) {
     return null;
@@ -194,7 +194,7 @@ Future<List<EventOccurrence>> getProjectNextEventOccurrences(int projectId) asyn
   return jsonArray.map((e) => EventOccurrence.fromJson(e)).toList();
 }
 
-Future<CafetProperties> getCafetProperties() async {
+Future<CafetProperties?> getCafetProperties() async {
   final response = await Requests.get('$url/cafet');
   if (response.hasError) {
     return null;

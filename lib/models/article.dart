@@ -25,22 +25,22 @@ class Article {
     this.category,
   });
 
-  int id;
-  String url;
-  String title;
-  User author;
-  Project project;
-  String abstract;
-  String html;
-  DateTime dateCreated;
-  DateTime dateEdited;
-  DateTime datePublished;
-  bool published;
-  bool private;
-  ArticleCategory category;
+  int? id;
+  String? url;
+  String? title;
+  User? author;
+  Project? project;
+  String? abstract;
+  String? html;
+  DateTime? dateCreated;
+  DateTime? dateEdited;
+  DateTime? datePublished;
+  bool? published;
+  bool? private;
+  ArticleCategory? category;
 
-  factory Article.fromJson(Map<String, dynamic> json) {
-    if (json == null) return null;
+  factory Article.fromJson(Map<String, dynamic>? json) {
+    if (json == null) return Article(id: -1);
 
     return Article(
       id: json['id'],
@@ -63,15 +63,15 @@ class Article {
     'id': id,
     'url': url,
     'title': title,
-    'author': author == null ? null : author.toJson(),
-    'project': project == null ? null : project.toJson(),
+    'author': author == null ? null : author!.toJson(),
+    'project': project == null ? null : project!.toJson(),
     'abstract': abstract,
     'html': html,
-    'date_created': dateCreated == null ? null : dateCreated.toIso8601String(),
-    'date_edited': dateEdited == null ? null : dateEdited.toIso8601String(),
-    'date_published': datePublished == null ? null : datePublished.toIso8601String(),
+    'date_created': dateCreated == null ? null : dateCreated!.toIso8601String(),
+    'date_edited': dateEdited == null ? null : dateEdited!.toIso8601String(),
+    'date_published': datePublished == null ? null : datePublished!.toIso8601String(),
     'published': published,
     'private': private,
-    'category': category == null ? null : category.toJson(),
+    'category': category == null ? null : category!.toJson(),
   };
 }

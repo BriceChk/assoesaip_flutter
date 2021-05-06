@@ -9,7 +9,7 @@ import 'package:url_launcher/url_launcher.dart';
 class EventPage extends StatefulWidget {
   EventPage(this.n);
 
-  final Event n;
+  final Event? n;
   @override
   _EventPageState createState() => _EventPageState();
 }
@@ -17,7 +17,7 @@ class EventPage extends StatefulWidget {
 class _EventPageState extends State<EventPage> {
   final double titleSize = 27.5;
 
-  Event e;
+  Event? e;
 
   final BorderRadius buttonBorderRadius = BorderRadius.circular(10);
   final BorderRadius bottomSheetBorderRadius = BorderRadius.only(
@@ -30,7 +30,7 @@ class _EventPageState extends State<EventPage> {
   @override
   void initState() {
     super.initState();
-    getEvent(widget.n.id).then((value) {
+    getEvent(widget.n!.id).then((value) {
       setState(() {
         e = value;
       });
@@ -70,7 +70,7 @@ class _EventPageState extends State<EventPage> {
   }
 
   Widget _buildEventWidget() {
-    String date = formatter.format(e.datePublished.toLocal());
+    String date = formatter.format(e!.datePublished!.toLocal());
 
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
@@ -92,7 +92,7 @@ class _EventPageState extends State<EventPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  e.title,
+                  e!.title!,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontSize: titleSize,
@@ -101,7 +101,7 @@ class _EventPageState extends State<EventPage> {
                 ),
                 SizedBox(height: 10),
                 Text(
-                  e.abstract,
+                  e!.abstract!,
                   textAlign: TextAlign.justify,
                   style: TextStyle(fontFamily: FONT_NUNITO, fontSize: 14),
                 ),
@@ -116,48 +116,52 @@ class _EventPageState extends State<EventPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    FlatButton(
+                    OutlinedButton(
                       onPressed: () {
                         Navigator.pushNamed(context, '/project',
-                            arguments: e.project);
+                            arguments: e!.project);
                       },
                       child: FittedBox(
                         child: Text(
-                          e.project.name,
+                          e!.project!.name!,
                           style: TextStyle(
                               fontFamily: FONT_NUNITO, color: Colors.white),
                         ),
                       ),
-                      color: COLOR_AE_BLUE,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: buttonBorderRadius),
+                      style: OutlinedButton.styleFrom(
+                        backgroundColor: COLOR_AE_BLUE,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: buttonBorderRadius),
+                      ),
                     ),
-                    FlatButton(
+                    OutlinedButton(
                       onPressed: () async {
-                        if (await canLaunch('mailto:' + e.author.username)) {
-                          await launch('mailto:' + e.author.username);
+                        if (await canLaunch('mailto:' + e!.author!.username!)) {
+                          await launch('mailto:' + e!.author!.username!);
                         } else {
                           throw 'Could not launch mailto:' +
-                              e.author.username;
+                              e!.author!.username!;
                         }
                       },
                       child: FittedBox(
                         child: Text(
-                          e.author.firstName + ' ' + e.author.lastName,
+                          e!.author!.firstName! + ' ' + e!.author!.lastName!,
                           style: TextStyle(
                               fontFamily: FONT_NUNITO, color: Colors.white),
                         ),
                       ),
-                      color: COLOR_AE_BLUE,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: buttonBorderRadius),
+                      style: OutlinedButton.styleFrom(
+                        backgroundColor: COLOR_AE_BLUE,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: buttonBorderRadius),
+                      ),
                     ),
                   ],
                 ),
               ],
             ),
           ),
-          CustomWebview(e.html)
+          CustomWebview(e!.html)
         ],
       ),
     );
@@ -169,13 +173,13 @@ class _EventPageState extends State<EventPage> {
     List<String> occurenceList = [];
     DateFormat formatterAllDay = DateFormat("EEEE dd MMM", 'fr_FR');
 
-    if (e.occurrencesCount == 1) {
-      if (e.allDay) {
-        dateStart = formatterAllDay.format(e.dateStart.toLocal()) + ', toute la journée';
-        dateEnd = formatterAllDay.format(e.dateEnd.toLocal()) + ', toute la journée';
+    if (e!.occurrencesCount == 1) {
+      if (e!.allDay!) {
+        dateStart = formatterAllDay.format(e!.dateStart!.toLocal()) + ', toute la journée';
+        dateEnd = formatterAllDay.format(e!.dateEnd!.toLocal()) + ', toute la journée';
       } else {
-        dateStart = formatter.format(e.dateStart.toLocal());
-        dateEnd = formatter.format(e.dateEnd.toLocal());
+        dateStart = formatter.format(e!.dateStart!.toLocal());
+        dateEnd = formatter.format(e!.dateEnd!.toLocal());
       }
 
       if (dateStart == dateEnd) {
@@ -215,12 +219,12 @@ class _EventPageState extends State<EventPage> {
         );
       }
     } else {
-      if (e.occurrences.length == 0) {
+      if (e!.occurrences!.length == 0) {
         return Text("Toutes les dates sont passées");
       } else {
-        if (e.allDay) {
-          for (var item in e.occurrences) {
-            occurenceList.add(formatterAllDay.format(item.date.toLocal()));
+        if (e!.allDay!) {
+          for (var item in e!.occurrences!) {
+            occurenceList.add(formatterAllDay.format(item.date!.toLocal()));
           }
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -240,19 +244,19 @@ class _EventPageState extends State<EventPage> {
             );
           }).toList());
         } else {
-          for (var item in e.occurrences) {
+          for (var item in e!.occurrences!) {
             //! Ici pour 'titre de l'evenement' vas dans le else alors qu'il ne devrait pas
             var formatterTime = DateFormat("HH'h'mm", 'fr_FR');
-            var endDate = item.date.add(Duration(minutes: e.duration));
-            if (formatterAllDay.format(item.date) ==
+            var endDate = item.date!.add(Duration(minutes: e!.duration!));
+            if (formatterAllDay.format(item.date!) ==
                 formatterAllDay.format(endDate)) {
               dateEnd = formatterTime.format(endDate.toLocal());
               occurenceList
-                  .add(formatter.format(item.date.toLocal()) + ' - ' + dateEnd);
+                  .add(formatter.format(item.date!.toLocal()) + ' - ' + dateEnd);
             } else {
               dateEnd = formatter.format(endDate.toLocal());
               occurenceList
-                  .add(formatter.format(item.date.toLocal()) + ' - ' + dateEnd);
+                  .add(formatter.format(item.date!.toLocal()) + ' - ' + dateEnd);
             }
           }
           return Column(

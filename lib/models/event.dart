@@ -35,31 +35,31 @@ class Event {
     this.occurrences,
   });
 
-  int id;
-  String url;
-  String title;
-  User author;
-  Project project;
-  String abstract;
-  String html;
-  DateTime dateCreated;
-  DateTime dateEdited;
-  DateTime datePublished;
-  bool published;
-  bool private;
-  EventCategory category;
-  DateTime dateStart;
-  DateTime dateEnd;
-  int duration;
-  bool allDay;
-  String daysOfWeek;
-  int intervalCount;
-  String intervalType;
-  int occurrencesCount;
-  List<EventOccurrence> occurrences;
+  int? id;
+  String? url;
+  String? title;
+  User? author;
+  Project? project;
+  String? abstract;
+  String? html;
+  DateTime? dateCreated;
+  DateTime? dateEdited;
+  DateTime? datePublished;
+  bool? published;
+  bool? private;
+  EventCategory? category;
+  DateTime? dateStart;
+  DateTime? dateEnd;
+  int? duration;
+  bool? allDay;
+  String? daysOfWeek;
+  int? intervalCount;
+  String? intervalType;
+  int? occurrencesCount;
+  List<EventOccurrence>? occurrences;
 
-  factory Event.fromJson(Map<String, dynamic> json) {
-    if (json == null) return null;
+  factory Event.fromJson(Map<String, dynamic>? json) {
+    if (json == null) return Event();
 
     return Event(
       id: json['id'],
@@ -91,24 +91,24 @@ class Event {
     'id': id,
     'url': url,
     'title': title,
-    'author': author == null ? null : author.toJson(),
-    'project': project == null ? null : project.toJson(),
+    'author': author == null ? null : author!.toJson(),
+    'project': project == null ? null : project!.toJson(),
     'abstract': abstract,
     'html': html,
-    'date_created': dateCreated == null ? null : dateCreated.toIso8601String(),
-    'date_edited': dateEdited == null ? null : dateEdited.toIso8601String(),
-    'date_published': datePublished == null ? null : datePublished.toIso8601String(),
+    'date_created': dateCreated == null ? null : dateCreated!.toIso8601String(),
+    'date_edited': dateEdited == null ? null : dateEdited!.toIso8601String(),
+    'date_published': datePublished == null ? null : datePublished!.toIso8601String(),
     'published': published,
     'private': private,
-    'category': category == null ? null : category.toJson(),
-    'date_start': dateStart == null ? null : dateStart.toIso8601String(),
-    'date_end': dateEnd == null ? null : dateEnd.toIso8601String(),
+    'category': category == null ? null : category!.toJson(),
+    'date_start': dateStart == null ? null : dateStart!.toIso8601String(),
+    'date_end': dateEnd == null ? null : dateEnd!.toIso8601String(),
     'duration': duration,
     'all_day': allDay,
     'days_of_week': daysOfWeek,
     'interval_count': intervalCount,
     'interval_type': intervalType,
     'occurrences_count': occurrencesCount,
-    'occurrences': occurrences == null ? null : List<dynamic>.from(occurrences.map((x) => x.toJson())),
+    'occurrences': occurrences == null ? null : List<dynamic>.from(occurrences!.map((x) => x.toJson())),
   };
 }

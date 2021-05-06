@@ -17,18 +17,18 @@ class User {
     this.avatarFileName,
   });
 
-  String fullNameAndEmail;
-  int id;
-  String firstName;
-  String lastName;
-  String username;
-  String msId;
-  String promo;
-  String campus;
-  String avatarFileName;
+  String? fullNameAndEmail;
+  int? id;
+  String? firstName;
+  String? lastName;
+  String? username;
+  String? msId;
+  String? promo;
+  String? campus;
+  String? avatarFileName;
 
-  factory User.fromJson(Map<String, dynamic> json) {
-    if (json == null) return null;
+  factory User.fromJson(Map<String, dynamic>? json) {
+    if (json == null) return User();
 
     return User(
       fullNameAndEmail: json['full_name_and_email'],

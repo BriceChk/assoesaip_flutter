@@ -2,15 +2,15 @@ import 'package:assoesaip_flutter/main.dart';
 import 'package:assoesaip_flutter/models/projectCategory.dart';
 import 'package:assoesaip_flutter/screens/main/cafet/cafet.dart';
 import 'package:assoesaip_flutter/screens/main/calendar/calendar.dart';
-import 'package:assoesaip_flutter/screens/main/homePage/homePage.dart';
 import 'package:assoesaip_flutter/screens/main/categories/categoriesNavigator.dart';
+import 'package:assoesaip_flutter/screens/main/homePage/homePage.dart';
 import 'package:assoesaip_flutter/shares/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 
 class MainNavigation extends StatefulWidget {
   final int tabIndex;
-  final ProjectCategory category;
+  final ProjectCategory? category;
 
   MainNavigation({this.tabIndex = 0, this.category});
 
@@ -20,8 +20,8 @@ class MainNavigation extends StatefulWidget {
 
 class _MainNavigationState extends State<MainNavigation> {
   //TODO_ variable
-  int _selectedIndex;
-  PageController _pageController;
+  int? _selectedIndex;
+  PageController? _pageController;
 
   //TODO_ Page of the App
   List<Widget> tabPages = [];
@@ -53,19 +53,19 @@ class _MainNavigationState extends State<MainNavigation> {
   void initState() {
     super.initState();
     _selectedIndex = widget.tabIndex;
-    _pageController = PageController(initialPage: _selectedIndex);
+    _pageController = PageController(initialPage: _selectedIndex!);
 
     tabPages.add(HomePage(_homeController));
     tabPages.add(CalendarWidget(_calendarController));
     tabPages.add(ProjectsNavigator());
-    if (MyApp.user.campus == "Angers") {
+    if (MyApp.user!.campus == "Angers") {
       tabPages.add(CafetWidget(_cafetController));
     }
   }
 
   @override
   void dispose() {
-    _pageController.dispose();
+    _pageController!.dispose();
     super.dispose();
   }
 
@@ -88,7 +88,7 @@ class _MainNavigationState extends State<MainNavigation> {
           unselectedItemColor: unselectedIconColor,
           backgroundColor: navBarColor,
           showUnselectedLabels: true,
-          currentIndex: _selectedIndex,
+          currentIndex: _selectedIndex!,
           onTap: (index) {
             setState(() {
               if (this._selectedIndex == index) {
@@ -97,7 +97,7 @@ class _MainNavigationState extends State<MainNavigation> {
                 controller.animateTo(0.0, duration: const Duration(milliseconds: 300), curve: Curves.easeOut);
               } else {
                 this._selectedIndex = index;
-                _pageController.jumpToPage(index);
+                _pageController!.animateToPage(index, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
               }
             });
           },
@@ -129,7 +129,7 @@ class _MainNavigationState extends State<MainNavigation> {
       ),
     ];
 
-    if (MyApp.user.campus == 'Angers') {
+    if (MyApp.user!.campus == 'Angers') {
       items.add(BottomNavigationBarItem(
         icon: Icon(Icons.fastfood),
         label: 'Cafet\'',

@@ -13,9 +13,9 @@ class CafetProperties {
     this.message,
   });
 
-  List<CafetItem> items;
-  bool isOpen;
-  String message;
+  List<CafetItem>? items;
+  bool? isOpen;
+  String? message;
 
   factory CafetProperties.fromJson(Map<String, dynamic> json) => CafetProperties(
     items: List<CafetItem>.from(json["items"].map((x) => CafetItem.fromJson(x))),
@@ -24,7 +24,7 @@ class CafetProperties {
   );
 
   Map<String, dynamic> toJson() => {
-    "items": List<dynamic>.from(items.map((x) => x.toJson())),
+    "items": List<dynamic>.from(items!.map((x) => x.toJson())),
     "is_open": isOpen,
     "message": message,
   };

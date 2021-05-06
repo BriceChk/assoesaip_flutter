@@ -13,12 +13,12 @@ class EventOccurrence {
     this.event,
   });
 
-  int id;
-  DateTime date;
-  Event event;
+  int? id;
+  DateTime? date;
+  Event? event;
 
-  factory EventOccurrence.fromJson(Map<String, dynamic> json) {
-    if (json == null) return null;
+  factory EventOccurrence.fromJson(Map<String, dynamic>? json) {
+    if (json == null) return EventOccurrence();
 
     return EventOccurrence(
       id: json['id'],
@@ -29,7 +29,7 @@ class EventOccurrence {
 
   Map<String, dynamic> toJson() => {
     'id': id,
-    'date': date.toIso8601String(),
-    'event': event == null ? null : event.toJson(),
+    'date': date!.toIso8601String(),
+    'event': event == null ? null : event!.toJson(),
   };
 }

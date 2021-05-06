@@ -11,9 +11,9 @@ class FcmToken {
     this.notificationsEnabled,
   });
 
-  String instanceId;
-  String token;
-  bool notificationsEnabled;
+  String? instanceId;
+  String? token;
+  bool? notificationsEnabled;
 
   factory FcmToken.fromJson(Map<String, dynamic> json) => FcmToken(
     instanceId: json["instance_id"],

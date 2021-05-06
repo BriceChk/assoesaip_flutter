@@ -4,7 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class ProjectsListTab extends StatefulWidget {
-  final List<Project> projects;
+  final List<Project>? projects;
 
   ProjectsListTab(this.projects);
 
@@ -24,7 +24,7 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
       child: Container(
         width: double.infinity,
         child: Column(
-            children: widget.projects.map((e) {
+            children: widget.projects!.map((e) {
               if (e.type == 'Association')
                 return _buildAssoWidget(e);
               return _buildClubWidget(e);
@@ -38,11 +38,11 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
     if (p.logoFileName == null) {
       imageUrl += 'build/images/project-placeholder.png';
     } else {
-      imageUrl += 'images/project-logos/' + p.logoFileName;
+      imageUrl += 'images/project-logos/' + p.logoFileName!;
     }
 
     // Sort children projects
-    p.childrenProjects.sort((a, b) => a.name.compareTo(b.name));
+    p.childrenProjects!.sort((a, b) => a.name!.compareTo(b.name!));
 
     return Column(
       children: [
@@ -57,7 +57,7 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
                 borderRadius: BorderRadius.circular(BORDER_RADIUS_CARD),
                 boxShadow: <BoxShadow>[
                   new BoxShadow(
-                    color: Colors.grey[400],
+                    color: Colors.grey[400]!,
                     blurRadius: 3.0,
                     offset: new Offset(0.0, 0.0),
                   ),
@@ -96,7 +96,7 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
                               ),
                             ),
                             Text(
-                              p.name,
+                              p.name!,
                               style: TextStyle(
                                 fontSize: 18,
                                 fontFamily: FONT_NUNITO,
@@ -110,7 +110,7 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
                       Padding(
                         padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
                         child: Text(
-                          p.description,
+                          p.description!,
                           textAlign: TextAlign.justify,
                           style: TextStyle(
                             fontSize: 15,
@@ -126,7 +126,7 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
           ),
         ),
         Column(
-            children: p.childrenProjects
+            children: p.childrenProjects!
                 .map((club) => _buildClubWidget(club))
                 .toList())
       ],
@@ -138,7 +138,7 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
     if (p.logoFileName == null) {
       imageUrl += 'build/images/project-placeholder.png';
     } else {
-      imageUrl += 'images/project-logos/' + p.logoFileName;
+      imageUrl += 'images/project-logos/' + p.logoFileName!;
     }
     return Padding(
       padding: EdgeInsets.only(right: 15, left: 15, bottom: 15),
@@ -151,7 +151,7 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
             borderRadius: BorderRadius.circular(BORDER_RADIUS_CARD),
             boxShadow: <BoxShadow>[
               new BoxShadow(
-                color: Colors.grey[400],
+                color: Colors.grey[400]!,
                 blurRadius: 3.0,
                 offset: new Offset(0.0, 0.0),
               ),
@@ -190,7 +190,7 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
                           ),
                         ),
                         Text(
-                          p.name,
+                          p.name!,
                           style: TextStyle(
                             fontSize: 18,
                             fontFamily: FONT_NUNITO,
@@ -204,7 +204,7 @@ class _ProjectsListTabState extends State<ProjectsListTab> {
                   Padding(
                     padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
                     child: Text(
-                      p.description,
+                      p.description!,
                       textAlign: TextAlign.justify,
                       style: TextStyle(
                         fontSize: 15,

@@ -15,13 +15,13 @@ class CafetItem {
     this.day,
   });
 
-  int id;
-  String name;
-  String description;
+  int? id;
+  String? name;
+  String? description;
   dynamic imageFileName;
-  CafetItemType type;
-  double price;
-  String day;
+  CafetItemType? type;
+  double? price;
+  String? day;
 
   factory CafetItem.fromJson(Map<String, dynamic> json) => CafetItem(
     id: json["id"],
@@ -38,7 +38,7 @@ class CafetItem {
     "name": name,
     "description": description,
     "image_file_name": imageFileName,
-    "type": typeValues.reverse[type],
+    "type": typeValues.reverse![type!],
     "price": price,
     "day": day,
   };
@@ -54,11 +54,11 @@ final typeValues = EnumValues({
 
 class EnumValues<T> {
   Map<String, T> map;
-  Map<T, String> reverseMap;
+  Map<T, String>? reverseMap;
 
   EnumValues(this.map);
 
-  Map<T, String> get reverse {
+  Map<T, String>? get reverse {
     if (reverseMap == null) {
       reverseMap = map.map((k, v) => new MapEntry(v, k));
     }

@@ -15,7 +15,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ProjectPageWidget extends StatefulWidget {
-  final Project p;
+  final Project? p;
 
   ProjectPageWidget(this.p);
 
@@ -32,43 +32,63 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
     ),
   );
 
-  Project project;
-  List<News> news;
-  List<ProjectPage> pages;
-  List<ProjectMember> members;
-  List<EventOccurrence> events;
+  Project? project;
+  List<News> news = [];
+  List<ProjectPage> pages = [];
+  List<ProjectMember> members = [];
+  List<EventOccurrence> events = [];
 
-  Map<String, Widget> tabs;
-  String selected;
+  late Map<String?, Widget> tabs;
+  String? selected;
   bool iconSelected = false;
 
   @override
   void initState() {
     super.initState();
     selected = 'Accueil';
-    getProject(widget.p.id).then((value) {
+    getProject(widget.p!.id).then((value) {
       setState(() {
-        project = value;
+        if (value == null) {
+          //TODO Error
+        } else {
+          project = value;
+        }
       });
     });
-    getProjectPages(widget.p.id).then((value) {
+    getProjectPages(widget.p!.id).then((value) {
       setState(() {
-        pages = value;
+        if (value == null) {
+          //TODO Error
+        } else {
+          pages = value;
+        }
       });
     });
-    getProjectMembers(widget.p.id).then((value) {
+    getProjectMembers(widget.p!.id).then((value) {
       setState(() {
-        members = value;
+        if (value == null) {
+          //TODO Error
+        } else {
+          members = value;
+        }
       });
     });
-    getProjectNews(widget.p.id).then((value) {
+    getProjectNews(widget.p!.id).then((value) {
       setState(() {
-        news = value;
+        if (value == null) {
+          //TODO Error
+        } else {
+          news = value;
+        }
       });
     });
-    getProjectNextEventOccurrences(widget.p.id).then((value) {
+    getProjectNextEventOccurrences(widget.p!.id).then((value) {
       setState(() {
-        events = value;
+        if (value == null) {
+          //TODO Error
+        } else {
+          events = value;
+        }
       });
     });
   }
@@ -85,7 +105,7 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
                 title: Text('Se désabonner des notifications'),
                 content: Text("Tu ne recevras plus de notification lors de la publication d'actus."),
                 actions: [
-                  FlatButton(
+                  TextButton(
                       onPressed: () {
                         //TODO Call API désabonnement
                         Navigator.of(context).pop();
@@ -96,7 +116,7 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
                       },
                       child: Text('Confirmer')
                   ),
-                  FlatButton(
+                  TextButton(
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
@@ -121,7 +141,7 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
                   title: Text("S'abonner aux notifications"),
                   content: Text("Tu recevras une notification lors de la publication d'actus (articles, événements ...)."),
                   actions: [
-                    FlatButton(
+                    TextButton(
                         onPressed: () {
                           //TODO Call API abonnement
                           Navigator.of(context).pop();
@@ -131,7 +151,7 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
                         },
                         child: Text('Confirmer')
                     ),
-                    FlatButton(
+                    TextButton(
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
@@ -149,13 +169,13 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
   @override
   Widget build(BuildContext context) {
     tabs = {
-      'Accueil': project is Project
-          ? CustomWebview(project.html)
+      'Accueil': project != null
+          ? CustomWebview(project!.html)
           : CircularProgressPlaceholder(),
-      'Membres': members is List<ProjectMember>
+      'Membres': members.isNotEmpty
           ? ProjectMembersTab(members)
           : NewsListWidget.newsListPlaceholder(),
-      'Actus': news is List<News>
+      'Actus': news.isNotEmpty
           ? NewsListWidget(news)
           : NewsListWidget.newsListPlaceholder(),
       'Calendrier': events is List<EventOccurrence>
@@ -178,7 +198,7 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
             SliverAppBar(
               title: FittedBox(
                 child: Text(
-                  widget.p.name,
+                  widget.p!.name!,
                   style: TextStyle(
                     fontSize: 30,
                     color: Colors.white,
@@ -202,7 +222,7 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
                   Column(
                     children: [
                       _buildTabs(),
-                      tabs[selected],
+                      tabs[selected]!,
                       SizedBox(height: 70),
                     ],
                   )
@@ -226,7 +246,7 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              widget.p.description,
+              widget.p!.description!,
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 16,
@@ -258,15 +278,15 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
   }
 
   List<Widget> _buildSocialNetworks() {
-    List<Widget> list = List();
+    List<Widget> list = [];
 
-    if (project.email != '') {
+    if (project!.email != '') {
       list.add(GestureDetector(
         onTap: () async {
-          if (await canLaunch('mailto:' + project.email)) {
-            await launch('mailto:' + project.email);
+          if (await canLaunch('mailto:' + project!.email!)) {
+            await launch('mailto:' + project!.email!);
           } else {
-            throw 'Could not launch mailto:' + project.email;
+            throw 'Could not launch mailto:' + project!.email!;
           }
         },
         child: Container(
@@ -285,7 +305,7 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
       ));
     }
 
-    if (project.social != null) {
+    if (project!.social != null) {
       var networkIcon = {
         'fb': FontAwesomeIcons.facebookF,
         'insta': FontAwesomeIcons.instagram,
@@ -295,7 +315,7 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
         'snap': FontAwesomeIcons.snapchatGhost,
       };
 
-      project.social.toJson().forEach((key, value) {
+      project!.social!.toJson().forEach((key, value) {
         if (value != null) {
           list.add(GestureDetector(
             onTap: () async {
@@ -343,7 +363,7 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
   }
 
   Widget _buildTabs() {
-    List<Widget> list = List();
+    List<Widget> list = [];
 
     tabs.keys.forEach((tab) {
       Widget w = Container(
@@ -353,7 +373,7 @@ class _ProjectPageWidgetState extends State<ProjectPageWidget> {
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
           child: Text(
-            tab,
+            tab!,
             style: TextStyle(
               fontSize: 18,
               fontFamily: FONT_NUNITO,

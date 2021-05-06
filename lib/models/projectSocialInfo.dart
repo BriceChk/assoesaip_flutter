@@ -8,12 +8,12 @@ class ProjectSocialInfo {
     this.snapchatName,
   });
 
-  String facebookUrl;
-  String instagramName;
-  String youtubeUrl;
-  String discordUrl;
-  String twitterName;
-  String snapchatName;
+  String? facebookUrl;
+  String? instagramName;
+  String? youtubeUrl;
+  String? discordUrl;
+  String? twitterName;
+  String? snapchatName;
 
   factory ProjectSocialInfo.fromJson(Map<String, dynamic> json) => ProjectSocialInfo(
     facebookUrl: json["fb"],

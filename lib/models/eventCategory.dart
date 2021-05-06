@@ -11,12 +11,12 @@ class EventCategory {
     this.color,
   });
 
-  int id;
-  String name;
-  String color;
+  int? id;
+  String? name;
+  String? color;
 
-  factory EventCategory.fromJson(Map<String, dynamic> json) {
-    if (json == null) return null;
+  factory EventCategory.fromJson(Map<String, dynamic>? json) {
+    if (json == null) return EventCategory();
 
     return EventCategory(
       id: json['id'],

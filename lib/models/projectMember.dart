@@ -16,12 +16,12 @@ class ProjectMember {
     this.orderPosition,
   });
 
-  int id;
-  User user;
-  String role;
-  String introduction;
-  bool admin;
-  int orderPosition;
+  int? id;
+  User? user;
+  String? role;
+  String? introduction;
+  bool? admin;
+  int? orderPosition;
 
   factory ProjectMember.fromJson(Map<String, dynamic> json) => ProjectMember(
     id: json["id"],
@@ -34,7 +34,7 @@ class ProjectMember {
 
   Map<String, dynamic> toJson() => {
     "id": id,
-    "user": user.toJson(),
+    "user": user!.toJson(),
     "role": role,
     "introduction": introduction,
     "admin": admin,

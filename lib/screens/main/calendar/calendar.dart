@@ -18,15 +18,15 @@ class _CalendarWidgetState extends State<CalendarWidget> with AutomaticKeepAlive
   @override
   bool get wantKeepAlive => true;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = new GlobalKey<RefreshIndicatorState>();
-  List<EventOccurrence> events;
+  List<EventOccurrence>? events;
 
   @override
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance.addObserver(
+    WidgetsBinding.instance!.addObserver(
         LifecycleEventHandler(resumeCallBack: () async => setState(() {
-          WidgetsBinding.instance.addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+          WidgetsBinding.instance!.addPostFrameCallback((_) => _refreshIndicatorKey.currentState!.show());
         }))
     );
 

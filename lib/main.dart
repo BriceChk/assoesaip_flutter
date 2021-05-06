@@ -15,31 +15,34 @@ import 'package:assoesaip_flutter/screens/main/mainNavigation.dart';
 import 'package:assoesaip_flutter/screens/profilePage.dart';
 import 'package:assoesaip_flutter/screens/project/projectPageWidget.dart';
 import 'package:assoesaip_flutter/services/api.dart';
+import 'package:assoesaip_flutter/shares/constants.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]).then((value) => runApp(MyApp()));
 }
 
 class MyApp extends StatefulWidget {
-  static User user;
-  static FcmToken fcmToken;
+  static User? user;
+  static FcmToken? fcmToken;
   static final navigatorKey = new GlobalKey<NavigatorState>();
   static final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
   FlutterLocalNotificationsPlugin();
-  static final FirebaseMessaging firebaseMessaging = FirebaseMessaging();
 
   static Future<void> getAndSaveToken() async {
-    var token = await firebaseMessaging.getToken();
+    var token = await (FirebaseMessaging.instance.getToken());
     assert(token != null);
-    var t = FcmToken.fromTokenString(token);
+    var t = FcmToken.fromTokenString(token!);
     var value = await saveToken(t);
     MyApp.fcmToken = value;
   }
@@ -57,38 +60,41 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     initializeDateFormatting('fr_FR');
 
-    MyApp.firebaseMessaging.configure(
-      onMessage: (Map<String, dynamic> message) async {
-        // The notification is received when the app is running in the foreground.
-        // Display a custom notification!
-        var data = message['data'] ?? message;
-        if (data['notify'] == '1') {
-          buildNotification(jsonEncode(data));
-        }
-      },
-      onBackgroundMessage: myBackgroundMessageHandler,
-      onLaunch: (Map<String, dynamic> message) async {
-        // A time loop to give time to the app to initialize the navigator
-        // Otherwise the screen will not load ¯\_(ツ)_/¯
-        var data = message['data'] ?? message;
-        Timer.periodic(
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print('Got a message whilst in the foreground!');
+      print('Message data: ${message.data}');
+
+      if (message.notification != null) {
+        print('Message also contained a notification: ${message.notification}');
+      }
+
+      //TODO better implementation
+      buildNotification(jsonEncode(message.data));
+    });
+
+    /*RemoteMessage initialMessage = await FirebaseMessaging.instance.getInitialMessage();
+    if (initialMessage?.data['notify'] == '1') {
+      // Maybe need to wait :
+      /*
+       * Timer.periodic(
           Duration(milliseconds: 500),
-            (timer) {
-              if (MyApp.navigatorKey.currentState == null) return;
-              // The notification is received when the app is terminated.
-              // The app starts, navigate to the desired page!
-              handleNotificationNavigation(jsonEncode(data));
-              timer.cancel();
-            }
-        );
-      },
-      onResume: (Map<String, dynamic> message) async {
-        // The notification is received when the app is running in the background.
-        // The app resumes, navigate to the desired page!
-        var data = message['data'] ?? message;
-        handleNotificationNavigation(jsonEncode(data));
-      },
-    );
+          (timer) {
+          if (MyApp.navigatorKey.currentState == null) return;
+          // The notification is received when the app is terminated.
+          // The app starts, navigate to the desired page!
+          handleNotificationNavigation(jsonEncode(data));
+          timer.cancel();
+          }
+          );
+       */
+      handleNotificationNavigation(jsonEncode(initialMessage.data));
+    }*/
+
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      if (message.data['notify'] == '1') {
+        handleNotificationNavigation(jsonEncode(message.data));
+      }
+    });
 
     getUser().then((value) {
       setState(() {
@@ -141,7 +147,7 @@ class _MyAppState extends State<MyApp> {
     MyApp.flutterLocalNotificationsPlugin.show(int.parse(data['id']), data['title'], data['abstract'], platformChannelSpecifics, payload: jsonEncode(data));
   }
 
-  Future selectNotification(String payload) async {
+  Future selectNotification(String? payload) async {
     if (payload != null) {
       handleNotificationNavigation(payload);
     }
@@ -162,7 +168,7 @@ class _MyAppState extends State<MyApp> {
       obj = Project(id: int.parse(data['id']), name: data['name'], description: data['description']);
     }
 
-    await MyApp.navigatorKey.currentState.pushNamed(route, arguments: obj);
+    await MyApp.navigatorKey.currentState!.pushNamed(route, arguments: obj);
   }
 
   @override
@@ -182,7 +188,21 @@ class _MyAppState extends State<MyApp> {
       default: home = MainNavigation(tabIndex: 0);
     }
 
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      systemNavigationBarColor: COLOR_AE_BLUE,
+      statusBarColor: COLOR_AE_BLUE
+    ));
+
     return MaterialApp(
+      themeMode: ThemeMode.light,
+      theme: ThemeData.light().copyWith(
+        scaffoldBackgroundColor: Colors.white,
+        primaryColor: COLOR_AE_BLUE,
+        primaryColorBrightness: Brightness.light,
+        appBarTheme: AppBarTheme(
+          brightness: Brightness.dark,
+        )
+      ),
       debugShowCheckedModeBanner: false,
       home: home,
       navigatorKey: MyApp.navigatorKey,
@@ -196,29 +216,23 @@ class _MyAppState extends State<MyApp> {
           '/welcome': (context) => WelcomePage(),
           '/welcome/login': (context) => LoginWebViewPage(),
           '/loading': (context) => LoadingScreen(),
-          '/project': (context) => ProjectPageWidget(arguments),
+          '/project': (context) => ProjectPageWidget(arguments as Project?),
           '/profile': (context) => ProfilePage(),
-          '/article': (context) => ArticlePage(arguments),
-          '/event': (context) => EventPage(arguments),
+          '/article': (context) => ArticlePage(arguments as Article?),
+          '/event': (context) => EventPage(arguments as Event?),
         };
 
-        WidgetBuilder builder = routes[settings.name];
-        return MaterialPageRoute(builder: (ctx) => builder(ctx));
+        WidgetBuilder? builder = routes[settings.name!];
+        return MaterialPageRoute(builder: (ctx) => builder!(ctx));
       },
     );
   }
 }
 
-Future<dynamic> myBackgroundMessageHandler(Map<String, dynamic> message) async {
-  if (message.containsKey('data')) {
-    // This is executed when there is only data and no notification payload.
-    var data = message['data'] ?? message;
-  }
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  // If you're going to use other Firebase services in the background, such as Firestore,
+  // make sure you call `initializeApp` before using other Firebase services.
+  await Firebase.initializeApp();
 
-  if (message.containsKey('notification')) {
-    // Handle notification message
-    final dynamic notification = message['notification'];
-  }
-
-  // Or do other work.
+  print("Handling a background message: ${message.messageId}");
 }

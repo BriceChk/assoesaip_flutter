@@ -2,6 +2,7 @@ import 'package:assoesaip_flutter/main.dart';
 import 'package:assoesaip_flutter/services/api.dart';
 import 'package:assoesaip_flutter/shares/constants.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -19,18 +20,18 @@ class _ProfilePageState extends State<ProfilePage> {
   final double nameFontSize = 20;
   final BorderRadius profilePictureRadius = BorderRadius.circular(10);
   final BorderRadius buttonBorderRadius = BorderRadius.circular(10);
-  String promoValue = MyApp.user.promo == '' ? 'ING1' : MyApp.user.promo;
-  String campusValue = MyApp.user.campus == '' ? 'Angers' : MyApp.user.campus;
-  bool notificationsEnabled = MyApp.fcmToken.notificationsEnabled;
+  String? promoValue = MyApp.user!.promo == '' ? 'ING1' : MyApp.user!.promo;
+  String? campusValue = MyApp.user!.campus == '' ? 'Angers' : MyApp.user!.campus;
+  bool? notificationsEnabled = MyApp.fcmToken!.notificationsEnabled;
 
   @override
   Widget build(BuildContext context) {
     String avatarUrl = 'https://$AE_HOST/';
 
-    if (MyApp.user.avatarFileName == null) {
+    if (MyApp.user!.avatarFileName == null) {
       avatarUrl += 'build/images/placeholder.png';
     } else {
-      avatarUrl += 'images/profile-pics/' + MyApp.user.avatarFileName;
+      avatarUrl += 'images/profile-pics/' + MyApp.user!.avatarFileName!;
     }
     return Scaffold(
       backgroundColor: Colors.white,
@@ -67,7 +68,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
                 SizedBox(height: 15),
                 Text(
-                  MyApp.user.firstName + ' ' + MyApp.user.lastName,
+                  MyApp.user!.firstName! + ' ' + MyApp.user!.lastName!,
                   style: TextStyle(
                       fontFamily: FONT_NUNITO, fontSize: nameFontSize),
                 ),
@@ -106,7 +107,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             iconSize: 24,
                             elevation: 16,
                             style: TextStyle(color: COLOR_AE_BLUE),
-                            onChanged: (String newValue) {
+                            onChanged: (String? newValue) {
                               setState(() {
                                 campusValue = newValue;
                               });
@@ -129,7 +130,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             iconSize: 24,
                             elevation: 16,
                             style: TextStyle(color: COLOR_AE_BLUE),
-                            onChanged: (String newValue) {
+                            onChanged: (String? newValue) {
                               setState(() {
                                 promoValue = newValue;
                               });
@@ -177,7 +178,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     trailing: CupertinoSwitch(
                       activeColor: COLOR_AE_BLUE,
-                      value: notificationsEnabled,
+                      value: notificationsEnabled!,
                       onChanged: (bool value) {
                         setState(() {
                           notificationsEnabled = value;
@@ -186,7 +187,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     onTap: () {
                       setState(() {
-                        notificationsEnabled = !notificationsEnabled;
+                        notificationsEnabled = !notificationsEnabled!;
                       });
                     },
                   ),
@@ -194,17 +195,17 @@ class _ProfilePageState extends State<ProfilePage> {
                 Builder(
                   builder: (context) => Padding(
                     padding: EdgeInsets.symmetric(vertical: 15),
-                    child: FlatButton(
+                    child: OutlinedButton(
                       onPressed: () {
-                        MyApp.user.campus = campusValue;
-                        MyApp.user.promo = promoValue;
-                        MyApp.fcmToken.notificationsEnabled =
+                        MyApp.user!.campus = campusValue;
+                        MyApp.user!.promo = promoValue;
+                        MyApp.fcmToken!.notificationsEnabled =
                             notificationsEnabled;
-                        if (notificationsEnabled) {
-                          MyApp.firebaseMessaging.requestNotificationPermissions();
+                        if (notificationsEnabled!) {
+                          FirebaseMessaging.instance.requestPermission();
                         }
-                        saveToken(MyApp.fcmToken);
-                        updateProfile(MyApp.user).then((value) {
+                        saveToken(MyApp.fcmToken!);
+                        updateProfile(MyApp.user!).then((value) {
                           if (widget.firstLogin) {
                             Navigator.pushReplacementNamed(
                                 context, '/main/home');
@@ -218,7 +219,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 content: Text(
                                     'Les modifications ont été enregistrées !'));
                           }
-                          Scaffold.of(context).showSnackBar(sb);
+                          ScaffoldMessenger.of(context).showSnackBar(sb);
                         });
                       },
                       child: FittedBox(
@@ -230,9 +231,11 @@ class _ProfilePageState extends State<ProfilePage> {
                               fontSize: nameFontSize - 3),
                         ),
                       ),
-                      color: COLOR_AE_BLUE,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: buttonBorderRadius),
+                      style: OutlinedButton.styleFrom(
+                        backgroundColor: COLOR_AE_BLUE,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: buttonBorderRadius),
+                      ),
                     ),
                   ),
                 ),

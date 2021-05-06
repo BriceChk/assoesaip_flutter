@@ -1,21 +1,15 @@
 // HomePage when the user connect: AppBar + Carousel event + CustomScrollVertical vertical
 
 import 'package:assoesaip_flutter/main.dart';
-import 'package:assoesaip_flutter/models/article.dart';
-import 'package:assoesaip_flutter/models/event.dart';
 import 'package:assoesaip_flutter/models/news.dart';
-import 'package:assoesaip_flutter/models/project.dart';
-import 'package:assoesaip_flutter/models/searchResult.dart';
 import 'package:assoesaip_flutter/screens/main/HomePage/starredNewsCarousel.dart';
 import 'package:assoesaip_flutter/services/api.dart';
 import 'package:assoesaip_flutter/shares/constants.dart';
 import 'package:assoesaip_flutter/shares/lifecycleEventHandler.dart';
 import 'package:assoesaip_flutter/shares/newsListWidget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:floating_search_bar/floating_search_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:requests/requests.dart';
 import 'package:webview_cookie_manager/webview_cookie_manager.dart';
 
@@ -34,24 +28,23 @@ class _HomePageState extends State<HomePage>
   @override
   bool get wantKeepAlive => true;
 
-  final TextEditingController _typeAheadController = TextEditingController();
 
   String avatarUrl = 'https://$AE_HOST/';
 
-  List<News> news;
-  List<News> starredNews;
+  List<News> news = [];
+  List<News> starredNews = [];
 
   @override
   void initState() {
     super.initState();
 
-    if (MyApp.user.avatarFileName == null) {
+    if (MyApp.user!.avatarFileName == null) {
       avatarUrl += 'build/images/placeholder.png';
     } else {
-      avatarUrl += 'images/profile-pics/' + MyApp.user.avatarFileName;
+      avatarUrl += 'images/profile-pics/' + MyApp.user!.avatarFileName!;
     }
 
-    WidgetsBinding.instance.addObserver(
+    WidgetsBinding.instance!.addObserver(
         LifecycleEventHandler(resumeCallBack: () async => setState(() {
           loadData();
         }))
@@ -63,206 +56,167 @@ class _HomePageState extends State<HomePage>
   void loadData() {
     getNews().then((value) {
       setState(() {
-        news = value;
+        if (value == null) {
+          //TODO Error
+        } else {
+          news = value;
+        }
       });
     });
     getStarredNews().then((value) {
       setState(() {
-        starredNews = value;
+        if (value == null) {
+          //TODO Error
+        } else {
+          starredNews = value;
+        }
       });
     });
   }
 
-  Widget _builderSearchResult(News n) {
-    return TypeAheadField(
-      itemBuilder: (context, SearchResult suggestion) {
-        IconData icon;
-        if (suggestion.type == "Article") {
-          icon = FontAwesomeIcons.newspaper;
-        } else if (suggestion.type == "Événement") {
-          icon = FontAwesomeIcons.calendarAlt;
-        } else {
-          icon = FontAwesomeIcons.userFriends;
-        }
-        return ListTile(
-          leading:
-              Container(child: Center(child: Icon(icon)), width: 5, height: 5),
-          title: Text(
-            suggestion.name,
-            style: TextStyle(
-              fontSize: 17,
-              fontFamily: FONT_NUNITO,
-              color: COLOR_NAVY_BLUE,
-            ),
-          ),
-          subtitle: Text(suggestion.type),
-        );
-      },
-      suggestionsCallback: (pattern) async {
-        return await getSearchResults(pattern);
-      },
-      onSuggestionSelected: (SearchResult suggestion) {
-        if (suggestion.type == "Article") {
-          Navigator.of(context, rootNavigator: true)
-              .pushNamed('/article', arguments: Article(id: suggestion.id));
-        } else if (suggestion.type == "Événement") {
-          Navigator.of(context, rootNavigator: true)
-              .pushNamed('/event', arguments: Event(id: suggestion.id));
-        } else {
-          Navigator.of(context, rootNavigator: true).pushNamed(
-            '/project',
-            arguments: Project(
-                id: suggestion.id,
-                name: suggestion.name,
-                description: suggestion.description),
-          );
-        }
-        _typeAheadController.clear();
-      },
-      suggestionsBoxDecoration: SuggestionsBoxDecoration(
-          borderRadius: BorderRadius.circular(10), color: Colors.white),
-      textFieldConfiguration: TextFieldConfiguration(
-        controller: _typeAheadController,
-        decoration: InputDecoration.collapsed(
-          hintText: "Rechercher un club, une actu ...",
-        ),
-        style: TextStyle(
-          fontFamily: FONT_NUNITO,
-        ),
-      ),
-      noItemsFoundBuilder: (context) {
-        return ListTile(
-          leading: Icon(FontAwesomeIcons.ban),
-          title: Text(
-            "Aucun résultat",
-            style: TextStyle(fontFamily: FONT_NUNITO, fontSize: 17),
-          ),
-        );
-      },
-      hideOnLoading: true,
-      hideSuggestionsOnKeyboardHide: true,
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
-    News n;
     super.build(context);
-    return Container(
-      color: Colors.white,
-      child: CustomScrollView(
-        controller: widget.controller,
-        physics: BouncingScrollPhysics(),
-        slivers: [
-          SliverPadding(
-            padding: EdgeInsets.only(top: 10),
-            sliver: SliverFloatingBar(
-              elevation: 2,
-              backgroundColor: Colors.white,
-              leading: Container(
-                height: double.infinity,
-                width: MediaQuery.of(context).size.width - 110,
-                child: Center(child: _builderSearchResult(n)),
-              ),
-              //* Menu + profile picture as button so see the menu
-              trailing: Container(
-                padding: const EdgeInsets.symmetric(vertical: 5.0),
-                child: PopupMenuButton<MenuItem>(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10))),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(80),
-                    child: Container(
-                      width: 45,
-                      height: 45,
-                      child: CachedNetworkImage(
-                        imageUrl: avatarUrl,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  onSelected: (MenuItem result) {
-                    switch (result) {
-                      //* Case when we hit "deconnexion" we log out
-                      case MenuItem.logout:
-                        final cookieManager = WebviewCookieManager();
-                        cookieManager.clearCookies();
-                        Requests.clearStoredCookies(
-                            '$AE_HOST:443');
-                        Navigator.pushReplacementNamed(context, '/welcome');
-                        break;
-                      //* Case when we hit "profile" we pushing to the page profile
-                      case MenuItem.profile:
-                        Navigator.pushNamed(context, '/profile');
-                        break;
-                      //* Case when we hit "Actualisé" we're refreshing the whole page for news update
-                      case MenuItem.refresh:
-                        loadData();
-                        break;
-                    }
-                  },
-                  tooltip: 'Menu',
-                  itemBuilder: (BuildContext context) =>
-                      //* We have the menu display here
-                      <PopupMenuEntry<MenuItem>>[
-                    PopupMenuItem<MenuItem>(
-                      value: MenuItem.profile,
-                      child: Text('Profil'),
-                    ),
-                    PopupMenuItem<MenuItem>(
-                      value: MenuItem.refresh,
-                      child: Text('Actualiser'),
-                    ),
-                    PopupMenuItem<MenuItem>(
-                      value: MenuItem.logout,
-                      child: Text('Déconnexion'),
-                    ),
-                  ],
-                ),
-              ),
+    return Stack(
+      children: [
+        CustomScrollView(
+          controller: widget.controller,
+          physics: BouncingScrollPhysics(),
+          slivers: [
+            SliverToBoxAdapter(
+              child: SizedBox(height: MediaQuery.of(context).padding.top + 55,),
             ),
-          ),
-          starredNews is List<News>
-              ? StarredNewsCarouselWidget(starredNews)
-              : StarredNewsCarouselWidget.carouselPlaceholder(),
-          SliverList(
-            delegate: SliverChildListDelegate(
-              [
-                Container(
-                  color: Colors.white,
-                  width: MediaQuery.of(context).size.width,
-                  //* Container of the white widget with the rounded corner
-                  child: Column(
+
+            starredNews.isNotEmpty
+                ? StarredNewsCarouselWidget(starredNews)
+                : StarredNewsCarouselWidget.carouselPlaceholder(),
+            SliverList(
+              delegate: SliverChildListDelegate(
+                [
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       //Want to have space between the carousel and the top of the rounded container
                       Padding(
                         padding: EdgeInsets.only(top: 5, left: 10),
                         child: Text(
-                          "Actualités",
+                          "Toutes les actus",
                           style: TextStyle(
                             fontSize: 25,
                             fontFamily: FONT_NUNITO,
                           ),
                         ),
                       ),
-                      //* Sizedbox in order to have a apsace between the rounded and the first news
-                      SizedBox(
-                        height: 10,
-                      ),
-                      //! Container of each news
-                      news is List<News>
+                      news.isNotEmpty
                           ? NewsListWidget(news)
                           : NewsListWidget.newsListPlaceholder()
                     ],
                   ),
+                  SizedBox(height: MediaQuery.of(context).padding.bottom + 20),
+                ],
+              ),
+            )
+          ],
+        ),
+        buildFloatingSearchBar()
+      ],
+    );
+  }
+
+  Widget buildFloatingSearchBar() {
+    return FloatingSearchBar(
+      hint: 'Rechercher un club, une actu ...',
+      scrollPadding: const EdgeInsets.only(top: 16, bottom: 56),
+      transitionDuration: const Duration(milliseconds: 400),
+      transitionCurve: Curves.easeInOut,
+      physics: const BouncingScrollPhysics(),
+      axisAlignment: 0.0,
+      openAxisAlignment: 0.0,
+      width: 600,
+      backdropColor: Colors.transparent,
+      debounceDelay: const Duration(milliseconds: 500),
+      onQueryChanged: (query) {
+        // TODO Call your model, bloc, controller here.
+      },
+      // Specify a custom transition to be used for
+      // animating between opened and closed stated.
+      transition: CircularFloatingSearchBarTransition(),
+      actions: [
+        FloatingSearchBarAction(
+          showIfOpened: false,
+          child: PopupMenuButton<MenuItem>(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10))),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(80),
+              child: Container(
+                width: 40,
+                height: 40,
+                child: CachedNetworkImage(
+                  imageUrl: avatarUrl,
+                  fit: BoxFit.cover,
                 ),
-                SizedBox(height: 100),
-              ],
+              ),
             ),
-          )
-        ],
-      ),
+            onSelected: (MenuItem result) {
+              switch (result) {
+              //* Case when we hit "deconnexion" we log out
+                case MenuItem.logout:
+                  final cookieManager = WebviewCookieManager();
+                  cookieManager.clearCookies();
+                  Requests.clearStoredCookies(
+                      '$AE_HOST:443');
+                  Navigator.pushReplacementNamed(context, '/welcome');
+                  break;
+              //* Case when we hit "profile" we pushing to the page profile
+                case MenuItem.profile:
+                  Navigator.pushNamed(context, '/profile');
+                  break;
+              //* Case when we hit "Actualisé" we're refreshing the whole page for news update
+                case MenuItem.refresh:
+                  loadData();
+                  break;
+              }
+            },
+            tooltip: 'Menu',
+            itemBuilder: (BuildContext context) =>
+            //* We have the menu display here
+            <PopupMenuEntry<MenuItem>>[
+              PopupMenuItem<MenuItem>(
+                value: MenuItem.profile,
+                child: Text('Profil'),
+              ),
+              PopupMenuItem<MenuItem>(
+                value: MenuItem.refresh,
+                child: Text('Actualiser'),
+              ),
+              PopupMenuItem<MenuItem>(
+                value: MenuItem.logout,
+                child: Text('Déconnexion'),
+              ),
+            ],
+          ),
+        ),
+        FloatingSearchBarAction.searchToClear(
+          showIfClosed: false,
+        ),
+      ],
+      builder: (context, transition) {
+        return ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: Material(
+            color: Colors.white,
+            elevation: 4.0,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: Colors.accents.map((color) {
+                return Container(height: 112, color: color);
+              }).toList(),
+            ),
+          ),
+        );
+      },
     );
   }
 }
