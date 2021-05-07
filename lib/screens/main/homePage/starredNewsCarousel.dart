@@ -87,7 +87,7 @@ class StarredNewsCarouselWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(15),
           side: BorderSide(color: COLOR_AE_BLUE, width: 1)),
       child: Padding(
-        padding: EdgeInsets.only(top: 15, bottom: 10, right: 15, left: 15),
+        padding: EdgeInsets.only(top: 10, bottom: 10, right: 15, left: 15),
         child: Stack(children: [
           Center(
             child: ColorFiltered(
