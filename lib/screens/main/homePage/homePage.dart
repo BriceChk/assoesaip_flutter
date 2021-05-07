@@ -134,6 +134,8 @@ class _HomePageState extends State<HomePage>
       axisAlignment: 0.0,
       openAxisAlignment: 0.0,
       width: 600,
+      automaticallyImplyBackButton: false,
+      borderRadius: BorderRadius.circular(12),
       backdropColor: Colors.transparent,
       debounceDelay: const Duration(milliseconds: 500),
       onQueryChanged: (query) {
