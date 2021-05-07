@@ -1,7 +1,11 @@
 // HomePage when the user connect: AppBar + Carousel event + CustomScrollVertical vertical
 
 import 'package:assoesaip_flutter/main.dart';
+import 'package:assoesaip_flutter/models/article.dart';
+import 'package:assoesaip_flutter/models/event.dart';
 import 'package:assoesaip_flutter/models/news.dart';
+import 'package:assoesaip_flutter/models/project.dart';
+import 'package:assoesaip_flutter/models/searchResult.dart';
 import 'package:assoesaip_flutter/screens/main/HomePage/starredNewsCarousel.dart';
 import 'package:assoesaip_flutter/services/api.dart';
 import 'package:assoesaip_flutter/shares/constants.dart';
@@ -9,6 +13,7 @@ import 'package:assoesaip_flutter/shares/lifecycleEventHandler.dart';
 import 'package:assoesaip_flutter/shares/newsListWidget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:requests/requests.dart';
 import 'package:webview_cookie_manager/webview_cookie_manager.dart';
@@ -28,11 +33,15 @@ class _HomePageState extends State<HomePage>
   @override
   bool get wantKeepAlive => true;
 
+  FloatingSearchBarController _searchBarController = new FloatingSearchBarController();
 
   String avatarUrl = 'https://$AE_HOST/';
 
   List<News> news = [];
   List<News> starredNews = [];
+  
+  List<SearchResult> searchResults = [];
+  bool isSearchLoading = false;
 
   @override
   void initState() {
@@ -127,6 +136,7 @@ class _HomePageState extends State<HomePage>
   Widget buildFloatingSearchBar() {
     return FloatingSearchBar(
       hint: 'Rechercher un club, une actu ...',
+      controller: _searchBarController,
       scrollPadding: const EdgeInsets.only(top: 16, bottom: 56),
       transitionDuration: const Duration(milliseconds: 400),
       transitionCurve: Curves.easeInOut,
@@ -140,7 +150,21 @@ class _HomePageState extends State<HomePage>
       debounceDelay: const Duration(milliseconds: 500),
       onQueryChanged: (query) {
         // TODO Call your model, bloc, controller here.
+        setState(() {
+          this.isSearchLoading = true;
+        });
+        getSearchResults(query).then((value) {
+          setState(() {
+            this.isSearchLoading = false;
+            if (value == null) {
+              //TODO Error
+              return;
+            }
+            this.searchResults = value;
+          });
+        });
       },
+      progress: isSearchLoading,
       // Specify a custom transition to be used for
       // animating between opened and closed stated.
       transition: CircularFloatingSearchBarTransition(),
@@ -205,16 +229,65 @@ class _HomePageState extends State<HomePage>
         ),
       ],
       builder: (context, transition) {
-        return ClipRRect(
+        return Material(
+          elevation: 4,
+          color: Colors.white,
           borderRadius: BorderRadius.circular(8),
-          child: Material(
-            color: Colors.white,
-            elevation: 4.0,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: Colors.accents.map((color) {
-                return Container(height: 112, color: color);
-              }).toList(),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(8),
+            child: ListView.separated(
+                shrinkWrap: true,
+                padding: EdgeInsets.zero,
+                itemBuilder: (context, index) {
+                  var suggestion = searchResults[index];
+
+                  IconData icon;
+                  if (suggestion.type == "Article") {
+                    icon = FontAwesomeIcons.newspaper;
+                  } else if (suggestion.type == "Événement") {
+                    icon = FontAwesomeIcons.calendarAlt;
+                  } else {
+                    icon = FontAwesomeIcons.userFriends;
+                  }
+
+                  return ListTile(
+                    leading: Icon(icon, size: 30),
+                    title: Text(
+                      suggestion.name!,
+                      style: TextStyle(
+                        fontSize: 17,
+                        fontFamily: FONT_NUNITO,
+                        color: COLOR_NAVY_BLUE,
+                      ),
+                    ),
+                    subtitle: Text(suggestion.type!),
+                    onTap: () {
+                      _searchBarController.clear();
+                      _searchBarController.close();
+                      searchResults.clear();
+                      if (suggestion.type == "Article") {
+                        Navigator.of(context, rootNavigator: true)
+                            .pushNamed('/article', arguments: Article(id: suggestion.id));
+                      } else if (suggestion.type == "Événement") {
+                        Navigator.of(context, rootNavigator: true)
+                            .pushNamed('/event', arguments: Event(id: suggestion.id));
+                      } else {
+                        Navigator.of(context, rootNavigator: true).pushNamed(
+                          '/project',
+                          arguments: Project(
+                              id: suggestion.id,
+                              name: suggestion.name,
+                              description: suggestion.description),
+                        );
+                      }
+                    },
+                  );
+                },
+                separatorBuilder: (context, index) => Divider(
+                  color: Colors.black26,
+                  height: 0,
+                ),
+                itemCount: searchResults.length
             ),
           ),
         );
