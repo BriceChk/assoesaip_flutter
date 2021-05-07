@@ -112,7 +112,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 campusValue = newValue;
                               });
                             },
-                            items: <String>['Angers', 'Aix']
+                            items: <String>['Angers', 'Aix', 'Reims']
                                 .map<DropdownMenuItem<String>>((String value) {
                               return DropdownMenuItem<String>(
                                 value: value,
