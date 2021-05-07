@@ -50,18 +50,11 @@ class StarredNewsCarouselWidget extends StatelessWidget {
                 //* All the option of the carousel see the pubdev page
                 options: CarouselOptions(
                   height: 275,
-                  aspectRatio: 16 / 9,
-                  viewportFraction: 0.8,
-                  initialPage: 0,
                   enableInfiniteScroll: news.length == 1 ? false : true,
                   autoPlay: true,
                   autoPlayInterval: Duration(seconds: 5),
-                  autoPlayAnimationDuration: Duration(milliseconds: 800),
                   enlargeStrategy: CenterPageEnlargeStrategy.height,
-                  autoPlayCurve: Curves.fastOutSlowIn,
                   enlargeCenterPage: true,
-                  scrollDirection: Axis.horizontal,
-                  onPageChanged: (index, reason) {},
                 ),
                 itemCount: news.length,
                 itemBuilder: (BuildContext context, int currentIndex, int realIdx) =>
@@ -125,7 +118,7 @@ class StarredNewsCarouselWidget extends StatelessWidget {
                   Text(
                     content,
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 15.2,
                       color: Colors.white,
                       fontFamily: FONT_NUNITO,
                     ),
