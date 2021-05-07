@@ -161,7 +161,8 @@ class _EventPageState extends State<EventPage> {
               ],
             ),
           ),
-          CustomWebview(e!.html)
+          CustomWebview(e!.html),
+          SizedBox(height: 40),
         ],
       ),
     );
